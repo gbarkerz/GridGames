@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             x:Name="SquaresPageInstance"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:resources="clr-namespace:GridGames.ResX"
+             x:Class="GridGames.Views.SquaresPage"
+             xmlns:localviews="clr-namespace:GridGames.Views"
+             xmlns:vm="clr-namespace:GridGames.ViewModels"
+             BackgroundColor="{DynamicResource PageBackgroundColor}"
+             Title="{Binding Title}">
+
+    <!--xmlns:imageeditor="clr-namespace:Syncfusion.SfImageEditor.XForms;assembly=Syncfusion.SfImageEditor.XForms"-->
+
+    <!--<Shell.TitleView>
+        <Grid BackgroundColor="{DynamicResource Primary}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Text="{x:Static resources:AppResources.Squares}"
+                TextColor="{DynamicResource GameTitleBarTextColor}" VerticalOptions="Center"
+                FontSize="Title" />
+            <Button Grid.Column="1" Text="&#xf013;" Clicked="SquaresGameSettingsButton_Clicked"
+                BorderWidth="0"
+                FontFamily="FA" FontSize="Title" HorizontalOptions="End"
+                AutomationProperties.Name="{x:Static resources:AppResources.SquaresSettings}"
+                IsVisible="{Binding GameIsLoading, Converter={StaticResource GameIsLoadingToVisibility}}"/>
+        </Grid>
+    </Shell.TitleView>-->
+    
+    <ContentPage.BindingContext>
+        <vm:SquaresViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <localviews:FirstRunLoadingSquaresToGridOpacity x:Key="FirstRunLoadingSquaresToGridOpacity" />
+            <localviews:GameIsLoadingToGridOpacity x:Key="GameIsLoadingToGridOpacity" />
+            <localviews:GameIsLoadingToVisibility x:Key="GameIsLoadingToVisibility" />
+            <localviews:CollectionViewHeightToRowHeight x:Key="CollectionViewHeightToRowHeight" />
+            <localviews:NumberSizeIndexToGridRowHeight x:Key="NumberSizeIndexToGridRowHeight" />
+            <localviews:LabelContainerHeightToFontSize x:Key="LabelContainerHeightToFontSize" />
+            <localviews:SquareTargetIndexToIsVisible x:Key="SquareTargetIndexToIsVisible" />
+            <localviews:SquareTargetIndexToContainerFrameVisibility x:Key="SquareTargetIndexToContainerFrameVisibility" />
+            <localviews:SquareTargetIndexToBackgroundColor x:Key="SquareTargetIndexToBackgroundColor" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid x:Name="PageGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- The SfImageEditor is used to programmatically crop the picture in order to show it
+            on the squares, and is never shown to the player. -->
+
+        <!-- Barker: Fix this. -->
+        <!--<imageeditor:SfImageEditor Grid.Row="0" x:Name="GridGameImageEditor" 
+            IsVisible="False"
+            ImageLoaded="GridGameImageEditor_ImageLoaded" 
+            ImageEdited="GridGameImageEditor_ImageEdited"                                              
+            ImageSaving="GridGameImageEditor_ImageSaving"
+            EndReset="GridGameImageEditor_EndReset" />-->
+
+        <!-- Future: Consider binding the CollectionView's IsEnabled on first run or loading.
+            A quick test of that set IsEnabled as expected, but that didn't prevent input. -->
+        
+        <CollectionView Grid.Row="1"
+            x:Name="SquaresCollectionView"
+            IsVisible="True"
+            SelectionMode="Single" 
+            SelectionChanged="SquaresGrid_SelectionChanged"
+            ItemsSource="{Binding SquareListCollection}">
+            <CollectionView.Opacity>
+                <MultiBinding Mode="OneWay" Converter="{StaticResource FirstRunLoadingSquaresToGridOpacity}">
+                    <Binding Source="{x:Reference SquaresPageInstance}" Path="BindingContext.FirstRunSquares" />
+                    <Binding Source="{x:Reference SquaresPageInstance}" Path="BindingContext.GameIsLoading" />
+                </MultiBinding>
+            </CollectionView.Opacity>
+
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="4" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, 
+                        Path=Height, Converter={StaticResource CollectionViewHeightToRowHeight}}"
+                        BackgroundColor="{DynamicResource GridBackgroundColor}"
+                        AutomationProperties.IsInAccessibleTree="True"
+                        AutomationProperties.Name="{Binding AccessibleName}"
+                        AutomationProperties.HelpText="{Binding AccessibleDescription}">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                        </Grid.GestureRecognizers>
+                        <Frame Margin="2" Padding="0"
+                            BackgroundColor="{Binding TargetIndex, 
+                                Converter={StaticResource SquareTargetIndexToBackgroundColor}}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition 
+                                        x:Name="SquareNumberGridRow"
+                                        Height="{Binding
+                                            Source={x:Reference SquaresPageInstance},
+                                            Path=BindingContext.NumberHeight,
+                                            Mode=OneWay,
+                                            Converter={StaticResource NumberSizeIndexToGridRowHeight},
+                                            ConverterParameter=0}" />
+                                    <RowDefinition 
+                                        Height="{Binding
+                                            Source={x:Reference SquaresPageInstance},
+                                            Path=BindingContext.NumberHeight,
+                                            Mode=OneWay,
+                                            Converter={StaticResource NumberSizeIndexToGridRowHeight},
+                                            ConverterParameter=1}" />
+                                </Grid.RowDefinitions>
+
+                                <Image Grid.Row="0" Grid.RowSpan="2"
+                                    Source="{Binding PictureImageSource}"
+                                    Aspect="Fill"
+                                    InputTransparent="True">
+                                    <Image.IsVisible>
+                                        <MultiBinding Mode="OneWay" Converter="{StaticResource SquareTargetIndexToIsVisible}">
+                                            <Binding Path="TargetIndex" />
+                                            <Binding Source="{x:Reference SquaresPageInstance}" Path="BindingContext.ShowPicture" />
+                                        </MultiBinding>
+                                    </Image.IsVisible>
+                                </Image>
+                                
+                                <Grid Grid.Row="0" x:Name="LabelPanel"
+                                    BackgroundColor="Transparent"
+                                    IsVisible="{Binding
+                                    Source={x:Reference SquaresPageInstance},
+                                    Path=BindingContext.ShowNumbers}">
+                                    <Frame Margin="0" Padding="4,0,4,0" HorizontalOptions="Start"
+                                        BorderColor="{DynamicResource SquaresNumberTextColor}"
+                                        BackgroundColor="{Binding TargetIndex, 
+                                            Converter={StaticResource SquareTargetIndexToBackgroundColor}}"
+                                        IsVisible="{Binding TargetIndex, 
+                                            Converter={StaticResource SquareTargetIndexToContainerFrameVisibility}}">
+                                        <Label Text="{Binding VisualLabel}"
+                                            TextColor="{DynamicResource SquaresNumberTextColor}"                                               
+                                            Margin="2,0,4,0"
+                                            HorizontalOptions="Center" VerticalOptions="Center"
+                                            HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type Grid}}, Path=Height}">
+                                            <Label.FontSize>
+                                                <!-- Don't only bind to the grid height here, as that leaves the FontSize zero when
+                                                    ShowNumbers is set true after moving squares when ShowNumbers is false. -->
+                                                <MultiBinding Mode="OneWay" 
+                                                    Converter="{StaticResource LabelContainerHeightToFontSize}">
+                                                    <Binding Source="{x:Reference SquaresPageInstance}"
+                                                        Path="BindingContext.ShowNumbers" />
+                                                    <Binding Source="{RelativeSource AncestorType={x:Type Grid}}" 
+                                                        Path="Height" />
+                                                </MultiBinding>
+                                            </Label.FontSize>
+                                        </Label>
+                                    </Frame>
+                                </Grid>
+                                <StackLayout Grid.Row="1" BackgroundColor="Transparent" />
+                            </Grid>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Show a message when the pictures are being loaded into the squares. -->
+        <Frame Grid.Row="1"
+            IsVisible="{Binding GameIsLoading}"
+            BorderColor="{DynamicResource MessageTextColor}"
+            BackgroundColor="{DynamicResource PageBackgroundColor}"
+            AutomationProperties.Name="{x:Static resources:AppResources.LoadingPleaseWait}"
+            VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+            <Label x:Name="PleaseWaitLabel"
+                Text="{x:Static resources:AppResources.LoadingPleaseWait}"
+                FontSize="Large" />
+        </Frame>
+
+        <!-- This Grid is here to support a setting to visually hide the game grid contents. -->
+        <Grid Grid.Row="1" IsVisible="{Binding HideGrid}"
+            BackgroundColor="{DynamicResource GridBackgroundColor}" />
+
+        <Frame Grid.Row="1" Margin="4" Padding="8"
+            IsVisible="{Binding FirstRunSquares}"
+            BorderColor="{DynamicResource MessageTextColor}"
+            BackgroundColor="{DynamicResource PageBackgroundColor}"
+            AutomationProperties.Name="{x:Static resources:AppResources.SquaresWelcome}"
+            VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" x:Name="SquaresWelcomeTitleLabel"
+                    Text="{x:Static resources:AppResources.SquaresWelcome}"                        
+                    FontSize="Large" FontAttributes="Bold" />
+                <ScrollView Grid.Row="1">
+                    <Label x:Name="SquaresWelcomeTitleInstructions" FontSize="Medium">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{x:Static resources:AppResources.WelcomeInstructions}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </ScrollView>
+                <Button Grid.Row="2" Margin="0"
+                        Text="{x:Static resources:AppResources.Close}" 
+                        Clicked="SquaresWelcomeOKButton_Clicked"
+                        HorizontalOptions="End" />
+            </Grid>
+        </Frame>
+
+    </Grid>
+
+</ContentPage>

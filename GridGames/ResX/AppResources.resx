@@ -1,0 +1,544 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppSettings" xml:space="preserve">
+    <value>App Settings</value>
+  </data>
+  <data name="AppSettingsDarkTheme" xml:space="preserve">
+    <value>Use a dark theme</value>
+  </data>
+  <data name="AppSettingsDarkThemeInstructions" xml:space="preserve">
+    <value>Changing the theme will restart the current game.</value>
+  </data>
+  <data name="AppSettingsHideGrid" xml:space="preserve">
+    <value>Hide Grid</value>
+  </data>
+  <data name="AppSettingsHideGridInstructions" xml:space="preserve">
+    <value>When the grid contents are visually hidden, use a screen reader to play the game.</value>
+  </data>
+  <data name="AppSettingsIntro" xml:space="preserve">
+    <value>Settings here apply to all games in the Grid Games app.</value>
+  </data>
+  <data name="BrowsePicture" xml:space="preserve">
+    <value>Browse for picture</value>
+  </data>
+  <data name="ChooseEightPictures" xml:space="preserve">
+    <value>Please choose a picture in a folder that contains exactly 8 pictures.</value>
+  </data>
+  <data name="ClearSelection" xml:space="preserve">
+    <value>Clear Selection</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="CompletedSquaresPictureInMoves" xml:space="preserve">
+    <value>You completed {0} in {1} goes.</value>
+  </data>
+  <data name="Congratulations" xml:space="preserve">
+    <value>Congratulations!</value>
+  </data>
+  <data name="DefaultMatchingCard1Description" xml:space="preserve">
+    <value>A smiling man with a red coat and arms outstretched, standing in front of 3 large Daleks and a TARDIS. The Daleks seem to be raised above the grass beneath them, and a slightly cloudy sky is in the background.</value>
+  </data>
+  <data name="DefaultMatchingCard1Name" xml:space="preserve">
+    <value>Daleks in Blackpool</value>
+  </data>
+  <data name="DefaultMatchingCard2Description" xml:space="preserve">
+    <value>A small brown stone lighthouse, with an upper small balcony and a lower bigger balcony. A covered sitting area is at the base of the lighthouse. In front of the lighthouse in the stone ground are anchor and compass symbols, and in the background is a grey cloudy sky.</value>
+  </data>
+  <data name="DefaultMatchingCard2Name" xml:space="preserve">
+    <value>Lower Lighthouse in Fleetwood</value>
+  </data>
+  <data name="DefaultMatchingCard3Description" xml:space="preserve">
+    <value>A first-person view looking down on two portions of fish and chips in trays and paper. In the background is a concrete path, and two partially shown shoes.</value>
+  </data>
+  <data name="DefaultMatchingCard3Name" xml:space="preserve">
+    <value>Fish and Chips in Cleveleys</value>
+  </data>
+  <data name="DefaultMatchingCard4Description" xml:space="preserve">
+    <value>A small, very old hexagonal red stone building, with castellated battlements housing a cross. Arched windows on the sides of the building are bricked-up from the inside. The building sits on grass, with a bay and cloudy sky in the background.</value>
+  </data>
+  <data name="DefaultMatchingCard4Name" xml:space="preserve">
+    <value>Cockersand Abbey</value>
+  </data>
+  <data name="DefaultMatchingCard5Description" xml:space="preserve">
+    <value>A white windmill with a black roof and black sails. The windmill has stairs going up to a black door, and black windows. In the background is a street of houses and a clear, blue sky.</value>
+  </data>
+  <data name="DefaultMatchingCard5Name" xml:space="preserve">
+    <value>Lytham St Annes Windmill</value>
+  </data>
+  <data name="DefaultMatchingCard6Description" xml:space="preserve">
+    <value>The stone ruins of a large, very old abbey. The abbey has no roof or windows, and the sun shines through the arches from behind the abbey. In the foreground is a lawn housing multiple large stone graves, and in the background is a clear blue sky.</value>
+  </data>
+  <data name="DefaultMatchingCard6Name" xml:space="preserve">
+    <value>Bolton Abbey</value>
+  </data>
+  <data name="DefaultMatchingCard7Description" xml:space="preserve">
+    <value>A large stone obelisk in a town square, with buildings and trees nearby. The sun shines on the obelisk, with a slightly cloudy, blue sky in the background. At the base of the obelisk are six red wreaths.</value>
+  </data>
+  <data name="DefaultMatchingCard7Name" xml:space="preserve">
+    <value>Harrogate Obelisk</value>
+  </data>
+  <data name="DefaultMatchingCard8Description" xml:space="preserve">
+    <value>A small square stone building with an opening on the near side. Above the opening is a Greek inscription. Railing surrounds the top of the building, and a sundial sits at the centre of the top. In the background is rocky grassland, with rolling hills in the far background along with a slightly cloudy, blue sky.</value>
+  </data>
+  <data name="DefaultMatchingCard8Name" xml:space="preserve">
+    <value>Hampsfell Hospice</value>
+  </data>
+  <data name="DefaultSquare10Name" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="DefaultSquare11Name" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="DefaultSquare12Name" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="DefaultSquare13Name" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="DefaultSquare14Name" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="DefaultSquare15Name" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="DefaultSquare1Name" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="DefaultSquare2Name" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="DefaultSquare3Name" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="DefaultSquare4Name" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="DefaultSquare5Name" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="DefaultSquare6Name" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="DefaultSquare7Name" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="DefaultSquare8Name" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="DefaultSquare9Name" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="DefaultSquareEmpty" xml:space="preserve">
+    <value>Empty</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="Down" xml:space="preserve">
+    <value>down</value>
+  </data>
+  <data name="Eight" xml:space="preserve">
+    <value>Eight</value>
+  </data>
+  <data name="Eleven" xml:space="preserve">
+    <value>Eleven</value>
+  </data>
+  <data name="FaceDown" xml:space="preserve">
+    <value>Face down</value>
+  </data>
+  <data name="Fifteen" xml:space="preserve">
+    <value>Fifteen</value>
+  </data>
+  <data name="FillCardAndClip" xml:space="preserve">
+    <value>Fill card and clip</value>
+  </data>
+  <data name="FillCardWithoutClipping" xml:space="preserve">
+    <value>Fill card without clipping</value>
+  </data>
+  <data name="Five" xml:space="preserve">
+    <value>Five</value>
+  </data>
+  <data name="Four" xml:space="preserve">
+    <value>Four</value>
+  </data>
+  <data name="Fourteen" xml:space="preserve">
+    <value>Fourteen</value>
+  </data>
+  <data name="GameReady" xml:space="preserve">
+    <value>Game is ready to play.</value>
+  </data>
+  <data name="GridGames" xml:space="preserve">
+    <value>Grid Games</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="HelpContentPairs" xml:space="preserve">
+    <value>The Pairs Game is based on a traditional card matching game, where face-down cards are turned over in order to find pairs of cards.
+
+When the game is run, a 4 by 4 grid of blank squares appears, each square representing a card. When a card is tapped, an image is shown on the card. When another card is clicked, an image is also shown on that second card. If the two images are the same, then the cards are considered to be matched, and will not change again for the rest of the game. If the images do not match, then the cards are considered to be unmatched, and cards must be turned back over by tapping on any card. These steps are to be repeated until all matching images have been found, and a "Congratulations" window appears.
+
+When using a screen reader with the game, move your finger around the screen to have the number of the card beneath your finger announced. Double tap to turn up a card. When a turned up card is matched, its name will be prefixed with "Matched".
+
+Please note when a screen reader moves to the Menu button near the top left corner of the app, it may announce the button as the OK button or Menu button, or only announce the word button.</value>
+  </data>
+  <data name="HelpContentSquares" xml:space="preserve">
+    <value>The Squares Game is based on a square sliding puzzle, where squares in a grid of squares are rearranged by the player to form an ordered sequence in the grid.
+
+When the game is run, a 4 by 4 grid of squares appears, with fifteen of those squares occupied with a movable element, and one square being empty. When a square is tapped, if it is adjacent to the empty square, the tapped square moves into the empty square. The space where the tapped square was then becomes the empty square. The aim is to arrange all the squares in a sorted order, leaving the empty square in the bottom right corner of the grid. Once all the squares are ordered, a "Congratulations" window appears.
+
+Tip: Don't use a swipe gesture to move a square. Support for swipe gestures has yet to be added to the game.
+
+Tip: Don't tap on the empty square. Instead tap on the squares next to the empty square.
+
+When the game first runs, the setting to have numbers shown on squares is on, and the settings to have pictures shown on the squares is off. This means a number is shown in the top left corner of the squares. When the squares are sorted, the square showing number 1 is at the top left of the grid, and the numbers increase from left to right then top to bottom.
+
+Tip: Practice moving numbered squares around before changing the setting to have a picture shown on the squares.
+
+When the game setting to have a picture shown on the squares is on, then a single picture is shown across all the squares. The sections of the picture will appear jumbled until the squares are arranged in their sorted order.
+
+When using a screen reader with the game, move your finger around the screen to have the number of the square beneath your finger announced. Double tap to move a square.
+
+Please note when a screen reader moves to the Menu button near the top left corner of the app, it may announce the button as the OK button or Menu button, or only announce the word button.</value>
+  </data>
+  <data name="Large" xml:space="preserve">
+    <value>Large</value>
+  </data>
+  <data name="Largest" xml:space="preserve">
+    <value>Largest</value>
+  </data>
+  <data name="Left" xml:space="preserve">
+    <value>left</value>
+  </data>
+  <data name="LoadedCustomPictures" xml:space="preserve">
+    <value>Loaded custom pictures</value>
+  </data>
+  <data name="LoadingPleaseWait" xml:space="preserve">
+    <value>Please wait a moment while the picture is loaded into the squares.</value>
+  </data>
+  <data name="Matched" xml:space="preserve">
+    <value>Matched</value>
+  </data>
+  <data name="MatchingWonInMoves" xml:space="preserve">
+    <value>You won the game in {0} goes.</value>
+  </data>
+  <data name="Medium" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="MissingMatchingGamePictureDetails" xml:space="preserve">
+    <value>The folder containing the 8 picture must also contain a MatchingGamePictureDetails file. Please review the Pairs Help for more details.</value>
+  </data>
+  <data name="Moved" xml:space="preserve">
+    <value>Moved</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="Nine" xml:space="preserve">
+    <value>Nine</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="NoFolderSelected" xml:space="preserve">
+    <value>No folder selected</value>
+  </data>
+  <data name="NoMovePossible" xml:space="preserve">
+    <value>A move is not possible from here.</value>
+  </data>
+  <data name="NumberSize" xml:space="preserve">
+    <value>Number size</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="One" xml:space="preserve">
+    <value>One</value>
+  </data>
+  <data name="Pairs" xml:space="preserve">
+    <value>Pairs</value>
+  </data>
+  <data name="PairsGameHelp" xml:space="preserve">
+    <value>Pairs Help</value>
+  </data>
+  <data name="PairsSettings" xml:space="preserve">
+    <value>Pairs Settings</value>
+  </data>
+  <data name="PairsWelcome" xml:space="preserve">
+    <value>Welcome to the Pairs Game!</value>
+  </data>
+  <data name="PictureAspectInstructions" xml:space="preserve">
+    <value>Pick how the pictures will be shown in the cards.</value>
+  </data>
+  <data name="PictureAspectLabel" xml:space="preserve">
+    <value>Scale type</value>
+  </data>
+  <data name="PictureNameLabel" xml:space="preserve">
+    <value>Picture Name:</value>
+  </data>
+  <data name="PicturePath" xml:space="preserve">
+    <value>Picture Path:</value>
+  </data>
+  <data name="PlaySoundMatch" xml:space="preserve">
+    <value>Play a sound when upturned cards match</value>
+  </data>
+  <data name="PlaySoundNotMatch" xml:space="preserve">
+    <value>Play a sound when upturned cards don't match</value>
+  </data>
+  <data name="RestartGame" xml:space="preserve">
+    <value>Restart Game</value>
+  </data>
+  <data name="Right" xml:space="preserve">
+    <value>right</value>
+  </data>
+  <data name="Selected" xml:space="preserve">
+    <value>Selected:</value>
+  </data>
+  <data name="SelectPicture" xml:space="preserve">
+    <value>Select Picture</value>
+  </data>
+  <data name="Seven" xml:space="preserve">
+    <value>Seven</value>
+  </data>
+  <data name="ShowCustomPictures" xml:space="preserve">
+    <value>Show custom pictures</value>
+  </data>
+  <data name="ShowFullPicture" xml:space="preserve">
+    <value>Show full picture</value>
+  </data>
+  <data name="ShowNumbers" xml:space="preserve">
+    <value>Show numbers</value>
+  </data>
+  <data name="ShowPicture" xml:space="preserve">
+    <value>Show picture</value>
+  </data>
+  <data name="Six" xml:space="preserve">
+    <value>Six</value>
+  </data>
+  <data name="Sixteen" xml:space="preserve">
+    <value>Sixteen</value>
+  </data>
+  <data name="Small" xml:space="preserve">
+    <value>Small</value>
+  </data>
+  <data name="Squares" xml:space="preserve">
+    <value>Squares</value>
+  </data>
+  <data name="SquaresGameHelp" xml:space="preserve">
+    <value>Squares Help</value>
+  </data>
+  <data name="SquaresSettings" xml:space="preserve">
+    <value>Squares Settings</value>
+  </data>
+  <data name="SquaresSettingsInstructions" xml:space="preserve">
+    <value>Please specify what you would like to appear inside the squares shown in the grid.</value>
+  </data>
+  <data name="SquaresWelcome" xml:space="preserve">
+    <value>Welcome to the Squares Game!</value>
+  </data>
+  <data name="SquaresWonInGoes" xml:space="preserve">
+    <value>You won the game in {0} moves.</value>
+  </data>
+  <data name="String" xml:space="preserve">
+    <value>Would you like to play another game?</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>When the game is run, a 4 by 4 grid of blank squares appears, each square representing a card. When a card is tapped, an image is shown on the card. When another card is clicked, an image is also shown on that second card. If the two images are the same, then the cards are considered to be matched, and will not change again for the rest of the game. If the images do not match, then the cards are considered to be unmatched, and cards must be turned back over by tapping on any card. These steps are to be repeated until all matching images have been found, and a "Congratulations" window appears.</value>
+  </data>
+  <data name="String10" xml:space="preserve">
+    <value>When the game setting to have a picture shown on the squares is on, then a single picture is shown across all the squares. The sections of the picture will appear jumbled until the squares are arranged in their sorted order.</value>
+  </data>
+  <data name="String11" xml:space="preserve">
+    <value>When using a screen reader with the game, move your finger around the screen to have the number of the square beneath your finger announced. Double tap to move a square.</value>
+  </data>
+  <data name="String12" xml:space="preserve">
+    <value>Please note when a screen reader moves to the Menu button near the top left corner of the app, it may announce the button as the OK button or Menu button, or only announce the word button.</value>
+  </data>
+  <data name="String13" xml:space="preserve">
+    <value>Would you like to play another game?</value>
+  </data>
+  <data name="String14" xml:space="preserve">
+    <value>Would you like to play another game?</value>
+  </data>
+  <data name="String15" xml:space="preserve">
+    <value>Note that screen readers may announce the menu button as the "OK" button or only as "button".</value>
+  </data>
+  <data name="String2" xml:space="preserve">
+    <value>When using a screen reader with the game, move your finger around the screen to have the number of the card beneath your finger announced. Double tap to turn up a card. When a turned up card is matched, its name will be prefixed with "Matched".</value>
+  </data>
+  <data name="String3" xml:space="preserve">
+    <value>Please note when a screen reader moves to the Menu button near the top left corner of the app, it may announce the button as the OK button or Menu button, or only announce the word button.</value>
+  </data>
+  <data name="String4" xml:space="preserve">
+    <value>The Squares Game is based on a square sliding puzzle, where squares in a grid of squares are rearranged by the player to form an ordered sequence in the grid.</value>
+  </data>
+  <data name="String5" xml:space="preserve">
+    <value>When the game is run, a 4 by 4 grid of squares appears, with fifteen of those squares occupied with a movable element, and one square being empty. When a square is tapped, if it is adjacent to the empty square, the tapped square moves into the empty square. The space where the tapped square was then becomes the empty square. The aim is to arrange all the squares in a sorted order, leaving the empty square in the bottom right corner of the grid. Once all the squares are ordered, a "Congratulations" window appears.</value>
+  </data>
+  <data name="String6" xml:space="preserve">
+    <value>Tip: Don't use a swipe gesture to move a square. Support for swipe gestures has yet to be added to the game.</value>
+  </data>
+  <data name="String7" xml:space="preserve">
+    <value>Tip: Don't tap on the empty square. Instead tap on the squares next to the empty square.</value>
+  </data>
+  <data name="String8" xml:space="preserve">
+    <value>When the game first runs, the setting to have numbers shown on squares is on, and the settings to have pictures shown on the squares is off. This means a number is shown in the top left corner of the squares. When the squares are sorted, the square showing number 1 is at the top left of the grid, and the numbers increase from left to right then top to bottom.</value>
+  </data>
+  <data name="String9" xml:space="preserve">
+    <value>Tip: Practice moving numbered squares around before changing the setting to have a picture shown on the squares.</value>
+  </data>
+  <data name="Ten" xml:space="preserve">
+    <value>Ten</value>
+  </data>
+  <data name="ThatsMatch" xml:space="preserve">
+    <value>That's a match.</value>
+  </data>
+  <data name="Thirteen" xml:space="preserve">
+    <value>Thirteen</value>
+  </data>
+  <data name="Three" xml:space="preserve">
+    <value>Three</value>
+  </data>
+  <data name="TurnedUp" xml:space="preserve">
+    <value>Turned up</value>
+  </data>
+  <data name="Twelve" xml:space="preserve">
+    <value>Twelve</value>
+  </data>
+  <data name="Two" xml:space="preserve">
+    <value>Two</value>
+  </data>
+  <data name="UnexpectedDataInFile" xml:space="preserve">
+    <value>The MatchingGamePictureDetails file does not contain the expected data. Please review the Pairs Help for more details.</value>
+  </data>
+  <data name="UnmatchedTurnedBack" xml:space="preserve">
+    <value>Unmatched cards turned back.</value>
+  </data>
+  <data name="Up" xml:space="preserve">
+    <value>up</value>
+  </data>
+  <data name="WelcomeInstructions" xml:space="preserve">
+    <value>After closing this message, please review the help content in the menu for details on how to play this game.</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+</root>

@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"    
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"    
+             x:Class="GridGames.Styles.DarkTheme">
+
+    <!-- Added during development of Grid Games. -->
+    <Color x:Key="PageBackgroundColor">Black</Color>
+    <Color x:Key="MessageTextColor">White</Color>
+    <Color x:Key="GameTitleBarTextColor">White</Color>
+    <Color x:Key="GameTitleBarBackgroundColor">#004000</Color>
+    <Color x:Key="GridBackgroundColor">LightGray</Color>
+    <Color x:Key="GridItemBackgroundColor">#001000</Color>
+    <Color x:Key="SquaresNumberTextColor">White</Color>
+    <Color x:Key="SquaresNumberBackgroundColor">Black</Color>
+    <Color x:Key="FlyoutMenuItemColor">White</Color>
+
+    <Style TargetType="Label">
+        <Setter Property="TextColor" Value="White"></Setter>
+    </Style>
+    <Style TargetType="CheckBox">
+        <Setter Property="Color" Value="White"></Setter>
+    </Style>
+    <Style TargetType="Picker">
+        <Setter Property="TextColor" Value="White"></Setter>
+        <Setter Property="BackgroundColor" Value="Black"></Setter>
+    </Style>
+
+    <!-- Originally in App.xaml. -->
+    <Color x:Key="Primary">#004000</Color>
+    <Style TargetType="Button">
+        <Setter Property="TextColor" Value="White"></Setter>
+        <Setter Property="BackgroundColor" Value="{DynamicResource Primary}"></Setter>
+        <Setter Property="BorderWidth" Value="1"></Setter>
+        <Setter Property="BorderColor" Value="White"></Setter>
+
+        <!-- There seems to be no left/right padding by default on Buttons on iOS. -->
+        <Setter Property="Padding" Value="10,0,10,0"></Setter>
+    </Style>
+
+    <!-- Originally in AppShell.xaml. -->
+    <Style x:Key="BaseStyle" TargetType="Element">
+        <Setter Property="Shell.BackgroundColor" Value="{DynamicResource Primary}" />
+        <Setter Property="Shell.ForegroundColor" Value="White" />
+        <Setter Property="Shell.TitleColor" Value="White" />
+        <Setter Property="Shell.TabBarBackgroundColor" Value="{DynamicResource Primary}" />
+        <Setter Property="Shell.TabBarForegroundColor" Value="White"/>
+        <Setter Property="Shell.TabBarTitleColor" Value="White"/>
+    </Style>
+    <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
+    <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
+
+    <!-- Without ShellContent being set here, the hamburger button's colors are
+         not as expected when running on iOS. -->
+    <Style TargetType="ShellContent" BasedOn="{StaticResource BaseStyle}"/>
+
+    <!--
+        Default Styles for all Flyout Items
+        https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/flyout#flyoutitem-and-menuitem-style-classes
+    -->
+    <Style Class="FlyoutItemLabelStyle" TargetType="Label">
+        <Setter Property="TextColor" Value="White"></Setter>
+    </Style>
+    <Style Class="FlyoutItemLayoutStyle" TargetType="Layout" ApplyToDerivedTypes="True">
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="White" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Selected">
+                        <VisualState.Setters>
+                            <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{StaticResource Primary}" />
+                            <Setter Property="BackgroundColor" Value="LightGray" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- Custom Style you can apply to any Flyout Item. -->
+    <Style Class="MenuItemLayoutStyle" TargetType="Layout" ApplyToDerivedTypes="True">
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="White" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>  

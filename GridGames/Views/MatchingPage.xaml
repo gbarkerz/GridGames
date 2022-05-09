@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             x:Name="MatchingPageInstance"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:resources="clr-namespace:GridGames.ResX"
+             x:Class="GridGames.Views.MatchingPage"
+             xmlns:localviews="clr-namespace:GridGames.Views"
+             xmlns:vm="clr-namespace:GridGames.ViewModels"
+             BackgroundColor="{DynamicResource PageBackgroundColor}"
+             Title="{Binding Title}">
+
+    <!--<Shell.TitleView>
+        <Grid BackgroundColor="{DynamicResource Primary}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Text="{x:Static resources:AppResources.Pairs}"
+                TextColor="{DynamicResource GameTitleBarTextColor}" VerticalOptions="Center"
+                FontSize="Title" />
+            <Button Grid.Column="1" Text="&#xf013;" Clicked="MatchingGameSettingsButton_Clicked"
+                BorderWidth="0"
+                FontFamily="FA" FontSize="Title" HorizontalOptions="End"
+                AutomationProperties.Name="{x:Static resources:AppResources.PairsSettings}" />
+        </Grid>
+    </Shell.TitleView>-->
+    
+    <ContentPage.BindingContext>
+        <vm:MatchingViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <localviews:FirstRunMatchingToGridOpacity x:Key="FirstRunMatchingToGridOpacity" />
+            <localviews:CollectionViewHeightToRowHeight x:Key="CollectionViewHeightToRowHeight" />
+            <localviews:CardToCollectionViewIndex x:Key="CardToCollectionViewIndex" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid x:Name="PageGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <CollectionView Grid.Row="0"
+                x:Name="SquaresCollectionView"
+                SemanticProperties.Description="Pairs cards"
+                BackgroundColor="Transparent"
+                Opacity="{Binding FirstRunMatching, Mode=OneWay,
+                    Converter={StaticResource FirstRunMatchingToGridOpacity}}"
+                SelectionMode="Single" 
+                SelectionChanged="MatchingGrid_SelectionChanged"
+                ItemsSource="{Binding SquareListCollection}">
+
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="4" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <!--HeightRequest="{Binding 
+                                Source={RelativeSource AncestorType={x:Type CollectionView}}, 
+                                Path=Height, Converter={StaticResource CollectionViewHeightToRowHeight}}"-->
+                        <Grid 
+                            HeightRequest="{Binding 
+                                Source={x:Reference MatchingPageInstance},
+                                    Path=BindingContext.GridRowHeight,
+                                    Mode=OneWay}"
+                            BackgroundColor="Transparent"
+                            AutomationProperties.IsInAccessibleTree="True"
+                            SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}"
+                            SemanticProperties.Hint="{Binding AccessibleDescription, Mode=OneWay}">
+
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"
+                                    CommandParameter="{Binding Index}" />
+                            </Grid.GestureRecognizers>
+
+                            <!-- Add a hidden label in order to support clicking a card via Voice Access,
+                                by speaking the index of the card in the card list. -->
+                            <Label IsVisible="False"
+                                Text="{Binding ., 
+                                    Converter={StaticResource CardToCollectionViewIndex}, 
+                                    ConverterParameter={Binding Source={x:Reference SquaresCollectionView}, 
+                                    Path=BindingContext}}"
+                                Margin="10"/>
+                            <!--Aspect="{Binding Source={x:Reference MatchingPageInstance},
+                                            Path=BindingContext.PictureAspect,
+                                            Mode=OneWay}"-->
+                            <!--<Frame Margin="2" Padding="0"
+                                BackgroundColor="{DynamicResource GridItemBackgroundColor}">
+                            </Frame>-->
+                            <Image IsVisible="{Binding FaceUp}" Margin="2"
+                                Aspect="AspectFill"
+                                Source="{Binding PictureImageSource}">
+                            </Image>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                
+            </CollectionView>
+
+            <!-- This Grid is here to support a setting to visually hide the game grid contents. -->
+            <!--<Grid IsVisible="{Binding HideGrid}"
+                BackgroundColor="{DynamicResource GridBackgroundColor}" />
+
+            <Frame Grid.Row="0" Margin="4" Padding="8"
+                IsVisible="{Binding FirstRunMatching}"
+                BorderColor="{DynamicResource MessageTextColor}"
+                BackgroundColor="{DynamicResource PageBackgroundColor}"
+                AutomationProperties.Name="{x:Static resources:AppResources.PairsWelcome}"
+                VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" x:Name="MatchingWelcomeTitleLabel"
+                        Text="{x:Static resources:AppResources.PairsWelcome}" 
+                        FontSize="Large" FontAttributes="Bold" />
+                    <ScrollView Grid.Row="1">
+                        <Label x:Name="MatchingWelcomeTitleInstructions" FontSize="Medium">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{x:Static resources:AppResources.WelcomeInstructions}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </ScrollView>
+                    <Button Grid.Row="2" Margin="0"
+                        Text="{x:Static resources:AppResources.Close}" 
+                        Clicked="MatchingWelcomeOKButton_Clicked"
+                        HorizontalOptions="End" />
+                </Grid>
+            </Frame>-->
+            
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

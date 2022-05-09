@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:resources="clr-namespace:GridGames.ResX"
+             x:Class="GridGames.HelpPage">
+    <ContentPage.Content>
+        <Grid Padding="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <!--<Label x:Name="SquaresGameHelpTitle" Grid.Row="0" 
+                Text="{x:Static resources:AppResources.SquaresGameHelp}" FontSize="Title" />
+            <Label x:Name="MatchingGameHelpTitle" Grid.Row="0" 
+                Text="{x:Static resources:AppResources.PairsGameHelp}" FontSize="Title" />-->
+            <StackLayout x:Name="SquaresGameHelpContent" Grid.Row="1">
+                <ScrollView Margin="4,4,4,2">
+                    <Label VerticalOptions="Center" FontSize="Medium">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{x:Static resources:AppResources.HelpContentSquares}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </ScrollView>
+            </StackLayout>
+            <StackLayout x:Name="MatchingGameHelpContent" Grid.Row="1">
+                <ScrollView Margin="4,4,4,2">
+                    <Label VerticalOptions="Center" FontSize="Medium">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{x:Static resources:AppResources.HelpContentPairs}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </ScrollView>
+            </StackLayout>
+            <Button Grid.Row="2" x:Name="CloseButton" 
+                HorizontalOptions="End" Margin="0,0,4,4"
+                Text="Close" Clicked="CloseButton_Clicked" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

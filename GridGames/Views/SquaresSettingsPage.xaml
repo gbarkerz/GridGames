@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:resources="clr-namespace:GridGames.ResX"
+             x:Class="GridGames.Views.SquaresSettingsPage"
+             xmlns:localviews="clr-namespace:GridGames.Views"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <localviews:SettingsPicturePathToPicturePathLabelIsVisible x:Key="SettingsPicturePathToPicturePathLabelIsVisible" />
+            <localviews:CheckBoxStateToAccessibleName x:Key="CheckBoxStateToAccessibleName" />
+            <localviews:PathToFileName x:Key="PathToFileName" />
+        </ResourceDictionary>
+    </ContentPage.Resources>    
+    
+    <ContentPage.Content>
+        <Grid Grid.Row="0" Padding="10"
+            BackgroundColor="{DynamicResource PageBackgroundColor}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" FontSize="Title"
+                Text="{x:Static resources:AppResources.SquaresSettings}" />
+            <Label Grid.Row="1" 
+                Text="{x:Static resources:AppResources.SquaresSettingsInstructions}" />
+            <StackLayout Grid.Row="2">
+                <ScrollView Margin="4,4,4,2">
+                    <StackLayout>
+                        <Frame BackgroundColor="Transparent">
+                            <StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label x:Name="ShowNumbersLabel" 
+                                        Text="{x:Static resources:AppResources.ShowNumbers}"
+                                        VerticalOptions="Center" />
+                                    <CheckBox x:Name="ShowNumbersCheckBox"
+                                        AutomationProperties.Name="{Binding ShowNumbers,
+                                            Mode=OneWay,
+                                            Converter={StaticResource CheckBoxStateToAccessibleName},
+                                            ConverterParameter=ShowNumbers}"
+                                        VerticalOptions="Center" IsChecked="{Binding ShowNumbers}" />
+                                </StackLayout>
+                                <!-- Use a Grid rather than StackPanel here, as the Picker width
+                                    doesn't seem to dynamically change when the seleciton changes.
+                                    That can leave the text in the Picker clipped horizontally. -->
+                                <Grid Margin="10,0,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" x:Name="NumberSizeLabel" 
+                                        Text="{x:Static resources:AppResources.NumberSize}"
+                                        VerticalOptions="Center" />
+                                    <Picker Grid.Column="1" x:Name="SquaresNumberSizePicker"
+                                        AutomationProperties.LabeledBy="{x:Reference NumberSizeLabel}"
+                                        VerticalOptions="Center" 
+                                        SelectedIndex="{Binding NumberSizeIndex}" />
+                                </Grid>
+                            </StackLayout>
+                        </Frame>
+                        <Frame Margin="4,2,4,10"  BackgroundColor="Transparent">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <StackLayout Grid.Row="0" Orientation="Horizontal">
+                                    <Label x:Name="ShowPictureLabel" 
+                                        Text="{x:Static resources:AppResources.ShowPicture}"
+                                        VerticalOptions="Center" />
+                                    <CheckBox x:Name="ShowPictureCheckBox" VerticalOptions="Center"
+                                        AutomationProperties.Name="{Binding ShowPicture,
+                                            Mode=OneWay,
+                                            Converter={StaticResource CheckBoxStateToAccessibleName},
+                                            ConverterParameter=ShowPicture}"
+                                        IsChecked="{Binding ShowPicture}" />
+                                </StackLayout>
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" x:Name="PictureNameLabel" 
+                                        VerticalTextAlignment="Center"
+                                        Text="{x:Static resources:AppResources.PictureNameLabel}" />
+                                    <Entry Grid.Column="1" x:Name="PictureNameEditor"
+                                        VerticalTextAlignment="Center"
+                                        Text="{Binding PictureName, Mode=TwoWay}" 
+                                        AutomationProperties.LabeledBy="PictureNameLabel" />
+                                </Grid>
+                                <Button Grid.Row="2" x:Name="PictureBrowseButton" 
+                                    Text="{x:Static resources:AppResources.BrowsePicture}"
+                                    HorizontalOptions="StartAndExpand" Margin="0,0,0,4"
+                                    Clicked="PictureBrowseButton_Clicked" />
+                                <Grid Grid.Row="3"
+                                    IsVisible="{Binding PicturePathSquares, 
+                                        Converter={StaticResource SettingsPicturePathToPicturePathLabelIsVisible}}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" 
+                                        Text="{x:Static resources:AppResources.Selected}"
+                                        Margin="0,0,10,0" Padding="0,0,0,0" />
+                                    <Label Grid.Column="1" 
+                                        Text="{Binding PicturePathSquares, 
+                                            Converter={StaticResource PathToFileName}}" 
+                                        Margin="0,0,0,0" Padding="0,0,0,0" />
+                                </Grid>
+                                <Button Grid.Row="4" x:Name="PictureClearButton" 
+                                    Text="{x:Static resources:AppResources.ClearSelection}"
+                                    HorizontalOptions="StartAndExpand" Margin="0,0,0,4"
+                                    Clicked="PictureClearButton_Clicked" />
+                            </Grid>
+                        </Frame>
+                    </StackLayout>
+                </ScrollView>
+            </StackLayout>
+            <Button Grid.Row="3" x:Name="CloseButton" 
+                HorizontalOptions="End" Margin="0,0,4,4"
+                Text="{x:Static resources:AppResources.Close}"
+                Clicked="CloseButton_Clicked" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
+    

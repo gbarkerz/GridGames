@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:localviews="clr-namespace:GridGames.Views"
+             xmlns:resources="clr-namespace:GridGames.ResX"
+             x:Class="GridGames.AppSettingsPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <localviews:CheckBoxStateToAccessibleName x:Key="CheckBoxStateToAccessibleName" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid Grid.Row="0" Padding="10"
+              BackgroundColor="{DynamicResource PageBackgroundColor}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" FontSize="Title"
+                Text="{x:Static resources:AppResources.AppSettings}" />
+            <Label Grid.Row="1" 
+                Text="{x:Static resources:AppResources.AppSettingsIntro}" />
+            <StackLayout Grid.Row="2">
+                <ScrollView Margin="4,4,4,2">
+                    <StackLayout>
+                        <Label Margin="0,20,0,0" 
+                            Text="{x:Static resources:AppResources.AppSettingsHideGridInstructions}" />
+                        <StackLayout Orientation="Horizontal">
+                            <Label x:Name="HideGridLabel" 
+                                Text="{x:Static resources:AppResources.AppSettingsHideGrid}" 
+                                VerticalOptions="Center" />
+                            <CheckBox x:Name="HideGridCheckBox"
+                                AutomationProperties.Name="{Binding HideGrid,
+                                    Mode=OneWay,
+                                    Converter={StaticResource CheckBoxStateToAccessibleName},
+                                    ConverterParameter=AppSettingsHideGrid}"
+                                VerticalOptions="Center" IsChecked="{Binding HideGrid}" />
+                        </StackLayout>
+                        <Label Margin="0,20,0,0" 
+                            Text="{x:Static resources:AppResources.AppSettingsDarkThemeInstructions}" />
+                        <StackLayout Orientation="Horizontal">
+                            <Label x:Name="ShowDarkThemeLabel" 
+                                Text="{x:Static resources:AppResources.AppSettingsDarkTheme}" 
+                                VerticalOptions="Center" />
+                            <CheckBox x:Name="ShowDarkThemeCheckBox"
+                                AutomationProperties.Name="{Binding ShowDarkTheme,
+                                    Mode=OneWay,
+                                    Converter={StaticResource CheckBoxStateToAccessibleName},
+                                    ConverterParameter=AppSettingsDarkTheme}"
+                                VerticalOptions="Center" IsChecked="{Binding ShowDarkTheme}" />
+                        </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+            </StackLayout>
+            <Button Grid.Row="3" x:Name="CloseButton" 
+                HorizontalOptions="End" Margin="0,0,4,4"
+                Text="{x:Static resources:AppResources.Close}" 
+                Clicked="CloseButton_Clicked" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
