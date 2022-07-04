@@ -1253,6 +1253,942 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 1.1.1 Non-text Content.
+        /// </summary>
+        internal static string WCAG111Label {
+            get {
+                return ResourceManager.GetString("WCAG111Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.1 Text Alternatives.
+        /// </summary>
+        internal static string WCAG11Label {
+            get {
+                return ResourceManager.GetString("WCAG11Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.2.1 Audio-only and Video-only (Prerecorded).
+        /// </summary>
+        internal static string WCAG121Label {
+            get {
+                return ResourceManager.GetString("WCAG121Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.2.2 Captions (Prerecorded).
+        /// </summary>
+        internal static string WCAG122Label {
+            get {
+                return ResourceManager.GetString("WCAG122Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.2.3 Audio Description or Media Alternative (Prerecorded).
+        /// </summary>
+        internal static string WCAG123Label {
+            get {
+                return ResourceManager.GetString("WCAG123Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.2.4 Captions (Live).
+        /// </summary>
+        internal static string WCAG124Label {
+            get {
+                return ResourceManager.GetString("WCAG124Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.2.5 Audio Description (Prerecorded).
+        /// </summary>
+        internal static string WCAG125Label {
+            get {
+                return ResourceManager.GetString("WCAG125Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.2.6 Sign Language (Prerecorded).
+        /// </summary>
+        internal static string WCAG126Label {
+            get {
+                return ResourceManager.GetString("WCAG126Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.2.7 Extended Audio Description (Prerecorded).
+        /// </summary>
+        internal static string WCAG127Label {
+            get {
+                return ResourceManager.GetString("WCAG127Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.2.8 Media Alternative (Prerecorded).
+        /// </summary>
+        internal static string WCAG128Label {
+            get {
+                return ResourceManager.GetString("WCAG128Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.2.9 Audio-only (Live).
+        /// </summary>
+        internal static string WCAG129Label {
+            get {
+                return ResourceManager.GetString("WCAG129Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.2 Time-based Media.
+        /// </summary>
+        internal static string WCAG12Label {
+            get {
+                return ResourceManager.GetString("WCAG12Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.3.1 Info and Relationships.
+        /// </summary>
+        internal static string WCAG131Label {
+            get {
+                return ResourceManager.GetString("WCAG131Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.3.2 Meaningful Sequence.
+        /// </summary>
+        internal static string WCAG132Label {
+            get {
+                return ResourceManager.GetString("WCAG132Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.3.3 Sensory Characteristics.
+        /// </summary>
+        internal static string WCAG133Label {
+            get {
+                return ResourceManager.GetString("WCAG133Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.3.4 Orientation.
+        /// </summary>
+        internal static string WCAG134Label {
+            get {
+                return ResourceManager.GetString("WCAG134Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.3.5 Identify Input Purpose.
+        /// </summary>
+        internal static string WCAG135Label {
+            get {
+                return ResourceManager.GetString("WCAG135Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.3.6 Identify Purpose.
+        /// </summary>
+        internal static string WCAG136Label {
+            get {
+                return ResourceManager.GetString("WCAG136Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.3 Adaptable.
+        /// </summary>
+        internal static string WCAG13Label {
+            get {
+                return ResourceManager.GetString("WCAG13Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.4.10 Reflow.
+        /// </summary>
+        internal static string WCAG1410Label {
+            get {
+                return ResourceManager.GetString("WCAG1410Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.4.11 Non-text Contrast.
+        /// </summary>
+        internal static string WCAG1411Label {
+            get {
+                return ResourceManager.GetString("WCAG1411Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.4.12 Text Spacing.
+        /// </summary>
+        internal static string WCAG1412Label {
+            get {
+                return ResourceManager.GetString("WCAG1412Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.4.13 Content on Hover or Focus.
+        /// </summary>
+        internal static string WCAG1413Label {
+            get {
+                return ResourceManager.GetString("WCAG1413Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.4.1 Use of Color.
+        /// </summary>
+        internal static string WCAG141Label {
+            get {
+                return ResourceManager.GetString("WCAG141Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.4.2 Audio Control.
+        /// </summary>
+        internal static string WCAG142Label {
+            get {
+                return ResourceManager.GetString("WCAG142Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.4.3 Contrast (Minimum).
+        /// </summary>
+        internal static string WCAG143Label {
+            get {
+                return ResourceManager.GetString("WCAG143Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.4.4 Resize text.
+        /// </summary>
+        internal static string WCAG144Label {
+            get {
+                return ResourceManager.GetString("WCAG144Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.4.5 Images of Text.
+        /// </summary>
+        internal static string WCAG145Label {
+            get {
+                return ResourceManager.GetString("WCAG145Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.4.6 Contrast (Enhanced).
+        /// </summary>
+        internal static string WCAG146Label {
+            get {
+                return ResourceManager.GetString("WCAG146Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.4.7 Low or No Background Audio.
+        /// </summary>
+        internal static string WCAG147Label {
+            get {
+                return ResourceManager.GetString("WCAG147Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.4.8 Visual Presentation.
+        /// </summary>
+        internal static string WCAG148Label {
+            get {
+                return ResourceManager.GetString("WCAG148Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.4.9 Images of Text (No Exception).
+        /// </summary>
+        internal static string WCAG149Label {
+            get {
+                return ResourceManager.GetString("WCAG149Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.4 Distinguishable.
+        /// </summary>
+        internal static string WCAG14Label {
+            get {
+                return ResourceManager.GetString("WCAG14Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1 Perceivable.
+        /// </summary>
+        internal static string WCAG1Label {
+            get {
+                return ResourceManager.GetString("WCAG1Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.1.1 Keyboard.
+        /// </summary>
+        internal static string WCAG211Label {
+            get {
+                return ResourceManager.GetString("WCAG211Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.1.2 No Keyboard Trap.
+        /// </summary>
+        internal static string WCAG212Label {
+            get {
+                return ResourceManager.GetString("WCAG212Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.1.3 Keyboard (No Exception).
+        /// </summary>
+        internal static string WCAG213Label {
+            get {
+                return ResourceManager.GetString("WCAG213Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.1.4 Character Key Shortcuts.
+        /// </summary>
+        internal static string WCAG214Label {
+            get {
+                return ResourceManager.GetString("WCAG214Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.1 Keyboard Accessible.
+        /// </summary>
+        internal static string WCAG21Label {
+            get {
+                return ResourceManager.GetString("WCAG21Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.2.1 Timing Adjustable.
+        /// </summary>
+        internal static string WCAG221Label {
+            get {
+                return ResourceManager.GetString("WCAG221Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.2.2 Pause, Stop, Hide.
+        /// </summary>
+        internal static string WCAG222Label {
+            get {
+                return ResourceManager.GetString("WCAG222Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.2.3 No Timing.
+        /// </summary>
+        internal static string WCAG223Label {
+            get {
+                return ResourceManager.GetString("WCAG223Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.2.4 Interruptions.
+        /// </summary>
+        internal static string WCAG224Label {
+            get {
+                return ResourceManager.GetString("WCAG224Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.2.5 Re-authenticating.
+        /// </summary>
+        internal static string WCAG225Label {
+            get {
+                return ResourceManager.GetString("WCAG225Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.2.6 Timeouts.
+        /// </summary>
+        internal static string WCAG226Label {
+            get {
+                return ResourceManager.GetString("WCAG226Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.2 Enough Time.
+        /// </summary>
+        internal static string WCAG22Label {
+            get {
+                return ResourceManager.GetString("WCAG22Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.3.1 Three Flashes or Below Threshold.
+        /// </summary>
+        internal static string WCAG231Label {
+            get {
+                return ResourceManager.GetString("WCAG231Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.3.2 Three Flashes.
+        /// </summary>
+        internal static string WCAG232Label {
+            get {
+                return ResourceManager.GetString("WCAG232Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.3.3 Animation from Interactions.
+        /// </summary>
+        internal static string WCAG233Label {
+            get {
+                return ResourceManager.GetString("WCAG233Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.3 Seizures and Physical Reactions.
+        /// </summary>
+        internal static string WCAG23Label {
+            get {
+                return ResourceManager.GetString("WCAG23Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.4.10 Section Headings.
+        /// </summary>
+        internal static string WCAG2410Label {
+            get {
+                return ResourceManager.GetString("WCAG2410Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.4.11 Focus Appearance (Minimum).
+        /// </summary>
+        internal static string WCAG2411Label {
+            get {
+                return ResourceManager.GetString("WCAG2411Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.4.12 Focus Appearance (Enhanced).
+        /// </summary>
+        internal static string WCAG2412Label {
+            get {
+                return ResourceManager.GetString("WCAG2412Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.4.13 Page Break Navigation.
+        /// </summary>
+        internal static string WCAG2413Label {
+            get {
+                return ResourceManager.GetString("WCAG2413Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.4.1 Bypass Blocks.
+        /// </summary>
+        internal static string WCAG241Label {
+            get {
+                return ResourceManager.GetString("WCAG241Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.4.2 Page Titled.
+        /// </summary>
+        internal static string WCAG242Label {
+            get {
+                return ResourceManager.GetString("WCAG242Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.4.3 Focus Order.
+        /// </summary>
+        internal static string WCAG243Label {
+            get {
+                return ResourceManager.GetString("WCAG243Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.4.4 Link Purpose (In Context).
+        /// </summary>
+        internal static string WCAG244Label {
+            get {
+                return ResourceManager.GetString("WCAG244Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.4.5 Multiple Ways.
+        /// </summary>
+        internal static string WCAG245Label {
+            get {
+                return ResourceManager.GetString("WCAG245Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.4.6 Headings and Labels.
+        /// </summary>
+        internal static string WCAG246Label {
+            get {
+                return ResourceManager.GetString("WCAG246Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.4.7 Focus Visible.
+        /// </summary>
+        internal static string WCAG247Label {
+            get {
+                return ResourceManager.GetString("WCAG247Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.4.8 Location.
+        /// </summary>
+        internal static string WCAG248Label {
+            get {
+                return ResourceManager.GetString("WCAG248Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.4.9 Link Purpose (Link Only).
+        /// </summary>
+        internal static string WCAG249Label {
+            get {
+                return ResourceManager.GetString("WCAG249Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.4 Navigable.
+        /// </summary>
+        internal static string WCAG24Label {
+            get {
+                return ResourceManager.GetString("WCAG24Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.5.1 Pointer Gestures.
+        /// </summary>
+        internal static string WCAG251Label {
+            get {
+                return ResourceManager.GetString("WCAG251Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.5.2 Pointer Cancellation.
+        /// </summary>
+        internal static string WCAG252Label {
+            get {
+                return ResourceManager.GetString("WCAG252Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.5.3 Label in Name.
+        /// </summary>
+        internal static string WCAG253Label {
+            get {
+                return ResourceManager.GetString("WCAG253Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.5.4 Motion Actuation.
+        /// </summary>
+        internal static string WCAG254Label {
+            get {
+                return ResourceManager.GetString("WCAG254Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.5.5 Target Size (Enhanced).
+        /// </summary>
+        internal static string WCAG255Label {
+            get {
+                return ResourceManager.GetString("WCAG255Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.5.6 Concurrent Input Mechanisms.
+        /// </summary>
+        internal static string WCAG256Label {
+            get {
+                return ResourceManager.GetString("WCAG256Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.5.7 Dragging Movements.
+        /// </summary>
+        internal static string WCAG257Label {
+            get {
+                return ResourceManager.GetString("WCAG257Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.5.8 Target Size (Minimum).
+        /// </summary>
+        internal static string WCAG258Label {
+            get {
+                return ResourceManager.GetString("WCAG258Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.5 Input Modalities.
+        /// </summary>
+        internal static string WCAG25Label {
+            get {
+                return ResourceManager.GetString("WCAG25Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2 Operable.
+        /// </summary>
+        internal static string WCAG2Label {
+            get {
+                return ResourceManager.GetString("WCAG2Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.1.1 Language of Page.
+        /// </summary>
+        internal static string WCAG311Label {
+            get {
+                return ResourceManager.GetString("WCAG311Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.1.2 Language of Parts.
+        /// </summary>
+        internal static string WCAG312Label {
+            get {
+                return ResourceManager.GetString("WCAG312Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.1.3 Unusual Words.
+        /// </summary>
+        internal static string WCAG313Label {
+            get {
+                return ResourceManager.GetString("WCAG313Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.1.4 Abbreviations.
+        /// </summary>
+        internal static string WCAG314Label {
+            get {
+                return ResourceManager.GetString("WCAG314Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.1.5 Reading Level.
+        /// </summary>
+        internal static string WCAG315Label {
+            get {
+                return ResourceManager.GetString("WCAG315Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.1.6 Pronunciation.
+        /// </summary>
+        internal static string WCAG316Label {
+            get {
+                return ResourceManager.GetString("WCAG316Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.1 Readable.
+        /// </summary>
+        internal static string WCAG31Label {
+            get {
+                return ResourceManager.GetString("WCAG31Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.2.1 On Focus.
+        /// </summary>
+        internal static string WCAG321Label {
+            get {
+                return ResourceManager.GetString("WCAG321Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.2.2 On Input.
+        /// </summary>
+        internal static string WCAG322Label {
+            get {
+                return ResourceManager.GetString("WCAG322Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.2.3 Consistent Navigation.
+        /// </summary>
+        internal static string WCAG323Label {
+            get {
+                return ResourceManager.GetString("WCAG323Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.2.4 Consistent Identification.
+        /// </summary>
+        internal static string WCAG324Label {
+            get {
+                return ResourceManager.GetString("WCAG324Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.2.5 Change on Request.
+        /// </summary>
+        internal static string WCAG325Label {
+            get {
+                return ResourceManager.GetString("WCAG325Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.2.6 Consistent Help.
+        /// </summary>
+        internal static string WCAG326Label {
+            get {
+                return ResourceManager.GetString("WCAG326Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.2.7 Visible Controls.
+        /// </summary>
+        internal static string WCAG327Label {
+            get {
+                return ResourceManager.GetString("WCAG327Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.2 Predictable.
+        /// </summary>
+        internal static string WCAG32Label {
+            get {
+                return ResourceManager.GetString("WCAG32Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.3.1 Error Identification.
+        /// </summary>
+        internal static string WCAG331Label {
+            get {
+                return ResourceManager.GetString("WCAG331Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.3.2 Labels or Instructions.
+        /// </summary>
+        internal static string WCAG332Label {
+            get {
+                return ResourceManager.GetString("WCAG332Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.3.3 Error Suggestion.
+        /// </summary>
+        internal static string WCAG333Label {
+            get {
+                return ResourceManager.GetString("WCAG333Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.3.4 Error Prevention (Legal, Financial, Data).
+        /// </summary>
+        internal static string WCAG334Label {
+            get {
+                return ResourceManager.GetString("WCAG334Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.3.5 Help.
+        /// </summary>
+        internal static string WCAG335Label {
+            get {
+                return ResourceManager.GetString("WCAG335Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.3.6 Error Prevention (All).
+        /// </summary>
+        internal static string WCAG336Label {
+            get {
+                return ResourceManager.GetString("WCAG336Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.3.7 Accessible Authentication.
+        /// </summary>
+        internal static string WCAG337Label {
+            get {
+                return ResourceManager.GetString("WCAG337Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.3.8 Redundant entry.
+        /// </summary>
+        internal static string WCAG338Label {
+            get {
+                return ResourceManager.GetString("WCAG338Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.3 Input Assistance.
+        /// </summary>
+        internal static string WCAG33Label {
+            get {
+                return ResourceManager.GetString("WCAG33Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3 Understandable.
+        /// </summary>
+        internal static string WCAG3Label {
+            get {
+                return ResourceManager.GetString("WCAG3Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 4.1.1 Parsing.
+        /// </summary>
+        internal static string WCAG411Label {
+            get {
+                return ResourceManager.GetString("WCAG411Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 4.1.2 Name, Role, Value.
+        /// </summary>
+        internal static string WCAG412Label {
+            get {
+                return ResourceManager.GetString("WCAG412Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 4.1.3 Status Messages.
+        /// </summary>
+        internal static string WCAG413Label {
+            get {
+                return ResourceManager.GetString("WCAG413Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 4.1 Compatible.
+        /// </summary>
+        internal static string WCAG41Label {
+            get {
+                return ResourceManager.GetString("WCAG41Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 4 Robust.
+        /// </summary>
+        internal static string WCAG4Label {
+            get {
+                return ResourceManager.GetString("WCAG4Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to After closing this message, please review the help content in the menu for details on how to play this game..
         /// </summary>
         internal static string WelcomeInstructions {

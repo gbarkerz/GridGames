@@ -12,8 +12,8 @@
         Route="MainPage" />-->
 
     <ShellContent
-        Title="Pairs"
-        ContentTemplate="{DataTemplate local:MatchingPage}"
-        Route="MatchingPage" />
+        Title="WCAG"
+        ContentTemplate="{DataTemplate local:WCAGPage}"
+        Route="WCAGPage" />
 
 </Shell>

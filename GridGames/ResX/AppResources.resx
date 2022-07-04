@@ -535,6 +535,318 @@ Please note when a screen reader moves to the Menu button near the top left corn
   <data name="Up" xml:space="preserve">
     <value>up</value>
   </data>
+  <data name="WCAG111Label" xml:space="preserve">
+    <value>1.1.1 Non-text Content</value>
+  </data>
+  <data name="WCAG11Label" xml:space="preserve">
+    <value>1.1 Text Alternatives</value>
+  </data>
+  <data name="WCAG121Label" xml:space="preserve">
+    <value>1.2.1 Audio-only and Video-only (Prerecorded)</value>
+  </data>
+  <data name="WCAG122Label" xml:space="preserve">
+    <value>1.2.2 Captions (Prerecorded)</value>
+  </data>
+  <data name="WCAG123Label" xml:space="preserve">
+    <value>1.2.3 Audio Description or Media Alternative (Prerecorded)</value>
+  </data>
+  <data name="WCAG124Label" xml:space="preserve">
+    <value>1.2.4 Captions (Live)</value>
+  </data>
+  <data name="WCAG125Label" xml:space="preserve">
+    <value>1.2.5 Audio Description (Prerecorded)</value>
+  </data>
+  <data name="WCAG126Label" xml:space="preserve">
+    <value>1.2.6 Sign Language (Prerecorded)</value>
+  </data>
+  <data name="WCAG127Label" xml:space="preserve">
+    <value>1.2.7 Extended Audio Description (Prerecorded)</value>
+  </data>
+  <data name="WCAG128Label" xml:space="preserve">
+    <value>1.2.8 Media Alternative (Prerecorded)</value>
+  </data>
+  <data name="WCAG129Label" xml:space="preserve">
+    <value>1.2.9 Audio-only (Live)</value>
+  </data>
+  <data name="WCAG12Label" xml:space="preserve">
+    <value>1.2 Time-based Media</value>
+  </data>
+  <data name="WCAG131Label" xml:space="preserve">
+    <value>1.3.1 Info and Relationships</value>
+  </data>
+  <data name="WCAG132Label" xml:space="preserve">
+    <value>1.3.2 Meaningful Sequence</value>
+  </data>
+  <data name="WCAG133Label" xml:space="preserve">
+    <value>1.3.3 Sensory Characteristics</value>
+  </data>
+  <data name="WCAG134Label" xml:space="preserve">
+    <value>1.3.4 Orientation</value>
+  </data>
+  <data name="WCAG135Label" xml:space="preserve">
+    <value>1.3.5 Identify Input Purpose</value>
+  </data>
+  <data name="WCAG136Label" xml:space="preserve">
+    <value>1.3.6 Identify Purpose</value>
+  </data>
+  <data name="WCAG13Label" xml:space="preserve">
+    <value>1.3 Adaptable</value>
+  </data>
+  <data name="WCAG1410Label" xml:space="preserve">
+    <value>1.4.10 Reflow</value>
+  </data>
+  <data name="WCAG1411Label" xml:space="preserve">
+    <value>1.4.11 Non-text Contrast</value>
+  </data>
+  <data name="WCAG1412Label" xml:space="preserve">
+    <value>1.4.12 Text Spacing</value>
+  </data>
+  <data name="WCAG1413Label" xml:space="preserve">
+    <value>1.4.13 Content on Hover or Focus</value>
+  </data>
+  <data name="WCAG141Label" xml:space="preserve">
+    <value>1.4.1 Use of Color</value>
+  </data>
+  <data name="WCAG142Label" xml:space="preserve">
+    <value>1.4.2 Audio Control</value>
+  </data>
+  <data name="WCAG143Label" xml:space="preserve">
+    <value>1.4.3 Contrast (Minimum)</value>
+  </data>
+  <data name="WCAG144Label" xml:space="preserve">
+    <value>1.4.4 Resize text</value>
+  </data>
+  <data name="WCAG145Label" xml:space="preserve">
+    <value>1.4.5 Images of Text</value>
+  </data>
+  <data name="WCAG146Label" xml:space="preserve">
+    <value>1.4.6 Contrast (Enhanced)</value>
+  </data>
+  <data name="WCAG147Label" xml:space="preserve">
+    <value>1.4.7 Low or No Background Audio</value>
+  </data>
+  <data name="WCAG148Label" xml:space="preserve">
+    <value>1.4.8 Visual Presentation</value>
+  </data>
+  <data name="WCAG149Label" xml:space="preserve">
+    <value>1.4.9 Images of Text (No Exception)</value>
+  </data>
+  <data name="WCAG14Label" xml:space="preserve">
+    <value>1.4 Distinguishable</value>
+  </data>
+  <data name="WCAG1Label" xml:space="preserve">
+    <value>1 Perceivable</value>
+  </data>
+  <data name="WCAG211Label" xml:space="preserve">
+    <value>2.1.1 Keyboard</value>
+  </data>
+  <data name="WCAG212Label" xml:space="preserve">
+    <value>2.1.2 No Keyboard Trap</value>
+  </data>
+  <data name="WCAG213Label" xml:space="preserve">
+    <value>2.1.3 Keyboard (No Exception)</value>
+  </data>
+  <data name="WCAG214Label" xml:space="preserve">
+    <value>2.1.4 Character Key Shortcuts</value>
+  </data>
+  <data name="WCAG21Label" xml:space="preserve">
+    <value>2.1 Keyboard Accessible</value>
+  </data>
+  <data name="WCAG221Label" xml:space="preserve">
+    <value>2.2.1 Timing Adjustable</value>
+  </data>
+  <data name="WCAG222Label" xml:space="preserve">
+    <value>2.2.2 Pause, Stop, Hide</value>
+  </data>
+  <data name="WCAG223Label" xml:space="preserve">
+    <value>2.2.3 No Timing</value>
+  </data>
+  <data name="WCAG224Label" xml:space="preserve">
+    <value>2.2.4 Interruptions</value>
+  </data>
+  <data name="WCAG225Label" xml:space="preserve">
+    <value>2.2.5 Re-authenticating</value>
+  </data>
+  <data name="WCAG226Label" xml:space="preserve">
+    <value>2.2.6 Timeouts</value>
+  </data>
+  <data name="WCAG22Label" xml:space="preserve">
+    <value>2.2 Enough Time</value>
+  </data>
+  <data name="WCAG231Label" xml:space="preserve">
+    <value>2.3.1 Three Flashes or Below Threshold</value>
+  </data>
+  <data name="WCAG232Label" xml:space="preserve">
+    <value>2.3.2 Three Flashes</value>
+  </data>
+  <data name="WCAG233Label" xml:space="preserve">
+    <value>2.3.3 Animation from Interactions</value>
+  </data>
+  <data name="WCAG23Label" xml:space="preserve">
+    <value>2.3 Seizures and Physical Reactions</value>
+  </data>
+  <data name="WCAG2410Label" xml:space="preserve">
+    <value>2.4.10 Section Headings</value>
+  </data>
+  <data name="WCAG2411Label" xml:space="preserve">
+    <value>2.4.11 Focus Appearance (Minimum)</value>
+  </data>
+  <data name="WCAG2412Label" xml:space="preserve">
+    <value>2.4.12 Focus Appearance (Enhanced)</value>
+  </data>
+  <data name="WCAG2413Label" xml:space="preserve">
+    <value>2.4.13 Page Break Navigation</value>
+  </data>
+  <data name="WCAG241Label" xml:space="preserve">
+    <value>2.4.1 Bypass Blocks</value>
+  </data>
+  <data name="WCAG242Label" xml:space="preserve">
+    <value>2.4.2 Page Titled</value>
+  </data>
+  <data name="WCAG243Label" xml:space="preserve">
+    <value>2.4.3 Focus Order</value>
+  </data>
+  <data name="WCAG244Label" xml:space="preserve">
+    <value>2.4.4 Link Purpose (In Context)</value>
+  </data>
+  <data name="WCAG245Label" xml:space="preserve">
+    <value>2.4.5 Multiple Ways</value>
+  </data>
+  <data name="WCAG246Label" xml:space="preserve">
+    <value>2.4.6 Headings and Labels</value>
+  </data>
+  <data name="WCAG247Label" xml:space="preserve">
+    <value>2.4.7 Focus Visible</value>
+  </data>
+  <data name="WCAG248Label" xml:space="preserve">
+    <value>2.4.8 Location</value>
+  </data>
+  <data name="WCAG249Label" xml:space="preserve">
+    <value>2.4.9 Link Purpose (Link Only)</value>
+  </data>
+  <data name="WCAG24Label" xml:space="preserve">
+    <value>2.4 Navigable</value>
+  </data>
+  <data name="WCAG251Label" xml:space="preserve">
+    <value>2.5.1 Pointer Gestures</value>
+  </data>
+  <data name="WCAG252Label" xml:space="preserve">
+    <value>2.5.2 Pointer Cancellation</value>
+  </data>
+  <data name="WCAG253Label" xml:space="preserve">
+    <value>2.5.3 Label in Name</value>
+  </data>
+  <data name="WCAG254Label" xml:space="preserve">
+    <value>2.5.4 Motion Actuation</value>
+  </data>
+  <data name="WCAG255Label" xml:space="preserve">
+    <value>2.5.5 Target Size (Enhanced)</value>
+  </data>
+  <data name="WCAG256Label" xml:space="preserve">
+    <value>2.5.6 Concurrent Input Mechanisms</value>
+  </data>
+  <data name="WCAG257Label" xml:space="preserve">
+    <value>2.5.7 Dragging Movements</value>
+  </data>
+  <data name="WCAG258Label" xml:space="preserve">
+    <value>2.5.8 Target Size (Minimum)</value>
+  </data>
+  <data name="WCAG25Label" xml:space="preserve">
+    <value>2.5 Input Modalities</value>
+  </data>
+  <data name="WCAG2Label" xml:space="preserve">
+    <value>2 Operable</value>
+  </data>
+  <data name="WCAG311Label" xml:space="preserve">
+    <value>3.1.1 Language of Page</value>
+  </data>
+  <data name="WCAG312Label" xml:space="preserve">
+    <value>3.1.2 Language of Parts</value>
+  </data>
+  <data name="WCAG313Label" xml:space="preserve">
+    <value>3.1.3 Unusual Words</value>
+  </data>
+  <data name="WCAG314Label" xml:space="preserve">
+    <value>3.1.4 Abbreviations</value>
+  </data>
+  <data name="WCAG315Label" xml:space="preserve">
+    <value>3.1.5 Reading Level</value>
+  </data>
+  <data name="WCAG316Label" xml:space="preserve">
+    <value>3.1.6 Pronunciation</value>
+  </data>
+  <data name="WCAG31Label" xml:space="preserve">
+    <value>3.1 Readable</value>
+  </data>
+  <data name="WCAG321Label" xml:space="preserve">
+    <value>3.2.1 On Focus</value>
+  </data>
+  <data name="WCAG322Label" xml:space="preserve">
+    <value>3.2.2 On Input</value>
+  </data>
+  <data name="WCAG323Label" xml:space="preserve">
+    <value>3.2.3 Consistent Navigation</value>
+  </data>
+  <data name="WCAG324Label" xml:space="preserve">
+    <value>3.2.4 Consistent Identification</value>
+  </data>
+  <data name="WCAG325Label" xml:space="preserve">
+    <value>3.2.5 Change on Request</value>
+  </data>
+  <data name="WCAG326Label" xml:space="preserve">
+    <value>3.2.6 Consistent Help</value>
+  </data>
+  <data name="WCAG327Label" xml:space="preserve">
+    <value>3.2.7 Visible Controls</value>
+  </data>
+  <data name="WCAG32Label" xml:space="preserve">
+    <value>3.2 Predictable</value>
+  </data>
+  <data name="WCAG331Label" xml:space="preserve">
+    <value>3.3.1 Error Identification</value>
+  </data>
+  <data name="WCAG332Label" xml:space="preserve">
+    <value>3.3.2 Labels or Instructions</value>
+  </data>
+  <data name="WCAG333Label" xml:space="preserve">
+    <value>3.3.3 Error Suggestion</value>
+  </data>
+  <data name="WCAG334Label" xml:space="preserve">
+    <value>3.3.4 Error Prevention (Legal, Financial, Data)</value>
+  </data>
+  <data name="WCAG335Label" xml:space="preserve">
+    <value>3.3.5 Help</value>
+  </data>
+  <data name="WCAG336Label" xml:space="preserve">
+    <value>3.3.6 Error Prevention (All)</value>
+  </data>
+  <data name="WCAG337Label" xml:space="preserve">
+    <value>3.3.7 Accessible Authentication</value>
+  </data>
+  <data name="WCAG338Label" xml:space="preserve">
+    <value>3.3.8 Redundant entry</value>
+  </data>
+  <data name="WCAG33Label" xml:space="preserve">
+    <value>3.3 Input Assistance</value>
+  </data>
+  <data name="WCAG3Label" xml:space="preserve">
+    <value>3 Understandable</value>
+  </data>
+  <data name="WCAG411Label" xml:space="preserve">
+    <value>4.1.1 Parsing</value>
+  </data>
+  <data name="WCAG412Label" xml:space="preserve">
+    <value>4.1.2 Name, Role, Value</value>
+  </data>
+  <data name="WCAG413Label" xml:space="preserve">
+    <value>4.1.3 Status Messages</value>
+  </data>
+  <data name="WCAG41Label" xml:space="preserve">
+    <value>4.1 Compatible</value>
+  </data>
+  <data name="WCAG4Label" xml:space="preserve">
+    <value>4 Robust</value>
+  </data>
   <data name="WelcomeInstructions" xml:space="preserve">
     <value>After closing this message, please review the help content in the menu for details on how to play this game.</value>
   </data>
