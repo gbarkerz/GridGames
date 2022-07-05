@@ -10,7 +10,7 @@
 
                 <!-- Barker: on 2nd July 2022, AutomationProperties.LabeledBy doesn't seem to work. -->
                 
-                <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG1Label}">
+                <!--<StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG1Label}">-->
                     <Label Text="{x:Static resources:AppResources.WCAG1Label}" SemanticProperties.HeadingLevel="Level2" 
                         FontSize="Large" Margin="0,10,0,0" />
 
@@ -18,18 +18,18 @@
                         Wrap="Wrap" AlignContent="Stretch"
                         JustifyContent="Start">-->
 
-                        <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG11Label}">
-                            <Label Text="{x:Static resources:AppResources.WCAG11Label}" SemanticProperties.HeadingLevel="Level3" 
+                        <Label Text="{x:Static resources:AppResources.WCAG11Label}" SemanticProperties.HeadingLevel="Level3" 
                             FontSize="Medium" Margin="0,10,0,10" />
+                        <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG11Label}">
                             <StackLayout Orientation="Horizontal">
                                 <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG111Label}" />
                                 <Label x:Name="WCAG111Label" Text="{x:Static resources:AppResources.WCAG111Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                         </StackLayout>
-                        <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG12Label}">
-                            <Label Text="{x:Static resources:AppResources.WCAG12Label}" SemanticProperties.HeadingLevel="Level3"
+                        <Label Text="{x:Static resources:AppResources.WCAG12Label}" SemanticProperties.HeadingLevel="Level3"
                             FontSize="Medium" Margin="0,10,0,10" />
+                        <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG12Label}">
                             <StackLayout Orientation="Horizontal">
                                 <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG121Label}" />
                                 <Label x:Name="WCAG121Label" Text="{x:Static resources:AppResources.WCAG121Label}"
@@ -76,9 +76,9 @@
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                         </StackLayout>
-                        <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG13Label}">
-                            <Label Text="{x:Static resources:AppResources.WCAG13Label}" SemanticProperties.HeadingLevel="Level3"
+                        <Label Text="{x:Static resources:AppResources.WCAG13Label}" SemanticProperties.HeadingLevel="Level3"
                             FontSize="Medium" Margin="0,10,0,10" />
+                        <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG13Label}">
                             <StackLayout Orientation="Horizontal">
                                 <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG131Label}" />
                                 <Label x:Name="WCAG131Label" Text="{x:Static resources:AppResources.WCAG131Label}"
@@ -110,9 +110,9 @@
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                         </StackLayout>
-                        <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG14Label}">
-                            <Label Text="{x:Static resources:AppResources.WCAG14Label}" SemanticProperties.HeadingLevel="Level3"
+                        <Label Text="{x:Static resources:AppResources.WCAG14Label}" SemanticProperties.HeadingLevel="Level3"
                             FontSize="Medium" Margin="0,10,0,10" />
+                        <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG14Label}">
                             <StackLayout Orientation="Horizontal">
                                 <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG141Label}" />
                                 <Label x:Name="WCAG141Label" Text="{x:Static resources:AppResources.WCAG141Label}"
@@ -180,17 +180,15 @@
                             </StackLayout>
                         </StackLayout>
 
-                    <!--</FlexLayout>-->
+                <!--</StackLayout>-->
 
-                </StackLayout>
-
-                <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG2Label}">
+                <!--<StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG2Label}">-->
                     <Label Text="{x:Static resources:AppResources.WCAG2Label}" SemanticProperties.HeadingLevel="Level2"
-                            FontSize="Large" Margin="0,10,0,0" />
+                        FontSize="Large" Margin="0,10,0,0" />
 
+                    <Label Text="{x:Static resources:AppResources.WCAG21Label}" SemanticProperties.HeadingLevel="Level3" 
+                        FontSize="Medium" Margin="0,10,0,10" />
                     <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG21Label}">
-                        <Label Text="{x:Static resources:AppResources.WCAG21Label}" SemanticProperties.HeadingLevel="Level3" 
-                            FontSize="Medium" Margin="0,10,0,10" />
                         <StackLayout Orientation="Horizontal">
                             <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG211Label}" />
                             <Label x:Name="WCA211Label" Text="{x:Static resources:AppResources.WCAG211Label}"
@@ -212,9 +210,9 @@
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                     </StackLayout>
+                    <Label Text="{x:Static resources:AppResources.WCAG22Label}" SemanticProperties.HeadingLevel="Level3" 
+                        FontSize="Medium" Margin="0,10,0,10" />
                     <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG22Label}">
-                        <Label Text="{x:Static resources:AppResources.WCAG22Label}" SemanticProperties.HeadingLevel="Level3" 
-                            FontSize="Medium" Margin="0,10,0,10" />
                         <StackLayout Orientation="Horizontal">
                             <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG221Label}" />
                             <Label x:Name="WCA221Label" Text="{x:Static resources:AppResources.WCAG221Label}"
@@ -246,9 +244,9 @@
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                     </StackLayout>
+                    <Label Text="{x:Static resources:AppResources.WCAG23Label}" SemanticProperties.HeadingLevel="Level3" 
+                        FontSize="Medium" Margin="0,10,0,10" />
                     <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG23Label}">
-                        <Label Text="{x:Static resources:AppResources.WCAG23Label}" SemanticProperties.HeadingLevel="Level3" 
-                            FontSize="Medium" Margin="0,10,0,10" />
                         <StackLayout Orientation="Horizontal">
                             <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG231Label}" />
                             <Label x:Name="WCA231Label" Text="{x:Static resources:AppResources.WCAG231Label}"
@@ -265,9 +263,9 @@
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                     </StackLayout>
+                    <Label Text="{x:Static resources:AppResources.WCAG24Label}" SemanticProperties.HeadingLevel="Level3" 
+                        FontSize="Medium" Margin="0,10,0,10" />
                     <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG24Label}">
-                        <Label Text="{x:Static resources:AppResources.WCAG24Label}" SemanticProperties.HeadingLevel="Level3" 
-                            FontSize="Medium" Margin="0,10,0,10" />
                         <StackLayout Orientation="Horizontal">
                             <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG241Label}" />
                             <Label x:Name="WCA241Label" Text="{x:Static resources:AppResources.WCAG241Label}"
@@ -334,9 +332,9 @@
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                     </StackLayout>
+                    <Label Text="{x:Static resources:AppResources.WCAG25Label}" SemanticProperties.HeadingLevel="Level3" 
+                        FontSize="Medium" Margin="0,10,0,10" />
                     <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG25Label}">
-                        <Label Text="{x:Static resources:AppResources.WCAG25Label}" SemanticProperties.HeadingLevel="Level3" 
-                            FontSize="Medium" Margin="0,10,0,10" />
                         <StackLayout Orientation="Horizontal">
                             <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG251Label}" />
                             <Label x:Name="WCA251Label" Text="{x:Static resources:AppResources.WCAG251Label}"
@@ -378,15 +376,15 @@
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                     </StackLayout>
-                </StackLayout>
+                <!--</StackLayout>-->
 
-                <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG3Label}">
+                <!--<StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG3Label}">-->
                     <Label Text="{x:Static resources:AppResources.WCAG3Label}" SemanticProperties.HeadingLevel="Level2"
                         FontSize="Large" Margin="0,10,0,0" />
 
+                    <Label Text="{x:Static resources:AppResources.WCAG31Label}" SemanticProperties.HeadingLevel="Level3" 
+                        FontSize="Medium" Margin="0,10,0,10" />
                     <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG31Label}">
-                        <Label Text="{x:Static resources:AppResources.WCAG31Label}" SemanticProperties.HeadingLevel="Level3" 
-                            FontSize="Medium" Margin="0,10,0,10" />
                         <StackLayout Orientation="Horizontal">
                             <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG311Label}" />
                             <Label x:Name="WCA311Label" Text="{x:Static resources:AppResources.WCAG311Label}"
@@ -418,9 +416,9 @@
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                     </StackLayout>
+                    <Label Text="{x:Static resources:AppResources.WCAG32Label}" SemanticProperties.HeadingLevel="Level3" 
+                        FontSize="Medium" Margin="0,10,0,10" />
                     <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG32Label}">
-                        <Label Text="{x:Static resources:AppResources.WCAG32Label}" SemanticProperties.HeadingLevel="Level3" 
-                            FontSize="Medium" Margin="0,10,0,10" />
                         <StackLayout Orientation="Horizontal">
                             <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG321Label}" />
                             <Label x:Name="WCA321Label" Text="{x:Static resources:AppResources.WCAG321Label}"
@@ -457,9 +455,9 @@
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                     </StackLayout>
+                    <Label Text="{x:Static resources:AppResources.WCAG33Label}" SemanticProperties.HeadingLevel="Level3" 
+                        FontSize="Medium" Margin="0,10,0,10" />
                     <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG32Label}">
-                        <Label Text="{x:Static resources:AppResources.WCAG33Label}" SemanticProperties.HeadingLevel="Level3" 
-                            FontSize="Medium" Margin="0,10,0,10" />
                         <StackLayout Orientation="Horizontal">
                             <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG331Label}" />
                             <Label x:Name="WCA331Label" Text="{x:Static resources:AppResources.WCAG331Label}"
@@ -501,15 +499,15 @@
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                     </StackLayout>
-                </StackLayout>
+                <!--</StackLayout>-->
 
-                <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG4Label}">
+                <!--<StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG4Label}">-->
                     <Label Text="{x:Static resources:AppResources.WCAG4Label}" SemanticProperties.HeadingLevel="Level2"
                         FontSize="Large" Margin="0,10,0,0" />
 
+                    <Label Text="{x:Static resources:AppResources.WCAG41Label}" SemanticProperties.HeadingLevel="Level3" 
+                        FontSize="Medium" Margin="0,10,0,10" />
                     <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG41Label}">
-                        <Label Text="{x:Static resources:AppResources.WCAG41Label}" SemanticProperties.HeadingLevel="Level3" 
-                            FontSize="Medium" Margin="0,10,0,10" />
                         <StackLayout Orientation="Horizontal">
                             <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG411Label}" />
                             <Label x:Name="WCA411Label" Text="{x:Static resources:AppResources.WCAG411Label}"
@@ -526,7 +524,7 @@
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                     </StackLayout>
-                </StackLayout>
+                <!--</StackLayout>-->
 
             </StackLayout>
         </ScrollView>
