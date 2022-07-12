@@ -322,6 +322,19 @@ When using a screen reader with the game, move your finger around the screen to 
 
 Please note when a screen reader moves to the Menu button near the top left corner of the app, it may announce the button as the OK button or Menu button, or only announce the word button.</value>
   </data>
+  <data name="HelpContentWheres" xml:space="preserve">
+    <value>"WCAG" is the Web Content Accessibility Guidelines (WCAG) international standard, which helps web content authors create content that's more accessible. The WCAG standard has been used as the base for European accessibility standards which apply to both web content and software.
+
+The Where's WCAG? game presents a question asking the player to find a particular WCAG group. For example, "Where's Enough Time?". Below the question in the app is a grid of squares showing fifteen WCAG group numbers. For example, "2.2". The aim of the game is for the player to click the square in the grid which shows the number matching the WCAG group in the question. If successful, the square changes to also show both the number and name of the WCAG group, and the question changes to ask the player to find a different WCAG group. If not successful, the player tries again by clicking another square. Once all the WCAG groups are found, the player has won, and a "Congratulations" window appears. 
+
+Note that the game only presents WCAG groups relating to content being perceivable, operable, and understandable, and from the WCAG 2.1 Standard.
+
+When using a screen reader with the game, move your finger around the screen to have the WCAG number shown on the square beneath your finger announced. Double tap to click on the square.
+
+Please note when a screen reader moves to the Menu button near the top left corner of the app, it may announce the button as the OK button or Menu button, or only announce the word “button”.
+
+The last square in the grid shows a question mark, and is announced by a screen reader as being the "Get a tip" button. When this button is clicked a page appears presenting a little information on the high-level WCAG group associated with the question, along with a reference to the WCAG documentation relating to that high-level group.</value>
+  </data>
   <data name="IncorrectWCAG" xml:space="preserve">
     <value>{0} isn't {1}.</value>
   </data>
