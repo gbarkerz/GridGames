@@ -27,13 +27,13 @@
     </ContentPage.Resources>
 
     <Shell.TitleView>
-        <Grid Margin="10">
+        <Grid Padding="5,5,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Text="{x:Static resources:AppResources.Wheres}"
-                VerticalOptions="Center" TextColor="White"
+                TextColor="{DynamicResource GameTitleBarTextColor}" VerticalOptions="Center"
                 FontSize="Title" />
             <Button Grid.Column="1" Text="&#xf013;" Clicked="WheresGameSettingsButton_Clicked"
                 BorderWidth="0"
