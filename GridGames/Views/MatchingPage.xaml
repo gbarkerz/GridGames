@@ -9,22 +9,6 @@
              BackgroundColor="{DynamicResource PageBackgroundColor}"
              Title="{Binding Title}">
 
-    <!--<Shell.TitleView>
-        <Grid BackgroundColor="{DynamicResource Primary}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Text="{x:Static resources:AppResources.Pairs}"
-                TextColor="{DynamicResource GameTitleBarTextColor}" VerticalOptions="Center"
-                FontSize="Title" />
-            <Button Grid.Column="1" Text="&#xf013;" Clicked="MatchingGameSettingsButton_Clicked"
-                BorderWidth="0"
-                FontFamily="FA" FontSize="Title" HorizontalOptions="End"
-                AutomationProperties.Name="{x:Static resources:AppResources.PairsSettings}" />
-        </Grid>
-    </Shell.TitleView>-->
-    
     <ContentPage.BindingContext>
         <vm:MatchingViewModel />
     </ContentPage.BindingContext>
@@ -36,6 +20,22 @@
             <localviews:CardToCollectionViewIndex x:Key="CardToCollectionViewIndex" />
         </ResourceDictionary>
     </ContentPage.Resources>
+
+    <Shell.TitleView>
+        <Grid BackgroundColor="{DynamicResource Primary}" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Text="Pairs"
+                TextColor="{DynamicResource GameTitleBarTextColor}" VerticalOptions="Center"
+                FontSize="Title" />
+            <Button Grid.Column="1" Text="&#xf013;" Clicked="MatchingGameSettingsButton_Clicked"
+                BorderWidth="0"
+                FontFamily="FA" FontSize="Title" HorizontalOptions="End"
+                AutomationProperties.Name="{x:Static resources:AppResources.PairsSettings}" />
+        </Grid>
+    </Shell.TitleView>
 
     <ContentPage.Content>
         <Grid x:Name="PageGrid">
@@ -49,8 +49,7 @@
                 BackgroundColor="Transparent"
                 Opacity="{Binding FirstRunMatching, Mode=OneWay,
                     Converter={StaticResource FirstRunMatchingToGridOpacity}}"
-                SelectionMode="Single" 
-                SelectionChanged="MatchingGrid_SelectionChanged"
+                SelectionMode="None" 
                 ItemsSource="{Binding SquareListCollection}">
 
                 <CollectionView.ItemsLayout>
@@ -92,7 +91,7 @@
                                 BackgroundColor="{DynamicResource GridItemBackgroundColor}">
                             </Frame>-->
                             <Image IsVisible="{Binding FaceUp}" Margin="2"
-                                Aspect="AspectFill"
+                                Aspect="Fill"
                                 Source="{Binding PictureImageSource}">
                             </Image>
                         </Grid>

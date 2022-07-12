@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             x:Name="WheresPageInstance"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:resources="clr-namespace:GridGames.ResX"
+             x:Class="GridGames.Views.WheresPage"
+             xmlns:localviews="clr-namespace:GridGames.Views"
+             xmlns:vm="clr-namespace:GridGames.ViewModels"
+             BackgroundColor="{DynamicResource PageBackgroundColor}"
+             Title="{Binding Title}">
+
+    <ContentPage.BindingContext>
+        <vm:WheresViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <localviews:FirstRunToGridOpacity x:Key="FirstRunToGridOpacity" />
+            <localviews:CollectionViewHeightToRowHeight x:Key="CollectionViewHeightToRowHeight" />
+            <localviews:CardToCollectionViewIndex x:Key="CardToCollectionViewIndex" />
+            <localviews:WheresLabelContainerHeightToFontSize x:Key="WheresLabelContainerHeightToFontSize" />
+            <localviews:LabelContainerHeightToFontSize x:Key="LabelContainerHeightToFontSize" />
+            <localviews:WheresAnsweredToTextColor x:Key="WheresAnsweredToTextColor" />
+            <localviews:WheresAnsweredToBackgroundColor x:Key="WheresAnsweredToBackgroundColor" />
+            <localviews:WCAGTitleToQuestion x:Key="WCAGTitleToQuestion" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Shell.TitleView>
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Text="{x:Static resources:AppResources.Wheres}"
+                VerticalOptions="Center" TextColor="White"
+                FontSize="Title" />
+            <Button Grid.Column="1" Text="&#xf013;" Clicked="WheresGameSettingsButton_Clicked"
+                BorderWidth="0"
+                FontFamily="FA" FontSize="Title" HorizontalOptions="End"
+                AutomationProperties.Name="{x:Static resources:AppResources.PairsSettings}" />
+        </Grid>
+    </Shell.TitleView>
+    
+    <ContentPage.Content>
+        <Grid x:Name="PageGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" 
+                Text="{Binding
+                    Source={x:Reference WheresPageInstance},
+                    Path=BindingContext.CurrentQuestionWCAG,
+                    Mode=OneWay, Converter={StaticResource WCAGTitleToQuestion}}"                 
+                FontSize="Subtitle" 
+                Opacity="{Binding FirstRunWheres, Mode=OneWay,
+                    Converter={StaticResource FirstRunToGridOpacity}}"
+                Padding="8,8,4,4" />
+            <CollectionView Grid.Row="1"
+                x:Name="SquaresCollectionView"
+                BackgroundColor="{DynamicResource WheresGridBackgroundColor}"
+                Opacity="{Binding FirstRunWheres, Mode=OneWay,
+                    Converter={StaticResource FirstRunToGridOpacity}}"
+                SelectionMode="None" 
+                ItemsSource="{Binding WheresListCollection}">
+
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="4" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid 
+                            HeightRequest="{Binding 
+                                Source={x:Reference WheresPageInstance},
+                                    Path=BindingContext.GridRowHeight,
+                                    Mode=OneWay}"
+                            BackgroundColor="Transparent"
+                            AutomationProperties.IsInAccessibleTree="True"
+                            AutomationProperties.Name="{Binding AccessibleName, Mode=OneWay}">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"
+                                    CommandParameter="{Binding Index}" />
+                            </Grid.GestureRecognizers>
+                            
+                            <!-- Barker Todo: Add support for Voice Access. -->
+
+                            <Frame Margin="0" Padding="0"
+                                BorderColor="{DynamicResource SquaresNumberTextColor}"
+                                BackgroundColor="{Binding IsFound, 
+                                    Converter={StaticResource WheresAnsweredToBackgroundColor}}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" Text="{Binding WCAGNumber, Mode=OneWay}" 
+                                        BackgroundColor="Transparent"
+                                        TextColor="{Binding IsFound, 
+                                            Converter={StaticResource WheresAnsweredToTextColor}}"
+                                        Margin="0" Padding="0,20,0,0"
+                                        HorizontalOptions="Center" VerticalOptions="Center"
+                                        HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type Grid}}, Path=Height}">
+                                        <Label.FontSize>
+                                             <!--Don't only bind to the grid height here, as that leaves the FontSize zero when
+                                                ShowNumbers is set true after moving squares when ShowNumbers is false.--> 
+                                            <MultiBinding Mode="OneWay" 
+                                                    Converter="{StaticResource WheresLabelContainerHeightToFontSize}">
+                                                <Binding Source="{RelativeSource AncestorType={x:Type Grid}}" 
+                                                                Path="IsVisible" />
+                                                <Binding Source="{RelativeSource AncestorType={x:Type Grid}}" 
+                                                                Path="Height" />
+                                            </MultiBinding>
+                                        </Label.FontSize>
+                                    </Label>
+
+                                    <Label Grid.Row="1" Text="{Binding WCAGName, Mode=OneWay}"
+                                        IsVisible="{Binding IsFound}"
+                                        TextColor="{Binding IsFound, 
+                                            Converter={StaticResource WheresAnsweredToTextColor}}"
+                                        LineBreakMode="MiddleTruncation"
+                                        MaxLines="2"
+                                        Margin="4"
+                                        HorizontalOptions="Center" />
+                                </Grid>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+            <!-- This Grid is here to support a setting to visually hide the game grid contents. -->
+            <Grid IsVisible="{Binding HideGrid}"
+                BackgroundColor="{DynamicResource GridBackgroundColor}" />
+
+            <Frame Grid.Row="0" Grid.RowSpan="2" Margin="4" Padding="8"
+                IsVisible="{Binding FirstRunWheres}"
+                BorderColor="{DynamicResource MessageTextColor}"
+                BackgroundColor="{DynamicResource PageBackgroundColor}"
+                AutomationProperties.Name="{x:Static resources:AppResources.PairsWelcome}"
+                VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" x:Name="WheresWelcomeTitleLabel"
+                        Text="{x:Static resources:AppResources.WheresWelcome}" 
+                        FontSize="Large" FontAttributes="Bold" />
+                    <ScrollView Grid.Row="1">
+                        <Label x:Name="WheresWelcomeTitleInstructions" FontSize="Medium">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{x:Static resources:AppResources.WelcomeInstructions}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </ScrollView>
+                    <Button Grid.Row="2" Margin="0"
+                        Text="{x:Static resources:AppResources.Close}" 
+                        Clicked="WheresWelcomeOKButton_Clicked"
+                        HorizontalOptions="End" />
+                </Grid>
+            </Frame>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

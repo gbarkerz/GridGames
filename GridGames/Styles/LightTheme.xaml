@@ -7,12 +7,15 @@
     <Color x:Key="PageBackgroundColor">White</Color>
     <Color x:Key="MessageTextColor">Black</Color>
     <Color x:Key="GameTitleBarTextColor">White</Color>
-    <Color x:Key="GameTitleBarBackgroundColor">#0C77CF</Color>
+    <Color x:Key="GameTitleBarBackgroundColor">#F0F0F0</Color>
     <Color x:Key="GridBackgroundColor">LightGray</Color>
     <Color x:Key="GridItemBackgroundColor">White</Color>
     <Color x:Key="SquaresNumberTextColor">Black</Color>
     <Color x:Key="SquaresNumberBackgroundColor">White</Color>
-    <Color x:Key="FlyoutMenuItemColor">#0C77CF</Color>
+    <Color x:Key="FlyoutMenuItemColor">Black</Color>
+    <Color x:Key="WheresTextColor">Black</Color>
+    <Color x:Key="WheresAnsweredTextColor">White</Color>
+    <Color x:Key="WheresAnsweredBackgroundColor">Green</Color>
 
     <Style TargetType="Label">
         <Setter Property="TextColor" Value="Black"></Setter>
@@ -38,7 +41,8 @@
     <!-- Originally in AppShell.xaml. -->
     <Style x:Key="BaseStyle" TargetType="Element">
         <Setter Property="Shell.BackgroundColor" Value="{DynamicResource Primary}" />
-        <Setter Property="Shell.ForegroundColor" Value="White" />
+        <!-- Only use Black because the Shell's FlyoutBackground seems ignored when the flyout's not open. -->
+        <Setter Property="Shell.ForegroundColor" Value="Black" />
         <Setter Property="Shell.TitleColor" Value="White" />
         <Setter Property="Shell.TabBarBackgroundColor" Value="{DynamicResource Primary}" />
         <Setter Property="Shell.TabBarForegroundColor" Value="White"/>
@@ -56,7 +60,7 @@
         https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/flyout#flyoutitem-and-menuitem-style-classes
         -->
     <Style Class="FlyoutItemLabelStyle" TargetType="Label">
-        <Setter Property="TextColor" Value="White"></Setter>
+        <Setter Property="TextColor" Value="{DynamicResource Primary}"></Setter>
     </Style>
     <Style Class="FlyoutItemLayoutStyle" TargetType="Layout" ApplyToDerivedTypes="True">
         <Setter Property="VisualStateManager.VisualStateGroups">
@@ -78,14 +82,20 @@
         </Setter>
     </Style>
 
-    <!-- Custom Style you can apply to any Flyout Item. -->
     <Style Class="MenuItemLayoutStyle" TargetType="Layout" ApplyToDerivedTypes="True">
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
                     <VisualState x:Name="Normal">
                         <VisualState.Setters>
-                            <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{DynamicResource Primary}" />
+                            <Setter Property="BackgroundColor" Value="Transparent" />
+                            <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="Orange" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Selected">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="Orange" />
+                            <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="Black" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>

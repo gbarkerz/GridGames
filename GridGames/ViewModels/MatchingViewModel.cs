@@ -346,7 +346,7 @@ namespace GridGames.ViewModels
             {
                 var assembly = typeof(App).GetTypeInfo().Assembly;
                 Stream audioStream = assembly.GetManifestResourceStream(
-                    "MobileGridGames.Resources." +
+                    "GridGames.Resources." +
                         (cardsMatch ? soundOnMatch : soundOnNotMatch));
 
                 // Barker: Turn it on, turn it on again.

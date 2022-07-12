@@ -1,24 +1,21 @@
-﻿namespace GridGames
+﻿using GridGames.Views;
+
+namespace GridGames
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HelpPage : ContentPage
     {
-        //public HelpPage(bool matchingPage)
-        public HelpPage()
+        public HelpPage(Page currentPage)
         {
-            bool matchingPage = true; // GBTest
-
             InitializeComponent();
 
-            if (matchingPage)
+            if (currentPage is MatchingPage)
             {
-                //SquaresGameHelpTitle.IsVisible = false;
-                SquaresGameHelpContent.IsVisible = false;
+                MatchingGameHelpContent.IsVisible = true;
             }
-            else
+            else if (currentPage is WheresPage)
             {
-                //MatchingGameHelpTitle.IsVisible = false;
-                MatchingGameHelpContent.IsVisible = false;
+                WheresGameHelpContent.IsVisible = true;
             }
         }
 

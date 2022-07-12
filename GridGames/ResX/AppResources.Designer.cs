@@ -169,6 +169,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You found {0}. Now where&apos;s {1}?.
+        /// </summary>
+        internal static string CorrectWCAG {
+            get {
+                return ResourceManager.GetString("CorrectWCAG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A smiling man with a red coat and arms outstretched, standing in front of 3 large Daleks and a TARDIS. The Daleks seem to be raised above the grass beneath them, and a slightly cloudy sky is in the background..
         /// </summary>
         internal static string DefaultMatchingCard1Description {
@@ -605,6 +614,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} isn&apos;t {1}..
+        /// </summary>
+        internal static string IncorrectWCAG {
+            get {
+                return ResourceManager.GetString("IncorrectWCAG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Large.
         /// </summary>
         internal static string Large {
@@ -659,7 +677,9 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You won the game in {0} goes..
+        ///   Looks up a localized string similar to You won the game in {0} goes.
+        ///
+        ///Would you like to play another game?.
         /// </summary>
         internal static string MatchingWonInMoves {
             get {
@@ -2194,6 +2214,71 @@ namespace GridGames.ResX {
         internal static string WelcomeInstructions {
             get {
                 return ResourceManager.GetString("WelcomeInstructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Where&apos;s WCAG?.
+        /// </summary>
+        internal static string Wheres {
+            get {
+                return ResourceManager.GetString("Wheres", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Where&apos;s WCAG? Help.
+        /// </summary>
+        internal static string WheresGameHelp {
+            get {
+                return ResourceManager.GetString("WheresGameHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play sound when WCAG found.
+        /// </summary>
+        internal static string WheresPlaySoundMatch {
+            get {
+                return ResourceManager.GetString("WheresPlaySoundMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play sound when WCAG not found.
+        /// </summary>
+        internal static string WheresPlaySoundNotMatch {
+            get {
+                return ResourceManager.GetString("WheresPlaySoundNotMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Where&apos;s WCAG? Settings.
+        /// </summary>
+        internal static string WheresSettings {
+            get {
+                return ResourceManager.GetString("WheresSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome to the Where&apos;s WCAG? Game!.
+        /// </summary>
+        internal static string WheresWelcome {
+            get {
+                return ResourceManager.GetString("WheresWelcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You won the game in {0} goes.
+        ///
+        ///Would you like to play another game?.
+        /// </summary>
+        internal static string WonInMoves {
+            get {
+                return ResourceManager.GetString("WonInMoves", resourceCulture);
             }
         }
         

@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:localviews="clr-namespace:GridGames.Views"
+             xmlns:resources="clr-namespace:GridGames.ResX"
+             x:Class="GridGames.WheresGameSettingsPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <localviews:CheckBoxStateToAccessibleName x:Key="CheckBoxStateToAccessibleName" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid Padding="10"
+            BackgroundColor="{DynamicResource PageBackgroundColor}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" FontSize="Title" Margin="0,10,0,0"
+                Text="{x:Static resources:AppResources.WheresSettings}" />
+            <ScrollView Grid.Row="1" Margin="4,4,4,2">
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" x:Name="PlaySoundOnMatchLabel" 
+                        Text="{x:Static resources:AppResources.WheresPlaySoundMatch}"
+                        VerticalOptions="Center" />
+                    <!-- For iOS 
+                    <CheckBox Grid.Row="0" Grid.Column="1" x:Name="PlaySoundOnMatchCheckBox"
+                        AutomationProperties.Name="{Binding PlaySoundOnMatch,
+                            Mode=OneWay,
+                            Converter={StaticResource CheckBoxStateToAccessibleName},
+                            ConverterParameter=WheresPlaySoundMatch}"
+                        VerticalOptions="Center" IsChecked="{Binding PlaySoundOnMatch}" />
+                    -->
+                    <!-- For Android -->
+                    <CheckBox Grid.Row="0" Grid.Column="1" x:Name="PlaySoundOnMatchCheckBox"
+                        AutomationProperties.LabeledBy="PlaySoundOnMatchLabel"
+                        VerticalOptions="Center" IsChecked="{Binding PlaySoundOnMatch}" />
+                    <Label Grid.Row="1" Grid.Column="0" x:Name="PlaySoundOnNotMatchLabel" 
+                        Text="{x:Static resources:AppResources.WheresPlaySoundNotMatch}"
+                        VerticalOptions="Center" />
+                    <!-- For iOS 
+                    <CheckBox Grid.Row="1" Grid.Column="1" x:Name="PlaySoundOnNotMatchCheckBox"
+                        AutomationProperties.Name="{Binding PlaySoundOnNotMatch,
+                            Mode=OneWay,
+                            Converter={StaticResource CheckBoxStateToAccessibleName},
+                            ConverterParameter=WheresPlaySoundNotMatch}"
+                        VerticalOptions="Center" IsChecked="{Binding PlaySoundOnNotMatch}" />
+                    -->
+                    <!-- For Android -->
+                    <CheckBox Grid.Row="1" Grid.Column="1" x:Name="PlaySoundOnNotMatchCheckBox"
+                        AutomationProperties.LabeledBy="PlaySoundOnNotMatchLabel"
+                        VerticalOptions="Center" IsChecked="{Binding PlaySoundOnNotMatch}" />
+                </Grid>
+            </ScrollView>
+            
+            <Button Grid.Row="2" x:Name="CloseButton" 
+                HorizontalOptions="End" Margin="0,0,4,4"
+                Text="{x:Static resources:AppResources.Close}" Clicked="CloseButton_Clicked" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

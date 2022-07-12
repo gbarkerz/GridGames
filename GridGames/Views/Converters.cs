@@ -393,4 +393,93 @@ namespace GridGames.Views
             return (Aspect)intValue;
         }
     }
+
+    public class WheresLabelContainerHeightToFontSize : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if ((values == null) || (values.Length < 2) || (values[0] == null) || (values[1] == null))
+            {
+                return 0;
+            }
+
+            var showNumbers = (bool)values[0];
+            var containerHeightPixels = (double)values[1];
+
+            // Future: Properly account for line height etc. For now, just shrink the value.
+            // Also this reduces the size to account for tall cells in portrait orientation.
+            double fontHeightPoints = 0;
+
+            if (showNumbers)
+            {
+                fontHeightPoints = containerHeightPixels * 0.4;
+            }
+
+            return fontHeightPoints;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class WheresAnsweredToTextColor : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var answered = (bool)value;
+
+            return answered ? App.Current.Resources["WheresAnsweredTextColor"] :
+                                App.Current.Resources["WheresTextColor"];
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class WheresAnsweredToBackgroundColor : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var answered = (bool)value;
+
+            return answered ? App.Current.Resources["WheresAnsweredBackgroundColor"] : Colors.Transparent;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class FirstRunToGridOpacity : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var firstRun = (bool)value;
+
+            return firstRun ? 0.0 : 1.0;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class WCAGTitleToQuestion : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return "Where's \"" + (string)value + "\"?";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

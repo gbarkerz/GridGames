@@ -89,7 +89,7 @@ namespace GridGames.Views
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("MobileGridGames: Browse exception: " + ex.Message);
+                Debug.WriteLine("GridGames: Browse exception: " + ex.Message);
             }
         }
     }

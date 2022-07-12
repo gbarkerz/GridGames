@@ -153,6 +153,9 @@
   <data name="Congratulations" xml:space="preserve">
     <value>Congratulations!</value>
   </data>
+  <data name="CorrectWCAG" xml:space="preserve">
+    <value>You found {0}. Now where's {1}?</value>
+  </data>
   <data name="DefaultMatchingCard1Description" xml:space="preserve">
     <value>A smiling man with a red coat and arms outstretched, standing in front of 3 large Daleks and a TARDIS. The Daleks seem to be raised above the grass beneath them, and a slightly cloudy sky is in the background.</value>
   </data>
@@ -319,6 +322,9 @@ When using a screen reader with the game, move your finger around the screen to 
 
 Please note when a screen reader moves to the Menu button near the top left corner of the app, it may announce the button as the OK button or Menu button, or only announce the word button.</value>
   </data>
+  <data name="IncorrectWCAG" xml:space="preserve">
+    <value>{0} isn't {1}.</value>
+  </data>
   <data name="Large" xml:space="preserve">
     <value>Large</value>
   </data>
@@ -338,7 +344,9 @@ Please note when a screen reader moves to the Menu button near the top left corn
     <value>Matched</value>
   </data>
   <data name="MatchingWonInMoves" xml:space="preserve">
-    <value>You won the game in {0} goes.</value>
+    <value>You won the game in {0} goes.
+
+Would you like to play another game?</value>
   </data>
   <data name="Medium" xml:space="preserve">
     <value>Medium</value>
@@ -849,6 +857,29 @@ Please note when a screen reader moves to the Menu button near the top left corn
   </data>
   <data name="WelcomeInstructions" xml:space="preserve">
     <value>After closing this message, please review the help content in the menu for details on how to play this game.</value>
+  </data>
+  <data name="Wheres" xml:space="preserve">
+    <value>Where's WCAG?</value>
+  </data>
+  <data name="WheresGameHelp" xml:space="preserve">
+    <value>Where's WCAG? Help</value>
+  </data>
+  <data name="WheresPlaySoundMatch" xml:space="preserve">
+    <value>Play sound when WCAG found</value>
+  </data>
+  <data name="WheresPlaySoundNotMatch" xml:space="preserve">
+    <value>Play sound when WCAG not found</value>
+  </data>
+  <data name="WheresSettings" xml:space="preserve">
+    <value>Where's WCAG? Settings</value>
+  </data>
+  <data name="WheresWelcome" xml:space="preserve">
+    <value>Welcome to the Where's WCAG? Game!</value>
+  </data>
+  <data name="WonInMoves" xml:space="preserve">
+    <value>You won the game in {0} goes.
+
+Would you like to play another game?</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>

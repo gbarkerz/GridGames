@@ -13,6 +13,9 @@
     <Color x:Key="SquaresNumberTextColor">White</Color>
     <Color x:Key="SquaresNumberBackgroundColor">Black</Color>
     <Color x:Key="FlyoutMenuItemColor">White</Color>
+    <Color x:Key="WheresTextColor">LightGray</Color>
+    <Color x:Key="WheresAnsweredTextColor">White</Color>
+    <Color x:Key="WheresAnsweredBackgroundColor">DarkGreen</Color>
 
     <Style TargetType="Label">
         <Setter Property="TextColor" Value="White"></Setter>

@@ -243,7 +243,7 @@ namespace GridGames.Views
         // ImageLoad is called once following the picture being set on the control.
         private void GridGameImageEditor_ImageLoaded(object sender, ImageLoadedEventArgs args)
         {
-            Debug.WriteLine("MobileGridGames: In ImageLoaded, calling PerformCrop.");
+            Debug.WriteLine("GridGames: In ImageLoaded, calling PerformCrop.");
 
             // Don't load a picture if this picture is already fully loaded.
             var vm = this.BindingContext as SquaresViewModel;
@@ -260,7 +260,7 @@ namespace GridGames.Views
 
             if (nextSquareIndexForImageSourceSetting != 0)
             {
-                Debug.WriteLine("MobileGridGames: Error in ImageLoaded, nextSquareIndexForImageSourceSetting should be zero, " +
+                Debug.WriteLine("GridGames: Error in ImageLoaded, nextSquareIndexForImageSourceSetting should be zero, " +
                     nextSquareIndexForImageSourceSetting.ToString());
 
                 vm.GameIsLoading = false;
@@ -272,7 +272,7 @@ namespace GridGames.Views
             // Perform a crop for first square.
             PerformCrop();
 
-            Debug.WriteLine("MobileGridGames: Leave ImageLoaded, done call to PerformCrop.");
+            Debug.WriteLine("GridGames: Leave ImageLoaded, done call to PerformCrop.");
         }
 
         private void PerformCrop()
@@ -291,24 +291,24 @@ namespace GridGames.Views
                 y = 1;
             }
 
-            Debug.WriteLine("MobileGridGames: In PerformCrop, crop at " + x + ", " + y + ".");
+            Debug.WriteLine("GridGames: In PerformCrop, crop at " + x + ", " + y + ".");
 
             // Set up the bounds for the next crop operation.
             GridGameImageEditor.ToggleCropping(new Rectangle(x, y, 25, 25));
 
-            Debug.WriteLine("MobileGridGames: Called ToggleCropping.");
+            Debug.WriteLine("GridGames: Called ToggleCropping.");
 
             // Crop() seems to need to be run on the UI thread.
             Device.BeginInvokeOnMainThread(() =>
             {
-                Debug.WriteLine("MobileGridGames: PerformCrop, about to call Crop.");
+                Debug.WriteLine("GridGames: PerformCrop, about to call Crop.");
 
                 GridGameImageEditor.Crop();
 
-                Debug.WriteLine("MobileGridGames: PerformCrop, called Crop.");
+                Debug.WriteLine("GridGames: PerformCrop, called Crop.");
             });
 
-            Debug.WriteLine("MobileGridGames: Leave PerformCrop.");
+            Debug.WriteLine("GridGames: Leave PerformCrop.");
         }
 
         private int mostRecentSquareWithImageEdited = -1;
@@ -316,7 +316,7 @@ namespace GridGames.Views
         // ImageEdited is called following a Crop operation and when the image is reset.
         private void GridGameImageEditor_ImageEdited(object sender, ImageEditedEventArgs e)
         {
-            Debug.WriteLine("MobileGridGames: In ImageEdited.");
+            Debug.WriteLine("GridGames: In ImageEdited.");
 
             // On iOS, GridGameImageEditor_ImageEdited seems to be called multiple times
             // in succession, without a specific edit in between. If that happens here,
@@ -335,13 +335,13 @@ namespace GridGames.Views
                 GridGameImageEditor.Save();
             }
 
-            Debug.WriteLine("MobileGridGames: Leave ImageEdited.");
+            Debug.WriteLine("GridGames: Leave ImageEdited.");
         }
 
         // ImageSaving is called following each crop of the picture.
         private void GridGameImageEditor_ImageSaving(object sender, ImageSavingEventArgs args)
         {
-            Debug.WriteLine("MobileGridGames: In ImageSaving." + Shell.Current);
+            Debug.WriteLine("GridGames: In ImageSaving." + Shell.Current);
 
             // Important: Prevent the cropped image from being saved to a file.
             args.Cancel = true; 
@@ -356,7 +356,7 @@ namespace GridGames.Views
 
             if (nextSquareIndexForImageSourceSetting > 14)
             {
-                Debug.WriteLine("MobileGridGames: Error in ImageSaving, nextSquareIndexForImageSourceSetting too high, " +
+                Debug.WriteLine("GridGames: Error in ImageSaving, nextSquareIndexForImageSourceSetting too high, " +
                     nextSquareIndexForImageSourceSetting);
 
                 vm.GameIsLoading = false;
@@ -373,14 +373,14 @@ namespace GridGames.Views
             // This seems to need to be run on the UI thread.
             Device.BeginInvokeOnMainThread(() =>
             {
-                Debug.WriteLine("MobileGridGames: About to call Reset.");
+                Debug.WriteLine("GridGames: About to call Reset.");
 
                 GridGameImageEditor.Reset();
 
-                Debug.WriteLine("MobileGridGames: Back from call to Reset.");
+                Debug.WriteLine("GridGames: Back from call to Reset.");
             });
 
-            Debug.WriteLine("MobileGridGames: Leave ImageSaving.");
+            Debug.WriteLine("GridGames: Leave ImageSaving.");
         }
 
         private ImageSource GetImageSourceFromPictureStream(Stream stream)
@@ -406,7 +406,7 @@ namespace GridGames.Views
         // EndResetis called as the original image is reset to perform the crop operation for the next square.
         private void GridGameImageEditor_EndReset(object sender, EndResetEventArgs args)
         {
-            Debug.WriteLine("MobileGridGames: In EndReset.");
+            Debug.WriteLine("GridGames: In EndReset.");
 
             var vm = this.BindingContext as SquaresViewModel;
 
@@ -420,7 +420,7 @@ namespace GridGames.Views
             // We've completed the image settings for a square. Continue with the next square if there is one.
             ++nextSquareIndexForImageSourceSetting;
 
-            Debug.WriteLine("MobileGridGames: nextSquareIndexForImageSourceSetting now " + nextSquareIndexForImageSourceSetting);
+            Debug.WriteLine("GridGames: nextSquareIndexForImageSourceSetting now " + nextSquareIndexForImageSourceSetting);
 
             // If we're not done loading pictures into squares, load a picture into the next square.
             if (nextSquareIndexForImageSourceSetting < 15)
@@ -443,7 +443,7 @@ namespace GridGames.Views
                 previousLoadedPicture = vm.PicturePathSquares;
             }
 
-            Debug.WriteLine("MobileGridGames: Leave EndReset");
+            Debug.WriteLine("GridGames: Leave EndReset");
         }
 
 BARKER: ENABLE ALL THIS. */
