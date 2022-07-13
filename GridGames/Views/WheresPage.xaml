@@ -38,7 +38,7 @@
             <Button Grid.Column="1" Text="&#xf013;" Clicked="WheresGameSettingsButton_Clicked"
                 BorderWidth="0"
                 FontFamily="FA" FontSize="Title" HorizontalOptions="End"
-                AutomationProperties.Name="{x:Static resources:AppResources.PairsSettings}" />
+                SemanticProperties.Description="Where's WCAG Settings?" />
         </Grid>
     </Shell.TitleView>
     
@@ -59,6 +59,7 @@
                 Padding="8,8,4,4" />
             <CollectionView Grid.Row="1"
                 x:Name="SquaresCollectionView"
+                SemanticProperties.Description="WCAG Groups"
                 BackgroundColor="{DynamicResource WheresGridBackgroundColor}"
                 Opacity="{Binding FirstRunWheres, Mode=OneWay,
                     Converter={StaticResource FirstRunToGridOpacity}}"
@@ -78,7 +79,7 @@
                                     Mode=OneWay}"
                             BackgroundColor="Transparent"
                             AutomationProperties.IsInAccessibleTree="True"
-                            AutomationProperties.Name="{Binding AccessibleName, Mode=OneWay}">
+                            SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}">
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"
                                     CommandParameter="{Binding Index}" />
@@ -86,11 +87,11 @@
                             
                             <!-- Barker Todo: Add support for Voice Access. -->
 
-                            <Frame Margin="0" Padding="0"
+                            <Frame Margin="0" Padding="0" AutomationProperties.IsInAccessibleTree="False"
                                 BorderColor="{DynamicResource SquaresNumberTextColor}"
                                 BackgroundColor="{Binding IsFound, 
                                     Converter={StaticResource WheresAnsweredToBackgroundColor}}">
-                                <Grid>
+                                <Grid AutomationProperties.IsInAccessibleTree="False">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*" />
                                         <RowDefinition Height="Auto" />
@@ -101,6 +102,7 @@
                                             Converter={StaticResource WheresAnsweredToTextColor}}"
                                         Margin="0" Padding="0,20,0,0"
                                         HorizontalOptions="Center" VerticalOptions="Center"
+                                        AutomationProperties.IsInAccessibleTree="False"                                           
                                         HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type Grid}}, Path=Height}">
                                         <Label.FontSize>
                                              <!--Don't only bind to the grid height here, as that leaves the FontSize zero when
@@ -116,6 +118,7 @@
                                     </Label>
 
                                     <Label Grid.Row="1" Text="{Binding WCAGName, Mode=OneWay}"
+                                        AutomationProperties.IsInAccessibleTree="False"                                           
                                         IsVisible="{Binding IsFound}"
                                         TextColor="{Binding IsFound, 
                                             Converter={StaticResource WheresAnsweredToTextColor}}"

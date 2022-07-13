@@ -169,6 +169,16 @@ namespace GridGames.ViewModels
         private string soundOnMatch = "SoundOnMatch.m4a";
         private string soundOnNotMatch = "SoundOnNotMatch.m4a";
 
+        private bool showBonusQuestion;
+        public bool ShowBonusQuestion
+        {
+            get { return showBonusQuestion; }
+            set
+            {
+                SetProperty(ref showBonusQuestion, value);
+            }
+        }
+
         private double gridRowHeight;
         public double GridRowHeight
         {

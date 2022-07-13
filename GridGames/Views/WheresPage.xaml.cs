@@ -1,5 +1,4 @@
-﻿using GridGames.ResX;
-using GridGames.Services;
+﻿using GridGames.Services;
 using GridGames.ViewModels;
 using System;
 using System.Diagnostics;
@@ -7,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Xaml;
+using GridGames.ResX;
 
 namespace GridGames.Views
 {
@@ -51,6 +51,7 @@ namespace GridGames.Views
 
             vm.PlaySoundOnMatch = Preferences.Get("WheresPlaySoundOnMatch", true);
             vm.PlaySoundOnNotMatch = Preferences.Get("WheresPlaySoundOnNotMatch", true);
+            vm.ShowBonusQuestion = Preferences.Get("ShowBonusQuestion", false);
 
             if (restartGame)
             {
@@ -99,6 +100,13 @@ namespace GridGames.Views
             }
 
             bool gameIsWon = vm.AttemptToAnswerQuestion(itemCollectionIndex);
+
+            // Show a bonus question if appropriate.
+            if (vm.ShowBonusQuestion)
+            {
+                await Navigation.PushModalAsync(new WCAGPage());
+            }
+
             if (gameIsWon)
             {
                 await OfferToRestartGame();

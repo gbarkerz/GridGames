@@ -4,8 +4,17 @@
              x:Class="GridGames.Views.WCAGPage"
              xmlns:resources="clr-namespace:GridGames.ResX"
              Title="WCAG">
-    <Grid>
-        <ScrollView>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Text="Bonus WCAG Question!" FontSize="Title"/>
+        <Label Grid.Row="1" Text="What two AA WCAG most relate to colour contrast?" 
+               Margin="8" FontSize="Subtitle" />
+        <ScrollView Grid.Row="2">
             <StackLayout Margin="10">
 
                 <!-- Barker: on 2nd July 2022, AutomationProperties.LabeledBy doesn't seem to work. -->
@@ -528,5 +537,9 @@
 
             </StackLayout>
         </ScrollView>
+
+        <Button Grid.Row="3" Text="Close"
+            HorizontalOptions="End" Margin="0,0,4,4" Padding="8"
+             Clicked="CloseButton_Clicked" />
     </Grid>
 </ContentPage>

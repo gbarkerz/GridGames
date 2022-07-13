@@ -933,6 +933,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show bonus WCAG questions.
+        /// </summary>
+        internal static string ShowBonusQuestion {
+            get {
+                return ResourceManager.GetString("ShowBonusQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show custom pictures.
         /// </summary>
         internal static string ShowCustomPictures {

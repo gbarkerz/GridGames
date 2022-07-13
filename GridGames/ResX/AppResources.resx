@@ -439,6 +439,9 @@ Would you like to play another game?</value>
   <data name="Seven" xml:space="preserve">
     <value>Seven</value>
   </data>
+  <data name="ShowBonusQuestion" xml:space="preserve">
+    <value>Show bonus WCAG questions</value>
+  </data>
   <data name="ShowCustomPictures" xml:space="preserve">
     <value>Show custom pictures</value>
   </data>

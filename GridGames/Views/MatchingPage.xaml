@@ -49,7 +49,8 @@
                 BackgroundColor="Transparent"
                 Opacity="{Binding FirstRunMatching, Mode=OneWay,
                     Converter={StaticResource FirstRunMatchingToGridOpacity}}"
-                SelectionMode="None" 
+                SelectionMode="Single"
+                SelectionChanged="MatchingGrid_SelectionChanged"
                 ItemsSource="{Binding SquareListCollection}">
 
                 <CollectionView.ItemsLayout>
@@ -61,12 +62,13 @@
                         <!--HeightRequest="{Binding 
                                 Source={RelativeSource AncestorType={x:Type CollectionView}}, 
                                 Path=Height, Converter={StaticResource CollectionViewHeightToRowHeight}}"-->
-                        <Grid 
+                        <Grid
                             HeightRequest="{Binding 
                                 Source={x:Reference MatchingPageInstance},
                                     Path=BindingContext.GridRowHeight,
                                     Mode=OneWay}"
                             BackgroundColor="Transparent"
+                            Padding="0" Margin="0"
                             AutomationProperties.IsInAccessibleTree="True"
                             SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}"
                             SemanticProperties.Hint="{Binding AccessibleDescription, Mode=OneWay}">
@@ -76,24 +78,28 @@
                                     CommandParameter="{Binding Index}" />
                             </Grid.GestureRecognizers>
 
-                            <!-- Add a hidden label in order to support clicking a card via Voice Access,
-                                by speaking the index of the card in the card list. -->
-                            <Label IsVisible="False"
-                                Text="{Binding ., 
-                                    Converter={StaticResource CardToCollectionViewIndex}, 
-                                    ConverterParameter={Binding Source={x:Reference SquaresCollectionView}, 
-                                    Path=BindingContext}}"
-                                Margin="10"/>
-                            <!--Aspect="{Binding Source={x:Reference MatchingPageInstance},
-                                            Path=BindingContext.PictureAspect,
-                                            Mode=OneWay}"-->
-                            <!--<Frame Margin="2" Padding="0"
-                                BackgroundColor="{DynamicResource GridItemBackgroundColor}">
-                            </Frame>-->
-                            <Image IsVisible="{Binding FaceUp}" Margin="2"
-                                Aspect="Fill"
-                                Source="{Binding PictureImageSource}">
-                            </Image>
+                            <Frame BorderColor="Black" Padding="0" Margin="1">
+                                <Grid Padding="0" Margin="0">
+                                    <!-- Add a hidden label in order to support clicking a card via Voice Access,
+                                        by speaking the index of the card in the card list. -->
+                                    <Label IsVisible="False"
+                                        Text="{Binding ., 
+                                            Converter={StaticResource CardToCollectionViewIndex}, 
+                                            ConverterParameter={Binding Source={x:Reference SquaresCollectionView}, 
+                                            Path=BindingContext}}"
+                                        Margin="10"/>
+                                    <!--Aspect="{Binding Source={x:Reference MatchingPageInstance},
+                                                    Path=BindingContext.PictureAspect,
+                                                    Mode=OneWay}"-->
+                                    <!--<Frame Margin="2" Padding="0"
+                                        BackgroundColor="{DynamicResource GridItemBackgroundColor}">
+                                    </Frame>-->
+                                    <Image IsVisible="{Binding FaceUp}"
+                                        Aspect="Fill"
+                                        Source="{Binding PictureImageSource}">
+                                    </Image>
+                                </Grid>
+                            </Frame>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

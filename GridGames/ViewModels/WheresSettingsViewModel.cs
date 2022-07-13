@@ -48,5 +48,24 @@ namespace GridGames.ViewModels
                 }
             }
         }
+
+        private bool showBonusQuestion;
+        public bool ShowBonusQuestion
+        {
+            get
+            {
+                return showBonusQuestion;
+            }
+            set
+            {
+                if (showBonusQuestion != value)
+                {
+                    SetProperty(ref showBonusQuestion, value);
+
+                    Preferences.Set("ShowBonusQuestion", value);
+                }
+            }
+        }
+
     }
 }

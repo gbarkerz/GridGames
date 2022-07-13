@@ -26,6 +26,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -61,7 +62,15 @@
                     <!-- For Android -->
                     <CheckBox Grid.Row="1" Grid.Column="1" x:Name="PlaySoundOnNotMatchCheckBox"
                         AutomationProperties.LabeledBy="PlaySoundOnNotMatchLabel"
-                        VerticalOptions="Center" IsChecked="{Binding PlaySoundOnNotMatch}" />
+                        VerticalOptions="Center" IsChecked="{Binding WheresPlaySoundOnNotMatch}" />
+
+                    <Label Grid.Row="2" Grid.Column="0" x:Name="ShowBonusQuestionLabel" 
+                        Text="{x:Static resources:AppResources.ShowBonusQuestion}"
+                        VerticalOptions="Center" />
+                    <CheckBox Grid.Row="2" Grid.Column="1" x:Name="ShowBonusQuestionCheckBox"
+                        AutomationProperties.LabeledBy="ShowBonusQuestionLabel"
+                        VerticalOptions="Center" IsChecked="{Binding ShowBonusQuestion}" />
+
                 </Grid>
             </ScrollView>
             

@@ -18,6 +18,7 @@ namespace GridGames
             var vm = this.BindingContext as WheresSettingsViewModel;
             vm.PlaySoundOnMatch = Preferences.Get("WheresPlaySoundOnMatch", true);
             vm.PlaySoundOnNotMatch = Preferences.Get("WheresPlaySoundOnNotMatch", true);
+            vm.ShowBonusQuestion = Preferences.Get("ShowBonusQuestion", false);
         }
 
         private async void CloseButton_Clicked(object sender, EventArgs e)
