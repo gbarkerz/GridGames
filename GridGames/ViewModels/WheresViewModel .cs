@@ -159,6 +159,8 @@ namespace GridGames.ViewModels
             wheresList = new ObservableCollection<WheresCard>();
 
             AnswerAttemptCount = 0;
+
+            wheresSettingsVM = new WheresSettingsViewModel();
         }
 
         public int AnswerAttemptCount { get; set; }
@@ -169,13 +171,13 @@ namespace GridGames.ViewModels
         private string soundOnMatch = "SoundOnMatch.m4a";
         private string soundOnNotMatch = "SoundOnNotMatch.m4a";
 
-        private bool showBonusQuestion;
-        public bool ShowBonusQuestion
+        private WheresSettingsViewModel wheresSettingsVM;
+        public WheresSettingsViewModel WheresSettingsVM
         {
-            get { return showBonusQuestion; }
+            get { return wheresSettingsVM; }
             set
             {
-                SetProperty(ref showBonusQuestion, value);
+                SetProperty(ref wheresSettingsVM, value);
             }
         }
 

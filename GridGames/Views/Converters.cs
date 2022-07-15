@@ -6,9 +6,52 @@ using System.IO;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Xaml;
+using System.Collections.ObjectModel;
 
 namespace GridGames.Views
 {
+    public class QuestionToQuestionString : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var question = value as string;
+
+            return "Q: " + question;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class AnswerSetToAnswersString : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var answers = value as Collection<string>;
+
+            string fullAnswers = "A: ";
+
+            for (int i = 0; i < answers.Count; ++i)
+            {
+                fullAnswers += answers[i];
+
+                if (i < answers.Count - 1)
+                {
+                    fullAnswers += ", ";
+                }
+            }
+
+            return fullAnswers;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class CollectionViewHeightToRowHeight : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

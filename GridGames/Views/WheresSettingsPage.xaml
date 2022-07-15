@@ -8,6 +8,8 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <localviews:CheckBoxStateToAccessibleName x:Key="CheckBoxStateToAccessibleName" />
+            <localviews:QuestionToQuestionString x:Key="QuestionToQuestionString" />
+            <localviews:AnswerSetToAnswersString x:Key="AnswerSetToAnswersString" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -27,15 +29,13 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Row="0" Grid.Column="0" x:Name="PlaySoundOnMatchLabel" 
-                        Text="{x:Static resources:AppResources.WheresPlaySoundMatch}"
-                        VerticalOptions="Center" />
                     <!-- For iOS 
                     <CheckBox Grid.Row="0" Grid.Column="1" x:Name="PlaySoundOnMatchCheckBox"
                         AutomationProperties.Name="{Binding PlaySoundOnMatch,
@@ -45,12 +45,14 @@
                         VerticalOptions="Center" IsChecked="{Binding PlaySoundOnMatch}" />
                     -->
                     <!-- For Android -->
+                    
                     <CheckBox Grid.Row="0" Grid.Column="1" x:Name="PlaySoundOnMatchCheckBox"
                         AutomationProperties.LabeledBy="PlaySoundOnMatchLabel"
                         VerticalOptions="Center" IsChecked="{Binding PlaySoundOnMatch}" />
-                    <Label Grid.Row="1" Grid.Column="0" x:Name="PlaySoundOnNotMatchLabel" 
-                        Text="{x:Static resources:AppResources.WheresPlaySoundNotMatch}"
+                    <Label Grid.Row="0" Grid.Column="0" x:Name="PlaySoundOnMatchLabel" 
+                        Text="{x:Static resources:AppResources.WheresPlaySoundMatch}"
                         VerticalOptions="Center" />
+
                     <!-- For iOS 
                     <CheckBox Grid.Row="1" Grid.Column="1" x:Name="PlaySoundOnNotMatchCheckBox"
                         AutomationProperties.Name="{Binding PlaySoundOnNotMatch,
@@ -63,13 +65,58 @@
                     <CheckBox Grid.Row="1" Grid.Column="1" x:Name="PlaySoundOnNotMatchCheckBox"
                         AutomationProperties.LabeledBy="PlaySoundOnNotMatchLabel"
                         VerticalOptions="Center" IsChecked="{Binding WheresPlaySoundOnNotMatch}" />
-
-                    <Label Grid.Row="2" Grid.Column="0" x:Name="ShowBonusQuestionLabel" 
-                        Text="{x:Static resources:AppResources.ShowBonusQuestion}"
+                    <Label Grid.Row="1" Grid.Column="0" x:Name="PlaySoundOnNotMatchLabel" 
+                        Text="{x:Static resources:AppResources.WheresPlaySoundNotMatch}"
                         VerticalOptions="Center" />
-                    <CheckBox Grid.Row="2" Grid.Column="1" x:Name="ShowBonusQuestionCheckBox"
-                        AutomationProperties.LabeledBy="ShowBonusQuestionLabel"
-                        VerticalOptions="Center" IsChecked="{Binding ShowBonusQuestion}" />
+
+                    <StackLayout Grid.Row="2">
+                        <Label Text="Bonus Questions" FontAttributes="Bold" />
+                        <Label Text="After every correct answer in the Where's WCAG game, have a bonus WCAG-related question asked." />
+
+                        <StackLayout Orientation="Horizontal">
+                            <CheckBox x:Name="ShowBonusQuestionCheckBox"
+                                AutomationProperties.LabeledBy="ShowBonusQuestionLabel"
+                                VerticalOptions="Center" IsChecked="{Binding ShowBonusQuestion}" />
+                            <Label x:Name="ShowBonusQuestionLabel" 
+                                Text="{x:Static resources:AppResources.ShowBonusQuestion}"
+                                VerticalOptions="Center" />
+                        </StackLayout>
+                        
+                        <Label Text="Select the text file with the bonus questions details." />
+
+                        <Button x:Name="QuestionsBrowseButton" 
+                                Text="Select Questions"
+                                HorizontalOptions="StartAndExpand" Margin="0,0,0,4"
+                                Clicked="QuestionsBrowseButton_Clicked" />
+
+                        <Button x:Name="QuestionsClearButton" 
+                                Text="Clear Questions"
+                                HorizontalOptions="StartAndExpand" Margin="0,0,0,4"
+                                Clicked="QuestionsClearButton_Clicked" />
+
+                        <Label Text="Bonus question file:" />
+                        <Label Text="{Binding BonusQuestionFile}" />
+                    </StackLayout>
+                    
+                    <CollectionView Grid.Row="3" x:Name="QuestionCollectionView"  
+                        SemanticProperties.Description="Selected questions and answers"
+                        ItemsSource="{Binding QuestionListCollection}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="4">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" FontAttributes="Bold" 
+                                        Text="{Binding Question, Mode=OneWay,
+                                        Converter={StaticResource QuestionToQuestionString}}" />
+                                    <Label Grid.Row="1" Text="{Binding Answers, Mode=OneWay,
+                                        Converter={StaticResource AnswerSetToAnswersString}}" />
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
 
                 </Grid>
             </ScrollView>

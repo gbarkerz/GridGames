@@ -49,10 +49,6 @@ namespace GridGames.Views
                     WheresWelcomeTitleLabel.Text + ", " + WheresWelcomeTitleInstructions.Text);
             }
 
-            vm.PlaySoundOnMatch = Preferences.Get("WheresPlaySoundOnMatch", true);
-            vm.PlaySoundOnNotMatch = Preferences.Get("WheresPlaySoundOnNotMatch", true);
-            vm.ShowBonusQuestion = Preferences.Get("ShowBonusQuestion", false);
-
             if (restartGame)
             {
                 restartGame = false;
@@ -69,7 +65,7 @@ namespace GridGames.Views
             var vm = this.BindingContext as WheresViewModel;
             if (!vm.FirstRunWheres)
             {
-                var settingsPage = new WheresGameSettingsPage();
+                var settingsPage = new WheresGameSettingsPage(vm.WheresSettingsVM);
                 await Navigation.PushModalAsync(settingsPage);
             }
         }
@@ -102,9 +98,21 @@ namespace GridGames.Views
             bool gameIsWon = vm.AttemptToAnswerQuestion(itemCollectionIndex);
 
             // Show a bonus question if appropriate.
-            if (vm.ShowBonusQuestion)
+            if (vm.WheresSettingsVM.ShowBonusQuestion && 
+                (vm.WheresSettingsVM.QuestionListCollection.Count == 15))
             {
-                await Navigation.PushModalAsync(new WCAGPage());
+                int questionIndex = 0;
+
+                foreach (WheresCard card in vm.WheresListCollection)
+                {
+                    if (card.IsFound)
+                    {
+                        ++questionIndex;
+                    }
+                }
+
+                await Navigation.PushModalAsync(new WCAGPage(
+                    vm.WheresSettingsVM.QuestionListCollection[questionIndex - 1]));
             }
 
             if (gameIsWon)

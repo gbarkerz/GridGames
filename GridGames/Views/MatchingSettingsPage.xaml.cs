@@ -158,7 +158,10 @@ namespace GridGames
                 //else
                 {
                     var result = await FilePicker.PickAsync(options);
-                    pathToPictures = result.FullPath;
+                    if (result != null)
+                    {
+                        pathToPictures = result.FullPath;
+                    }
                 }
 
                 if (!String.IsNullOrWhiteSpace(pathToPictures))

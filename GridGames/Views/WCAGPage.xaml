@@ -4,6 +4,7 @@
              x:Class="GridGames.Views.WCAGPage"
              xmlns:resources="clr-namespace:GridGames.ResX"
              Title="WCAG">
+
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -12,7 +13,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Text="Bonus WCAG Question!" FontSize="Title"/>
-        <Label Grid.Row="1" Text="What two AA WCAG most relate to colour contrast?" 
+        <Label Grid.Row="1" x:Name="WCAGQuestion" 
                Margin="8" FontSize="Subtitle" />
         <ScrollView Grid.Row="2">
             <StackLayout Margin="10">
@@ -27,11 +28,13 @@
                         Wrap="Wrap" AlignContent="Stretch"
                         JustifyContent="Start">-->
 
+                        <!-- Barker: How to style all CheckBoxes to have the same Checked handler? -->
+                
                         <Label Text="{x:Static resources:AppResources.WCAG11Label}" SemanticProperties.HeadingLevel="Level3" 
                             FontSize="Medium" Margin="0,10,0,10" />
                         <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG11Label}">
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG111Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG111Label}" />
                                 <Label x:Name="WCAG111Label" Text="{x:Static resources:AppResources.WCAG111Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
@@ -40,47 +43,47 @@
                             FontSize="Medium" Margin="0,10,0,10" />
                         <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG12Label}">
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG121Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG121Label}" />
                                 <Label x:Name="WCAG121Label" Text="{x:Static resources:AppResources.WCAG121Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG122Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG122Label}" />
                                 <Label x:Name="WCAG122Label" Text="{x:Static resources:AppResources.WCAG122Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG123Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG123Label}" />
                                 <Label x:Name="WCAG123Label" Text="{x:Static resources:AppResources.WCAG123Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG124Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG124Label}" />
                                 <Label x:Name="WCAG124Label" Text="{x:Static resources:AppResources.WCAG124Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG125Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG125Label}" />
                                 <Label x:Name="WCAG125Label" Text="{x:Static resources:AppResources.WCAG125Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG126Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG126Label}" />
                                 <Label x:Name="WCAG126Label" Text="{x:Static resources:AppResources.WCAG126Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG127Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG127Label}" />
                                 <Label x:Name="WCAG127Label" Text="{x:Static resources:AppResources.WCAG127Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG128Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG128Label}" />
                                 <Label x:Name="WCAG128Label" Text="{x:Static resources:AppResources.WCAG128Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG129Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG129Label}" />
                                 <Label x:Name="WCAG129Label" Text="{x:Static resources:AppResources.WCAG129Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
@@ -89,32 +92,32 @@
                             FontSize="Medium" Margin="0,10,0,10" />
                         <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG13Label}">
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG131Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG131Label}" />
                                 <Label x:Name="WCAG131Label" Text="{x:Static resources:AppResources.WCAG131Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG132Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG132Label}" />
                                 <Label x:Name="WCAG132Label" Text="{x:Static resources:AppResources.WCAG132Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG133Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG133Label}" />
                                 <Label x:Name="WCAG133Label" Text="{x:Static resources:AppResources.WCAG133Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG134Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG134Label}" />
                                 <Label x:Name="WCAG134Label" Text="{x:Static resources:AppResources.WCAG134Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG135Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG135Label}" />
                                 <Label x:Name="WCAG135Label" Text="{x:Static resources:AppResources.WCAG135Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG136Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG136Label}" />
                                 <Label x:Name="WCAG136Label" Text="{x:Static resources:AppResources.WCAG136Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
@@ -123,67 +126,67 @@
                             FontSize="Medium" Margin="0,10,0,10" />
                         <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG14Label}">
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG141Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG141Label}" />
                                 <Label x:Name="WCAG141Label" Text="{x:Static resources:AppResources.WCAG141Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG142Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG142Label}" />
                                 <Label x:Name="WCAG142Label" Text="{x:Static resources:AppResources.WCAG142Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG143Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG143Label}" />
                                 <Label x:Name="WCAG143Label" Text="{x:Static resources:AppResources.WCAG143Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG144Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG144Label}" />
                                 <Label x:Name="WCAG144Label" Text="{x:Static resources:AppResources.WCAG144Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG145Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG145Label}" />
                                 <Label x:Name="WCAG145Label" Text="{x:Static resources:AppResources.WCAG145Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG146Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG146Label}" />
                                 <Label x:Name="WCAG146Label" Text="{x:Static resources:AppResources.WCAG146Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG147Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG147Label}" />
                                 <Label x:Name="WCAG147Label" Text="{x:Static resources:AppResources.WCAG147Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG148Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG148Label}" />
                                 <Label x:Name="WCAG148Label" Text="{x:Static resources:AppResources.WCAG148Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG149Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG149Label}" />
                                 <Label x:Name="WCAG149Label" Text="{x:Static resources:AppResources.WCAG149Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG1410Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG1410Label}" />
                                 <Label x:Name="WCAG1410Label" Text="{x:Static resources:AppResources.WCAG1410Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG1411Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG1411Label}" />
                                 <Label x:Name="WCAG1411Label" Text="{x:Static resources:AppResources.WCAG1411Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG1412Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG1412Label}" />
                                 <Label x:Name="WCAG1412Label" Text="{x:Static resources:AppResources.WCAG1412Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG1413Label}" />
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG1413Label}" />
                                 <Label x:Name="WCAG1413Label" Text="{x:Static resources:AppResources.WCAG1413Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                             </StackLayout>
@@ -199,22 +202,22 @@
                         FontSize="Medium" Margin="0,10,0,10" />
                     <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG21Label}">
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG211Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG211Label}" />
                             <Label x:Name="WCA211Label" Text="{x:Static resources:AppResources.WCAG211Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG212Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG212Label}" />
                             <Label x:Name="WCAG212Label" Text="{x:Static resources:AppResources.WCAG212Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG213Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG213Label}" />
                             <Label x:Name="WCAG213Label" Text="{x:Static resources:AppResources.WCAG213Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG214Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG214Label}" />
                             <Label x:Name="WCAG214Label" Text="{x:Static resources:AppResources.WCAG214Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
@@ -223,32 +226,32 @@
                         FontSize="Medium" Margin="0,10,0,10" />
                     <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG22Label}">
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG221Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG221Label}" />
                             <Label x:Name="WCA221Label" Text="{x:Static resources:AppResources.WCAG221Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG222Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG222Label}" />
                             <Label x:Name="WCA222Label" Text="{x:Static resources:AppResources.WCAG222Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG223Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG223Label}" />
                             <Label x:Name="WCA223Label" Text="{x:Static resources:AppResources.WCAG223Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG224Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG224Label}" />
                             <Label x:Name="WCA224Label" Text="{x:Static resources:AppResources.WCAG224Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG225Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG225Label}" />
                             <Label x:Name="WCA225Label" Text="{x:Static resources:AppResources.WCAG225Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG226Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG226Label}" />
                             <Label x:Name="WCA226Label" Text="{x:Static resources:AppResources.WCAG226Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
@@ -257,17 +260,17 @@
                         FontSize="Medium" Margin="0,10,0,10" />
                     <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG23Label}">
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG231Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG231Label}" />
                             <Label x:Name="WCA231Label" Text="{x:Static resources:AppResources.WCAG231Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG232Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG232Label}" />
                             <Label x:Name="WCA232Label" Text="{x:Static resources:AppResources.WCAG232Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG233Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG233Label}" />
                             <Label x:Name="WCA233Label" Text="{x:Static resources:AppResources.WCAG233Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
@@ -276,67 +279,67 @@
                         FontSize="Medium" Margin="0,10,0,10" />
                     <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG24Label}">
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG241Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG241Label}" />
                             <Label x:Name="WCA241Label" Text="{x:Static resources:AppResources.WCAG241Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG242Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG242Label}" />
                             <Label x:Name="WCA242Label" Text="{x:Static resources:AppResources.WCAG242Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG243Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG243Label}" />
                             <Label x:Name="WCA243Label" Text="{x:Static resources:AppResources.WCAG243Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG244Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG244Label}" />
                             <Label x:Name="WCA244Label" Text="{x:Static resources:AppResources.WCAG244Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG245Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG245Label}" />
                             <Label x:Name="WCA245Label" Text="{x:Static resources:AppResources.WCAG245Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG246Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG246Label}" />
                             <Label x:Name="WCA246Label" Text="{x:Static resources:AppResources.WCAG246Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG247Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG247Label}" />
                             <Label x:Name="WCA247Label" Text="{x:Static resources:AppResources.WCAG247Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG248Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG248Label}" />
                             <Label x:Name="WCA248Label" Text="{x:Static resources:AppResources.WCAG248Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG249Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG249Label}" />
                             <Label x:Name="WCA249Label" Text="{x:Static resources:AppResources.WCAG249Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG2410Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG2410Label}" />
                             <Label x:Name="WCA2410Label" Text="{x:Static resources:AppResources.WCAG2410Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG2411Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG2411Label}" />
                             <Label x:Name="WCA2411Label" Text="{x:Static resources:AppResources.WCAG2411Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG2412Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG2412Label}" />
                             <Label x:Name="WCA2412Label" Text="{x:Static resources:AppResources.WCAG2412Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG2413Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG2413Label}" />
                             <Label x:Name="WCA2413Label" Text="{x:Static resources:AppResources.WCAG2413Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
@@ -345,42 +348,42 @@
                         FontSize="Medium" Margin="0,10,0,10" />
                     <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG25Label}">
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG251Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG251Label}" />
                             <Label x:Name="WCA251Label" Text="{x:Static resources:AppResources.WCAG251Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG252Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG252Label}" />
                             <Label x:Name="WCA252Label" Text="{x:Static resources:AppResources.WCAG252Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG253Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG253Label}" />
                             <Label x:Name="WCA253Label" Text="{x:Static resources:AppResources.WCAG253Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG254Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG254Label}" />
                             <Label x:Name="WCA254Label" Text="{x:Static resources:AppResources.WCAG254Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG255Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG255Label}" />
                             <Label x:Name="WCA255Label" Text="{x:Static resources:AppResources.WCAG255Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG256Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG256Label}" />
                             <Label x:Name="WCA256Label" Text="{x:Static resources:AppResources.WCAG256Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG257Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG257Label}" />
                             <Label x:Name="WCA257Label" Text="{x:Static resources:AppResources.WCAG257Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG258Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG258Label}" />
                             <Label x:Name="WCA258Label" Text="{x:Static resources:AppResources.WCAG258Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
@@ -395,32 +398,32 @@
                         FontSize="Medium" Margin="0,10,0,10" />
                     <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG31Label}">
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG311Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG311Label}" />
                             <Label x:Name="WCA311Label" Text="{x:Static resources:AppResources.WCAG311Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG312Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG312Label}" />
                             <Label x:Name="WCA312Label" Text="{x:Static resources:AppResources.WCAG312Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG313Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG313Label}" />
                             <Label x:Name="WCA313Label" Text="{x:Static resources:AppResources.WCAG313Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG314Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG314Label}" />
                             <Label x:Name="WCA314Label" Text="{x:Static resources:AppResources.WCAG314Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG315Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG315Label}" />
                             <Label x:Name="WCA315Label" Text="{x:Static resources:AppResources.WCAG315Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG316Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG316Label}" />
                             <Label x:Name="WCA316Label" Text="{x:Static resources:AppResources.WCAG316Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
@@ -429,37 +432,37 @@
                         FontSize="Medium" Margin="0,10,0,10" />
                     <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG32Label}">
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG321Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG321Label}" />
                             <Label x:Name="WCA321Label" Text="{x:Static resources:AppResources.WCAG321Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG322Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG322Label}" />
                             <Label x:Name="WCA322Label" Text="{x:Static resources:AppResources.WCAG322Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG323Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG323Label}" />
                             <Label x:Name="WCA323Label" Text="{x:Static resources:AppResources.WCAG323Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG324Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG324Label}" />
                             <Label x:Name="WCA324Label" Text="{x:Static resources:AppResources.WCAG324Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG325Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG325Label}" />
                             <Label x:Name="WCA325Label" Text="{x:Static resources:AppResources.WCAG325Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG326Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG326Label}" />
                             <Label x:Name="WCA326Label" Text="{x:Static resources:AppResources.WCAG326Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG327Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG327Label}" />
                             <Label x:Name="WCA327Label" Text="{x:Static resources:AppResources.WCAG327Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
@@ -468,42 +471,42 @@
                         FontSize="Medium" Margin="0,10,0,10" />
                     <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG32Label}">
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG331Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG331Label}" />
                             <Label x:Name="WCA331Label" Text="{x:Static resources:AppResources.WCAG331Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG332Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG332Label}" />
                             <Label x:Name="WCA332Label" Text="{x:Static resources:AppResources.WCAG332Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG333Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG333Label}" />
                             <Label x:Name="WCA333Label" Text="{x:Static resources:AppResources.WCAG333Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG334Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG334Label}" />
                             <Label x:Name="WCA334Label" Text="{x:Static resources:AppResources.WCAG334Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG335Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG335Label}" />
                             <Label x:Name="WCA335Label" Text="{x:Static resources:AppResources.WCAG335Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG336Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG336Label}" />
                             <Label x:Name="WCA336Label" Text="{x:Static resources:AppResources.WCAG336Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG337Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG337Label}" />
                             <Label x:Name="WCA337Label" Text="{x:Static resources:AppResources.WCAG337Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG338Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG338Label}" />
                             <Label x:Name="WCA338Label" Text="{x:Static resources:AppResources.WCAG338Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
@@ -518,17 +521,17 @@
                         FontSize="Medium" Margin="0,10,0,10" />
                     <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG41Label}">
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG411Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG411Label}" />
                             <Label x:Name="WCA411Label" Text="{x:Static resources:AppResources.WCAG411Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG412Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG412Label}" />
                             <Label x:Name="WCA412Label" Text="{x:Static resources:AppResources.WCAG412Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <CheckBox SemanticProperties.Description="{x:Static resources:AppResources.WCAG413Label}" />
+                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG413Label}" />
                             <Label x:Name="WCA413Label" Text="{x:Static resources:AppResources.WCAG413Label}"
                                 AutomationProperties.IsInAccessibleTree="False" VerticalOptions="Center" />
                         </StackLayout>
@@ -538,8 +541,8 @@
             </StackLayout>
         </ScrollView>
 
-        <Button Grid.Row="3" Text="Close"
+        <Button Grid.Row="3" Text="Submit Answer"
             HorizontalOptions="End" Margin="0,0,4,4" Padding="8"
-             Clicked="CloseButton_Clicked" />
+             Clicked="SubmitButton_Clicked" />
     </Grid>
 </ContentPage>
