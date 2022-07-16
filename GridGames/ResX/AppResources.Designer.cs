@@ -187,6 +187,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select any file from the folder which contains only the eight custom pictures and also the text file with the names and optionally the descriptions of the pictures. The file containing the names must be called &quot;MatchingGamePictureDetails.txt&quot;. Each line in that file contains details for one picture, and a line starts with the filename of the picture, followed by a tab, and then the name of the picture. If a description is also provided, the name is followed by a tab, and then the description..
+        /// </summary>
+        internal static string CustomPicturesInstructions {
+            get {
+                return ResourceManager.GetString("CustomPicturesInstructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A smiling man with a red coat and arms outstretched, standing in front of 3 large Daleks and a TARDIS. The Daleks seem to be raised above the grass beneath them, and a slightly cloudy sky is in the background..
         /// </summary>
         internal static string DefaultMatchingCard1Description {

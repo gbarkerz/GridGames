@@ -87,14 +87,13 @@
                                             ConverterParameter={Binding Source={x:Reference SquaresCollectionView}, 
                                             Path=BindingContext}}"
                                         Margin="10"/>
-                                    <!--Aspect="{Binding Source={x:Reference MatchingPageInstance},
-                                                    Path=BindingContext.PictureAspect,
-                                                    Mode=OneWay}"-->
                                     <!--<Frame Margin="2" Padding="0"
                                         BackgroundColor="{DynamicResource GridItemBackgroundColor}">
                                     </Frame>-->
                                     <Image IsVisible="{Binding FaceUp}"
-                                        Aspect="Fill"
+                                        Aspect="{Binding Source={x:Reference MatchingPageInstance},
+                                            Path=BindingContext.PictureAspect,
+                                            Mode=OneWay}"
                                         Source="{Binding PictureImageSource}">
                                     </Image>
                                 </Grid>

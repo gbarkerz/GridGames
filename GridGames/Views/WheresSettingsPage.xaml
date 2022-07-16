@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:localviews="clr-namespace:GridGames.Views"
              xmlns:resources="clr-namespace:GridGames.ResX"
+             xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
              x:Class="GridGames.WheresGameSettingsPage">
 
     <ContentPage.Resources>
@@ -82,6 +83,7 @@
 
                         <StackLayout Orientation="Horizontal" Margin="10">
                             <CheckBox x:Name="ShowBonusQuestionCheckBox"
+                                windows:VisualElement.AccessKey="B"                                      
                                 SemanticProperties.Description="{x:Static resources:AppResources.ShowBonusQuestion}"
                                 VerticalOptions="Center" IsChecked="{Binding ShowBonusQuestion}" />
                             <Label x:Name="ShowBonusQuestionLabel" 
@@ -92,17 +94,29 @@
                         <Label Text="{x:Static resources:AppResources.BonusQAInstructions}"
                                Margin="0,4,0,10" />
 
-                        <Button x:Name="QuestionsBrowseButton" 
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Row="0" x:Name="QuestionsBrowseButton" 
+                                windows:VisualElement.AccessKey="Q"
                                 Padding="10"
                                 Text="Select Questions"
-                                HorizontalOptions="StartAndExpand" Margin="0,0,0,10"
+                                HorizontalOptions="Fill" Margin="0,0,0,10"
                                 Clicked="QuestionsBrowseButton_Clicked" />
 
-                        <Button x:Name="QuestionsClearButton" 
+                            <Button Grid.Row="1" x:Name="QuestionsClearButton" 
+                                windows:VisualElement.AccessKey="S"
                                 Padding="10"
-                                Text="Clear Questions"
-                                HorizontalOptions="StartAndExpand" Margin="0,0,0,10"
+                                Text="Clear Selection"
+                                HorizontalOptions="Fill" Margin="0,0,0,10"
                                 Clicked="QuestionsClearButton_Clicked" />
+                        </Grid>
                     </StackLayout>
 
                     <StackLayout Grid.Row="3" Margin="10"
@@ -159,7 +173,8 @@
             </ScrollView>
             
             <Button Grid.Row="2" x:Name="CloseButton" 
-                HorizontalOptions="End" Margin="0,10,0,0" Padding="10"
+                windows:VisualElement.AccessKey="C"                                    
+                HorizontalOptions="End" Margin="0,0,4,4" Padding="8"
                 Text="{x:Static resources:AppResources.Close}" Clicked="CloseButton_Clicked" />
         </Grid>
     </ContentPage.Content>

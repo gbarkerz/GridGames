@@ -3,14 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:localviews="clr-namespace:GridGames.Views"
              xmlns:resources="clr-namespace:GridGames.ResX"
+             xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
              x:Class="GridGames.MatchingGameSettingsPage">
 
     <ContentPage.Resources>
         <ResourceDictionary>
             <localviews:FilePathToIsVisible x:Key="FilePathToIsVisible" />
             <localviews:CheckBoxStateToAccessibleName x:Key="CheckBoxStateToAccessibleName" />
-            <localviews:PictureAspectToInt x:Key="PictureAspectToInt" />            
-            <localviews:PathToDirectoryName x:Key="PathToDirectoryName" />            
+            <localviews:PictureAspectToInt x:Key="PictureAspectToInt" />
+            <localviews:PathToDirectoryName x:Key="PathToDirectoryName" />
+            <localviews:CustomPictureToItemName x:Key="CustomPictureToItemName" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -22,13 +24,11 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <!--<Label Grid.Row="0" FontSize="Title"
-                Text="{x:Static resources:AppResources.PairsSettings}" />-->
+            <Label Grid.Row="0" FontSize="Title"
+                Text="{x:Static resources:AppResources.PairsSettings}" />
             <ScrollView Grid.Row="1" Margin="4,4,4,2">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -46,9 +46,14 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
+                        <!-- No sound in the app yet. -->
+                        
+                        <!--
                         <Label Grid.Row="0" Grid.Column="0" x:Name="PlaySoundOnMatchLabel" 
                             Text="{x:Static resources:AppResources.PlaySoundMatch}"
                             VerticalOptions="Center" />
+                        -->
+                        
                         <!-- For iOS
                         <CheckBox Grid.Row="0" Grid.Column="1" x:Name="PlaySoundOnMatchCheckBox"
                             AutomationProperties.Name="{Binding PlaySoundOnMatch,
@@ -58,12 +63,14 @@
                             VerticalOptions="Center" IsChecked="{Binding PlaySoundOnMatch}" />
                         -->
                         <!-- For Android -->
+                        <!--
                         <CheckBox Grid.Row="0" Grid.Column="1" x:Name="PlaySoundOnMatchCheckBox"
                             SemanticProperties.Description="{x:Static resources:AppResources.PlaySoundMatch}"
                             VerticalOptions="Center" IsChecked="{Binding PlaySoundOnMatch}" />
                         <Label Grid.Row="1" Grid.Column="0" x:Name="PlaySoundOnNotMatchLabel" 
                             Text="{x:Static resources:AppResources.PlaySoundNotMatch}"
                             VerticalOptions="Center" />
+                        -->
                         <!-- For iOS
                         <CheckBox Grid.Row="1" Grid.Column="1" x:Name="PlaySoundOnNotMatchCheckBox"
                             AutomationProperties.Name="{Binding PlaySoundOnNotMatch,
@@ -73,74 +80,109 @@
                             VerticalOptions="Center" IsChecked="{Binding PlaySoundOnNotMatch}" />
                         -->
                         <!-- For Android -->
+                        <!--
                         <CheckBox Grid.Row="1" Grid.Column="1" x:Name="PlaySoundOnNotMatchCheckBox"
                             SemanticProperties.Description="{x:Static resources:AppResources.PlaySoundNotMatch}"
                             VerticalOptions="Center" IsChecked="{Binding PlaySoundOnNotMatch}" />
+                        -->
                     </Grid>
 
                     <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                            Text="Select how you would like the pictures to be shown in the cards." Margin="0,10,0,10" />
                         <Label Grid.Row="1" Grid.Column="0" x:Name="PictureAspectLabel" 
                             Text="{x:Static resources:AppResources.PictureAspectLabel}"
                             VerticalOptions="Center" />
                         <Picker Grid.Row="1" Grid.Column="1" x:Name="MatchingPictureAspectPicker"
-                            VerticalOptions="Center" 
+                            VerticalOptions="Center" Margin="8,0,0,0"
                             SemanticProperties.Description="{x:Static resources:AppResources.PictureAspectLabel}"
                             SelectedIndex="{Binding PictureAspect, Mode=TwoWay,
                                 Converter={StaticResource PictureAspectToInt}}" />
                     </Grid>
 
-                    <StackLayout Grid.Row="2"  Orientation="Horizontal" Margin="0,20,0,0">
-                        <Label x:Name="ShowCustomPicturesLabel" 
-                            Text="{x:Static resources:AppResources.ShowCustomPictures}"
-                            VerticalOptions="Center" />
-                        <!-- For iOS
-                        <CheckBox x:Name="ShowCustomPicturesCheckBox"
-                            AutomationProperties.Name="{Binding ShowCustomPictures,
-                                Mode=OneWay,
-                                Converter={StaticResource CheckBoxStateToAccessibleName},
-                                ConverterParameter=ShowCustomPictures}"
-                            VerticalOptions="Center" IsChecked="{Binding ShowCustomPictures}" />
-                        -->
-                        <!-- For Android -->
-                        <CheckBox x:Name="ShowCustomPicturesCheckBox" Margin="10,0,0,0"
-                            SemanticProperties.Description="{x:Static resources:AppResources.ShowCustomPictures}"
-                            VerticalOptions="Center" IsChecked="{Binding ShowCustomPictures}" />
+                    <StackLayout Grid.Row="2" Margin="0,20,0,10">
+                        <Label Text="Custom Pictures" FontSize="Subtitle" Margin="0,0,0,10" />
+                        <Label Text="Have your own pictures shown in the cards in the Pairs game." />
+
+                        <StackLayout Orientation="Horizontal" Margin="10">
+                            <CheckBox x:Name="ShowCustomPicturesCheckBox" Margin="10,0,0,0"
+                                windows:VisualElement.AccessKey="H"                                      
+                                SemanticProperties.Description="{x:Static resources:AppResources.ShowCustomPictures}"
+                                VerticalOptions="Center" IsChecked="{Binding ShowCustomPictures}" />
+                            <Label x:Name="ShowCustomPicturesLabel" 
+                                Text="{x:Static resources:AppResources.ShowCustomPictures}"
+                                VerticalOptions="Center" />
+                        </StackLayout>
+
+                        <Label Text="{x:Static resources:AppResources.CustomPicturesInstructions}"
+                                   Margin="0,4,0,10" />
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Row="0" x:Name="PictureBrowseButton" 
+                                windows:VisualElement.AccessKey="P"
+                                Text="{x:Static resources:AppResources.SelectPicture}"
+                                Padding="10"
+                                HorizontalOptions="Fill" Margin="0,0,0,10"
+                                Clicked="PictureBrowseButton_Clicked" />
+
+                            <Button Grid.Row="1" x:Name="PictureClearButton" 
+                                windows:VisualElement.AccessKey="S"
+                                Text="{x:Static resources:AppResources.ClearSelection}"                               
+                                Padding="10"
+                                HorizontalOptions="Fill" Margin="0,0,0,10"
+                                Clicked="PictureClearButton_Clicked" />
+                        </Grid>
+
                     </StackLayout>
 
-                    <Button Grid.Row="3" x:Name="PictureBrowseButton" 
-                            Text="{x:Static resources:AppResources.SelectPicture}"
-                            HorizontalOptions="StartAndExpand" Margin="0,0,0,4"
-                            Clicked="PictureBrowseButton_Clicked" />
-                    
-                    <Grid Grid.Row="4" Margin="0,10,0,10">
+                    <Grid Grid.Row="3" Margin="0,10,0,10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Margin="0,0,10,0" 
-                            Text="{x:Static resources:AppResources.PicturePath}" />
-                        <Label Grid.Column="1" 
-                            Text="{x:Static resources:AppResources.NoFolderSelected}"                               
+                            Text="{x:Static resources:AppResources.PicturePath}" 
                             IsVisible="{Binding PicturePathMatching, Mode=OneWay,
                                 Converter={StaticResource FilePathToIsVisible}}" />
-                        <Label Grid.Column="1" Text="{Binding PictureOriginalPathMatching, Mode=TwoWay}" />
+                        <!--<Label Grid.Column="1" 
+                            Text="{x:Static resources:AppResources.NoFolderSelected}"                               
+                            IsVisible="{Binding PicturePathMatching, Mode=OneWay,
+                                Converter={StaticResource FilePathToIsVisible}}" />-->
+                        <Label Grid.Column="1" Text="{Binding PictureOriginalPathMatching, Mode=TwoWay}" 
+                            IsVisible="{Binding PicturePathMatching, Mode=OneWay,
+                                Converter={StaticResource FilePathToIsVisible}}"/>
                     </Grid>
 
-                    <Button Grid.Row="5" x:Name="PictureClearButton" 
-                        Text="{x:Static resources:AppResources.ClearSelection}"                               
-                        HorizontalOptions="StartAndExpand" Margin="0,0,0,4"
-                        Clicked="PictureClearButton_Clicked" />
-
-                    <CollectionView Grid.Row="6" x:Name="PicturesCollectionView"  
-                        SemanticProperties.Description="Selected pictures"
+                    <CollectionView Grid.Row="4" x:Name="PicturesCollectionView"  
+                        SemanticProperties.Description="Custom pictures"
                         ItemsSource="{Binding PictureListCollection}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Grid>
+                                <Grid Margin="4">
+                                    <SemanticProperties.Description>
+                                        <MultiBinding Converter="{StaticResource CustomPictureToItemName}">
+                                            <Binding Path="Index" />
+                                            <Binding Path="FileName" />
+                                            <Binding Path="AccessibleName" />
+                                        </MultiBinding>
+                                    </SemanticProperties.Description>
+                                    
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
@@ -183,7 +225,8 @@
             </ScrollView>
             
             <Button Grid.Row="2" x:Name="CloseButton" 
-                HorizontalOptions="End" Margin="0,0,4,4"
+                windows:VisualElement.AccessKey="C"                                    
+                HorizontalOptions="End" Margin="0,0,4,4" Padding="8"
                 Text="{x:Static resources:AppResources.Close}" Clicked="CloseButton_Clicked" />
         </Grid>
     </ContentPage.Content>

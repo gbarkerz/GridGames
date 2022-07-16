@@ -10,13 +10,39 @@ using System.Collections.ObjectModel;
 
 namespace GridGames.Views
 {
+    public class CustomPictureToItemName : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values == null || (values.Length < 3))
+            {
+                return "";
+            }
+
+            if ((values[0] == null) || (values[1] == null) || (values[2] == null))
+            {
+                return "";
+            }
+            int index = (int)values[0];
+            string fileName = (string)values[1];
+            string accessibleName = (string)values[2];
+
+            return index + ", " + fileName + ", " + accessibleName;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class QAToItemName : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             if (values == null || (values.Length < 2))
             {
-                return false;
+                return "";
             }
 
             string question = (string)values[0];
