@@ -10,6 +10,27 @@ using System.Collections.ObjectModel;
 
 namespace GridGames.Views
 {
+    public class QAToItemName : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values == null || (values.Length < 2))
+            {
+                return false;
+            }
+
+            string question = (string)values[0];
+            string answerSet = (string)values[1];
+
+            return question + ", " + answerSet;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class QuestionToQuestionString : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -328,15 +349,13 @@ namespace GridGames.Views
         }
     }
 
-    public class MatchingSettingsPicturePathToIsVisible : IValueConverter
+    public class FilePathToIsVisible : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var picturePath = (string)value;
+            var filePath = (string)value;
 
-            bool picturePathLabelIsVisible = String.IsNullOrWhiteSpace(picturePath);
-
-            return picturePathLabelIsVisible;
+            return !String.IsNullOrWhiteSpace(filePath);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

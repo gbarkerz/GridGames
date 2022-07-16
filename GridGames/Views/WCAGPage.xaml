@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GridGames.Views.WCAGPage"
              xmlns:resources="clr-namespace:GridGames.ResX"
+             xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
              Title="WCAG">
 
     <Grid Margin="10">
@@ -19,6 +20,9 @@
             <StackLayout Margin="10">
 
                 <!-- Barker: on 2nd July 2022, AutomationProperties.LabeledBy doesn't seem to work. -->
+
+                <!-- Barker: When custom key input handling is available in Maui, provide key ways to move 
+                    focus between groups using only the keyboard. -->
                 
                 <!--<StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG1Label}">-->
                     <Label Text="{x:Static resources:AppResources.WCAG1Label}" SemanticProperties.HeadingLevel="Level2" 
@@ -31,7 +35,8 @@
                         <!-- Barker: How to style all CheckBoxes to have the same Checked handler? -->
                 
                         <Label Text="{x:Static resources:AppResources.WCAG11Label}" SemanticProperties.HeadingLevel="Level3" 
-                            FontSize="Medium" Margin="0,10,0,10" />
+                            windows:VisualElement.AccessKey="11"
+                            FontSize="Medium" Margin="0,10,0,10"/>
                         <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG11Label}">
                             <StackLayout Orientation="Horizontal">
                                 <CheckBox CheckedChanged="CheckBox_CheckedChanged" SemanticProperties.Description="{x:Static resources:AppResources.WCAG111Label}" />
@@ -40,6 +45,7 @@
                             </StackLayout>
                         </StackLayout>
                         <Label Text="{x:Static resources:AppResources.WCAG12Label}" SemanticProperties.HeadingLevel="Level3"
+                            windows:VisualElement.AccessKey="12"
                             FontSize="Medium" Margin="0,10,0,10" />
                         <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG12Label}">
                             <StackLayout Orientation="Horizontal">
@@ -89,6 +95,7 @@
                             </StackLayout>
                         </StackLayout>
                         <Label Text="{x:Static resources:AppResources.WCAG13Label}" SemanticProperties.HeadingLevel="Level3"
+                            windows:VisualElement.AccessKey="13"
                             FontSize="Medium" Margin="0,10,0,10" />
                         <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG13Label}">
                             <StackLayout Orientation="Horizontal">
@@ -123,6 +130,7 @@
                             </StackLayout>
                         </StackLayout>
                         <Label Text="{x:Static resources:AppResources.WCAG14Label}" SemanticProperties.HeadingLevel="Level3"
+                            windows:VisualElement.AccessKey="14"
                             FontSize="Medium" Margin="0,10,0,10" />
                         <StackLayout SemanticProperties.Description="{x:Static resources:AppResources.WCAG14Label}">
                             <StackLayout Orientation="Horizontal">
@@ -542,6 +550,7 @@
         </ScrollView>
 
         <Button Grid.Row="3" Text="Submit Answer"
+            windows:VisualElement.AccessKey="S"                
             HorizontalOptions="End" Margin="0,0,4,4" Padding="8"
              Clicked="SubmitButton_Clicked" />
     </Grid>

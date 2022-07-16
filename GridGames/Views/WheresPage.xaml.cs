@@ -95,10 +95,11 @@ namespace GridGames.Views
                 return;
             }
 
-            bool gameIsWon = vm.AttemptToAnswerQuestion(itemCollectionIndex);
+            bool answerIsCorrect;
+            bool gameIsWon = vm.AttemptToAnswerQuestion(itemCollectionIndex, out answerIsCorrect);
 
             // Show a bonus question if appropriate.
-            if (vm.WheresSettingsVM.ShowBonusQuestion && 
+            if (answerIsCorrect && vm.WheresSettingsVM.ShowBonusQuestion && 
                 (vm.WheresSettingsVM.QuestionListCollection.Count == 15))
             {
                 int questionIndex = 0;
@@ -201,9 +202,6 @@ namespace GridGames.Views
 
         private async void WheresGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Barker: This breaks keyboard input. :(
-            return; 
-
             var vm = this.BindingContext as WheresViewModel;
             if (vm.FirstRunWheres)
             {

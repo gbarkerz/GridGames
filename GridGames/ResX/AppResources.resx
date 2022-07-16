@@ -135,6 +135,9 @@
   <data name="AppSettingsIntro" xml:space="preserve">
     <value>Settings here apply to all games in the Grid Games app.</value>
   </data>
+  <data name="BonusQAInstructions" xml:space="preserve">
+    <value>Select the text file with the bonus questions and answers. The file must contain at least fifteen question and answer pairs, with each question and each answer on their own lines in the file. A question line must start with "Q:" and is followed with an answer line starting with "A:". An answer is a WCAG number, such as "3.3.2". Questions with multiple answers have answers separated with a comma in the file, such as "1.4.3,1.4.11".</value>
+  </data>
   <data name="BrowsePicture" xml:space="preserve">
     <value>Browse for picture</value>
   </data>

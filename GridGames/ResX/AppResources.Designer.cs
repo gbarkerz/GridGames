@@ -115,6 +115,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select the text file with the bonus questions and answers. The file must contain at least fifteen question and answer pairs, with each question and each answer on their own lines in the file. A question line must start with &quot;Q:&quot; and is followed with an answer line starting with &quot;A:&quot;. An answer is a WCAG number, such as &quot;3.3.2&quot;. Questions with multiple answers have answers separated with a comma in the file, such as &quot;1.4.3,1.4.11&quot;..
+        /// </summary>
+        internal static string BonusQAInstructions {
+            get {
+                return ResourceManager.GetString("BonusQAInstructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Browse for picture.
         /// </summary>
         internal static string BrowsePicture {

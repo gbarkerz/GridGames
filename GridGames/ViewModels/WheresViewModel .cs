@@ -255,9 +255,11 @@ namespace GridGames.ViewModels
             set { this.wheresList = value; }
         }
 
-        public bool AttemptToAnswerQuestion(int squareIndex)
+        public bool AttemptToAnswerQuestion(int squareIndex, out bool answerIsCorrect)
         {
             bool gameIsWon = false;
+
+            answerIsCorrect = false;
 
             // Take no action if the click is on a cell that's already found.
             var card = wheresList[squareIndex];
@@ -269,6 +271,8 @@ namespace GridGames.ViewModels
             // Does this card's WCAG match the current question?
             if (card.WCAGName == currentQuestionWCAG)
             {
+                answerIsCorrect = true;
+
                 card.IsFound = true;
 
                 PlaySoundOnAnswerAttempt(true);
@@ -345,7 +349,8 @@ namespace GridGames.ViewModels
                 return false;
             }
 
-            return AttemptToAnswerQuestion(currentSelectionIndex);
+            bool answerIsCorrect;
+            return AttemptToAnswerQuestion(currentSelectionIndex, out answerIsCorrect);
         }
 
         private bool GameIsWon()

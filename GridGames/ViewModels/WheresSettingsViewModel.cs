@@ -37,10 +37,10 @@ namespace GridGames.ViewModels
                 "1.4.7",
                 "1.4.8",
                 "1.4.9",
-                "1.4.1",
-                "1.4.1",
-                "1.4.1",
-                "1.4.1",
+                "1.4.10",
+                "1.4.11",
+                "1.4.12",
+                "1.4.13",
                 "2.1.1",
                 "2.1.2",
                 "2.1.3",
@@ -104,8 +104,8 @@ namespace GridGames.ViewModels
 
             this.QuestionListCollection = new ObservableCollection<QAPair>();
 
-            PlaySoundOnMatch = Preferences.Get("WheresPlaySoundOnMatch", true);
-            PlaySoundOnNotMatch = Preferences.Get("WheresPlaySoundOnNotMatch", true);
+            PlaySoundOnMatch = Preferences.Get("WheresPlaySoundOnMatch", false);
+            PlaySoundOnNotMatch = Preferences.Get("WheresPlaySoundOnNotMatch", false);
             
             ShowBonusQuestion = Preferences.Get("ShowBonusQuestion", false);
             BonusQuestionFile = Preferences.Get("BonusQuestionFile", "");
@@ -278,6 +278,8 @@ namespace GridGames.ViewModels
                 if (QuestionListCollection.Count != 15)
                 {
                     QuestionListCollection.Clear();
+
+                    BonusQuestionFile = "";
 
                     // Barker: Present a helpful message somewhere.
                     //await DisplayAlert("Where's WCAG Bonus Questions",

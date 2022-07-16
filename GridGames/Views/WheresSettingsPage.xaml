@@ -10,6 +10,8 @@
             <localviews:CheckBoxStateToAccessibleName x:Key="CheckBoxStateToAccessibleName" />
             <localviews:QuestionToQuestionString x:Key="QuestionToQuestionString" />
             <localviews:AnswerSetToAnswersString x:Key="AnswerSetToAnswersString" />
+            <localviews:FilePathToIsVisible x:Key="FilePathToIsVisible" />
+            <localviews:QAToItemName x:Key="QAToItemName" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -30,6 +32,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -46,13 +49,15 @@
                     -->
                     <!-- For Android -->
                     
+                    <!-- No cross-platform support for playing audio on Maui yet.
                     <CheckBox Grid.Row="0" Grid.Column="1" x:Name="PlaySoundOnMatchCheckBox"
                         AutomationProperties.LabeledBy="PlaySoundOnMatchLabel"
                         VerticalOptions="Center" IsChecked="{Binding PlaySoundOnMatch}" />
                     <Label Grid.Row="0" Grid.Column="0" x:Name="PlaySoundOnMatchLabel" 
                         Text="{x:Static resources:AppResources.WheresPlaySoundMatch}"
                         VerticalOptions="Center" />
-
+                    -->
+                    
                     <!-- For iOS 
                     <CheckBox Grid.Row="1" Grid.Column="1" x:Name="PlaySoundOnNotMatchCheckBox"
                         AutomationProperties.Name="{Binding PlaySoundOnNotMatch,
@@ -62,67 +67,99 @@
                         VerticalOptions="Center" IsChecked="{Binding PlaySoundOnNotMatch}" />
                     -->
                     <!-- For Android -->
+                    <!-- No cross-platform support for playing audio on Maui yet.
                     <CheckBox Grid.Row="1" Grid.Column="1" x:Name="PlaySoundOnNotMatchCheckBox"
                         AutomationProperties.LabeledBy="PlaySoundOnNotMatchLabel"
                         VerticalOptions="Center" IsChecked="{Binding WheresPlaySoundOnNotMatch}" />
                     <Label Grid.Row="1" Grid.Column="0" x:Name="PlaySoundOnNotMatchLabel" 
                         Text="{x:Static resources:AppResources.WheresPlaySoundNotMatch}"
                         VerticalOptions="Center" />
-
-                    <StackLayout Grid.Row="2">
-                        <Label Text="Bonus Questions" FontAttributes="Bold" />
+                    -->
+                    
+                    <StackLayout Grid.Row="2" Margin="0,10,0,10">
+                        <Label Text="Bonus Questions" FontSize="Subtitle" Margin="0,0,0,10" />
                         <Label Text="After every correct answer in the Where's WCAG game, have a bonus WCAG-related question asked." />
 
-                        <StackLayout Orientation="Horizontal">
+                        <StackLayout Orientation="Horizontal" Margin="10">
                             <CheckBox x:Name="ShowBonusQuestionCheckBox"
-                                AutomationProperties.LabeledBy="ShowBonusQuestionLabel"
+                                SemanticProperties.Description="{x:Static resources:AppResources.ShowBonusQuestion}"
                                 VerticalOptions="Center" IsChecked="{Binding ShowBonusQuestion}" />
                             <Label x:Name="ShowBonusQuestionLabel" 
                                 Text="{x:Static resources:AppResources.ShowBonusQuestion}"
                                 VerticalOptions="Center" />
                         </StackLayout>
-                        
-                        <Label Text="Select the text file with the bonus questions details." />
+
+                        <Label Text="{x:Static resources:AppResources.BonusQAInstructions}"
+                               Margin="0,4,0,10" />
 
                         <Button x:Name="QuestionsBrowseButton" 
+                                Padding="10"
                                 Text="Select Questions"
-                                HorizontalOptions="StartAndExpand" Margin="0,0,0,4"
+                                HorizontalOptions="StartAndExpand" Margin="0,0,0,10"
                                 Clicked="QuestionsBrowseButton_Clicked" />
 
                         <Button x:Name="QuestionsClearButton" 
+                                Padding="10"
                                 Text="Clear Questions"
-                                HorizontalOptions="StartAndExpand" Margin="0,0,0,4"
+                                HorizontalOptions="StartAndExpand" Margin="0,0,0,10"
                                 Clicked="QuestionsClearButton_Clicked" />
+                    </StackLayout>
 
-                        <Label Text="Bonus question file:" />
+                    <StackLayout Grid.Row="3" Margin="10"
+                        IsVisible="{Binding BonusQuestionFile,
+                            Mode=OneWay,
+                            Converter={StaticResource FilePathToIsVisible}}">
+
+                            <Label Text="Selected questions file:" 
+                                IsVisible="{Binding BonusQuestionFile,
+                                    Mode=OneWay,
+                                    Converter={StaticResource FilePathToIsVisible}}"
+                               Margin="0,0,0,4" />
                         <Label Text="{Binding BonusQuestionFile}" />
                     </StackLayout>
-                    
-                    <CollectionView Grid.Row="3" x:Name="QuestionCollectionView"  
-                        SemanticProperties.Description="Selected questions and answers"
-                        ItemsSource="{Binding QuestionListCollection}">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="4">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <Label Grid.Row="0" FontAttributes="Bold" 
-                                        Text="{Binding Question, Mode=OneWay,
-                                        Converter={StaticResource QuestionToQuestionString}}" />
-                                    <Label Grid.Row="1" Text="{Binding Answers, Mode=OneWay,
-                                        Converter={StaticResource AnswerSetToAnswersString}}" />
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
 
+                    <StackLayout Grid.Row="4" Margin="10,0,10,0"
+                        IsVisible="{Binding BonusQuestionFile,
+                            Mode=OneWay,
+                            Converter={StaticResource FilePathToIsVisible}}">
+
+                        <Label Text="Loaded questions:" />
+
+                        <CollectionView x:Name="QuestionCollectionView"  
+                                SemanticProperties.Description="Selected questions and answers"
+                                ItemsSource="{Binding QuestionListCollection}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="4">
+                                        <SemanticProperties.Description>
+                                            <MultiBinding Converter="{StaticResource QAToItemName}">
+                                                <Binding Path="Question" />
+                                                <Binding Path="Answers" 
+                                                    Converter="{StaticResource AnswerSetToAnswersString}" />
+                                            </MultiBinding>
+                                        </SemanticProperties.Description>
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Row="0" FontAttributes="Bold" 
+                                                Text="{Binding Question, Mode=OneWay,
+                                                Converter={StaticResource QuestionToQuestionString}}" />
+                                        <Label Grid.Row="1" Text="{Binding Answers, Mode=OneWay,
+                                                Converter={StaticResource AnswerSetToAnswersString}}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                    </StackLayout>
+                    
                 </Grid>
             </ScrollView>
             
             <Button Grid.Row="2" x:Name="CloseButton" 
-                HorizontalOptions="End" Margin="0,0,4,4"
+                HorizontalOptions="End" Margin="0,10,0,0" Padding="10"
                 Text="{x:Static resources:AppResources.Close}" Clicked="CloseButton_Clicked" />
         </Grid>
     </ContentPage.Content>

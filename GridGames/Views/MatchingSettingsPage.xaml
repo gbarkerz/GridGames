@@ -7,7 +7,7 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <localviews:MatchingSettingsPicturePathToIsVisible x:Key="MatchingSettingsPicturePathToIsVisible" />
+            <localviews:FilePathToIsVisible x:Key="FilePathToIsVisible" />
             <localviews:CheckBoxStateToAccessibleName x:Key="CheckBoxStateToAccessibleName" />
             <localviews:PictureAspectToInt x:Key="PictureAspectToInt" />            
             <localviews:PathToDirectoryName x:Key="PathToDirectoryName" />            
@@ -126,7 +126,7 @@
                         <Label Grid.Column="1" 
                             Text="{x:Static resources:AppResources.NoFolderSelected}"                               
                             IsVisible="{Binding PicturePathMatching, Mode=OneWay,
-                                Converter={StaticResource MatchingSettingsPicturePathToIsVisible}}" />
+                                Converter={StaticResource FilePathToIsVisible}}" />
                         <Label Grid.Column="1" Text="{Binding PictureOriginalPathMatching, Mode=TwoWay}" />
                     </Grid>
 
