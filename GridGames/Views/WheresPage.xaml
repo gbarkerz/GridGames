@@ -63,7 +63,7 @@
                 BackgroundColor="{DynamicResource WheresGridBackgroundColor}"
                 Opacity="{Binding FirstRunWheres, Mode=OneWay,
                     Converter={StaticResource FirstRunToGridOpacity}}"
-                SelectionMode="None" 
+                SelectionMode="Single" 
                 ItemsSource="{Binding WheresListCollection}">
 
                 <CollectionView.ItemsLayout>
@@ -78,6 +78,7 @@
                                     Path=BindingContext.GridRowHeight,
                                     Mode=OneWay}"
                             BackgroundColor="Transparent"
+                            Padding="0" Margin="1"
                             AutomationProperties.IsInAccessibleTree="True"
                             SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}">
                             <Grid.GestureRecognizers>
@@ -87,7 +88,7 @@
                             
                             <!-- Barker Todo: Add support for Voice Access. -->
 
-                            <Frame Margin="0" Padding="0" AutomationProperties.IsInAccessibleTree="False"
+                            <Frame Margin="0" Padding="1" AutomationProperties.IsInAccessibleTree="False"
                                 BorderColor="{DynamicResource SquaresNumberTextColor}"
                                 BackgroundColor="{Binding IsFound, 
                                     Converter={StaticResource WheresAnsweredToBackgroundColor}}">

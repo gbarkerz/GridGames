@@ -192,7 +192,7 @@ namespace GridGames.ViewModels
             }
         }
 
-        public async void LoadBonusQuestions(string pathQuestions)
+        public void LoadBonusQuestions(string pathQuestions)
         {
             QuestionListCollection.Clear();
 

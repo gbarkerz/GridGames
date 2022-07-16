@@ -50,7 +50,6 @@
                 Opacity="{Binding FirstRunMatching, Mode=OneWay,
                     Converter={StaticResource FirstRunMatchingToGridOpacity}}"
                 SelectionMode="Single"
-                SelectionChanged="MatchingGrid_SelectionChanged"
                 ItemsSource="{Binding SquareListCollection}">
 
                 <CollectionView.ItemsLayout>

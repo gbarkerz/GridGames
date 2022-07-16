@@ -175,15 +175,28 @@ namespace GridGames.Views
 
         private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
+            int itemIndex = (int)(e as Microsoft.Maui.Controls.TappedEventArgs).Parameter;
+            await ReactToInputOnCard(itemIndex);
+        }
+
+        public async void ReactToKeyInputOnSelectedCard()
+        {
+            var item = SquaresCollectionView.SelectedItem as Card;
+            if (item != null)
+            {
+                await ReactToInputOnCard(item.Index);
+            }
+        }
+
+        private async Task ReactToInputOnCard(int itemIndex)
+        {
+            Debug.WriteLine("Grid Games: Input on Square " + itemIndex);
+
             var vm = this.BindingContext as MatchingViewModel;
             if (vm.FirstRunMatching)
             {
                 return;
             }
-
-            int itemIndex = (int)(e as Microsoft.Maui.Controls.TappedEventArgs).Parameter;
-
-            Debug.WriteLine("Grid Games: Tapped on Square " + itemIndex);
 
             int itemCollectionIndex = GetItemCollectionIndexFromItemIndex(itemIndex);
             if (itemCollectionIndex == -1)
