@@ -66,9 +66,7 @@ namespace GridGames.ViewModels
         {
             Debug.WriteLine("GridGames: Announcing \"" + notification + "\"");
 
-            // Barker: Fix this.
-            //var service = DependencyService.Get<IGridGamesPlatformAction>();
-            //service.ScreenReaderAnnouncement(notification);
+            SemanticScreenReader.Default.Announce(notification);
         }
     }
 }
