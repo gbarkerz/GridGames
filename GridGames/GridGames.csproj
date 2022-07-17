@@ -94,12 +94,6 @@
 	  <MauiXaml Update="Views\MatchingSettingsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\SquaresPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\SquaresSettingsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="Views\WCAGPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

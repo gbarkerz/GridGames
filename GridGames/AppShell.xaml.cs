@@ -31,14 +31,6 @@ public partial class AppShell : Shell
                 await Navigation.PushModalAsync(new HelpPage(currentPage));
             }
         }
-        else if (currentPage is SquaresPage)
-        {
-            var vm = (CurrentPage as SquaresPage).BindingContext as SquaresViewModel;
-            if (!vm.FirstRunSquares)
-            {
-                await Navigation.PushModalAsync(new HelpPage(currentPage));
-            }
-        }
     }
 
     private async void OnAppSettingsMenuItemClicked(object sender, EventArgs e)

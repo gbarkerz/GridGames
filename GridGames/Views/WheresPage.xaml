@@ -27,13 +27,14 @@
     </ContentPage.Resources>
 
     <Shell.TitleView>
-        <Grid Padding="5,5,0,0">
+        <Grid Padding="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Text="{x:Static resources:AppResources.Wheres}"
-                TextColor="{DynamicResource GameTitleBarTextColor}" VerticalOptions="Center"
+                TextColor="{DynamicResource GameTitleBarTextColor}"
+                HorizontalOptions="Center" VerticalOptions="Center"
                 FontSize="Title" />
             <Button Grid.Column="1" Text="&#xf013;" Clicked="WheresGameSettingsButton_Clicked"
                 BorderWidth="0"
@@ -60,12 +61,13 @@
             <CollectionView Grid.Row="1"
                 x:Name="SquaresCollectionView"
                 SemanticProperties.Description="WCAG Groups"
+                Margin="2,0,2,0"
                 BackgroundColor="{DynamicResource WheresGridBackgroundColor}"
                 Opacity="{Binding FirstRunWheres, Mode=OneWay,
                     Converter={StaticResource FirstRunToGridOpacity}}"
                 SelectionMode="Single" 
                 ItemsSource="{Binding WheresListCollection}">
-
+                
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" Span="4" />
                 </CollectionView.ItemsLayout>
@@ -78,7 +80,7 @@
                                     Path=BindingContext.GridRowHeight,
                                     Mode=OneWay}"
                             BackgroundColor="Transparent"
-                            Padding="0" Margin="1"
+                            Padding="0" Margin="2"
                             AutomationProperties.IsInAccessibleTree="True"
                             SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}">
                             <Grid.GestureRecognizers>
