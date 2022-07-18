@@ -165,11 +165,6 @@ namespace GridGames.ViewModels
 
         public int AnswerAttemptCount { get; set; }
         public int CurrentQuestionIndex { get; set; }
-        public bool PlaySoundOnMatch { get; set; }
-        public bool PlaySoundOnNotMatch { get; set; }
-
-        private string soundOnMatch = "SoundOnMatch.m4a";
-        private string soundOnNotMatch = "SoundOnNotMatch.m4a";
 
         private WheresSettingsViewModel wheresSettingsVM;
         public WheresSettingsViewModel WheresSettingsVM
@@ -275,8 +270,6 @@ namespace GridGames.ViewModels
 
                 card.IsFound = true;
 
-                PlaySoundOnAnswerAttempt(true);
-
                 // Has the game been won?
                 gameIsWon = GameIsWon();
                 if (!gameIsWon)
@@ -294,8 +287,6 @@ namespace GridGames.ViewModels
             }
             else if (card.WCAGName != "Tip")
             {
-                PlaySoundOnAnswerAttempt(false);
-
                 ++AnswerAttemptCount;
 
                 var message = String.Format(
@@ -307,23 +298,6 @@ namespace GridGames.ViewModels
 
             return gameIsWon;
         }
-
-        private void PlaySoundOnAnswerAttempt(bool foundWCAG)
-        {
-            if ((PlaySoundOnMatch && foundWCAG) || (PlaySoundOnNotMatch && !foundWCAG))
-            {
-                var assembly = typeof(App).GetTypeInfo().Assembly;
-                Stream audioStream = assembly.GetManifestResourceStream(
-                    "GridGames.Resources." +
-                        (foundWCAG ? soundOnMatch : soundOnNotMatch));
-
-                // Barker; Get sounds working.
-                //var player = Plugin.SimpleAudioPlayer.CrossSimpleAudioPlayer.Current;
-                //player.Load(audioStream);
-                //player.Play();
-            }
-        }
-
 
         public bool AttemptTurnUpBySelection(object currentSelection)
         {

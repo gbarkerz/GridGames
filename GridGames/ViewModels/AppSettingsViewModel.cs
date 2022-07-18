@@ -41,25 +41,5 @@ namespace GridGames.ViewModels
                 }
             }
         }
-
-        // Use "new" hear to make it unabiguous between the BaseViewModel HideGrid property.
-        private bool hideGrid;
-        public new bool HideGrid
-        {
-            get
-            {
-                return hideGrid;
-            }
-            set
-            {
-                if (hideGrid != value)
-                {
-                    SetProperty(ref hideGrid, value);
-
-                    Preferences.Set("HideGrid", value);
-                }
-            }
-        }
-
     }
 }

@@ -69,10 +69,6 @@ namespace GridGames.Views
             //        MatchingWelcomeTitleLabel.Text + ", " + MatchingWelcomeTitleInstructions.Text);
             //}
 
-            vm.PlaySoundOnMatch = Preferences.Get("PlaySoundOnMatch", true);
-            vm.PlaySoundOnNotMatch = Preferences.Get("PlaySoundOnNotMatch", true);
-            vm.HideGrid = Preferences.Get("HideGrid", false);
-
             // Default to Fill and Clip.
             vm.PictureAspect = (Aspect)Preferences.Get("PictureAspect", 1);
 

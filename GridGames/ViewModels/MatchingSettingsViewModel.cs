@@ -98,42 +98,6 @@ namespace GridGames.ViewModels
                 }
             }
         }
-
-        private bool playSoundOnMatch;
-        public bool PlaySoundOnMatch
-        {
-            get
-            {
-                return playSoundOnMatch;
-            }
-            set
-            {
-                if (playSoundOnMatch != value)
-                {
-                    SetProperty(ref playSoundOnMatch, value);
-
-                    Preferences.Set("PlaySoundOnMatch", value);
-                }
-            }
-        }
-
-        private bool playSoundOnNotMatch;
-        public bool PlaySoundOnNotMatch
-        {
-            get
-            {
-                return playSoundOnNotMatch;
-            }
-            set
-            {
-                if (playSoundOnNotMatch != value)
-                {
-                    SetProperty(ref playSoundOnNotMatch, value);
-
-                    Preferences.Set("PlaySoundOnNotMatch", value);
-                }
-            }
-        }
     }
 
     public class PictureData : INotifyPropertyChanged

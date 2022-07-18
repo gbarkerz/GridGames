@@ -88,24 +88,6 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hide Grid.
-        /// </summary>
-        internal static string AppSettingsHideGrid {
-            get {
-                return ResourceManager.GetString("AppSettingsHideGrid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to When the grid contents are visually hidden, use a screen reader to play the game..
-        /// </summary>
-        internal static string AppSettingsHideGridInstructions {
-            get {
-                return ResourceManager.GetString("AppSettingsHideGridInstructions", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Settings here apply to all games in the Grid Games app..
         /// </summary>
         internal static string AppSettingsIntro {
@@ -884,24 +866,6 @@ namespace GridGames.ResX {
         internal static string PicturePath {
             get {
                 return ResourceManager.GetString("PicturePath", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Play a sound when upturned cards match.
-        /// </summary>
-        internal static string PlaySoundMatch {
-            get {
-                return ResourceManager.GetString("PlaySoundMatch", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Play a sound when upturned cards don&apos;t match.
-        /// </summary>
-        internal static string PlaySoundNotMatch {
-            get {
-                return ResourceManager.GetString("PlaySoundNotMatch", resourceCulture);
             }
         }
         
@@ -2270,24 +2234,6 @@ namespace GridGames.ResX {
         internal static string WheresGameHelp {
             get {
                 return ResourceManager.GetString("WheresGameHelp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Play sound when WCAG found.
-        /// </summary>
-        internal static string WheresPlaySoundMatch {
-            get {
-                return ResourceManager.GetString("WheresPlaySoundMatch", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Play sound when WCAG not found.
-        /// </summary>
-        internal static string WheresPlaySoundNotMatch {
-            get {
-                return ResourceManager.GetString("WheresPlaySoundNotMatch", resourceCulture);
             }
         }
         

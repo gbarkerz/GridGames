@@ -126,12 +126,6 @@
   <data name="AppSettingsDarkThemeInstructions" xml:space="preserve">
     <value>Changing the theme will restart the current game.</value>
   </data>
-  <data name="AppSettingsHideGrid" xml:space="preserve">
-    <value>Hide Grid</value>
-  </data>
-  <data name="AppSettingsHideGridInstructions" xml:space="preserve">
-    <value>When the grid contents are visually hidden, use a screen reader to play the game.</value>
-  </data>
   <data name="AppSettingsIntro" xml:space="preserve">
     <value>Settings here apply to all games in the Grid Games app.</value>
   </data>
@@ -423,12 +417,6 @@ Would you like to play another game?</value>
   </data>
   <data name="PicturePath" xml:space="preserve">
     <value>Picture Path:</value>
-  </data>
-  <data name="PlaySoundMatch" xml:space="preserve">
-    <value>Play a sound when upturned cards match</value>
-  </data>
-  <data name="PlaySoundNotMatch" xml:space="preserve">
-    <value>Play a sound when upturned cards don't match</value>
   </data>
   <data name="RestartGame" xml:space="preserve">
     <value>Restart Game</value>
@@ -885,12 +873,6 @@ Would you like to play another game?</value>
   </data>
   <data name="WheresGameHelp" xml:space="preserve">
     <value>Where's WCAG? Help</value>
-  </data>
-  <data name="WheresPlaySoundMatch" xml:space="preserve">
-    <value>Play sound when WCAG found</value>
-  </data>
-  <data name="WheresPlaySoundNotMatch" xml:space="preserve">
-    <value>Play sound when WCAG not found</value>
   </data>
   <data name="WheresSettings" xml:space="preserve">
     <value>Where's WCAG? Settings</value>

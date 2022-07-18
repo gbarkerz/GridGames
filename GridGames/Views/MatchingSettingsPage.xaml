@@ -45,46 +45,6 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-
-                        <!-- No sound in the app yet. -->
-                        
-                        <!--
-                        <Label Grid.Row="0" Grid.Column="0" x:Name="PlaySoundOnMatchLabel" 
-                            Text="{x:Static resources:AppResources.PlaySoundMatch}"
-                            VerticalOptions="Center" />
-                        -->
-                        
-                        <!-- For iOS
-                        <CheckBox Grid.Row="0" Grid.Column="1" x:Name="PlaySoundOnMatchCheckBox"
-                            AutomationProperties.Name="{Binding PlaySoundOnMatch,
-                                Mode=OneWay,
-                                Converter={StaticResource CheckBoxStateToAccessibleName},
-                                ConverterParameter=PlaySoundMatch}"
-                            VerticalOptions="Center" IsChecked="{Binding PlaySoundOnMatch}" />
-                        -->
-                        <!-- For Android -->
-                        <!--
-                        <CheckBox Grid.Row="0" Grid.Column="1" x:Name="PlaySoundOnMatchCheckBox"
-                            SemanticProperties.Description="{x:Static resources:AppResources.PlaySoundMatch}"
-                            VerticalOptions="Center" IsChecked="{Binding PlaySoundOnMatch}" />
-                        <Label Grid.Row="1" Grid.Column="0" x:Name="PlaySoundOnNotMatchLabel" 
-                            Text="{x:Static resources:AppResources.PlaySoundNotMatch}"
-                            VerticalOptions="Center" />
-                        -->
-                        <!-- For iOS
-                        <CheckBox Grid.Row="1" Grid.Column="1" x:Name="PlaySoundOnNotMatchCheckBox"
-                            AutomationProperties.Name="{Binding PlaySoundOnNotMatch,
-                                Mode=OneWay,
-                                Converter={StaticResource CheckBoxStateToAccessibleName},
-                                ConverterParameter=PlaySoundNotMatch}"
-                            VerticalOptions="Center" IsChecked="{Binding PlaySoundOnNotMatch}" />
-                        -->
-                        <!-- For Android -->
-                        <!--
-                        <CheckBox Grid.Row="1" Grid.Column="1" x:Name="PlaySoundOnNotMatchCheckBox"
-                            SemanticProperties.Description="{x:Static resources:AppResources.PlaySoundNotMatch}"
-                            VerticalOptions="Center" IsChecked="{Binding PlaySoundOnNotMatch}" />
-                        -->
                     </Grid>
 
                     <Grid Grid.Row="1">

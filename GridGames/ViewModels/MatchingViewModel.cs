@@ -128,8 +128,6 @@ namespace GridGames.ViewModels
     {
         private Card firstCardInMatchAttempt;
         private Card secondCardInMatchAttempt;
-        private string soundOnMatch = "SoundOnMatch.m4a";
-        private string soundOnNotMatch = "SoundOnNotMatch.m4a";
 
         public MatchingViewModel()
         {
@@ -142,8 +140,6 @@ namespace GridGames.ViewModels
 
         public int MoveCount { get; set; }
         public int TryAgainCount { get; set; }
-        public bool PlaySoundOnMatch { get; set; }
-        public bool PlaySoundOnNotMatch { get; set; }
 
         private bool firstRunMatching = true;
         public bool FirstRunMatching
@@ -163,6 +159,9 @@ namespace GridGames.ViewModels
             }
         }
 
+        // Barker: Remove this at some point, and only use the equivalent property in the
+        // MatchingSettingsViewModel. When this is done, the bound property in the grid's
+        // squares needs to update following a change made at the Matching Settings page.
         private Aspect pictureAspect;
         public Aspect PictureAspect
         {
@@ -175,7 +174,6 @@ namespace GridGames.ViewModels
                 SetProperty(ref pictureAspect, value);
             }
         }
-
 
         private double gridRowHeight;
         public double GridRowHeight
@@ -299,14 +297,8 @@ namespace GridGames.ViewModels
                     firstCardInMatchAttempt = null;
                     secondCardInMatchAttempt = null;
 
-                    PlayCardMatchSound(true);
-
                     // Has the game been won?
                     gameIsWon = GameIsWon();
-                }
-                else
-                {
-                    PlayCardMatchSound(false);
                 }
             }
 
@@ -338,22 +330,6 @@ namespace GridGames.ViewModels
             }
 
             return AttemptToTurnOverSquare(currentSelectionIndex);
-        }
-
-        private void PlayCardMatchSound(bool cardsMatch)
-        {
-            if ((PlaySoundOnMatch && cardsMatch) || (PlaySoundOnNotMatch && !cardsMatch))
-            {
-                var assembly = typeof(App).GetTypeInfo().Assembly;
-                Stream audioStream = assembly.GetManifestResourceStream(
-                    "GridGames.Resources." +
-                        (cardsMatch ? soundOnMatch : soundOnNotMatch));
-
-                // Barker: Turn it on, turn it on again.
-                //var player = Plugin.SimpleAudioPlayer.CrossSimpleAudioPlayer.Current;
-                //player.Load(audioStream);
-                //player.Play();
-            }
         }
 
         private void TurnUpCard(Card card)

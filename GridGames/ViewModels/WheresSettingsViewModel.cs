@@ -104,9 +104,6 @@ namespace GridGames.ViewModels
 
             this.QuestionListCollection = new ObservableCollection<QAPair>();
 
-            PlaySoundOnMatch = Preferences.Get("WheresPlaySoundOnMatch", false);
-            PlaySoundOnNotMatch = Preferences.Get("WheresPlaySoundOnNotMatch", false);
-            
             ShowBonusQuestion = Preferences.Get("ShowBonusQuestion", false);
             BonusQuestionFile = Preferences.Get("BonusQuestionFile", "");
 
@@ -154,42 +151,6 @@ namespace GridGames.ViewModels
         {
             get { return questionList; }
             set { this.questionList = value; }
-        }
-
-        private bool playSoundOnMatch;
-        public bool PlaySoundOnMatch
-        {
-            get
-            {
-                return playSoundOnMatch;
-            }
-            set
-            {
-                if (playSoundOnMatch != value)
-                {
-                    SetProperty(ref playSoundOnMatch, value);
-
-                    Preferences.Set("WheresPlaySoundOnMatch", value);
-                }
-            }
-        }
-
-        private bool playSoundOnNotMatch;
-        public bool PlaySoundOnNotMatch
-        {
-            get
-            {
-                return playSoundOnNotMatch;
-            }
-            set
-            {
-                if (playSoundOnNotMatch != value)
-                {
-                    SetProperty(ref playSoundOnNotMatch, value);
-
-                    Preferences.Set("WheresPlaySoundOnNotMatch", value);
-                }
-            }
         }
 
         public void LoadBonusQuestions(string pathQuestions)

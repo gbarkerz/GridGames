@@ -31,8 +31,7 @@ namespace GridGames
             this.BindingContext = new MatchingSettingsViewModel();
 
             var vm = this.BindingContext as MatchingSettingsViewModel;
-            vm.PlaySoundOnMatch = Preferences.Get("PlaySoundOnMatch", true);
-            vm.PlaySoundOnNotMatch = Preferences.Get("PlaySoundOnNotMatch", true);
+
             vm.ShowCustomPictures = Preferences.Get("ShowCustomPictures", false);
             vm.PicturePathMatching = Preferences.Get("PicturePathMatching", "");
             vm.PictureOriginalPathMatching = Preferences.Get("PictureOriginalPathMatching", "");

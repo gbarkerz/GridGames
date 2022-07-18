@@ -140,10 +140,6 @@
 
             </CollectionView>
 
-            <!-- This Grid is here to support a setting to visually hide the game grid contents. -->
-            <Grid IsVisible="{Binding HideGrid}"
-                BackgroundColor="{DynamicResource GridBackgroundColor}" />
-
             <Frame Grid.Row="0" Grid.RowSpan="2" Margin="4" Padding="8"
                 IsVisible="{Binding FirstRunWheres}"
                 BorderColor="{DynamicResource MessageTextColor}"

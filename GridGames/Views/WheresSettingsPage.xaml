@@ -39,43 +39,6 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-
-                    <!-- For iOS 
-                    <CheckBox Grid.Row="0" Grid.Column="1" x:Name="PlaySoundOnMatchCheckBox"
-                        AutomationProperties.Name="{Binding PlaySoundOnMatch,
-                            Mode=OneWay,
-                            Converter={StaticResource CheckBoxStateToAccessibleName},
-                            ConverterParameter=WheresPlaySoundMatch}"
-                        VerticalOptions="Center" IsChecked="{Binding PlaySoundOnMatch}" />
-                    -->
-                    <!-- For Android -->
-                    
-                    <!-- No cross-platform support for playing audio on Maui yet.
-                    <CheckBox Grid.Row="0" Grid.Column="1" x:Name="PlaySoundOnMatchCheckBox"
-                        AutomationProperties.LabeledBy="PlaySoundOnMatchLabel"
-                        VerticalOptions="Center" IsChecked="{Binding PlaySoundOnMatch}" />
-                    <Label Grid.Row="0" Grid.Column="0" x:Name="PlaySoundOnMatchLabel" 
-                        Text="{x:Static resources:AppResources.WheresPlaySoundMatch}"
-                        VerticalOptions="Center" />
-                    -->
-                    
-                    <!-- For iOS 
-                    <CheckBox Grid.Row="1" Grid.Column="1" x:Name="PlaySoundOnNotMatchCheckBox"
-                        AutomationProperties.Name="{Binding PlaySoundOnNotMatch,
-                            Mode=OneWay,
-                            Converter={StaticResource CheckBoxStateToAccessibleName},
-                            ConverterParameter=WheresPlaySoundNotMatch}"
-                        VerticalOptions="Center" IsChecked="{Binding PlaySoundOnNotMatch}" />
-                    -->
-                    <!-- For Android -->
-                    <!-- No cross-platform support for playing audio on Maui yet.
-                    <CheckBox Grid.Row="1" Grid.Column="1" x:Name="PlaySoundOnNotMatchCheckBox"
-                        AutomationProperties.LabeledBy="PlaySoundOnNotMatchLabel"
-                        VerticalOptions="Center" IsChecked="{Binding WheresPlaySoundOnNotMatch}" />
-                    <Label Grid.Row="1" Grid.Column="0" x:Name="PlaySoundOnNotMatchLabel" 
-                        Text="{x:Static resources:AppResources.WheresPlaySoundNotMatch}"
-                        VerticalOptions="Center" />
-                    -->
                     
                     <StackLayout Grid.Row="2" Margin="0,10,0,10">
                         <Label Text="Bonus Questions" FontSize="Subtitle" Margin="0,0,0,10" />

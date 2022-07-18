@@ -18,7 +18,6 @@ namespace GridGames
             this.BindingContext = new AppSettingsViewModel();
 
             var vm = this.BindingContext as AppSettingsViewModel;
-            vm.HideGrid = Preferences.Get("HideGrid", false);
             vm.ShowDarkTheme = Preferences.Get("ShowDarkTheme", false);
 
             currentShowDarkTheme = vm.ShowDarkTheme;
