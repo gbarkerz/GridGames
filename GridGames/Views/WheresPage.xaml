@@ -32,9 +32,10 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Text="{x:Static resources:AppResources.Wheres}"
+            <Label Grid.Column="0" Grid.ColumnSpan="2" Text="{x:Static resources:AppResources.Wheres}"
                 TextColor="{DynamicResource GameTitleBarTextColor}"
                 HorizontalOptions="Center" VerticalOptions="Center"
+                SemanticProperties.HeadingLevel="Level1"
                 FontSize="Title" />
             <Button Grid.Column="1" Text="&#xf013;" Clicked="WheresGameSettingsButton_Clicked"
                 BorderWidth="0"
@@ -53,8 +54,10 @@
                 Text="{Binding
                     Source={x:Reference WheresPageInstance},
                     Path=BindingContext.CurrentQuestionWCAG,
-                    Mode=OneWay, Converter={StaticResource WCAGTitleToQuestion}}"                 
-                FontSize="Subtitle" 
+                    Mode=OneWay, Converter={StaticResource WCAGTitleToQuestion}}" 
+                SemanticProperties.HeadingLevel="Level2"
+                FontSize="Header" 
+                HorizontalOptions="Start"
                 Opacity="{Binding FirstRunWheres, Mode=OneWay,
                     Converter={StaticResource FirstRunToGridOpacity}}"
                 Padding="8,8,4,4" />
@@ -90,8 +93,8 @@
                             
                             <!-- Barker Todo: Add support for Voice Access. -->
 
-                            <Frame Margin="0" Padding="1" AutomationProperties.IsInAccessibleTree="False"
-                                BorderColor="{DynamicResource SquaresNumberTextColor}"
+                            <Frame Margin="2" Padding="0" AutomationProperties.IsInAccessibleTree="False"
+                                BorderColor="Grey"
                                 BackgroundColor="{Binding IsFound, 
                                     Converter={StaticResource WheresAnsweredToBackgroundColor}}">
                                 <Grid AutomationProperties.IsInAccessibleTree="False">
