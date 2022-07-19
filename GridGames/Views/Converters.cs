@@ -1,11 +1,6 @@
 ﻿using GridGames.ResX;
 using GridGames.ViewModels;
-using System;
 using System.Globalization;
-using System.IO;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Xaml;
 using System.Collections.ObjectModel;
 
 namespace GridGames.Views
@@ -492,36 +487,36 @@ namespace GridGames.Views
         }
     }
 
-    public class WheresAnsweredToTextColor : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var answered = (bool)value;
+    //public class WheresAnsweredToTextColor : IValueConverter
+    //{
+    //    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    //    {
+    //        var answered = (bool)value;
 
-            return answered ? App.Current.Resources["WheresAnsweredTextColor"] :
-                                App.Current.Resources["WheresTextColor"];
-        }
+    //        return answered ? App.Current.Resources["WheresAnsweredTextColor"] :
+    //                            App.Current.Resources["WheresTextColor"];
+    //    }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
+    //    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}
 
-    public class WheresAnsweredToBackgroundColor : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var answered = (bool)value;
+    //public class WheresAnsweredToBackgroundColor : IValueConverter
+    //{
+    //    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    //    {
+    //        var answered = (bool)value;
 
-            return answered ? App.Current.Resources["WheresAnsweredBackgroundColor"] : Colors.Transparent;
-        }
+    //        return answered ? App.Current.Resources["WheresAnsweredBackgroundColor"] : Colors.Transparent;
+    //    }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
+    //    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}
 
     public class FirstRunToGridOpacity : IValueConverter
     {

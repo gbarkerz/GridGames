@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:GridGames"
              x:Class="GridGames.App">
     <Application.Resources>
-        <ResourceDictionary Source="Styles/LightTheme.xaml" />
+        <!--<ResourceDictionary Source="Styles/LightTheme.xaml" />-->
     </Application.Resources>
 </Application>

@@ -19,9 +19,9 @@
     <!-- The CheckBox doesn't seem to be stylable in a way to control the border colour, 
         the background colour, and the tick colour, so stick to the default colours. -->
 
-    <Style TargetType="Label">
+    <!--<Style TargetType="Label">
         <Setter Property="TextColor" Value="Black"></Setter>
-    </Style>
+    </Style>-->
     
     <Style TargetType="Picker">
         <Setter Property="TextColor" Value="Black"></Setter>

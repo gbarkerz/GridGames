@@ -4,7 +4,6 @@
              xmlns:localviews="clr-namespace:GridGames.Views"
              xmlns:resources="clr-namespace:GridGames.ResX"
              xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
-             BackgroundColor="{DynamicResource PageBackgroundColor}"
              x:Class="GridGames.WheresGameSettingsPage">
 
     <ContentPage.Resources>
@@ -18,8 +17,7 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <Grid Padding="10"
-            BackgroundColor="{DynamicResource PageBackgroundColor}">
+        <Grid Padding="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />

@@ -49,7 +49,21 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Styles\**" />
+	  <Compile Remove="Styles\**" />
+	  <EmbeddedResource Remove="Styles\**" />
+	  <MauiCss Remove="Styles\**" />
+	  <MauiXaml Remove="Styles\**" />
+	  <None Remove="Styles\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Remove="Platforms\Windows\DependencyService.cs" />
+	  <Compile Remove="Views\AppSettingsPage.xaml.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Remove="Views\AppSettingsPage.xaml" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -82,15 +96,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Styles\DarkTheme.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Styles\LightTheme.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\AppSettingsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="Views\MatchingSettingsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -16,9 +16,9 @@
 
     <Color x:Key="Primary">#004000</Color>
     
-    <Style TargetType="Label">
+    <!--<Style TargetType="Label">
         <Setter Property="TextColor" Value="White"></Setter>
-    </Style>
+    </Style>-->
     
     <Style TargetType="Picker">
         <Setter Property="TextColor" Value="White"></Setter>

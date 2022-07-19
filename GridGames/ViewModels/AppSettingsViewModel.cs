@@ -1,6 +1,5 @@
 ﻿using GridGames.ResX;
 using GridGames.Services;
-using GridGames.Styles;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Xaml;
@@ -30,14 +29,14 @@ namespace GridGames.ViewModels
 
                     Preferences.Set("ShowDarkTheme", value);
 
-                    if (showDarkTheme)
-                    {
-                        App.Current.Resources = new DarkTheme();
-                    }
-                    else
-                    {
-                        App.Current.Resources = new LightTheme();
-                    }
+                    //if (showDarkTheme)
+                    //{
+                    //    App.Current.Resources = new DarkTheme();
+                    //}
+                    //else
+                    //{
+                    //    App.Current.Resources = new LightTheme();
+                    //}
                 }
             }
         }

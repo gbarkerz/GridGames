@@ -7,7 +7,6 @@
              xmlns:localviews="clr-namespace:GridGames.Views"
              xmlns:vm="clr-namespace:GridGames.ViewModels"
              xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
-             BackgroundColor="{DynamicResource PageBackgroundColor}"
              Title="{Binding Title}">
 
     <ContentPage.BindingContext>
@@ -21,8 +20,6 @@
             <localviews:CardToCollectionViewIndex x:Key="CardToCollectionViewIndex" />
             <localviews:WheresLabelContainerHeightToFontSize x:Key="WheresLabelContainerHeightToFontSize" />
             <localviews:LabelContainerHeightToFontSize x:Key="LabelContainerHeightToFontSize" />
-            <localviews:WheresAnsweredToTextColor x:Key="WheresAnsweredToTextColor" />
-            <localviews:WheresAnsweredToBackgroundColor x:Key="WheresAnsweredToBackgroundColor" />
             <localviews:WCAGTitleToQuestion x:Key="WCAGTitleToQuestion" />
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -36,7 +33,6 @@
             <Label Grid.Column="0" Grid.ColumnSpan="2" 
                 Text="{x:Static resources:AppResources.Wheres}"
                 SemanticProperties.HeadingLevel="Level1" FontSize="Title"
-                TextColor="{DynamicResource GameTitleBarTextColor}"
                 HorizontalOptions="Center" VerticalOptions="Center" />
             <Button Grid.Column="1" Text="&#xf013;" Clicked="WheresGameSettingsButton_Clicked"
                 BorderWidth="0"
@@ -66,7 +62,6 @@
                 x:Name="SquaresCollectionView"
                 SemanticProperties.Description="WCAG Groups"
                 Margin="2,0,2,0"
-                BackgroundColor="Transparent"
                 Opacity="{Binding FirstRunWheres, Mode=OneWay,
                     Converter={StaticResource FirstRunToGridOpacity}}"
                 SelectionMode="Single" 
@@ -83,7 +78,6 @@
                                 Source={x:Reference WheresPageInstance},
                                     Path=BindingContext.GridRowHeight,
                                     Mode=OneWay}"
-                            BackgroundColor="Transparent"
                             Padding="0" Margin="2"
                             AutomationProperties.IsInAccessibleTree="True"
                             SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}">
@@ -94,19 +88,13 @@
                             
                             <!-- Barker Todo: Add support for Voice Access. -->
 
-                            <Frame Margin="2" Padding="0" AutomationProperties.IsInAccessibleTree="False"
-                                BorderColor="Grey"
-                                BackgroundColor="{Binding IsFound, 
-                                    Converter={StaticResource WheresAnsweredToBackgroundColor}}">
+                            <Frame Margin="2" Padding="0" AutomationProperties.IsInAccessibleTree="False">
                                 <Grid AutomationProperties.IsInAccessibleTree="False">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*" />
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
                                     <Label Grid.Row="0" Text="{Binding WCAGNumber, Mode=OneWay}" 
-                                        BackgroundColor="Transparent"
-                                        TextColor="{Binding IsFound, 
-                                            Converter={StaticResource WheresAnsweredToTextColor}}"
                                         Margin="0" Padding="0,20,0,0"
                                         HorizontalOptions="Center" VerticalOptions="Center"
                                         AutomationProperties.IsInAccessibleTree="False"                                           
@@ -127,8 +115,6 @@
                                     <Label Grid.Row="1" Text="{Binding WCAGName, Mode=OneWay}"
                                         AutomationProperties.IsInAccessibleTree="False"                                           
                                         IsVisible="{Binding IsFound}"
-                                        TextColor="{Binding IsFound, 
-                                            Converter={StaticResource WheresAnsweredToTextColor}}"
                                         LineBreakMode="MiddleTruncation"
                                         MaxLines="2"
                                         Margin="4"
@@ -143,8 +129,6 @@
 
             <Frame Grid.Row="0" Grid.RowSpan="2" Margin="4" Padding="8"
                 IsVisible="{Binding FirstRunWheres}"
-                BorderColor="{DynamicResource MessageTextColor}"
-                BackgroundColor="{DynamicResource PageBackgroundColor}"
                 AutomationProperties.Name="{x:Static resources:AppResources.PairsWelcome}"
                 VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
                 <Grid>
