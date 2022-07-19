@@ -390,26 +390,6 @@ namespace GridGames.Views
         }
     }
 
-    public class SquareTargetIndexToBackgroundColor : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var targetIndex = (int)value;
-
-            //return targetIndex != 15 ?
-            //    App.Current.Resources["SquaresNumberBackgroundColor"] : Color.DarkGray;
-
-            // Barker: How about that!
-            return targetIndex != 15 ?
-                App.Current.Resources["SquaresNumberBackgroundColor"] : Colors.DarkGray;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
     public class PictureAspectToInt : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

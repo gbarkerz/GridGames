@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:resources="clr-namespace:GridGames.ResX"
+             xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
+             BackgroundColor="{DynamicResource PageBackgroundColor}"
              x:Class="GridGames.HelpPage">
     <ContentPage.Content>
         <Grid Padding="10">
@@ -30,6 +32,7 @@
                 </Label>
             </ScrollView>
             <Button Grid.Row="1" x:Name="CloseButton" 
+                windows:VisualElement.AccessKey="C"                                    
                 HorizontalOptions="End" Margin="0,0,4,4" Padding="8"
                 Text="Close" Clicked="CloseButton_Clicked" />
         </Grid>

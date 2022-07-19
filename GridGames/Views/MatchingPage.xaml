@@ -30,10 +30,9 @@
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Grid.ColumnSpan="2"
                 Text="{x:Static resources:AppResources.Pairs}"
-                TextColor="{DynamicResource GameTitleBarTextColor}" 
-                HorizontalOptions="Center" VerticalOptions="Center"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="Title" />
+                SemanticProperties.HeadingLevel="Level1" FontSize="Title"
+                TextColor="{DynamicResource GameTitleBarTextColor}"
+                HorizontalOptions="Center" VerticalOptions="Center" />
             <Button Grid.Column="1" Text="&#xf013;" Clicked="MatchingGameSettingsButton_Clicked"
                 BorderWidth="0"
                 FontFamily="FA" FontSize="Title" HorizontalOptions="End"
@@ -80,16 +79,17 @@
                             </Grid.GestureRecognizers>
 
                             <Frame Margin="2" Padding="0" 
+                                BackgroundColor="Transparent"
                                 BorderColor="Grey">
                                 <Grid>
                                     <!-- Add a hidden label in order to support clicking a card via Voice Access,
                                         by speaking the index of the card in the card list. -->
-                                    <Label IsVisible="False"
+                                    <!--<Label IsVisible="False"
                                         Text="{Binding ., 
                                             Converter={StaticResource CardToCollectionViewIndex}, 
                                             ConverterParameter={Binding Source={x:Reference SquaresCollectionView}, 
                                             Path=BindingContext}}"
-                                        Margin="10"/>
+                                        Margin="10"/>-->
                                     <Image IsVisible="{Binding FaceUp}"
                                         Aspect="{Binding Source={x:Reference MatchingPageInstance},
                                             Path=BindingContext.PictureAspect,

@@ -4,6 +4,7 @@
              xmlns:localviews="clr-namespace:GridGames.Views"
              xmlns:resources="clr-namespace:GridGames.ResX"
              xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
+             BackgroundColor="{DynamicResource PageBackgroundColor}"
              x:Class="GridGames.MatchingGameSettingsPage">
 
     <ContentPage.Resources>
@@ -25,6 +26,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Label Grid.Row="0" FontSize="Title"
+                SemanticProperties.HeadingLevel="Level1"
                 Text="{x:Static resources:AppResources.PairsSettings}" />
             <ScrollView Grid.Row="1" Margin="4,4,4,2">
                 <Grid>

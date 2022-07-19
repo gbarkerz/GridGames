@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:localviews="clr-namespace:GridGames.Views"
              xmlns:resources="clr-namespace:GridGames.ResX"
+             xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
              x:Class="GridGames.AppSettingsPage">
 
     <ContentPage.Resources>
@@ -21,6 +22,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Label Grid.Row="0" FontSize="Title"
+                SemanticProperties.HeadingLevel="Level1"
                 Text="{x:Static resources:AppResources.AppSettings}" />
             <Label Grid.Row="1" 
                 Text="{x:Static resources:AppResources.AppSettingsIntro}" />
@@ -34,17 +36,15 @@
                                 Text="{x:Static resources:AppResources.AppSettingsDarkTheme}" 
                                 VerticalOptions="Center" />
                             <CheckBox x:Name="ShowDarkThemeCheckBox"
-                                AutomationProperties.Name="{Binding ShowDarkTheme,
-                                    Mode=OneWay,
-                                    Converter={StaticResource CheckBoxStateToAccessibleName},
-                                    ConverterParameter=AppSettingsDarkTheme}"
+                                SemanticProperties.Description="{x:Static resources:AppResources.AppSettingsDarkTheme}"
                                 VerticalOptions="Center" IsChecked="{Binding ShowDarkTheme}" />
                         </StackLayout>
                     </StackLayout>
                 </ScrollView>
             </StackLayout>
             <Button Grid.Row="3" x:Name="CloseButton" 
-                HorizontalOptions="End" Margin="0,0,4,4"
+                windows:VisualElement.AccessKey="C"                                    
+                HorizontalOptions="End" Margin="0,0,4,4" Padding="8"
                 Text="{x:Static resources:AppResources.Close}" 
                 Clicked="CloseButton_Clicked" />
         </Grid>
