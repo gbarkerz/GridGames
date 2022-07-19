@@ -15,12 +15,15 @@
     
     <!--The Squares game is currently unavailable in MAUI due to an unavailable 3rd party dependency.-->
 
+    <!--SemanticProperties.Description="Wallace"-->
+
     <FlyoutItem Title="Where's WCAG?"
                 Icon="wheresgameicon.png">
         <Tab>
             <ShellContent ContentTemplate="{DataTemplate views:WheresPage}" />
         </Tab>
     </FlyoutItem>
+
     <FlyoutItem Title="Pairs"
                 Icon="matchinggameicon.png">
         <Tab>

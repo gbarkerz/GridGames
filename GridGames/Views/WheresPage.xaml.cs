@@ -40,12 +40,11 @@ namespace GridGames.Views
             Preferences.Set("InitialGame", "Wheres");
 
             var vm = this.BindingContext as WheresViewModel;
-            //vm.FirstRunWheres = Preferences.Get("FirstRunWheres", true);
-            vm.FirstRunWheres = false;
+
+            vm.FirstRunWheres = Preferences.Get("FirstRunWheres", true);
             if (vm.FirstRunWheres)
             {
-                var service = DependencyService.Get<IGridGamesPlatformAction>();
-                service.ScreenReaderAnnouncement(
+                vm.RaiseNotificationEvent(
                     WheresWelcomeTitleLabel.Text + ", " + WheresWelcomeTitleInstructions.Text);
             }
 

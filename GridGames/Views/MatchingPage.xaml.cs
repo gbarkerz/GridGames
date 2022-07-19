@@ -58,16 +58,12 @@ namespace GridGames.Views
 
             var vm = this.BindingContext as MatchingViewModel;
 
-            // Barker: Fix this.
-            vm.FirstRunMatching = false;
-
-            //vm.FirstRunMatching = Preferences.Get("FirstRunMatching", true);
-            //if (vm.FirstRunMatching)
-            //{
-            //    var service = DependencyService.Get<IGridGamesPlatformAction>();
-            //    service.ScreenReaderAnnouncement(
-            //        MatchingWelcomeTitleLabel.Text + ", " + MatchingWelcomeTitleInstructions.Text);
-            //}
+            vm.FirstRunMatching = Preferences.Get("FirstRunMatching", true);
+            if (vm.FirstRunMatching)
+            {
+                vm.RaiseNotificationEvent(
+                    MatchingWelcomeTitleLabel.Text + ", " + MatchingWelcomeTitleInstructions.Text);
+            }
 
             // Default to Fill and Clip.
             vm.PictureAspect = (Aspect)Preferences.Get("PictureAspect", 1);

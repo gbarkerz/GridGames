@@ -6,6 +6,7 @@
              x:Class="GridGames.Views.MatchingPage"
              xmlns:localviews="clr-namespace:GridGames.Views"
              xmlns:vm="clr-namespace:GridGames.ViewModels"
+             xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
              BackgroundColor="{DynamicResource PageBackgroundColor}"
              Title="{Binding Title}">
 
@@ -103,7 +104,6 @@
                 
             </CollectionView>
 
-<!--
             <Frame Grid.Row="0" Margin="4" Padding="8"
                 IsVisible="{Binding FirstRunMatching}"
                 BorderColor="{DynamicResource MessageTextColor}"
@@ -118,7 +118,8 @@
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" x:Name="MatchingWelcomeTitleLabel"
                         Text="{x:Static resources:AppResources.PairsWelcome}" 
-                        FontSize="Large" FontAttributes="Bold" />
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="Title" Margin="0,0,0,20" />
                     <ScrollView Grid.Row="1">
                         <Label x:Name="MatchingWelcomeTitleInstructions" FontSize="Medium">
                             <Label.FormattedText>
@@ -128,12 +129,13 @@
                             </Label.FormattedText>
                         </Label>
                     </ScrollView>
-                    <Button Grid.Row="2" Margin="0"
+                    <Button Grid.Row="2"
                         Text="{x:Static resources:AppResources.Close}" 
                         Clicked="MatchingWelcomeOKButton_Clicked"
-                        HorizontalOptions="End" />
+                        windows:VisualElement.AccessKey="C"
+                        HorizontalOptions="End" Margin="0,0,4,4" Padding="8" />
                 </Grid>
-            </Frame>-->
+            </Frame>
             
         </Grid>
     </ContentPage.Content>

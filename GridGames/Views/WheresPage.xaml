@@ -6,6 +6,7 @@
              x:Class="GridGames.Views.WheresPage"
              xmlns:localviews="clr-namespace:GridGames.Views"
              xmlns:vm="clr-namespace:GridGames.ViewModels"
+             xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
              BackgroundColor="{DynamicResource PageBackgroundColor}"
              Title="{Binding Title}">
 
@@ -154,7 +155,8 @@
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" x:Name="WheresWelcomeTitleLabel"
                         Text="{x:Static resources:AppResources.WheresWelcome}" 
-                        FontSize="Large" FontAttributes="Bold" />
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="Title" Margin="0,0,0,20" />
                     <ScrollView Grid.Row="1">
                         <Label x:Name="WheresWelcomeTitleInstructions" FontSize="Medium">
                             <Label.FormattedText>
@@ -164,10 +166,11 @@
                             </Label.FormattedText>
                         </Label>
                     </ScrollView>
-                    <Button Grid.Row="2" Margin="0"
+                    <Button Grid.Row="2"
                         Text="{x:Static resources:AppResources.Close}" 
                         Clicked="WheresWelcomeOKButton_Clicked"
-                        HorizontalOptions="End" />
+                        windows:VisualElement.AccessKey="C"
+                        HorizontalOptions="End" Margin="0,0,4,4" Padding="8" />
                 </Grid>
             </Frame>
 

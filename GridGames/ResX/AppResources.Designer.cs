@@ -2211,7 +2211,9 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to After closing this message, please review the help content in the menu for details on how to play this game..
+        ///   Looks up a localized string similar to After closing this message, please review the help content in the menu for details on how to play this game.
+        ///
+        ///The help content can be reached via the Open Navigation button at the top left corner of the app..
         /// </summary>
         internal static string WelcomeInstructions {
             get {
