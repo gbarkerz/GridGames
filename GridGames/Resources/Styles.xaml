@@ -31,6 +31,11 @@
     <Color x:Key="Blue200Accent">#72ACF1</Color>
     <Color x:Key="Blue300Accent">#A7CBF6</Color>
 
+    <!-- Barker: Add these Where's WCAG-related colours. -->
+    <Color x:Key="WheresTextColor">Black</Color>
+    <Color x:Key="WheresAnsweredTextColor">White</Color>
+    <Color x:Key="WheresAnsweredBackgroundColor">Green</Color>
+    
     <Style TargetType="ActivityIndicator">
         <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
     </Style>

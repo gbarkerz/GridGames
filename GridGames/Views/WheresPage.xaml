@@ -21,6 +21,8 @@
             <localviews:WheresLabelContainerHeightToFontSize x:Key="WheresLabelContainerHeightToFontSize" />
             <localviews:LabelContainerHeightToFontSize x:Key="LabelContainerHeightToFontSize" />
             <localviews:WCAGTitleToQuestion x:Key="WCAGTitleToQuestion" />
+            <localviews:WheresAnsweredToTextColor x:Key="WheresAnsweredToTextColor" />
+            <localviews:WheresAnsweredToBackgroundColor x:Key="WheresAnsweredToBackgroundColor" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -90,7 +92,9 @@
                             
                             <!-- Barker Todo: Add support for Voice Access. -->
 
-                            <Frame Margin="2" Padding="0" AutomationProperties.IsInAccessibleTree="False">
+                            <Frame Margin="2" Padding="0" AutomationProperties.IsInAccessibleTree="False"
+                                BackgroundColor="{Binding IsFound, 
+                                    Converter={StaticResource WheresAnsweredToBackgroundColor}}">
                                 <Grid AutomationProperties.IsInAccessibleTree="False">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*" />
@@ -100,7 +104,9 @@
                                         Margin="0" Padding="0,20,0,0"
                                         HorizontalOptions="Center" VerticalOptions="Center"
                                         AutomationProperties.IsInAccessibleTree="False"                                           
-                                        HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type Grid}}, Path=Height}">
+                                        HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type Grid}}, Path=Height}"
+                                        TextColor="{Binding IsFound, 
+                                            Converter={StaticResource WheresAnsweredToTextColor}}">
                                         <Label.FontSize>
                                              <!--Don't only bind to the grid height here, as that leaves the FontSize zero when
                                                 ShowNumbers is set true after moving squares when ShowNumbers is false.--> 
@@ -120,7 +126,9 @@
                                         LineBreakMode="MiddleTruncation"
                                         MaxLines="2"
                                         Margin="4"
-                                        HorizontalOptions="Center" />
+                                        HorizontalOptions="Center" 
+                                        TextColor="{Binding IsFound, 
+                                            Converter={StaticResource WheresAnsweredToTextColor}}" />
                                 </Grid>
                             </Frame>
                         </Grid>
