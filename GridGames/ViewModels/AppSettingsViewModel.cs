@@ -29,14 +29,14 @@ namespace GridGames.ViewModels
 
                     Preferences.Set("ShowDarkTheme", value);
 
-                    //if (showDarkTheme)
-                    //{
-                    //    App.Current.Resources = new DarkTheme();
-                    //}
-                    //else
-                    //{
-                    //    App.Current.Resources = new LightTheme();
-                    //}
+                    if (showDarkTheme)
+                    {
+                        Application.Current.UserAppTheme = AppTheme.Dark;
+                    }
+                    else
+                    {
+                        Application.Current.UserAppTheme = AppTheme.Light;
+                    }
                 }
             }
         }

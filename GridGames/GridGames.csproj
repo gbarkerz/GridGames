@@ -59,11 +59,7 @@
 
 	<ItemGroup>
 	  <Compile Remove="Platforms\Windows\DependencyService.cs" />
-	  <Compile Remove="Views\AppSettingsPage.xaml.cs" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Remove="Views\AppSettingsPage.xaml" />
+	  <Compile Remove="Views\AppSettingsViewModel.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -96,6 +92,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\AppSettingsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\MatchingSettingsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

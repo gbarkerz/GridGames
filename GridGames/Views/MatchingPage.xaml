@@ -22,7 +22,8 @@
     </ContentPage.Resources>
 
     <Shell.TitleView>
-        <Grid Padding="0">
+        <Grid Padding="0"
+              BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -30,6 +31,7 @@
             <Label Grid.Column="0" Grid.ColumnSpan="2"
                 Text="{x:Static resources:AppResources.Pairs}"
                 SemanticProperties.HeadingLevel="Level1" FontSize="Title"
+                TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}"
                 HorizontalOptions="Center" VerticalOptions="Center" />
             <Button Grid.Column="1" Text="&#xf013;" Clicked="MatchingGameSettingsButton_Clicked"
                 BorderWidth="0"

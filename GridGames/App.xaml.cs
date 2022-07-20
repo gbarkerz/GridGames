@@ -9,15 +9,15 @@ public partial class App : Application
 
 		MainPage = new AppShell();
 
-        //var showDarkTheme = Preferences.Get("ShowDarkTheme", false);
-        //if (showDarkTheme)
-        //{
-        //    App.Current.Resources = new DarkTheme();
-        //}
-        //else
-        //{
-        //    App.Current.Resources = new LightTheme();
-        //}
+        var showDarkTheme = Preferences.Get("ShowDarkTheme", false);
+        if (showDarkTheme)
+        {
+            Application.Current.UserAppTheme = AppTheme.Dark;
+        }
+        else
+        {
+            Application.Current.UserAppTheme = AppTheme.Light;
+        }
 
         MainPage = new AppShell();
     }
