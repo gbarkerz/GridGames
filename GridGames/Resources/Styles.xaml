@@ -31,11 +31,17 @@
     <Color x:Key="Blue200Accent">#72ACF1</Color>
     <Color x:Key="Blue300Accent">#A7CBF6</Color>
 
-    <!-- Barker: Add these Where's WCAG-related colours. -->
+    <!-- Barker: Add these Where's WCAG-related colours. Investigate how all this and 
+        the associated converters can be replaced with something less complicated. -->
     <Color x:Key="WheresTextColor">Black</Color>
+    <Color x:Key="WheresBackgroundColor">White</Color>
+    <Color x:Key="WheresTextColorDark">White</Color>
+    <Color x:Key="WheresBackgroundColorDark">Black</Color>
     <Color x:Key="WheresAnsweredTextColor">White</Color>
     <Color x:Key="WheresAnsweredBackgroundColor">Green</Color>
-    
+    <Color x:Key="WheresAnsweredTextColorDark">White</Color>
+    <Color x:Key="WheresAnsweredBackgroundColorDark">Green</Color>
+
     <Style TargetType="ActivityIndicator">
         <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
     </Style>
@@ -188,28 +194,6 @@
         
         <!-- Barker: Add this. -->
         <Setter Property="BackgroundColor" Value="Transparent" />
-    </Style>
-
-    <Style TargetType="ImageButton">
-        <Setter Property="BorderColor" Value="Transparent"/>
-        <Setter Property="BorderWidth" Value="0"/>
-        <Setter Property="CornerRadius" Value="0"/>
-        <Setter Property="VisualStateManager.VisualStateGroups">
-            <VisualStateGroupList>
-                <VisualStateGroup x:Name="CommonStates">
-                    <VisualState x:Name="Normal">
-                        <VisualState.Setters>
-                            <Setter Property="Opacity" Value="1" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="Disabled">
-                        <VisualState.Setters>
-                            <Setter Property="Opacity" Value="0.5" />
-                        </VisualState.Setters>
-                    </VisualState>
-                </VisualStateGroup>
-            </VisualStateGroupList>
-        </Setter>
     </Style>
 
     <Style TargetType="Label">

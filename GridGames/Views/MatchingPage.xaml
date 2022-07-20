@@ -18,6 +18,8 @@
             <localviews:FirstRunMatchingToGridOpacity x:Key="FirstRunMatchingToGridOpacity" />
             <localviews:CollectionViewHeightToRowHeight x:Key="CollectionViewHeightToRowHeight" />
             <localviews:CardToCollectionViewIndex x:Key="CardToCollectionViewIndex" />
+            <localviews:WheresAnsweredToTextColor x:Key="WheresAnsweredToTextColor" />
+            <localviews:WheresAnsweredToBackgroundColor x:Key="WheresAnsweredToBackgroundColor" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -41,7 +43,7 @@
     </Shell.TitleView>
 
     <ContentPage.Content>
-        <Grid x:Name="PageGrid">
+        <Grid x:Name="PageGrid" BackgroundColor="LightGray">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
@@ -49,7 +51,7 @@
             <CollectionView Grid.Row="0"
                 x:Name="SquaresCollectionView"
                 SemanticProperties.Description="Pairs cards"
-                Margin="2,2,2,0"
+                Margin="5,5,5,0"
                 Opacity="{Binding FirstRunMatching, Mode=OneWay,
                     Converter={StaticResource FirstRunMatchingToGridOpacity}}"
                 SelectionMode="Single"
@@ -76,7 +78,8 @@
                                     CommandParameter="{Binding Index}" />
                             </Grid.GestureRecognizers>
 
-                            <Frame Margin="2" Padding="0">
+                            <Frame Margin="2" Padding="0"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
                                 <Grid>
                                     <!-- Add a hidden label in order to support clicking a card via Voice Access,
                                         by speaking the index of the card in the card list. -->

@@ -13,32 +13,5 @@ namespace GridGames.ViewModels
         {
             Title = AppResources.ResourceManager.GetString("AppSettings");
         }
-
-        private bool showDarkTheme;
-        public bool ShowDarkTheme
-        {
-            get
-            {
-                return showDarkTheme;
-            }
-            set
-            {
-                if (showDarkTheme != value)
-                {
-                    SetProperty(ref showDarkTheme, value);
-
-                    Preferences.Set("ShowDarkTheme", value);
-
-                    if (showDarkTheme)
-                    {
-                        Application.Current.UserAppTheme = AppTheme.Dark;
-                    }
-                    else
-                    {
-                        Application.Current.UserAppTheme = AppTheme.Light;
-                    }
-                }
-            }
-        }
     }
 }

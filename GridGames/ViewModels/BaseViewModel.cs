@@ -29,6 +29,33 @@ namespace GridGames.ViewModels
             }
         }
 
+        private bool showDarkTheme = false;
+        public bool ShowDarkTheme
+        {
+            get
+            {
+                return showDarkTheme;
+            }
+            set
+            {
+                if (showDarkTheme != value)
+                {
+                    SetProperty(ref showDarkTheme, value);
+
+                    Preferences.Set("ShowDarkTheme", value);
+
+                    if (showDarkTheme)
+                    {
+                        Application.Current.UserAppTheme = AppTheme.Dark;
+                    }
+                    else
+                    {
+                        Application.Current.UserAppTheme = AppTheme.Light;
+                    }
+                }
+            }
+        }
+
         protected bool SetProperty<T>(ref T backingStore, T value,
             [CallerMemberName] string propertyName = "",
             Action onChanged = null)

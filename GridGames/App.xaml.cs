@@ -20,5 +20,10 @@ public partial class App : Application
         }
 
         MainPage = new AppShell();
+
+        // Barker: Change the light/dark mode based onteh current active system theme.
+        Application.Current.RequestedThemeChanged += (s, a) =>
+        {
+        };
     }
 }

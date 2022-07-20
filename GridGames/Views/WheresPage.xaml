@@ -46,26 +46,38 @@
     </Shell.TitleView>
     
     <ContentPage.Content>
-        <Grid x:Name="PageGrid">
+        <Grid x:Name="PageGrid" BackgroundColor="LightGray">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" 
-                Text="{Binding
-                    Source={x:Reference WheresPageInstance},
-                    Path=BindingContext.CurrentQuestionWCAG,
-                    Mode=OneWay, Converter={StaticResource WCAGTitleToQuestion}}" 
-                SemanticProperties.HeadingLevel="Level2"
-                FontSize="Header" 
-                HorizontalOptions="Start"
-                Opacity="{Binding FirstRunWheres, Mode=OneWay,
-                    Converter={StaticResource FirstRunToGridOpacity}}"
-                Padding="8,8,4,4" />
-            <CollectionView Grid.Row="1"
+
+            <Grid Grid.Row="0" 
+                BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
+                <Label 
+                    Text="{Binding
+                        Source={x:Reference WheresPageInstance},
+                        Path=BindingContext.CurrentQuestionWCAG,
+                        Mode=OneWay, Converter={StaticResource WCAGTitleToQuestion}}" 
+                    SemanticProperties.HeadingLevel="Level2"
+                    FontSize="Header" 
+                    Margin="10,0,0,0"
+                    HorizontalOptions="Start"
+                    Opacity="{Binding FirstRunWheres, Mode=OneWay,
+                        Converter={StaticResource FirstRunToGridOpacity}}" />
+            </Grid>
+            
+            <Grid Grid.Row="1" BackgroundColor="Transparent" HeightRequest="5" 
+                Margin="0" Padding="0" />
+
+            <!-- Barker: I don't know how to customise the colours for keyboard focus around a grid item.
+                So for now, always show dark on light feedback regardless of the current light/dark mode. -->
+
+            <CollectionView Grid.Row="2"
                 x:Name="SquaresCollectionView"
                 SemanticProperties.Description="WCAG Groups"
-                Margin="2,0,2,0"
+                Margin="5,0,5,0"
                 Opacity="{Binding FirstRunWheres, Mode=OneWay,
                     Converter={StaticResource FirstRunToGridOpacity}}"
                 SelectionMode="Single" 
@@ -77,7 +89,7 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid 
+                        <Grid
                             HeightRequest="{Binding 
                                 Source={x:Reference WheresPageInstance},
                                     Path=BindingContext.GridRowHeight,
@@ -92,9 +104,16 @@
                             
                             <!-- Barker Todo: Add support for Voice Access. -->
 
-                            <Frame Margin="2" Padding="0" AutomationProperties.IsInAccessibleTree="False"
-                                BackgroundColor="{Binding IsFound, 
-                                    Converter={StaticResource WheresAnsweredToBackgroundColor}}">
+                            <Frame Margin="2" Padding="0" AutomationProperties.IsInAccessibleTree="False">
+                                <Frame.BackgroundColor>
+                                    <MultiBinding Mode="OneWay" 
+                                            Converter="{StaticResource WheresAnsweredToBackgroundColor}">
+                                        <Binding Path="IsFound" />
+                                        <Binding Source="{x:Reference WheresPageInstance}" 
+                                            Path="BindingContext.ShowDarkTheme" />
+                                    </MultiBinding>
+                                </Frame.BackgroundColor>
+
                                 <Grid AutomationProperties.IsInAccessibleTree="False">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*" />
@@ -103,10 +122,16 @@
                                     <Label Grid.Row="0" Text="{Binding WCAGNumber, Mode=OneWay}" 
                                         Margin="0" Padding="0,20,0,0"
                                         HorizontalOptions="Center" VerticalOptions="Center"
-                                        AutomationProperties.IsInAccessibleTree="False"                                           
-                                        HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type Grid}}, Path=Height}"
-                                        TextColor="{Binding IsFound, 
-                                            Converter={StaticResource WheresAnsweredToTextColor}}">
+                                        AutomationProperties.IsInAccessibleTree="False"                              
+                                        HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type Grid}}, Path=Height}">
+                                        <Label.TextColor>
+                                            <MultiBinding Mode="OneWay" 
+                                                Converter="{StaticResource WheresAnsweredToTextColor}">
+                                                <Binding Path="IsFound" />
+                                                <Binding Source="{x:Reference WheresPageInstance}" 
+                                                    Path="BindingContext.ShowDarkTheme" />
+                                            </MultiBinding>
+                                        </Label.TextColor>
                                         <Label.FontSize>
                                              <!--Don't only bind to the grid height here, as that leaves the FontSize zero when
                                                 ShowNumbers is set true after moving squares when ShowNumbers is false.--> 
@@ -126,9 +151,16 @@
                                         LineBreakMode="MiddleTruncation"
                                         MaxLines="2"
                                         Margin="4"
-                                        HorizontalOptions="Center" 
-                                        TextColor="{Binding IsFound, 
-                                            Converter={StaticResource WheresAnsweredToTextColor}}" />
+                                        HorizontalOptions="Center">
+                                        <Label.TextColor>
+                                            <MultiBinding Mode="OneWay" 
+                                                Converter="{StaticResource WheresAnsweredToTextColor}">
+                                                <Binding Path="IsFound" />
+                                                <Binding Source="{x:Reference WheresPageInstance}" 
+                                                    Path="BindingContext.ShowDarkTheme" />
+                                            </MultiBinding>
+                                        </Label.TextColor>
+                                    </Label>
                                 </Grid>
                             </Frame>
                         </Grid>

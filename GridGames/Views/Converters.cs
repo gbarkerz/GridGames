@@ -487,32 +487,82 @@ namespace GridGames.Views
         }
     }
 
-    public class WheresAnsweredToTextColor : IValueConverter
+    public class WheresAnsweredToTextColor : IMultiValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var answered = (bool)value;
+            if (values == null || (values.Length < 2))
+            {
+                return "";
+            }
 
-            return answered ? App.Current.Resources["WheresAnsweredTextColor"] :
-                                App.Current.Resources["WheresTextColor"];
+            if ((values[0] == null) || (values[1] == null))
+            {
+                return "";
+            }
+
+            bool isFound = (bool)values[0];
+            bool showDarkTheme = (bool)values[1];
+
+            var colorName = "WheresTextColor";
+
+            if (showDarkTheme)
+            {
+                colorName = isFound ? "WheresAnsweredTextColorDark" : "WheresTextColorDark";
+            }
+            else
+            {
+                if (isFound)
+                {
+                    colorName = "WheresAnsweredTextColor";
+                }
+            }
+
+            return App.Current.Resources[colorName];
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
     }
 
-    public class WheresAnsweredToBackgroundColor : IValueConverter
+    public class WheresAnsweredToBackgroundColor : IMultiValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var answered = (bool)value;
+            if (values == null || (values.Length < 2))
+            {
+                return "";
+            }
 
-            return answered ? App.Current.Resources["WheresAnsweredBackgroundColor"] : Colors.Transparent;
+            if ((values[0] == null) || (values[1] == null))
+            {
+                return "";
+            }
+
+            bool isFound = (bool)values[0];
+            bool showDarkTheme = (bool)values[1];
+
+            var colorName = "WheresBackgroundColor";
+
+            if (showDarkTheme)
+            {
+                colorName = isFound ? "WheresAnsweredBackgroundColorDark" : "WheresBackgroundColorDark";
+            }
+            else
+            {
+                if (isFound)
+                {
+                    colorName = "WheresAnsweredBackgroundColor";
+                }
+            }
+
+            return App.Current.Resources[colorName];
+
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

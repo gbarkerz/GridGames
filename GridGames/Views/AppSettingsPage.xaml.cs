@@ -5,7 +5,7 @@ namespace GridGames
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class AppSettingsPage : ContentPage
 	{
-        public AppSettingsPage ()
+        public AppSettingsPage()
 		{
 			InitializeComponent ();
 

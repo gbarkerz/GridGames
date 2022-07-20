@@ -48,6 +48,8 @@ namespace GridGames.Views
                     WheresWelcomeTitleLabel.Text + ", " + WheresWelcomeTitleInstructions.Text);
             }
 
+            vm.ShowDarkTheme = Preferences.Get("ShowDarkTheme", false);
+
             if (restartGame)
             {
                 restartGame = false;
