@@ -33,31 +33,6 @@ public partial class AppShell : Shell
         }
     }
 
-    private async void OnAppSettingsMenuItemClicked(object sender, EventArgs e)
-    {
-        Shell.Current.FlyoutIsPresented = false;
-
-        bool showAppSettingWindow = false;
-
-        var currentPage = this.CurrentPage;
-        if (currentPage is MatchingPage)
-        {
-            var vm = (CurrentPage as MatchingPage).BindingContext as MatchingViewModel;
-            showAppSettingWindow = !vm.FirstRunMatching;
-        }
-        else if (currentPage is WheresPage)
-        {
-            var vm = (CurrentPage as WheresPage).BindingContext as WheresViewModel;
-            showAppSettingWindow = !vm.FirstRunWheres;
-        }
-
-        if (showAppSettingWindow)
-        {
-            var appSettingsPage = new AppSettingsPage();
-            await Navigation.PushModalAsync(appSettingsPage);
-        }
-    }
-
     private void OnRestartMenuItemClicked(object sender, EventArgs e)
     {
         Shell.Current.FlyoutIsPresented = false;

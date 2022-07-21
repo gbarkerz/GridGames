@@ -20,6 +20,18 @@ namespace GridGames.Views
             InitializeComponent();
 
             SquaresCollectionView.SizeChanged += SquaresCollectionView_SizeChanged;
+
+            Application.Current.RequestedThemeChanged += (s, a) =>
+            {
+                var currentTheme = a.RequestedTheme;
+                if (currentTheme == AppTheme.Unspecified)
+                {
+                    currentTheme = Application.Current.PlatformAppTheme;
+                }
+
+                var vm = this.BindingContext as WheresViewModel;
+                vm.ShowDarkTheme = (currentTheme == AppTheme.Dark);
+            };
         }
 
         private void SquaresCollectionView_SizeChanged(object sender, EventArgs e)
@@ -48,7 +60,13 @@ namespace GridGames.Views
                     WheresWelcomeTitleLabel.Text + ", " + WheresWelcomeTitleInstructions.Text);
             }
 
-            vm.ShowDarkTheme = Preferences.Get("ShowDarkTheme", false);
+            var currentTheme = Application.Current.UserAppTheme;
+            if (currentTheme == AppTheme.Unspecified)
+            {
+                currentTheme = Application.Current.PlatformAppTheme;
+            }
+
+            vm.ShowDarkTheme = (currentTheme == AppTheme.Dark);
 
             if (restartGame)
             {

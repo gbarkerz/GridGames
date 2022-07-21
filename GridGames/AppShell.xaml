@@ -32,15 +32,6 @@
         </MenuItem.IconImageSource>
     </MenuItem>
 
-    <MenuItem Text="App Settings" 
-        StyleClass="MenuItemLayoutStyle" Clicked="OnAppSettingsMenuItemClicked">
-        <MenuItem.IconImageSource>
-            <FontImageSource
-                Glyph="&#xf013;"
-                FontFamily="FA" />
-        </MenuItem.IconImageSource>
-    </MenuItem>
-
     <MenuItem Text="Restart Game" 
         StyleClass="MenuItemLayoutStyle" Clicked="OnRestartMenuItemClicked">
         <MenuItem.IconImageSource>

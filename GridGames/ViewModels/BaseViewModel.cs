@@ -41,17 +41,6 @@ namespace GridGames.ViewModels
                 if (showDarkTheme != value)
                 {
                     SetProperty(ref showDarkTheme, value);
-
-                    Preferences.Set("ShowDarkTheme", value);
-
-                    if (showDarkTheme)
-                    {
-                        Application.Current.UserAppTheme = AppTheme.Dark;
-                    }
-                    else
-                    {
-                        Application.Current.UserAppTheme = AppTheme.Light;
-                    }
                 }
             }
         }
