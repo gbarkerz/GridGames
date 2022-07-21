@@ -6,12 +6,6 @@
              xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
              x:Class="GridGames.AppSettingsPage">
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <localviews:CheckBoxStateToAccessibleName x:Key="CheckBoxStateToAccessibleName" />
-        </ResourceDictionary>
-    </ContentPage.Resources>
-
     <ContentPage.Content>
         <Grid Grid.Row="0" Padding="10">
             <Grid.RowDefinitions>

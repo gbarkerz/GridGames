@@ -16,9 +16,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <localviews:FirstRunToGridOpacity x:Key="FirstRunToGridOpacity" />
-            <localviews:CollectionViewHeightToRowHeight x:Key="CollectionViewHeightToRowHeight" />
             <localviews:WheresLabelContainerHeightToFontSize x:Key="WheresLabelContainerHeightToFontSize" />
-            <localviews:LabelContainerHeightToFontSize x:Key="LabelContainerHeightToFontSize" />
             <localviews:WCAGTitleToQuestion x:Key="WCAGTitleToQuestion" />
             <localviews:WheresAnsweredToTextColor x:Key="WheresAnsweredToTextColor" />
             <localviews:WheresAnsweredToBackgroundColor x:Key="WheresAnsweredToBackgroundColor" />
@@ -37,13 +35,16 @@
                 SemanticProperties.HeadingLevel="Level1" FontSize="Title"
                 TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}"
                 HorizontalOptions="Center" VerticalOptions="Center" />
-            <Button Grid.Column="1" Text="&#xf013;" Clicked="WheresGameSettingsButton_Clicked"
+            <Button Grid.Column="1" 
+                Text="&#xf013;" 
+                Clicked="WheresGameSettingsButton_Clicked"
                 BorderWidth="0"
+                windows:VisualElement.AccessKey="S"
                 FontFamily="FA" FontSize="Title" HorizontalOptions="End"
-                SemanticProperties.Description="Where's WCAG Settings?" />
+                SemanticProperties.Description="{x:Static resources:AppResources.WheresSettings}" />
         </Grid>
     </Shell.TitleView>
-    
+
     <ContentPage.Content>
         <Grid x:Name="PageGrid" BackgroundColor="LightGray">
             <Grid.RowDefinitions>
@@ -86,6 +87,9 @@
                     <GridItemsLayout Orientation="Vertical" Span="4" />
                 </CollectionView.ItemsLayout>
 
+                <!-- Set AutomationProperties.IsInAccessibleTree="False" in some elements below 
+                     in order to prevent containers being unnecessarily exposed through UIA. -->
+
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid
@@ -94,7 +98,7 @@
                                     Path=BindingContext.GridRowHeight,
                                     Mode=OneWay}"
                             Padding="0" Margin="2"
-                            AutomationProperties.IsInAccessibleTree="True"
+                            AutomationProperties.IsInAccessibleTree="False"
                             SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}">
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"
@@ -132,8 +136,6 @@
                                             </MultiBinding>
                                         </Label.TextColor>
                                         <Label.FontSize>
-                                             <!--Don't only bind to the grid height here, as that leaves the FontSize zero when
-                                                ShowNumbers is set true after moving squares when ShowNumbers is false.--> 
                                             <MultiBinding Mode="OneWay" 
                                                     Converter="{StaticResource WheresLabelContainerHeightToFontSize}">
                                                 <Binding Source="{RelativeSource AncestorType={x:Type Grid}}" 

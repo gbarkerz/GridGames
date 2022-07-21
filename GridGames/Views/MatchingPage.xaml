@@ -15,11 +15,8 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <localviews:FirstRunMatchingToGridOpacity x:Key="FirstRunMatchingToGridOpacity" />
-            <localviews:CollectionViewHeightToRowHeight x:Key="CollectionViewHeightToRowHeight" />
+            <localviews:FirstRunToGridOpacity x:Key="FirstRunToGridOpacity" />
             <localviews:CardToCollectionViewIndex x:Key="CardToCollectionViewIndex" />
-            <localviews:WheresAnsweredToTextColor x:Key="WheresAnsweredToTextColor" />
-            <localviews:WheresAnsweredToBackgroundColor x:Key="WheresAnsweredToBackgroundColor" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -37,8 +34,9 @@
                 HorizontalOptions="Center" VerticalOptions="Center" />
             <Button Grid.Column="1" Text="&#xf013;" Clicked="MatchingGameSettingsButton_Clicked"
                 BorderWidth="0"
+                windows:VisualElement.AccessKey="S"
                 FontFamily="FA" FontSize="Title" HorizontalOptions="End"
-                AutomationProperties.Name="{x:Static resources:AppResources.PairsSettings}" />
+                SemanticProperties.Description="{x:Static resources:AppResources.PairsSettings}" />
         </Grid>
     </Shell.TitleView>
 
@@ -53,13 +51,16 @@
                 SemanticProperties.Description="Pairs cards"
                 Margin="5,5,5,0"
                 Opacity="{Binding FirstRunMatching, Mode=OneWay,
-                    Converter={StaticResource FirstRunMatchingToGridOpacity}}"
+                    Converter={StaticResource FirstRunToGridOpacity}}"
                 SelectionMode="Single"
                 ItemsSource="{Binding SquareListCollection}">
 
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" Span="4" />
                 </CollectionView.ItemsLayout>
+
+                <!-- Set AutomationProperties.IsInAccessibleTree="False" in some elements below 
+                     in order to prevent containers being unnecessarily exposed through UIA. -->
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
@@ -69,7 +70,7 @@
                                     Path=BindingContext.GridRowHeight,
                                     Mode=OneWay}"
                             Padding="0" Margin="2"
-                            AutomationProperties.IsInAccessibleTree="True"
+                            AutomationProperties.IsInAccessibleTree="False"
                             SemanticProperties.Description="{Binding ., Mode=OneWay,
                                 Converter={StaticResource CardToCollectionViewIndex}, 
                                     ConverterParameter={Binding Source={x:Reference SquaresCollectionView}}}"
@@ -81,9 +82,9 @@
                             </Grid.GestureRecognizers>
 
                             <Frame Margin="2" Padding="0"
+                                AutomationProperties.IsInAccessibleTree="False"
                                 BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
                                 <Image IsVisible="{Binding FaceUp}"
-
                                     Aspect="{Binding Source={x:Reference MatchingPageInstance},
                                         Path=BindingContext.PictureAspect,
                                         Mode=OneWay}"

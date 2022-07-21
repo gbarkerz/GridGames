@@ -9,9 +9,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <localviews:FilePathToIsVisible x:Key="FilePathToIsVisible" />
-            <localviews:CheckBoxStateToAccessibleName x:Key="CheckBoxStateToAccessibleName" />
             <localviews:PictureAspectToInt x:Key="PictureAspectToInt" />
-            <localviews:PathToDirectoryName x:Key="PathToDirectoryName" />
             <localviews:CustomPictureToItemName x:Key="CustomPictureToItemName" />
         </ResourceDictionary>
     </ContentPage.Resources>

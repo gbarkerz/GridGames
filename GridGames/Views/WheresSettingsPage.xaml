@@ -8,7 +8,6 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <localviews:CheckBoxStateToAccessibleName x:Key="CheckBoxStateToAccessibleName" />
             <localviews:QuestionToQuestionString x:Key="QuestionToQuestionString" />
             <localviews:AnswerSetToAnswersString x:Key="AnswerSetToAnswersString" />
             <localviews:FilePathToIsVisible x:Key="FilePathToIsVisible" />
