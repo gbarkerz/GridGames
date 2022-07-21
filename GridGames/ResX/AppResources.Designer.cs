@@ -484,7 +484,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Eight.
+        ///   Looks up a localized string similar to eight.
         /// </summary>
         internal static string Eight {
             get {
@@ -493,7 +493,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Eleven.
+        ///   Looks up a localized string similar to eleven.
         /// </summary>
         internal static string Eleven {
             get {
@@ -511,7 +511,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fifteen.
+        ///   Looks up a localized string similar to fifteen.
         /// </summary>
         internal static string Fifteen {
             get {
@@ -538,7 +538,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Five.
+        ///   Looks up a localized string similar to five.
         /// </summary>
         internal static string Five {
             get {
@@ -547,7 +547,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Four.
+        ///   Looks up a localized string similar to four.
         /// </summary>
         internal static string Four {
             get {
@@ -556,7 +556,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fourteen.
+        ///   Looks up a localized string similar to fourteen.
         /// </summary>
         internal static string Fourteen {
             get {
@@ -735,7 +735,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nine.
+        ///   Looks up a localized string similar to nine.
         /// </summary>
         internal static string Nine {
             get {
@@ -789,7 +789,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to One.
+        ///   Looks up a localized string similar to one.
         /// </summary>
         internal static string One {
             get {
@@ -906,7 +906,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Seven.
+        ///   Looks up a localized string similar to seven.
         /// </summary>
         internal static string Seven {
             get {
@@ -960,7 +960,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Six.
+        ///   Looks up a localized string similar to six.
         /// </summary>
         internal static string Six {
             get {
@@ -969,7 +969,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sixteen.
+        ///   Looks up a localized string similar to sixteen.
         /// </summary>
         internal static string Sixteen {
             get {
@@ -1185,7 +1185,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ten.
+        ///   Looks up a localized string similar to ten.
         /// </summary>
         internal static string Ten {
             get {
@@ -1203,7 +1203,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thirteen.
+        ///   Looks up a localized string similar to thirteen.
         /// </summary>
         internal static string Thirteen {
             get {
@@ -1212,7 +1212,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Three.
+        ///   Looks up a localized string similar to three.
         /// </summary>
         internal static string Three {
             get {
@@ -1230,7 +1230,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Twelve.
+        ///   Looks up a localized string similar to twelve.
         /// </summary>
         internal static string Twelve {
             get {
@@ -1239,7 +1239,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Two.
+        ///   Looks up a localized string similar to two.
         /// </summary>
         internal static string Two {
             get {

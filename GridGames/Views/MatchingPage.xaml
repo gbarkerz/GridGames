@@ -82,14 +82,13 @@
 
                             <Frame Margin="2" Padding="0"
                                 BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
-                                <Grid>
-                                    <Image IsVisible="{Binding FaceUp}"
-                                        Aspect="{Binding Source={x:Reference MatchingPageInstance},
-                                            Path=BindingContext.PictureAspect,
-                                            Mode=OneWay}"
-                                        Source="{Binding PictureImageSource}">
-                                    </Image>
-                                </Grid>
+                                <Image IsVisible="{Binding FaceUp}"
+
+                                    Aspect="{Binding Source={x:Reference MatchingPageInstance},
+                                        Path=BindingContext.PictureAspect,
+                                        Mode=OneWay}"
+                                    Source="{Binding PictureImageSource}">
+                                </Image>
                             </Frame>
                         </Grid>
                     </DataTemplate>

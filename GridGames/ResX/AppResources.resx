@@ -259,16 +259,16 @@
     <value>down</value>
   </data>
   <data name="Eight" xml:space="preserve">
-    <value>Eight</value>
+    <value>eight</value>
   </data>
   <data name="Eleven" xml:space="preserve">
-    <value>Eleven</value>
+    <value>eleven</value>
   </data>
   <data name="FaceDown" xml:space="preserve">
     <value>Face down</value>
   </data>
   <data name="Fifteen" xml:space="preserve">
-    <value>Fifteen</value>
+    <value>fifteen</value>
   </data>
   <data name="FillCardAndClip" xml:space="preserve">
     <value>Fill card and clip</value>
@@ -277,13 +277,13 @@
     <value>Fill card without clipping</value>
   </data>
   <data name="Five" xml:space="preserve">
-    <value>Five</value>
+    <value>five</value>
   </data>
   <data name="Four" xml:space="preserve">
-    <value>Four</value>
+    <value>four</value>
   </data>
   <data name="Fourteen" xml:space="preserve">
-    <value>Fourteen</value>
+    <value>fourteen</value>
   </data>
   <data name="GameReady" xml:space="preserve">
     <value>Game is ready to play.</value>
@@ -374,7 +374,7 @@ Would you like to play another game?</value>
     <value>Name:</value>
   </data>
   <data name="Nine" xml:space="preserve">
-    <value>Nine</value>
+    <value>nine</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
@@ -392,7 +392,7 @@ Would you like to play another game?</value>
     <value>OK</value>
   </data>
   <data name="One" xml:space="preserve">
-    <value>One</value>
+    <value>one</value>
   </data>
   <data name="Pairs" xml:space="preserve">
     <value>Pairs</value>
@@ -431,7 +431,7 @@ Would you like to play another game?</value>
     <value>Select Picture</value>
   </data>
   <data name="Seven" xml:space="preserve">
-    <value>Seven</value>
+    <value>seven</value>
   </data>
   <data name="ShowBonusQuestion" xml:space="preserve">
     <value>Show bonus WCAG questions</value>
@@ -449,10 +449,10 @@ Would you like to play another game?</value>
     <value>Show picture</value>
   </data>
   <data name="Six" xml:space="preserve">
-    <value>Six</value>
+    <value>six</value>
   </data>
   <data name="Sixteen" xml:space="preserve">
-    <value>Sixteen</value>
+    <value>sixteen</value>
   </data>
   <data name="Small" xml:space="preserve">
     <value>Small</value>
@@ -524,25 +524,25 @@ Would you like to play another game?</value>
     <value>Tip: Practice moving numbered squares around before changing the setting to have a picture shown on the squares.</value>
   </data>
   <data name="Ten" xml:space="preserve">
-    <value>Ten</value>
+    <value>ten</value>
   </data>
   <data name="ThatsMatch" xml:space="preserve">
     <value>That's a match.</value>
   </data>
   <data name="Thirteen" xml:space="preserve">
-    <value>Thirteen</value>
+    <value>thirteen</value>
   </data>
   <data name="Three" xml:space="preserve">
-    <value>Three</value>
+    <value>three</value>
   </data>
   <data name="TurnedUp" xml:space="preserve">
     <value>Turned up</value>
   </data>
   <data name="Twelve" xml:space="preserve">
-    <value>Twelve</value>
+    <value>twelve</value>
   </data>
   <data name="Two" xml:space="preserve">
-    <value>Two</value>
+    <value>two</value>
   </data>
   <data name="UnexpectedDataInFile" xml:space="preserve">
     <value>The MatchingGamePictureDetails file does not contain the expected data. Please review the Pairs Help for more details.</value>
