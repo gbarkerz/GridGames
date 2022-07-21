@@ -70,7 +70,9 @@
                                     Mode=OneWay}"
                             Padding="0" Margin="2"
                             AutomationProperties.IsInAccessibleTree="True"
-                            SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}"
+                            SemanticProperties.Description="{Binding ., Mode=OneWay,
+                                Converter={StaticResource CardToCollectionViewIndex}, 
+                                    ConverterParameter={Binding Source={x:Reference SquaresCollectionView}}}"
                             SemanticProperties.Hint="{Binding AccessibleDescription, Mode=OneWay}">
 
                             <Grid.GestureRecognizers>
@@ -81,14 +83,6 @@
                             <Frame Margin="2" Padding="0"
                                 BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
                                 <Grid>
-                                    <!-- Add a hidden label in order to support clicking a card via Voice Access,
-                                        by speaking the index of the card in the card list. -->
-                                    <!--<Label IsVisible="False"
-                                        Text="{Binding ., 
-                                            Converter={StaticResource CardToCollectionViewIndex}, 
-                                            ConverterParameter={Binding Source={x:Reference SquaresCollectionView}, 
-                                            Path=BindingContext}}"
-                                        Margin="10"/>-->
                                     <Image IsVisible="{Binding FaceUp}"
                                         Aspect="{Binding Source={x:Reference MatchingPageInstance},
                                             Path=BindingContext.PictureAspect,

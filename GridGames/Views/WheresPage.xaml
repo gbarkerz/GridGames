@@ -17,7 +17,6 @@
         <ResourceDictionary>
             <localviews:FirstRunToGridOpacity x:Key="FirstRunToGridOpacity" />
             <localviews:CollectionViewHeightToRowHeight x:Key="CollectionViewHeightToRowHeight" />
-            <localviews:CardToCollectionViewIndex x:Key="CardToCollectionViewIndex" />
             <localviews:WheresLabelContainerHeightToFontSize x:Key="WheresLabelContainerHeightToFontSize" />
             <localviews:LabelContainerHeightToFontSize x:Key="LabelContainerHeightToFontSize" />
             <localviews:WCAGTitleToQuestion x:Key="WCAGTitleToQuestion" />

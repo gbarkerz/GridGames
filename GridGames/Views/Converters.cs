@@ -341,7 +341,7 @@ namespace GridGames.Views
             AppResources.ResourceManager.GetString("Twelve"),
             AppResources.ResourceManager.GetString("Thirteen"),
             AppResources.ResourceManager.GetString("Fourteen"),
-            AppResources.ResourceManager.GetString("Fiften"),
+            AppResources.ResourceManager.GetString("Fifteen"),
             AppResources.ResourceManager.GetString("Sixteen") };
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -359,9 +359,11 @@ namespace GridGames.Views
 
             var collectionViewIndex = vm.SquareListCollection.IndexOf(card);
 
+            var fullName = card.AccessibleName + " " + numberWords[collectionViewIndex];
+
             // Return a word here, to avoid speech of "1" being ambiguous between
             // 1, 10, 11, etc.
-            return numberWords[collectionViewIndex];
+            return fullName;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
