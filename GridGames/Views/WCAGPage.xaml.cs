@@ -66,4 +66,79 @@ public partial class WCAGPage : ContentPage
 			playerAnswers.Remove(wcagNumber);
         }
     }
+
+	private void JumpToPicker_SelectedIndexChanged(object sender, EventArgs e)
+	{
+        var picker = (Picker)sender;
+
+        int selectedIndex = picker.SelectedIndex;
+
+        if (selectedIndex != -1)
+        {
+            CheckBox targetCheckBox = null;
+
+            switch (picker.ClassId)
+			{
+				case "Perceivable":
+
+                    CheckBox[] boxesPerceivable = {
+                        Perceivable11CheckBox,
+                        Perceivable12CheckBox,
+                        Perceivable13CheckBox,
+                        Perceivable14CheckBox
+                    };
+
+                    targetCheckBox = boxesPerceivable[selectedIndex];
+
+                    break;
+
+				case "Operable":
+
+					CheckBox[] boxesOperable = {
+						Operable21CheckBox,
+						Operable22CheckBox,
+						Operable23CheckBox,
+						Operable24CheckBox,
+						Operable25CheckBox
+					};
+
+					targetCheckBox = boxesOperable[selectedIndex];
+
+					break;
+
+				case "Understandable":
+
+                    CheckBox[] boxesUnderstandable = {
+                        Understandable31CheckBox,
+                        Understandable32CheckBox,
+                        Understandable33CheckBox
+                    };
+
+                    targetCheckBox = boxesUnderstandable[selectedIndex];
+                    
+					break;
+
+				case "Robust":
+
+                    CheckBox[] boxesRobust = {
+                        Robust41CheckBox,
+                    };
+
+                    targetCheckBox = boxesRobust[selectedIndex];
+                    
+					break;
+
+				default:
+
+					break;
+			}
+
+			if (targetCheckBox != null)
+			{
+                WCAGScrollView.ScrollToAsync(targetCheckBox, ScrollToPosition.Center, true);
+
+                targetCheckBox.Focus();
+            }
+        }
+    }
 }

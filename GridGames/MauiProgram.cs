@@ -10,7 +10,10 @@ public static class MauiProgram
 
     static void MyKeyEventHandler(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
     {
-        if (e.Key == Windows.System.VirtualKey.Space)
+        // Barker: Review old feedback from original Windows Grid Game player.
+        // Check that there was a request for Enter to activate an item.
+        if ((e.Key == Windows.System.VirtualKey.Space) ||
+            (e.Key == Windows.System.VirtualKey.Enter))
         {
             // Are we on the grid in either the Pairs game or Where's WCAG? game?
             if (e.OriginalSource is Microsoft.UI.Xaml.Controls.GridViewItem)
