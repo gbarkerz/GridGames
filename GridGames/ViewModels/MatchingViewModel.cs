@@ -246,6 +246,43 @@ namespace GridGames.ViewModels
             set { this.squareList = value; }
         }
 
+        private static String[] numberWords = {
+            AppResources.ResourceManager.GetString("One"),
+            AppResources.ResourceManager.GetString("Two"),
+            AppResources.ResourceManager.GetString("Three"),
+            AppResources.ResourceManager.GetString("Four"),
+            AppResources.ResourceManager.GetString("Five"),
+            AppResources.ResourceManager.GetString("Six"),
+            AppResources.ResourceManager.GetString("Seven"),
+            AppResources.ResourceManager.GetString("Eight"),
+            AppResources.ResourceManager.GetString("Nine"),
+            AppResources.ResourceManager.GetString("Ten"),
+            AppResources.ResourceManager.GetString("Eleven"),
+            AppResources.ResourceManager.GetString("Twelve"),
+            AppResources.ResourceManager.GetString("Thirteen"),
+            AppResources.ResourceManager.GetString("Fourteen"),
+            AppResources.ResourceManager.GetString("Fifteen"),
+            AppResources.ResourceManager.GetString("Sixteen") };
+
+        public void SetFaceDownAccessibleDetails(Card card)
+        {
+            if (SquareListCollection.Count < card.Index)
+            {
+                return;
+            }
+
+            int itemCollectionIndex = matchingPage.GetItemCollectionIndexFromItemIndex(card.Index);
+            if (itemCollectionIndex == -1)
+            {
+                return;
+            }
+
+            card.CurrentAccessibleName = AppResources.ResourceManager.GetString("FaceDown") + " " +
+                numberWords[itemCollectionIndex];
+
+            card.CurrentAccessibleDescription = "";
+        }
+
         public bool AttemptToTurnOverSquare(int squareIndex)
         {
             bool gameIsWon = false;
@@ -256,17 +293,15 @@ namespace GridGames.ViewModels
                 ++TryAgainCount;
 
                 firstCardInMatchAttempt.FaceUp = false;
-                
-                firstCardInMatchAttempt.CurrentAccessibleName = "Face down";
-                firstCardInMatchAttempt.CurrentAccessibleDescription = "";
+
+                SetFaceDownAccessibleDetails(firstCardInMatchAttempt);
 
                 SetAccessibleDetails(firstCardInMatchAttempt);
                 firstCardInMatchAttempt = null;
 
                 secondCardInMatchAttempt.FaceUp = false;
 
-                secondCardInMatchAttempt.CurrentAccessibleName = "Face down";
-                secondCardInMatchAttempt.CurrentAccessibleDescription = "";
+                SetFaceDownAccessibleDetails(secondCardInMatchAttempt);
 
                 SetAccessibleDetails(secondCardInMatchAttempt);
                 secondCardInMatchAttempt = null;
@@ -408,8 +443,7 @@ namespace GridGames.ViewModels
                 card.FaceUp = false;
                 card.Matched = false;
 
-                card.CurrentAccessibleName = "Face down";
-                card.CurrentAccessibleDescription = "";
+                SetFaceDownAccessibleDetails(card);
 
                 this.squareList[i] = card;
             }

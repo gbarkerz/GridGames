@@ -179,11 +179,10 @@ namespace GridGames.Views
                                 break;
                             }
 
-                            card.CurrentAccessibleName = "Face down";
-
                             settingName = "Card" + (i + 1) + "Description";
                             card.OriginalAccessibleDescription = Preferences.Get(settingName, "");
-                            card.CurrentAccessibleDescription = "";
+
+                            vm.SetFaceDownAccessibleDetails(card);
 
                             customPictures.Add(card);
                         }
@@ -254,74 +253,21 @@ namespace GridGames.Views
 
             for (int i = 0; i < 16; i++)
             {
-                vm.SquareListCollection[i].CurrentAccessibleName = "Face down";
-                vm.SquareListCollection[i].CurrentAccessibleDescription = "";
+                vm.SetFaceDownAccessibleDetails(vm.SquareListCollection[i]);
 
                 SetAccessibleDetailsOnItem(vm.SquareListCollection[i]);
             }
         }
 
-        private static String[] numberWords = {
-            AppResources.ResourceManager.GetString("One"),
-            AppResources.ResourceManager.GetString("Two"),
-            AppResources.ResourceManager.GetString("Three"),
-            AppResources.ResourceManager.GetString("Four"),
-            AppResources.ResourceManager.GetString("Five"),
-            AppResources.ResourceManager.GetString("Six"),
-            AppResources.ResourceManager.GetString("Seven"),
-            AppResources.ResourceManager.GetString("Eight"),
-            AppResources.ResourceManager.GetString("Nine"),
-            AppResources.ResourceManager.GetString("Ten"),
-            AppResources.ResourceManager.GetString("Eleven"),
-            AppResources.ResourceManager.GetString("Twelve"),
-            AppResources.ResourceManager.GetString("Thirteen"),
-            AppResources.ResourceManager.GetString("Fourteen"),
-            AppResources.ResourceManager.GetString("Fifteen"),
-            AppResources.ResourceManager.GetString("Sixteen") };
-
         public void SetAccessibleDetailsOnItem(Card card)
         {
-            int squaresFound = 0;
-            
-            int itemCollectionIndex = GetItemCollectionIndexFromItemIndex(card.Index);
-            if (itemCollectionIndex == -1)
-            {
-                return;
-            }
+            var temp = card.CurrentAccessibleName;
+            card.CurrentAccessibleName = card.CurrentAccessibleName + " ";
+            card.CurrentAccessibleName = temp;
 
-            var descendants = SquaresCollectionView.GetVisualTreeDescendants();
-            for (int i = 0; i < descendants.Count; i++)
-            {
-                if (descendants[i] is Grid)
-                {
-                    if (squaresFound == itemCollectionIndex)
-                    {
-                        var grid = descendants[i] as Grid;
-
-                        var name = card.CurrentAccessibleName;
-                        var description = card.CurrentAccessibleDescription;
-
-                        Debug.WriteLine("Card: " + name + ", " + description);
-
-                        SemanticProperties.SetDescription(grid, name);
-
-                        var temp = card.CurrentAccessibleName;
-                        card.CurrentAccessibleName = card.CurrentAccessibleName + " ";
-                        card.CurrentAccessibleName = temp;
-
-                        // Note that this hint doesn't seem to get propagated up to the containing item like the name does.
-                        SemanticProperties.SetHint(grid, description);
-
-                        temp = card.CurrentAccessibleDescription;
-                        card.CurrentAccessibleDescription = card.CurrentAccessibleDescription + " ";
-                        card.CurrentAccessibleDescription = temp;
-
-                        break;
-                    }
-
-                    ++squaresFound;
-                }
-            }
+            temp = card.CurrentAccessibleDescription;
+            card.CurrentAccessibleDescription = card.CurrentAccessibleDescription + " ";
+            card.CurrentAccessibleDescription = temp;
         }
 
         private async Task OfferToRestartGame()
@@ -344,7 +290,7 @@ namespace GridGames.Views
             }
         }
 
-        private int GetItemCollectionIndexFromItemIndex(int itemIndex)
+        public int GetItemCollectionIndexFromItemIndex(int itemIndex)
         {
             var vm = this.BindingContext as MatchingViewModel;
 
