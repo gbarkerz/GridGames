@@ -212,11 +212,16 @@ namespace GridGames.ViewModels
                         {
                             Index = cardIndex,
                             OriginalAccessibleName = resManager.GetString("DefaultMatchingCard" + resourceIndex + "Name"),
-                            CurrentAccessibleName = resManager.GetString("DefaultMatchingCard" + resourceIndex + "Name"),
+                            CurrentAccessibleName = resManager.GetString("FaceDown"),
                             OriginalAccessibleDescription = resManager.GetString("DefaultMatchingCard" + resourceIndex + "Description"),
-                            CurrentAccessibleDescription = resManager.GetString("DefaultMatchingCard" + resourceIndex + "Description"),
+                            CurrentAccessibleDescription = "",
                             PictureImageSource = GetImageSourceForCard("card" + resourceIndex)
                         };
+
+                    card.FaceUp = false;
+                    card.Matched = false;
+
+                    SetFaceDownAccessibleDetails(card);
 
                     squareList.Add(card);
                 }
@@ -224,6 +229,11 @@ namespace GridGames.ViewModels
 
             var shuffler = new Shuffler();
             shuffler.Shuffle(squareList);
+
+            for (int i = 0; i < this.squareList.Count; i++)
+            {
+                SetAccessibleDetails(this.squareList[i]);
+            }
         }
 
         public void SetupCustomMatchingCardList(Collection<Card> cards)
