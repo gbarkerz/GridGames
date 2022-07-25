@@ -35,6 +35,28 @@ namespace GridGames.Views
                 var vm = this.BindingContext as MatchingViewModel;
                 vm.ShowDarkTheme = (currentTheme == AppTheme.Dark);
             };
+
+            (this.BindingContext as MatchingViewModel).SetMatchingPage(this);
+
+            SquaresCollectionView.ChildAdded += SquaresCollectionView_ChildAdded;
+        }
+
+        private bool doneSetNames = false;
+        private int squareCount = 0;
+
+        private void SquaresCollectionView_ChildAdded(object sender, ElementEventArgs e)
+        {
+            if (!doneSetNames && (e.Element is Grid))
+            {
+                ++squareCount;
+
+                if (squareCount == 16)
+                {
+                    doneSetNames = true;
+
+                    SetInitialAccessibleNamesOnItems();
+                }
+            }
         }
 
         private void SquaresCollectionView_SizeChanged(object sender, EventArgs e)
@@ -147,8 +169,8 @@ namespace GridGames.Views
                             }
 
                             settingName = "Card" + (i + 1) + "Name";
-                            card.AccessibleName = Preferences.Get(settingName, "");
-                            if (String.IsNullOrWhiteSpace(card.AccessibleName))
+                            card.OriginalAccessibleName = Preferences.Get(settingName, "");
+                            if (String.IsNullOrWhiteSpace(card.OriginalAccessibleName))
                             {
                                 Debug.WriteLine("Pairs: Accessible name missing.");
 
@@ -157,8 +179,11 @@ namespace GridGames.Views
                                 break;
                             }
 
+                            card.CurrentAccessibleName = "Face down";
+
                             settingName = "Card" + (i + 1) + "Description";
-                            card.AccessibleDescription = Preferences.Get(settingName, "");
+                            card.OriginalAccessibleDescription = Preferences.Get(settingName, "");
+                            card.CurrentAccessibleDescription = "";
 
                             customPictures.Add(card);
                         }
@@ -220,6 +245,82 @@ namespace GridGames.Views
             if (gameIsWon)
             {
                 await OfferToRestartGame();
+            }
+        }
+
+        public void SetInitialAccessibleNamesOnItems()
+        {
+            var vm = this.BindingContext as MatchingViewModel;
+
+            for (int i = 0; i < 16; i++)
+            {
+                vm.SquareListCollection[i].CurrentAccessibleName = "Face down";
+                vm.SquareListCollection[i].CurrentAccessibleDescription = "";
+
+                SetAccessibleDetailsOnItem(vm.SquareListCollection[i]);
+            }
+        }
+
+        private static String[] numberWords = {
+            AppResources.ResourceManager.GetString("One"),
+            AppResources.ResourceManager.GetString("Two"),
+            AppResources.ResourceManager.GetString("Three"),
+            AppResources.ResourceManager.GetString("Four"),
+            AppResources.ResourceManager.GetString("Five"),
+            AppResources.ResourceManager.GetString("Six"),
+            AppResources.ResourceManager.GetString("Seven"),
+            AppResources.ResourceManager.GetString("Eight"),
+            AppResources.ResourceManager.GetString("Nine"),
+            AppResources.ResourceManager.GetString("Ten"),
+            AppResources.ResourceManager.GetString("Eleven"),
+            AppResources.ResourceManager.GetString("Twelve"),
+            AppResources.ResourceManager.GetString("Thirteen"),
+            AppResources.ResourceManager.GetString("Fourteen"),
+            AppResources.ResourceManager.GetString("Fifteen"),
+            AppResources.ResourceManager.GetString("Sixteen") };
+
+        public void SetAccessibleDetailsOnItem(Card card)
+        {
+            int squaresFound = 0;
+            
+            int itemCollectionIndex = GetItemCollectionIndexFromItemIndex(card.Index);
+            if (itemCollectionIndex == -1)
+            {
+                return;
+            }
+
+            var descendants = SquaresCollectionView.GetVisualTreeDescendants();
+            for (int i = 0; i < descendants.Count; i++)
+            {
+                if (descendants[i] is Grid)
+                {
+                    if (squaresFound == itemCollectionIndex)
+                    {
+                        var grid = descendants[i] as Grid;
+
+                        var name = card.CurrentAccessibleName;
+                        var description = card.CurrentAccessibleDescription;
+
+                        Debug.WriteLine("Card: " + name + ", " + description);
+
+                        SemanticProperties.SetDescription(grid, name);
+
+                        var temp = card.CurrentAccessibleName;
+                        card.CurrentAccessibleName = card.CurrentAccessibleName + " ";
+                        card.CurrentAccessibleName = temp;
+
+                        // Note that this hint doesn't seem to get propagated up to the containing item like the name does.
+                        SemanticProperties.SetHint(grid, description);
+
+                        temp = card.CurrentAccessibleDescription;
+                        card.CurrentAccessibleDescription = card.CurrentAccessibleDescription + " ";
+                        card.CurrentAccessibleDescription = temp;
+
+                        break;
+                    }
+
+                    ++squaresFound;
+                }
             }
         }
 

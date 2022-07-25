@@ -16,7 +16,6 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <localviews:FirstRunToGridOpacity x:Key="FirstRunToGridOpacity" />
-            <localviews:CardToCollectionViewIndex x:Key="CardToCollectionViewIndex" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -64,17 +63,13 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid
+                        <Grid 
+                            SemanticProperties.Description="{Binding CurrentAccessibleName, Mode=TwoWay}"
                             HeightRequest="{Binding 
                                 Source={x:Reference MatchingPageInstance},
                                     Path=BindingContext.GridRowHeight,
                                     Mode=OneWay}"
-                            Padding="0" Margin="2"
-                            AutomationProperties.IsInAccessibleTree="False"
-                            SemanticProperties.Description="{Binding ., Mode=OneWay,
-                                Converter={StaticResource CardToCollectionViewIndex}, 
-                                    ConverterParameter={Binding Source={x:Reference SquaresCollectionView}}}"
-                            SemanticProperties.Hint="{Binding AccessibleDescription, Mode=OneWay}">
+                            Padding="0" Margin="2">
 
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"
@@ -85,9 +80,10 @@
                                 AutomationProperties.IsInAccessibleTree="False"
                                 BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
                                 <Image IsVisible="{Binding FaceUp}"
-                                    Aspect="{Binding Source={x:Reference MatchingPageInstance},
-                                        Path=BindingContext.PictureAspect,
-                                        Mode=OneWay}"
+                                       SemanticProperties.Description="{Binding CurrentAccessibleDescription, Mode=TwoWay}"
+                                       Aspect="{Binding Source={x:Reference MatchingPageInstance},
+                                       Path=BindingContext.PictureAspect,
+                                       Mode=OneWay}"
                                     Source="{Binding PictureImageSource}">
                                 </Image>
                             </Frame>

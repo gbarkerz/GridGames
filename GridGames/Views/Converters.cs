@@ -94,54 +94,6 @@ namespace GridGames.Views
         }
     }
 
-    public class CardToCollectionViewIndex : IValueConverter
-    {
-        private static String[] numberWords = {
-            AppResources.ResourceManager.GetString("One"),
-            AppResources.ResourceManager.GetString("Two"),
-            AppResources.ResourceManager.GetString("Three"),
-            AppResources.ResourceManager.GetString("Four"),
-            AppResources.ResourceManager.GetString("Five"),
-            AppResources.ResourceManager.GetString("Six"),
-            AppResources.ResourceManager.GetString("Seven"),
-            AppResources.ResourceManager.GetString("Eight"),
-            AppResources.ResourceManager.GetString("Nine"),
-            AppResources.ResourceManager.GetString("Ten"),
-            AppResources.ResourceManager.GetString("Eleven"),
-            AppResources.ResourceManager.GetString("Twelve"),
-            AppResources.ResourceManager.GetString("Thirteen"),
-            AppResources.ResourceManager.GetString("Fourteen"),
-            AppResources.ResourceManager.GetString("Fifteen"),
-            AppResources.ResourceManager.GetString("Sixteen") };
-
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var card = (Card)value;
-            if (card == null)
-            {
-                return -1;
-            }
-
-            var binding = (Binding)parameter;
-            var collectionView = (CollectionView)binding.Source;
-
-            var vm = collectionView.BindingContext as MatchingViewModel;
-
-            var collectionViewIndex = vm.SquareListCollection.IndexOf(card);
-
-            var fullName = card.AccessibleName + " " + numberWords[collectionViewIndex];
-
-            // Return a word here, to avoid speech of "1" being ambiguous between
-            // 1, 10, 11, etc.
-            return fullName;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
     public class FilePathToIsVisible : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

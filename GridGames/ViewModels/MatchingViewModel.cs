@@ -9,6 +9,7 @@ using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Xaml;
 using GridGames.ResX;
+using GridGames.Views;
 
 namespace GridGames.ViewModels
 {
@@ -16,41 +17,32 @@ namespace GridGames.ViewModels
     {
         public int Index { get; set; }
 
-        private string accessibleName;
-        public string AccessibleName
+        public string OriginalAccessibleName { get; set; }
+        public string OriginalAccessibleDescription { get; set; }
+
+        private string currentAccessibleName;
+        public string CurrentAccessibleName
         {
             get
             {
-                string name = "";
-                if (faceUp)
-                {
-                    name = (Matched ?
-                        AppResources.ResourceManager.GetString("Matched") + " " : "") + 
-                        accessibleName;
-                }
-                else
-                {
-                    name = AppResources.ResourceManager.GetString("FaceDown");
-                }
-
-                return name;
+                return currentAccessibleName;
             }
             set
             {
-                SetProperty(ref accessibleName, value);
+                SetProperty(ref currentAccessibleName, value);
             }
         }
 
-        private string accessibleDescription;
-        public string AccessibleDescription
+        private string currentAccessibleDescription;
+        public string CurrentAccessibleDescription
         {
             get
             {
-                return faceUp ? accessibleDescription : "";
+                return currentAccessibleDescription;
             }
             set
             {
-                SetProperty(ref accessibleDescription, value);
+                SetProperty(ref currentAccessibleDescription, value);
             }
         }
 
@@ -66,8 +58,8 @@ namespace GridGames.ViewModels
                 SetProperty(ref faceUp, value);
 
                 // Other properties may change as a result of this.
-                OnPropertyChanged("AccessibleName");
-                OnPropertyChanged("AccessibleDescription");
+                OnPropertyChanged("CurrentAccessibleName");
+                OnPropertyChanged("CurrentAccessibleDescription");
             }
         }
 
@@ -83,7 +75,8 @@ namespace GridGames.ViewModels
                 SetProperty(ref matched, value);
 
                 // Other properties may change as a result of this.
-                OnPropertyChanged("AccessibleName");
+                OnPropertyChanged("CurrentAccessibleName");
+                OnPropertyChanged("CurrentAccessibleDescription");
             }
         }
 
@@ -136,6 +129,13 @@ namespace GridGames.ViewModels
             squareList = new ObservableCollection<Card>();
 
             TryAgainCount = 0;
+        }
+
+        private MatchingPage matchingPage;
+
+        public void SetMatchingPage(MatchingPage matchingPage)
+        {
+            this.matchingPage = matchingPage;
         }
 
         public int MoveCount { get; set; }
@@ -208,14 +208,17 @@ namespace GridGames.ViewModels
                     var cardIndex = (i * 2) + j + 1;
                     var resourceIndex = (i + 1);
 
-                    squareList.Add(
-                        new Card
+                    var card = new Card
                         {
                             Index = cardIndex,
-                            AccessibleName = resManager.GetString("DefaultMatchingCard" + resourceIndex + "Name"),
-                            AccessibleDescription = resManager.GetString("DefaultMatchingCard" + resourceIndex + "Description"),
+                            OriginalAccessibleName = resManager.GetString("DefaultMatchingCard" + resourceIndex + "Name"),
+                            CurrentAccessibleName = resManager.GetString("DefaultMatchingCard" + resourceIndex + "Name"),
+                            OriginalAccessibleDescription = resManager.GetString("DefaultMatchingCard" + resourceIndex + "Description"),
+                            CurrentAccessibleDescription = resManager.GetString("DefaultMatchingCard" + resourceIndex + "Description"),
                             PictureImageSource = GetImageSourceForCard("card" + resourceIndex)
-                        });
+                        };
+
+                    squareList.Add(card);
                 }
             }
 
@@ -253,9 +256,19 @@ namespace GridGames.ViewModels
                 ++TryAgainCount;
 
                 firstCardInMatchAttempt.FaceUp = false;
+                
+                firstCardInMatchAttempt.CurrentAccessibleName = "Face down";
+                firstCardInMatchAttempt.CurrentAccessibleDescription = "";
+
+                SetAccessibleDetails(firstCardInMatchAttempt);
                 firstCardInMatchAttempt = null;
 
                 secondCardInMatchAttempt.FaceUp = false;
+
+                secondCardInMatchAttempt.CurrentAccessibleName = "Face down";
+                secondCardInMatchAttempt.CurrentAccessibleDescription = "";
+
+                SetAccessibleDetails(secondCardInMatchAttempt);
                 secondCardInMatchAttempt = null;
 
                 RaiseNotificationEvent(AppResources.ResourceManager.GetString("UnmatchedTurnedBack"));
@@ -275,6 +288,11 @@ namespace GridGames.ViewModels
             {
                 firstCardInMatchAttempt = card;
                 TurnUpCard(card);
+
+                card.CurrentAccessibleName = card.OriginalAccessibleName;
+                card.CurrentAccessibleDescription = card.OriginalAccessibleDescription;
+
+                matchingPage.SetAccessibleDetailsOnItem(card);
             }
             else
             {
@@ -283,14 +301,23 @@ namespace GridGames.ViewModels
                 TurnUpCard(card);
 
                 // Has a match been found?
-                var cardNameFirst = firstCardInMatchAttempt.AccessibleName;
-                var cardNameSecond = secondCardInMatchAttempt.AccessibleName;
+                var cardNameFirst = firstCardInMatchAttempt.OriginalAccessibleName;
+                var cardNameSecond = secondCardInMatchAttempt.OriginalAccessibleName;
 
                 if (cardNameFirst == cardNameSecond)
                 {
                     // We have a match!
                     firstCardInMatchAttempt.Matched = true;
+                    firstCardInMatchAttempt.CurrentAccessibleName = "Matched " + firstCardInMatchAttempt.OriginalAccessibleName;
+                    firstCardInMatchAttempt.CurrentAccessibleDescription = firstCardInMatchAttempt.OriginalAccessibleDescription;
+
+                    matchingPage.SetAccessibleDetailsOnItem(firstCardInMatchAttempt);
+
                     secondCardInMatchAttempt.Matched = true;
+                    secondCardInMatchAttempt.CurrentAccessibleName = "Matched " + secondCardInMatchAttempt.OriginalAccessibleName;
+                    secondCardInMatchAttempt.CurrentAccessibleDescription = secondCardInMatchAttempt.OriginalAccessibleDescription;
+
+                    matchingPage.SetAccessibleDetailsOnItem(secondCardInMatchAttempt);
 
                     RaiseNotificationEvent(AppResources.ResourceManager.GetString("ThatsMatch"));
 
@@ -299,6 +326,13 @@ namespace GridGames.ViewModels
 
                     // Has the game been won?
                     gameIsWon = GameIsWon();
+                }
+                else
+                {
+                    card.CurrentAccessibleName = card.OriginalAccessibleName;
+                    card.CurrentAccessibleDescription = card.OriginalAccessibleDescription;
+
+                    matchingPage.SetAccessibleDetailsOnItem(card);
                 }
             }
 
@@ -337,7 +371,8 @@ namespace GridGames.ViewModels
             card.FaceUp = true;
 
             RaiseNotificationEvent(
-                AppResources.ResourceManager.GetString("TurnedUp") + " " + card.AccessibleName);
+                AppResources.ResourceManager.GetString("TurnedUp") + " " + 
+                card.OriginalAccessibleName);
         }
 
         private bool GameIsWon()
@@ -362,8 +397,21 @@ namespace GridGames.ViewModels
 
             for (int i = 0; i < this.squareList.Count; i++)
             {
-                this.squareList[i].FaceUp = false;
-                this.squareList[i].Matched = false;
+                var card = new Card
+                {
+                    Index = squareList[i].Index,
+                    OriginalAccessibleName = squareList[i].OriginalAccessibleName,
+                    OriginalAccessibleDescription = squareList[i].OriginalAccessibleDescription,
+                    PictureImageSource = squareList[i].PictureImageSource
+                };
+
+                card.FaceUp = false;
+                card.Matched = false;
+
+                card.CurrentAccessibleName = "Face down";
+                card.CurrentAccessibleDescription = "";
+
+                this.squareList[i] = card;
             }
 
             if (shuffle)
@@ -371,6 +419,16 @@ namespace GridGames.ViewModels
                 var shuffler = new Shuffler();
                 shuffler.Shuffle(squareList);
             }
+
+            for (int i = 0; i < this.squareList.Count; i++)
+            {
+                SetAccessibleDetails(this.squareList[i]);
+            }
+        }
+
+        private void SetAccessibleDetails(Card card)
+        {
+            this.matchingPage.SetAccessibleDetailsOnItem(card);
         }
 
         public class Shuffler
