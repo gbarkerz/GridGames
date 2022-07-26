@@ -23,10 +23,11 @@
         </Tab>
     </FlyoutItem>
 
-    <MenuItem Text="Help"
+    <MenuItem Text="Help" 
         StyleClass="MenuItemLayoutStyle" Clicked="OnHelpMenuItemClicked">
         <MenuItem.IconImageSource>
             <FontImageSource
+                Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}"
                 Glyph="&#xf05a;"
                 FontFamily="FA" />
         </MenuItem.IconImageSource>
@@ -36,6 +37,7 @@
         StyleClass="MenuItemLayoutStyle" Clicked="OnRestartMenuItemClicked">
         <MenuItem.IconImageSource>
             <FontImageSource
+                Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}"
                 Glyph="&#xf021;"
                 FontFamily="FA" />
         </MenuItem.IconImageSource>
