@@ -25,23 +25,7 @@ namespace GridGames.ViewModels
         {
             get
             {
-                string name = "";
-
-                if (Index == 15)
-                {
-                    name = "Get a tip";
-                }
-                else
-                {
-                    name = WCAGNumber;
-
-                    if (isFound)
-                    {
-                        name += " " + WCAGName;
-                    }
-                }
-
-                return name;
+                return accessibleName;
             }
             set
             {
@@ -231,6 +215,7 @@ namespace GridGames.ViewModels
                     new WheresCard
                     {
                         Index = i,
+                        AccessibleName = (i < 15 ? wcagNumbers[i] : "Get a tip"),
                         WCAGNumber = (i < 15 ? wcagNumbers[i] : "?"),
                         WCAGName = (i  < 15 ? wcagNames[i] : "Tip")
                     });
@@ -269,6 +254,12 @@ namespace GridGames.ViewModels
                 answerIsCorrect = true;
 
                 card.IsFound = true;
+
+                // Barker: The bound name doesn't always get propagated up to the containing list items,
+                // but this double setting seems to workaround that. Revisit this at some point.
+                var fullAccessibleName = card.WCAGNumber + ", " + card.WCAGName;
+                card.AccessibleName = fullAccessibleName + ".";
+                card.AccessibleName = fullAccessibleName; 
 
                 // Has the game been won?
                 gameIsWon = GameIsWon();

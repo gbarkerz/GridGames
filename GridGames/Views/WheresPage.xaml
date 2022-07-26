@@ -76,6 +76,7 @@
 
             <CollectionView Grid.Row="2"
                 x:Name="SquaresCollectionView"
+                InputTransparent="True"
                 SemanticProperties.Description="WCAG Groups"
                 Margin="5,0,5,0"
                 Opacity="{Binding FirstRunWheres, Mode=OneWay,
