@@ -41,23 +41,59 @@ namespace GridGames.Views
             SquaresCollectionView.ChildAdded += SquaresCollectionView_ChildAdded;
         }
 
-        private bool doneSetNames = false;
-        private int squareCount = 0;
+        // Barker: TEMPORARY. It seems that https://github.com/dotnet/maui/issues/8722 is impacting
+        // the ability to update items' accessible names. Until this is resolved, this app takes
+        // a variety of steps which seems to get things working well enough for the player. The steps
+        // may seems excessive, but leave them here until issue 8722 is resolved, and this whole
+        // thing can be re-examined, (and hopefully all the temporary code removed).
+        private bool doneSetAccessibleNamesOnItems = false;
+        private int countSquaresAddedToCollection = 0;
 
         private void SquaresCollectionView_ChildAdded(object sender, ElementEventArgs e)
         {
-            if (!doneSetNames && (e.Element is Grid))
+            // When the set of items is first being set up, once all the squares have
+            // been added, set the initial accessible details on all the items.
+            if (!doneSetAccessibleNamesOnItems && (e.Element is Grid))
             {
-                ++squareCount;
+                ++countSquaresAddedToCollection;
 
-                if (squareCount == 16)
+                if (countSquaresAddedToCollection > 15)
                 {
-                    doneSetNames = true;
+                    doneSetAccessibleNamesOnItems = true;
 
                     SetInitialAccessibleNamesOnItems();
                 }
             }
         }
+
+        public void SetInitialAccessibleNamesOnItems()
+        {
+            var vm = this.BindingContext as MatchingViewModel;
+
+            for (int i = 0; i < 16; i++)
+            {
+                vm.SetFaceDownAccessibleDetails(vm.SquareListCollection[i]);
+
+                SetAccessibleDetailsOnItem(vm.SquareListCollection[i]);
+            }
+        }
+
+        // Take excessive action when setting the accessible name and description on an item.
+        // This seems to leave the item in a state that's usable for the player.
+        public void SetAccessibleDetailsOnItem(Card card)
+        {
+            // Set the accessible name twice, which apparently leaves the bound UI in a usable state.
+            var temp = card.CurrentAccessibleName;
+            card.CurrentAccessibleName = card.CurrentAccessibleName + ".";
+            card.CurrentAccessibleName = temp;
+
+            // Set the accessible description twice, which apparently leaves the bound UI in a usable state.
+            temp = card.CurrentAccessibleDescription;
+            card.CurrentAccessibleDescription = card.CurrentAccessibleDescription + ".";
+            card.CurrentAccessibleDescription = temp;
+        }
+
+        // Barker: End of TEMPORARY code.
 
         private void SquaresCollectionView_SizeChanged(object sender, EventArgs e)
         {
@@ -118,94 +154,101 @@ namespace GridGames.Views
             if ((showCustomPictures != previousShowCustomPictures) ||
                 (picturePathMatching != previousPicturePathMatching))
             {
-                // Reset all cached game progress setting, but don't bother to shuffle.
-                vm.ResetGrid(false);
-
-                // Should we be showing the default pictures?
-                if (!showCustomPictures || String.IsNullOrWhiteSpace(picturePathMatching))
-                {
-                    vm.SetupDefaultMatchingCardList();
-                }
-                else
-                {
-                    // Attempt to load up the custom pictures and associated accessible data.
-                    var customPictures = new Collection<Card>();
-
-                    bool resetToUseDefaultPictures = false;
-
-                    // We should have 8 pairs of cards.
-                    for (int i = 0; i < 8; i++)
-                    {
-                        // For each of the 2 cards in each pair...
-                        for (int j = 0; j < 2; j++)
-                        {
-                            var card = new Card();
-
-                            // The index is from 1-16.
-                            card.Index = (i * 2) + j + 1;
-
-                            string settingName = "Card" + (i + 1) + "Path";
-                            var cardPath = Preferences.Get(settingName, "");
-                            if (!File.Exists(cardPath))
-                            {
-                                Debug.WriteLine("Pairs: Card path missing.");
-
-                                resetToUseDefaultPictures = true;
-
-                                break;
-                            }
-
-                            try
-                            {
-                                card.PictureImageSource = ImageSource.FromFile(cardPath);
-                            }
-                            catch (Exception ex)
-                            {
-                                Debug.WriteLine("Pairs: Failed to load image. " + ex.Message);
-
-                                resetToUseDefaultPictures = true;
-
-                                break;
-                            }
-
-                            settingName = "Card" + (i + 1) + "Name";
-                            card.OriginalAccessibleName = Preferences.Get(settingName, "");
-                            if (String.IsNullOrWhiteSpace(card.OriginalAccessibleName))
-                            {
-                                Debug.WriteLine("Pairs: Accessible name missing.");
-
-                                resetToUseDefaultPictures = true;
-
-                                break;
-                            }
-
-                            settingName = "Card" + (i + 1) + "Description";
-                            card.OriginalAccessibleDescription = Preferences.Get(settingName, "");
-
-                            vm.SetFaceDownAccessibleDetails(card);
-
-                            customPictures.Add(card);
-                        }
-
-                        if (resetToUseDefaultPictures)
-                        {
-                            break;
-                        }
-                    }
-
-                    // Now use the custom pictures is we have all the required data.
-                    if (!resetToUseDefaultPictures)
-                    {
-                        vm.SetupCustomMatchingCardList(customPictures);
-                    }
-                    else
-                    {
-                        vm.SetupDefaultMatchingCardList();
-                    }
-                }
+                SetUpCards();
 
                 previousShowCustomPictures = showCustomPictures;
                 previousPicturePathMatching = picturePathMatching;
+            }
+        }
+
+        public void SetUpCards()
+        {
+            var vm = this.BindingContext as MatchingViewModel;
+
+            var showCustomPictures = Preferences.Get("ShowCustomPictures", false);
+            var picturePathMatching = Preferences.Get("PicturePathMatching", "");
+
+            // Should we be showing the default pictures?
+            if (!showCustomPictures || String.IsNullOrWhiteSpace(picturePathMatching))
+            {
+                vm.SetupDefaultMatchingCardList();
+            }
+            else
+            {
+                // Attempt to load up the custom pictures and associated accessible data.
+                var customPictures = new Collection<Card>();
+
+                bool resetToUseDefaultPictures = false;
+
+                // We should have 8 pairs of cards.
+                for (int i = 0; i < 8; i++)
+                {
+                    // For each of the 2 cards in each pair...
+                    for (int j = 0; j < 2; j++)
+                    {
+                        var card = new Card();
+
+                        // The index is from 1-16.
+                        card.Index = (i * 2) + j + 1;
+
+                        string settingName = "Card" + (i + 1) + "Path";
+                        var cardPath = Preferences.Get(settingName, "");
+                        if (!File.Exists(cardPath))
+                        {
+                            Debug.WriteLine("Pairs: Card path missing.");
+
+                            resetToUseDefaultPictures = true;
+
+                            break;
+                        }
+
+                        try
+                        {
+                            card.PictureImageSource = ImageSource.FromFile(cardPath);
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine("Pairs: Failed to load image. " + ex.Message);
+
+                            resetToUseDefaultPictures = true;
+
+                            break;
+                        }
+
+                        settingName = "Card" + (i + 1) + "Name";
+                        card.OriginalAccessibleName = Preferences.Get(settingName, "");
+                        if (String.IsNullOrWhiteSpace(card.OriginalAccessibleName))
+                        {
+                            Debug.WriteLine("Pairs: Accessible name missing.");
+
+                            resetToUseDefaultPictures = true;
+
+                            break;
+                        }
+
+                        settingName = "Card" + (i + 1) + "Description";
+                        card.OriginalAccessibleDescription = Preferences.Get(settingName, "");
+
+                        vm.SetFaceDownAccessibleDetails(card);
+
+                        customPictures.Add(card);
+                    }
+
+                    if (resetToUseDefaultPictures)
+                    {
+                        break;
+                    }
+                }
+
+                // Now use the custom pictures is we have all the required data.
+                if (!resetToUseDefaultPictures)
+                {
+                    vm.SetupCustomMatchingCardList(customPictures);
+                }
+                else
+                {
+                    vm.SetupDefaultMatchingCardList();
+                }
             }
         }
 
@@ -245,29 +288,6 @@ namespace GridGames.Views
             {
                 await OfferToRestartGame();
             }
-        }
-
-        public void SetInitialAccessibleNamesOnItems()
-        {
-            var vm = this.BindingContext as MatchingViewModel;
-
-            for (int i = 0; i < 16; i++)
-            {
-                vm.SetFaceDownAccessibleDetails(vm.SquareListCollection[i]);
-
-                SetAccessibleDetailsOnItem(vm.SquareListCollection[i]);
-            }
-        }
-
-        public void SetAccessibleDetailsOnItem(Card card)
-        {
-            var temp = card.CurrentAccessibleName;
-            card.CurrentAccessibleName = card.CurrentAccessibleName + " ";
-            card.CurrentAccessibleName = temp;
-
-            temp = card.CurrentAccessibleDescription;
-            card.CurrentAccessibleDescription = card.CurrentAccessibleDescription + " ";
-            card.CurrentAccessibleDescription = temp;
         }
 
         private async Task OfferToRestartGame()

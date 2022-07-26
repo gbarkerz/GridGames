@@ -64,7 +64,7 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid 
-                            SemanticProperties.Description="{Binding CurrentAccessibleName, Mode=TwoWay}"
+                            SemanticProperties.Description="{Binding CurrentAccessibleName, Mode=OneWay}"
                             HeightRequest="{Binding 
                                 Source={x:Reference MatchingPageInstance},
                                     Path=BindingContext.GridRowHeight,
@@ -79,9 +79,10 @@
                             <Frame Margin="2" Padding="0"
                                 AutomationProperties.IsInAccessibleTree="False"
                                 BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
-                                <Image IsVisible="{Binding FaceUp}"
-                                       SemanticProperties.Description="{Binding CurrentAccessibleDescription, Mode=TwoWay}"
-                                       Aspect="{Binding Source={x:Reference MatchingPageInstance},
+                                <Image 
+                                    SemanticProperties.Description="{Binding CurrentAccessibleDescription, Mode=OneWay}"
+                                    IsVisible="{Binding FaceUp}"
+                                    Aspect="{Binding Source={x:Reference MatchingPageInstance},
                                        Path=BindingContext.PictureAspect,
                                        Mode=OneWay}"
                                     Source="{Binding PictureImageSource}">

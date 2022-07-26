@@ -221,8 +221,6 @@ namespace GridGames.ViewModels
                     card.FaceUp = false;
                     card.Matched = false;
 
-                    SetFaceDownAccessibleDetails(card);
-
                     squareList.Add(card);
                 }
             }
@@ -232,6 +230,7 @@ namespace GridGames.ViewModels
 
             for (int i = 0; i < this.squareList.Count; i++)
             {
+                SetFaceDownAccessibleDetails(this.squareList[i]);
                 SetAccessibleDetails(this.squareList[i]);
             }
         }
@@ -247,6 +246,12 @@ namespace GridGames.ViewModels
 
             var shuffler = new Shuffler();
             shuffler.Shuffle(squareList);
+
+            for (int i = 0; i < this.squareList.Count; i++)
+            {
+                SetFaceDownAccessibleDetails(this.squareList[i]);
+                SetAccessibleDetails(this.squareList[i]);
+            }
         }
 
         private ObservableCollection<Card> squareList;
@@ -305,15 +310,15 @@ namespace GridGames.ViewModels
                 firstCardInMatchAttempt.FaceUp = false;
 
                 SetFaceDownAccessibleDetails(firstCardInMatchAttempt);
-
                 SetAccessibleDetails(firstCardInMatchAttempt);
+
                 firstCardInMatchAttempt = null;
 
                 secondCardInMatchAttempt.FaceUp = false;
 
                 SetFaceDownAccessibleDetails(secondCardInMatchAttempt);
-
                 SetAccessibleDetails(secondCardInMatchAttempt);
+
                 secondCardInMatchAttempt = null;
 
                 RaiseNotificationEvent(AppResources.ResourceManager.GetString("UnmatchedTurnedBack"));
@@ -353,12 +358,14 @@ namespace GridGames.ViewModels
                 {
                     // We have a match!
                     firstCardInMatchAttempt.Matched = true;
+
                     firstCardInMatchAttempt.CurrentAccessibleName = "Matched " + firstCardInMatchAttempt.OriginalAccessibleName;
                     firstCardInMatchAttempt.CurrentAccessibleDescription = firstCardInMatchAttempt.OriginalAccessibleDescription;
 
                     matchingPage.SetAccessibleDetailsOnItem(firstCardInMatchAttempt);
 
                     secondCardInMatchAttempt.Matched = true;
+
                     secondCardInMatchAttempt.CurrentAccessibleName = "Matched " + secondCardInMatchAttempt.OriginalAccessibleName;
                     secondCardInMatchAttempt.CurrentAccessibleDescription = secondCardInMatchAttempt.OriginalAccessibleDescription;
 
@@ -440,40 +447,22 @@ namespace GridGames.ViewModels
             firstCardInMatchAttempt = null;
             secondCardInMatchAttempt = null;
 
-            for (int i = 0; i < this.squareList.Count; i++)
-            {
-                var card = new Card
-                {
-                    Index = squareList[i].Index,
-                    OriginalAccessibleName = squareList[i].OriginalAccessibleName,
-                    OriginalAccessibleDescription = squareList[i].OriginalAccessibleDescription,
-                    PictureImageSource = squareList[i].PictureImageSource
-                };
-
-                card.FaceUp = false;
-                card.Matched = false;
-
-                SetFaceDownAccessibleDetails(card);
-
-                this.squareList[i] = card;
-            }
-
-            if (shuffle)
-            {
-                var shuffler = new Shuffler();
-                shuffler.Shuffle(squareList);
-            }
-
-            for (int i = 0; i < this.squareList.Count; i++)
-            {
-                SetAccessibleDetails(this.squareList[i]);
-            }
+            matchingPage.SetUpCards();
         }
+
+        // Barker: TEMPORARY. It seems that https://github.com/dotnet/maui/issues/8722 is impacting
+        // the ability to update items' accessible names. Until this is resolved, this app takes
+        // a variety of steps which seems to get things working well enough for the player. The steps
+        // may seems excessive, but leave them here until issue 8722 is resolved, and this whole
+        // thing can be re-examined, (and hopefully all the temporary code removed).
 
         private void SetAccessibleDetails(Card card)
         {
             this.matchingPage.SetAccessibleDetailsOnItem(card);
         }
+
+        // Barker: End of TEMPORARY code.
+
 
         public class Shuffler
         {
