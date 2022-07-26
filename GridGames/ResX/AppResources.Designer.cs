@@ -511,6 +511,17 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please use the keyboard to play the game.
+        ///
+        ///Review the Help content for details on how to play the game using only the keyboard..
+        /// </summary>
+        internal static string FallthroughTapMessage {
+            get {
+                return ResourceManager.GetString("FallthroughTapMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to fifteen.
         /// </summary>
         internal static string Fifteen {

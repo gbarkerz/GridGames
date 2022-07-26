@@ -357,5 +357,13 @@ namespace GridGames.Views
             var vm = this.BindingContext as MatchingViewModel;
             vm.FirstRunMatching = false;
         }
+
+        private async void FallthroughGrid_Tapped(object sender, EventArgs e)
+        {
+            await DisplayAlert(
+                AppResources.ResourceManager.GetString("GridGames"),
+                AppResources.ResourceManager.GetString("FallthroughTapMessage"),
+                AppResources.ResourceManager.GetString("OK"));
+        }
     }
 }

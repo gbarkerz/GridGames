@@ -76,8 +76,8 @@
 
             <CollectionView Grid.Row="2"
                 x:Name="SquaresCollectionView"
-                InputTransparent="True"
                 SemanticProperties.Description="WCAG Groups"
+                InputTransparent="True"
                 Margin="5,0,5,0"
                 Opacity="{Binding FirstRunWheres, Mode=OneWay,
                     Converter={StaticResource FirstRunToGridOpacity}}"
@@ -171,9 +171,15 @@
 
             </CollectionView>
 
+            <Grid Grid.Row="2" SemanticProperties.Description="Game grid" BackgroundColor="Transparent">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="FallthroughGrid_Tapped" />
+                </Grid.GestureRecognizers>
+            </Grid>
+
             <Frame Grid.Row="0" Grid.RowSpan="2" Margin="4" Padding="8"
                 IsVisible="{Binding FirstRunWheres}"
-                AutomationProperties.Name="{x:Static resources:AppResources.PairsWelcome}"
+                SemanticProperties.Description="{x:Static resources:AppResources.PairsWelcome}"
                 VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
                 <Grid>
                     <Grid.RowDefinitions>

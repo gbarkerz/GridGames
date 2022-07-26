@@ -99,9 +99,15 @@
                 
             </CollectionView>
 
+            <Grid Grid.Row="0" SemanticProperties.Description="Game grid" BackgroundColor="Transparent">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="FallthroughGrid_Tapped" />
+                </Grid.GestureRecognizers>
+            </Grid>
+
             <Frame Grid.Row="0" Margin="4" Padding="8"
                 IsVisible="{Binding FirstRunMatching}"
-                AutomationProperties.Name="{x:Static resources:AppResources.PairsWelcome}"
+                SemanticProperties.Description="{x:Static resources:AppResources.PairsWelcome}"
                 VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
                 <Grid>
                     <Grid.RowDefinitions>

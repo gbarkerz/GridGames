@@ -267,6 +267,11 @@
   <data name="FaceDown" xml:space="preserve">
     <value>Face down</value>
   </data>
+  <data name="FallthroughTapMessage" xml:space="preserve">
+    <value>Please use the keyboard to play the game.
+
+Review the Help content for details on how to play the game using only the keyboard.</value>
+  </data>
   <data name="Fifteen" xml:space="preserve">
     <value>fifteen</value>
   </data>
