@@ -45,8 +45,13 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
+            <!-- UI Automation hit testing hangs the app, so for now, disallow all taps and clicks in the grid.
+                This means the game can only be played with the keyboard. Speech no longer works, so presumably
+                that's simulating mouse input. -->
+            
             <CollectionView Grid.Row="0"
                 x:Name="SquaresCollectionView"
+                InputTransparent="True"
                 SemanticProperties.Description="Pairs cards"
                 Margin="5,5,5,0"
                 Opacity="{Binding FirstRunMatching, Mode=OneWay,
