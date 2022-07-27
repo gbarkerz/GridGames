@@ -35,7 +35,7 @@
                 SemanticProperties.HeadingLevel="Level1" FontSize="Title"
                 TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}"
                 HorizontalOptions="Center" VerticalOptions="Center" />
-            <Button Grid.Column="1" 
+            <Button Grid.Column="1" x:Name="WheresSettingsButton"
                 Text="&#xf013;" 
                 Clicked="WheresGameSettingsButton_Clicked"
                 BorderWidth="0"

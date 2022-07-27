@@ -6,18 +6,9 @@ namespace GridGames;
 
 public partial class AppShell : Shell
 {
-    public static WCAGPage AppWCAGPage;
-
     public AppShell()
     {
         InitializeComponent();
-
-        // Instatiating the WCAGPage takes quite a while, so only do that once.
-        // It still takes a while for the page to first appear, but after that
-        // it's relatively quick.
-        var timeBefore = DateTime.Now;
-        AppWCAGPage = new WCAGPage();
-        Debug.WriteLine("Time to create WCAGPage: " + (DateTime.Now - timeBefore).TotalMilliseconds);
     }
 
     private async void OnHelpMenuItemClicked(object sender, EventArgs e)

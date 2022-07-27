@@ -290,7 +290,7 @@ namespace GridGames.Views
             }
         }
 
-        public async void RestartGame()
+        public void RestartGame()
         {
             var vm = this.BindingContext as MatchingViewModel;
             if (!vm.FirstRunMatching)

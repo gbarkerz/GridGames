@@ -100,7 +100,7 @@ namespace GridGames.Views
             }
         }
 
-        public async void RestartGame()
+        public void RestartGame()
         {
             var vm = this.BindingContext as WheresViewModel;
             if (!vm.FirstRunWheres)
@@ -165,9 +165,11 @@ namespace GridGames.Views
                     }
                 }
 
-                AppShell.AppWCAGPage.PrepareCurrentQA(
-                    vm.WheresSettingsVM.QuestionListCollection[questionIndex - 1]);
-                await Navigation.PushModalAsync(AppShell.AppWCAGPage);
+                // Barker: IMPORTANT! Reduce the time it takes to present the bonus question page.
+                await Navigation.PushModalAsync(new WCAGPage(
+                    vm.WheresSettingsVM.QuestionListCollection[questionIndex - 1]));
+
+                vm.MoveToNextQuestion();
             }
 
             if (gameIsWon)

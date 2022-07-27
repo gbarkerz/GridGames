@@ -1,5 +1,6 @@
 using GridGames.ViewModels;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace GridGames.Views;
 
@@ -10,23 +11,13 @@ public partial class WCAGPage : ContentPage
     private Collection<CheckBox> checkedAnswers = new Collection<CheckBox>();
     private bool verifyingAnswer = false;
 
-    public WCAGPage()
+    public WCAGPage(QAPair qaPair)
 	{
 		InitializeComponent();
-    }
-
-	public void PrepareCurrentQA(QAPair qaPair)
-	{
-        verifyingAnswer = false;
 
         this.qaPair = qaPair;
 
         WCAGQuestion.Text = qaPair.Question;
-
-        PerceivablePicker.SelectedItem = null;
-        OperablePicker.SelectedItem = null;
-        UnderstandablePicker.SelectedItem = null;
-        RobustPicker.SelectedItem = null;
     }
 
     private async void SubmitButton_Clicked(object sender, EventArgs e)

@@ -265,10 +265,6 @@ namespace GridGames.ViewModels
                 gameIsWon = GameIsWon();
                 if (!gameIsWon)
                 {
-                    ++CurrentQuestionIndex;
-
-                    CurrentQuestionWCAG = wcagNames[CurrentQuestionIndex];
-
                     var message = String.Format(
                         AppResources.ResourceManager.GetString("CorrectWCAG"),
                         card.WCAGName, CurrentQuestionWCAG);
@@ -288,6 +284,13 @@ namespace GridGames.ViewModels
             }
 
             return gameIsWon;
+        }
+
+        public void MoveToNextQuestion()
+        {
+            ++CurrentQuestionIndex;
+
+            CurrentQuestionWCAG = wcagNames[CurrentQuestionIndex];
         }
 
         public bool AttemptTurnUpBySelection(object currentSelection)
