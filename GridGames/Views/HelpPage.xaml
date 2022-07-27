@@ -6,34 +6,43 @@
              x:Class="GridGames.HelpPage">
 
     <ContentPage.Content>
-        <Grid Padding="10">
+        <Grid Margin="0" Padding="0">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <ScrollView x:Name="WheresGameHelpContent" Grid.Row="0"
+
+            <Grid Grid.Row="0" Padding="10" Margin="0"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}">
+                <Label Text="Help"
+                    SemanticProperties.HeadingLevel="Level1" FontSize="Title"
+                    TextColor="{AppThemeBinding Light=White, Dark=White}"
+                    HorizontalOptions="Center" VerticalOptions="Center" />
+            </Grid>
+            
+            <ScrollView x:Name="WheresGameHelpContent" Grid.Row="1"
                 IsVisible="False" Margin="4,4,4,2">
-                <Label FontSize="Medium">
+                <!-- Labels don't seem scrollable with the keyboard here, so use an Editor instead. -->
+                <Editor IsReadOnly="True" FontSize="Medium" 
+                    Text="{x:Static resources:AppResources.HelpContentWheres}" />
+                <!--<Label FontSize="Medium">
                     <Label.FormattedText>
                         <FormattedString>
                             <Span Text="{x:Static resources:AppResources.HelpContentWheres}" />
                         </FormattedString>
                     </Label.FormattedText>
-                </Label>
+                </Label>-->
             </ScrollView>
-            <ScrollView x:Name="MatchingGameHelpContent" Grid.Row="0" 
+            <ScrollView x:Name="MatchingGameHelpContent" Grid.Row="1" 
                 IsVisible="False" Margin="4,4,4,2">
-                <Label FontSize="Medium">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Text="{x:Static resources:AppResources.HelpContentPairs}" />
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
+                <Editor IsReadOnly="True" FontSize="Medium" 
+                    Text="{x:Static resources:AppResources.HelpContentPairs}" />
             </ScrollView>
-            <Button Grid.Row="1" x:Name="CloseButton" 
+            
+            <Button Grid.Row="2" x:Name="CloseButton" 
                 windows:VisualElement.AccessKey="C"                                    
-                HorizontalOptions="End" Margin="0,0,4,4" Padding="8"
+                HorizontalOptions="End" Margin="0,8,4,4" Padding="8"
                 Text="Close" Clicked="CloseButton_Clicked" />
         </Grid>
     </ContentPage.Content>
