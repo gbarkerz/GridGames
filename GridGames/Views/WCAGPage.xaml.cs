@@ -7,19 +7,46 @@ public partial class WCAGPage : ContentPage
 {
 	private QAPair qaPair;
 	private Collection<string> playerAnswers = new Collection<string>();
+    private Collection<CheckBox> checkedAnswers = new Collection<CheckBox>();
+    private bool verifyingAnswer = false;
 
-	public WCAGPage(QAPair qaPair)
+    public WCAGPage()
 	{
 		InitializeComponent();
-
-		this.qaPair = qaPair;
-
-		WCAGQuestion.Text = qaPair.Question;
     }
 
-	private async void SubmitButton_Clicked(object sender, EventArgs e)
+	public void PrepareCurrentQA(QAPair qaPair)
 	{
-		bool foundIncorrectAnswer = false;
+        verifyingAnswer = false;
+
+        this.qaPair = qaPair;
+
+        WCAGQuestion.Text = qaPair.Question;
+
+        PerceivablePicker.SelectedItem = null;
+        OperablePicker.SelectedItem = null;
+        UnderstandablePicker.SelectedItem = null;
+        RobustPicker.SelectedItem = null;
+    }
+
+    private async void SubmitButton_Clicked(object sender, EventArgs e)
+	{
+        verifyingAnswer = true;
+
+        foreach (CheckBox checkedAnswer in checkedAnswers)
+        {
+            var description = SemanticProperties.GetDescription(checkedAnswer);
+            var numberSeparator = description.IndexOf(' ');
+            var wcagNumber = description.Substring(0, numberSeparator);
+
+            playerAnswers.Add(wcagNumber);
+
+            checkedAnswer.IsChecked = false;
+        }
+
+        checkedAnswers.Clear();
+
+        bool foundIncorrectAnswer = false;
 
 		foreach (var correctAnswer in qaPair.Answers)
 		{
@@ -46,24 +73,25 @@ public partial class WCAGPage : ContentPage
 	           (foundIncorrectAnswer ? "not correct." : "correct."),
             "OK");
 
-		await Navigation.PopModalAsync();
+        await Navigation.PopModalAsync();
     }
 
 	private void CheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
 	{
-		var checkboxWCAG = (CheckBox)sender;
+        if (verifyingAnswer)
+        {
+            return;
+        }
 
-        var description = SemanticProperties.GetDescription(checkboxWCAG);
-		var numberSeparator = description.IndexOf(' ');
-		var wcagNumber = description.Substring(0, numberSeparator);
+		var checkboxWCAG = (CheckBox)sender;
 
 		if (checkboxWCAG.IsChecked)
 		{
-			playerAnswers.Add(wcagNumber);
+			checkedAnswers.Add(checkboxWCAG);
         }
 		else
 		{
-			playerAnswers.Remove(wcagNumber);
+            checkedAnswers.Remove(checkboxWCAG);
         }
     }
 

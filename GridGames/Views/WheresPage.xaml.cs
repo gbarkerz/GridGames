@@ -145,8 +145,9 @@ namespace GridGames.Views
                     }
                 }
 
-                await Navigation.PushModalAsync(new WCAGPage(
-                    vm.WheresSettingsVM.QuestionListCollection[questionIndex - 1]));
+                AppShell.AppWCAGPage.PrepareCurrentQA(
+                    vm.WheresSettingsVM.QuestionListCollection[questionIndex - 1]);
+                await Navigation.PushModalAsync(AppShell.AppWCAGPage);
             }
 
             if (gameIsWon)

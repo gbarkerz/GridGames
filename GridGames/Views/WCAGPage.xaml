@@ -21,7 +21,7 @@
 
         <FlexLayout Grid.Row="2" Wrap="Wrap"
             SemanticProperties.Description="Page Navigation">
-            <Picker ClassId="Perceivable" windows:VisualElement.AccessKey="P" 
+            <Picker x:Name="PerceivablePicker" ClassId="Perceivable" windows:VisualElement.AccessKey="P" 
                 Title="Jump to Perceivable groups"
                 Margin="10"
                 SelectedIndexChanged="JumpToPicker_SelectedIndexChanged">
@@ -34,7 +34,7 @@
                     </x:Array>
                 </Picker.ItemsSource>
             </Picker>
-            <Picker ClassId="Operable" windows:VisualElement.AccessKey="O" 
+            <Picker x:Name="OperablePicker" ClassId="Operable" windows:VisualElement.AccessKey="O" 
                 Title="Jump to Operable groups"
                 Margin="10"
                 SelectedIndexChanged="JumpToPicker_SelectedIndexChanged">
@@ -48,7 +48,7 @@
                     </x:Array>
                 </Picker.ItemsSource>
             </Picker>
-            <Picker ClassId="Understandable" windows:VisualElement.AccessKey="U" 
+            <Picker x:Name="UnderstandablePicker" ClassId="Understandable" windows:VisualElement.AccessKey="U" 
                 Title="Jump to Understandble groups"
                 Margin="10"
                 SelectedIndexChanged="JumpToPicker_SelectedIndexChanged">
@@ -60,7 +60,7 @@
                     </x:Array>
                 </Picker.ItemsSource>
             </Picker>
-            <Picker ClassId="Robust" windows:VisualElement.AccessKey="R" 
+            <Picker x:Name="RobustPicker" ClassId="Robust" windows:VisualElement.AccessKey="R" 
                 Title="Jump to Robust groups"
                 Margin="10"
                 SelectedIndexChanged="JumpToPicker_SelectedIndexChanged">
