@@ -23,6 +23,7 @@ namespace GridGames.Views
             InitializeComponent();
 
             SquaresCollectionView.SizeChanged += SquaresCollectionView_SizeChanged;
+            SquaresCollectionView.Focused += SquaresCollectionView_Focused;
 
             Application.Current.RequestedThemeChanged += (s, a) =>
             {
@@ -37,8 +38,19 @@ namespace GridGames.Views
             };
 
             (this.BindingContext as MatchingViewModel).SetMatchingPage(this);
+        }
 
-            SquaresCollectionView.ChildAdded += SquaresCollectionView_ChildAdded;
+        private void SquaresCollectionView_Focused(object sender, FocusEventArgs e)
+        {
+            // If the grid has no selected item by the time it gets focus, 
+            // select the first square now. The grid must always have a 
+            // selected item if it's to respond to keyboard input.
+            var item = SquaresCollectionView.SelectedItem as Card;
+            if (item == null)
+            {
+                var vm = this.BindingContext as MatchingViewModel;
+                SquaresCollectionView.SelectedItem = vm.SquareListCollection[0];
+            }
         }
 
         // Barker: TEMPORARY. It seems that https://github.com/dotnet/maui/issues/8722 is impacting
