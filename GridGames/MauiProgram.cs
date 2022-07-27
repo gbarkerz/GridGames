@@ -35,6 +35,42 @@ public static class MauiProgram
                 }
             }
         }
+        else if (e.Key == Windows.System.VirtualKey.F1)
+        {
+            var currentPage = (Application.Current.MainPage as Microsoft.Maui.Controls.Shell).CurrentPage;
+            if ((currentPage is MatchingPage) || (currentPage is WheresPage))
+            {
+                var page = currentPage as MatchingPage;
+                if (page != null)
+                {
+                    page.ShowHelp();
+                }
+                else
+                {
+                    (currentPage as WheresPage).ShowHelp();
+                }
+
+                e.Handled = true;
+            }
+        }
+        else if (e.Key == Windows.System.VirtualKey.F5)
+        {
+            var currentPage = (Application.Current.MainPage as Microsoft.Maui.Controls.Shell).CurrentPage;
+            if ((currentPage is MatchingPage) || (currentPage is WheresPage))
+            {
+                var page = currentPage as MatchingPage;
+                if (page != null)
+                {
+                    page.RestartGame();
+                }
+                else
+                {
+                    (currentPage as WheresPage).RestartGame();
+                }
+
+                e.Handled = true;
+            }
+        }
     }
 #endif
 

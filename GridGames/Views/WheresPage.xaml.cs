@@ -89,6 +89,26 @@ namespace GridGames.Views
             }
         }
 
+        public async void ShowHelp()
+        {
+            var vm = this.BindingContext as WheresViewModel;
+            if (!vm.FirstRunWheres)
+            {
+                await Navigation.PushModalAsync(new HelpPage(this));
+
+                SquaresCollectionView.Focus();
+            }
+        }
+
+        public async void RestartGame()
+        {
+            var vm = this.BindingContext as WheresViewModel;
+            if (!vm.FirstRunWheres)
+            {
+                vm.ResetGrid(true);
+            }
+        }
+
         private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
             int itemIndex = (int)(e as TappedEventArgs).Parameter;

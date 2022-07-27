@@ -153,6 +153,7 @@
                                         LineBreakMode="MiddleTruncation"
                                         MaxLines="2"
                                         Margin="4"
+                                        FontSize="Medium"
                                         HorizontalOptions="Center">
                                         <Label.TextColor>
                                             <MultiBinding Mode="OneWay" 

@@ -32,12 +32,6 @@ public partial class AppShell : Shell
             {
                 await Navigation.PushModalAsync(new HelpPage(currentPage));
             }
-
-            var matchingPage = (CurrentPage as MatchingPage);
-            if (matchingPage != null)
-            {
-                matchingPage.SetInitialAccessibleNamesOnItems();
-            }
         }
         else if (currentPage is WheresPage)
         {

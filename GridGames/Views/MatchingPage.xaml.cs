@@ -279,6 +279,26 @@ namespace GridGames.Views
             }
         }
 
+        public async void ShowHelp()
+        {
+            var vm = this.BindingContext as MatchingViewModel;
+            if (!vm.FirstRunMatching)
+            {
+                await Navigation.PushModalAsync(new HelpPage(this));
+
+                SquaresCollectionView.Focus();
+            }
+        }
+
+        public async void RestartGame()
+        {
+            var vm = this.BindingContext as MatchingViewModel;
+            if (!vm.FirstRunMatching)
+            {
+                vm.ResetGrid(true);
+            }
+        }
+
         private async Task ReactToInputOnCard(int itemIndex)
         {
             Debug.WriteLine("Grid Games: Input on Square " + itemIndex);
