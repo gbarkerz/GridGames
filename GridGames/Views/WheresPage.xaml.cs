@@ -77,6 +77,9 @@ namespace GridGames.Views
 
                 vm.SetupWheresCardList();
             }
+
+            // Try to always set keyboard focus to the cards when the page appears.
+            SquaresCollectionView.Focus();
         }
 
         private async void WheresGameSettingsButton_Clicked(object sender, EventArgs e)

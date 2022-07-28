@@ -53,60 +53,6 @@ namespace GridGames.Views
             }
         }
 
-        // Barker: TEMPORARY. It seems that https://github.com/dotnet/maui/issues/8722 is impacting
-        // the ability to update items' accessible names. Until this is resolved, this app takes
-        // a variety of steps which seems to get things working well enough for the player. The steps
-        // may seems excessive, but leave them here until issue 8722 is resolved, and this whole
-        // thing can be re-examined, (and hopefully all the temporary code removed).
-        private bool doneSetAccessibleNamesOnItems = false;
-        private int countSquaresAddedToCollection = 0;
-
-        private void SquaresCollectionView_ChildAdded(object sender, ElementEventArgs e)
-        {
-            // When the set of items is first being set up, once all the squares have
-            // been added, set the initial accessible details on all the items.
-            if (!doneSetAccessibleNamesOnItems && (e.Element is Grid))
-            {
-                ++countSquaresAddedToCollection;
-
-                if (countSquaresAddedToCollection > 15)
-                {
-                    doneSetAccessibleNamesOnItems = true;
-
-                    SetInitialAccessibleNamesOnItems();
-                }
-            }
-        }
-
-        public void SetInitialAccessibleNamesOnItems()
-        {
-            var vm = this.BindingContext as MatchingViewModel;
-
-            for (int i = 0; i < 16; i++)
-            {
-                vm.SetFaceDownAccessibleDetails(vm.SquareListCollection[i]);
-
-                SetAccessibleDetailsOnItem(vm.SquareListCollection[i]);
-            }
-        }
-
-        // Take excessive action when setting the accessible name and description on an item.
-        // This seems to leave the item in a state that's usable for the player.
-        public void SetAccessibleDetailsOnItem(Card card)
-        {
-            // Set the accessible name twice, which apparently leaves the bound UI in a usable state.
-            var temp = card.CurrentAccessibleName;
-            card.CurrentAccessibleName = card.CurrentAccessibleName + ".";
-            card.CurrentAccessibleName = temp;
-
-            // Set the accessible description twice, which apparently leaves the bound UI in a usable state.
-            temp = card.CurrentAccessibleDescription;
-            card.CurrentAccessibleDescription = card.CurrentAccessibleDescription + ".";
-            card.CurrentAccessibleDescription = temp;
-        }
-
-        // Barker: End of TEMPORARY code.
-
         private void SquaresCollectionView_SizeChanged(object sender, EventArgs e)
         {
             if (SquaresCollectionView.Height > 0)

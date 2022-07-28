@@ -131,6 +131,29 @@ namespace GridGames.ViewModels
             TryAgainCount = 0;
         }
 
+        // Barker: TEMPORARY. It seems that https://github.com/dotnet/maui/issues/8722 is impacting
+        // the ability to update items' accessible names. Until this is resolved, this app takes
+        // a variety of steps which seems to get things working well enough for the player. The steps
+        // may seems excessive, but leave them here until issue 8722 is resolved, and this whole
+        // thing can be re-examined, (and hopefully all the temporary code removed).
+
+        // Take excessive action when setting the accessible name and description on an item.
+        // This seems to leave the item in a state that's usable for the player.
+        private void SetAccessibleDetails(Card card)
+        {
+            // Set the accessible name twice, which apparently leaves the bound UI in a usable state.
+            var temp = card.CurrentAccessibleName;
+            card.CurrentAccessibleName = card.CurrentAccessibleName + ".";
+            card.CurrentAccessibleName = temp;
+
+            // Set the accessible description twice, which apparently leaves the bound UI in a usable state.
+            temp = card.CurrentAccessibleDescription;
+            card.CurrentAccessibleDescription = card.CurrentAccessibleDescription + ".";
+            card.CurrentAccessibleDescription = temp;
+        }
+
+        // Barker: End of TEMPORARY code.
+
         private MatchingPage matchingPage;
 
         public void SetMatchingPage(MatchingPage matchingPage)
@@ -342,7 +365,7 @@ namespace GridGames.ViewModels
                 card.CurrentAccessibleName = card.OriginalAccessibleName;
                 card.CurrentAccessibleDescription = card.OriginalAccessibleDescription;
 
-                matchingPage.SetAccessibleDetailsOnItem(card);
+                SetAccessibleDetails(card);
             }
             else
             {
@@ -362,14 +385,14 @@ namespace GridGames.ViewModels
                     firstCardInMatchAttempt.CurrentAccessibleName = "Matched " + firstCardInMatchAttempt.OriginalAccessibleName;
                     firstCardInMatchAttempt.CurrentAccessibleDescription = firstCardInMatchAttempt.OriginalAccessibleDescription;
 
-                    matchingPage.SetAccessibleDetailsOnItem(firstCardInMatchAttempt);
+                    SetAccessibleDetails(firstCardInMatchAttempt);
 
                     secondCardInMatchAttempt.Matched = true;
 
                     secondCardInMatchAttempt.CurrentAccessibleName = "Matched " + secondCardInMatchAttempt.OriginalAccessibleName;
                     secondCardInMatchAttempt.CurrentAccessibleDescription = secondCardInMatchAttempt.OriginalAccessibleDescription;
 
-                    matchingPage.SetAccessibleDetailsOnItem(secondCardInMatchAttempt);
+                    SetAccessibleDetails(secondCardInMatchAttempt);
 
                     RaiseNotificationEvent(AppResources.ResourceManager.GetString("ThatsMatch"));
 
@@ -384,7 +407,7 @@ namespace GridGames.ViewModels
                     card.CurrentAccessibleName = card.OriginalAccessibleName;
                     card.CurrentAccessibleDescription = card.OriginalAccessibleDescription;
 
-                    matchingPage.SetAccessibleDetailsOnItem(card);
+                    SetAccessibleDetails(card);
                 }
             }
 
@@ -449,20 +472,6 @@ namespace GridGames.ViewModels
 
             matchingPage.SetUpCards();
         }
-
-        // Barker: TEMPORARY. It seems that https://github.com/dotnet/maui/issues/8722 is impacting
-        // the ability to update items' accessible names. Until this is resolved, this app takes
-        // a variety of steps which seems to get things working well enough for the player. The steps
-        // may seems excessive, but leave them here until issue 8722 is resolved, and this whole
-        // thing can be re-examined, (and hopefully all the temporary code removed).
-
-        private void SetAccessibleDetails(Card card)
-        {
-            this.matchingPage.SetAccessibleDetailsOnItem(card);
-        }
-
-        // Barker: End of TEMPORARY code.
-
 
         public class Shuffler
         {

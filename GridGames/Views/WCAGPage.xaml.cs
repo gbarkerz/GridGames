@@ -60,8 +60,9 @@ public partial class WCAGPage : ContentPage
 		}
 
 	   await DisplayAlert("WCAG Bonus Question",
-			"Your answer was " + 
-	           (foundIncorrectAnswer ? "not correct." : "correct."),
+            foundIncorrectAnswer ? 
+                "Sorry, your answer wasn't the same answer as the one that I have." :
+	            "Congratulations! You answer was the same answer as the one I have.",
             "OK");
 
         await Navigation.PopModalAsync();
