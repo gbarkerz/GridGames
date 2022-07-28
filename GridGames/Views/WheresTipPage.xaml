@@ -1,25 +1,30 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
              x:Class="GridGames.Views.WheresTipPage">
-    <ContentPage.Content>
-        <Grid Padding="10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Label Grid.Row="0" FontSize="Title">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="Tip for " />
-                        <Span Text="{Binding wcagName}" />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
-            <Label Grid.Row="1" FontSize="Subtitle">
+
+    <Grid Margin="0" Padding="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Padding="10" Margin="0"
+            BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}">
+            <Label Text="Where's WCAG? Tip"
+                SemanticProperties.HeadingLevel="Level1" FontSize="Title"
+                TextColor="{AppThemeBinding Light=White, Dark=White}"
+                HorizontalOptions="Center" VerticalOptions="Center" />
+        </Grid>
+
+        <Grid Grid.Row="1" Padding="0" Margin="20,10,20,10"
+              BackgroundColor="{AppThemeBinding Light=White, Dark=Black}">
+            <Label TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                FontSize="Medium">
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="The &quot;" />
@@ -34,36 +39,41 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-
-            <!-- From...
-                https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/text/label#hyperlinks
-                Barker: But this link isn't keyboard accessible, so don't do it.
-            -->
-            <!--<Label Grid.Row="2" >
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="For more details, visit " />
-                        <Span Text="{Binding wcagGroupName}"
-                            TextColor="Blue"
-                            TextDecorations="Underline">
-                            <Span.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding TapCommand}"
-                                    CommandParameter="{Binding wcagURL, Mode=OneWay}" />
-                            </Span.GestureRecognizers>
-                        </Span>%
-                        <Span Text=" at the WCAG 2.1 documentation." />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>-->
-
-            <Button Grid.Row="2" Margin="0,20,0,0" Padding="8"
-                Text="Learn more at the WCAG documentation"
-                HorizontalOptions="Center"
-                Clicked="LearnMoreButton_Clicked" />
-            
-            <Button Grid.Row="4" Text="Close" Padding="8"
-                HorizontalOptions="End"
-                Clicked="WheresTipCloseButton_Clicked" />
         </Grid>
-    </ContentPage.Content>
+
+        <!-- From...
+            https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/text/label#hyperlinks
+            Barker: But this link isn't keyboard accessible, so don't do it.
+        -->
+        <!--<Label Grid.Row="2" >
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="For more details, visit " />
+                    <Span Text="{Binding wcagGroupName}"
+                        TextColor="Blue"
+                        TextDecorations="Underline">
+                        <Span.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding TapCommand}"
+                                CommandParameter="{Binding wcagURL, Mode=OneWay}" />
+                        </Span.GestureRecognizers>
+                    </Span>%
+                    <Span Text=" at the WCAG 2.1 documentation." />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>-->
+
+        <Button Grid.Row="2" Margin="0,20,0,0" Padding="8"
+            windows:VisualElement.AccessKey="L"                
+            Text="Learn more at the WCAG documentation"
+            HorizontalOptions="Center"
+            Clicked="LearnMoreButton_Clicked" />
+
+        <Button Grid.Row="4" Text="Close"
+            windows:VisualElement.AccessKey="C"                
+            HorizontalOptions="End" Margin="0,0,4,4" Padding="8"
+            Clicked="WheresTipCloseButton_Clicked" />
+
+    </Grid>
+    
 </ContentPage>
+    
