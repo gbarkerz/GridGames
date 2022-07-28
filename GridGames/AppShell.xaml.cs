@@ -9,6 +9,15 @@ public partial class AppShell : Shell
     public AppShell()
     {
         InitializeComponent();
+
+        this.Loaded += AppShell_Loaded;
+    }
+
+    public static WCAGPage AppWCAGPage;
+
+    private void AppShell_Loaded(object sender, EventArgs e)
+    {
+        AppWCAGPage = new WCAGPage();
     }
 
     private async void OnHelpMenuItemClicked(object sender, EventArgs e)

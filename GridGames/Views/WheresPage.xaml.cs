@@ -16,6 +16,7 @@ namespace GridGames.Views
     public partial class WheresPage : ContentPage
     {
         private bool restartGame = true;
+        private int countBonusQuestionsCorrect;
 
         public WheresPage()
         {
@@ -126,6 +127,8 @@ namespace GridGames.Views
             {
                 vm.ResetGrid(true);
             }
+
+            countBonusQuestionsCorrect = 0;
         }
 
         private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
@@ -187,8 +190,21 @@ namespace GridGames.Views
                     }
 
                     // Barker: IMPORTANT! Reduce the time it takes to present the bonus question page.
-                    await Navigation.PushModalAsync(new WCAGPage(
-                        vm.WheresSettingsVM.QuestionListCollection[questionIndex - 1]));
+                    AppShell.AppWCAGPage.PrepareToAskQuestion(
+                        vm.WheresSettingsVM.QuestionListCollection[questionIndex - 1]);
+
+                    try
+                    {
+                        var wcagPage = new WCAGPage();
+                        wcagPage.PrepareToAskQuestion(
+                            vm.WheresSettingsVM.QuestionListCollection[questionIndex - 1]);
+
+                        await Navigation.PushModalAsync(wcagPage);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("WCAGPage failed: " + ex.Message);
+                    }
                 }
 
                 vm.MoveToNextQuestion();
@@ -200,7 +216,6 @@ namespace GridGames.Views
                     "Sorry, \"" + vm.CurrentQuestionWCAG + "\" isn't WCAG " +
                      vm.WheresListCollection[itemIndex].WCAGNumber + ".\r\n\r\nPlease do try again!",
                     AppResources.ResourceManager.GetString("OK"));
-
             }
 
             if (gameIsWon)
@@ -258,6 +273,11 @@ namespace GridGames.Views
                     AppResources.ResourceManager.GetString("WonInMoves"), 
                     15 + vm.AnswerAttemptCount);
 
+                if (vm.WheresSettingsVM.ShowBonusQuestion)
+                {
+                    message += " " + countBonusQuestionsCorrect;
+                }
+
                 var answer = await DisplayAlert(
                     AppResources.ResourceManager.GetString("Congratulations"),
                     message,
@@ -285,31 +305,6 @@ namespace GridGames.Views
             }
 
             return itemCollectionIndex;
-        }
-
-        private async void WheresGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var vm = this.BindingContext as WheresViewModel;
-            if (vm.FirstRunWheres)
-            {
-                return;
-            }
-
-            Debug.WriteLine("Wheres Grid Game: Selection changed. Selection count is " + e.CurrentSelection.Count);
-
-            // No action required here if there is no selected item.
-            if (e.CurrentSelection.Count > 0)
-            {
-                bool gameIsWon = vm.AttemptTurnUpBySelection(e.CurrentSelection[0]);
-
-                // Clear the selection now to support the same square moving again.
-                SquaresCollectionView.SelectedItem = null;
-
-                if (gameIsWon)
-                {
-                    await OfferToRestartGame();
-                }
-            }
         }
 
         private void WheresWelcomeOKButton_Clicked(object sender, EventArgs e)

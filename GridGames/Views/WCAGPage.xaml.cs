@@ -11,13 +11,36 @@ public partial class WCAGPage : ContentPage
     private Collection<CheckBox> checkedAnswers = new Collection<CheckBox>();
     private bool verifyingAnswer = false;
 
-    public WCAGPage(QAPair qaPair)
+    public WCAGPage()
 	{
 		InitializeComponent();
 
+        WCAG1.IsVisible = false;
+        WCAG2.IsVisible = false;
+        WCAG3.IsVisible = false;
+        WCAG4.IsVisible = false;
+    }
+
+    private void WCAGPage_Loaded(object sender, EventArgs e)
+    {
+        WCAGScrollView.IsVisible = true;
+    }
+
+    public void PrepareToAskQuestion(QAPair qaPair)
+    {
         this.qaPair = qaPair;
 
         WCAGQuestion.Text = qaPair.Question;
+
+        PerceivablePicker.SelectedItem = null;
+        OperablePicker.SelectedItem = null;
+        UnderstandablePicker.SelectedItem = null;
+        RobustPicker.SelectedItem = null;
+
+        playerAnswers.Clear();
+        checkedAnswers.Clear();
+
+        verifyingAnswer = false;
     }
 
     private async void SubmitButton_Clicked(object sender, EventArgs e)
@@ -34,8 +57,6 @@ public partial class WCAGPage : ContentPage
 
             checkedAnswer.IsChecked = false;
         }
-
-        checkedAnswers.Clear();
 
         bool foundIncorrectAnswer = false;
 
@@ -68,7 +89,19 @@ public partial class WCAGPage : ContentPage
         await Navigation.PopModalAsync();
     }
 
-	private void CheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
+    private async void CancelButton_Clicked(object sender, EventArgs e)
+    {
+        verifyingAnswer = true;
+
+        foreach (CheckBox checkedAnswer in checkedAnswers)
+        {
+            checkedAnswer.IsChecked = false;
+        }
+
+        await Navigation.PopModalAsync();
+    }
+
+    private void CheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
 	{
         if (verifyingAnswer)
         {
@@ -87,9 +120,14 @@ public partial class WCAGPage : ContentPage
         }
     }
 
-	private void JumpToPicker_SelectedIndexChanged(object sender, EventArgs e)
+    private void JumpToPicker_SelectedIndexChanged(object sender, EventArgs e)
 	{
         var picker = (Picker)sender;
+
+        WCAG1.IsVisible = false;
+        WCAG2.IsVisible = false;
+        WCAG3.IsVisible = false;
+        WCAG4.IsVisible = false;
 
         int selectedIndex = picker.SelectedIndex;
 
@@ -100,6 +138,8 @@ public partial class WCAGPage : ContentPage
             switch (picker.ClassId)
 			{
 				case "Perceivable":
+
+                    WCAG1.IsVisible = true;
 
                     CheckBox[] boxesPerceivable = {
                         Perceivable11CheckBox,
@@ -114,7 +154,9 @@ public partial class WCAGPage : ContentPage
 
 				case "Operable":
 
-					CheckBox[] boxesOperable = {
+                    WCAG2.IsVisible = true;
+
+                    CheckBox[] boxesOperable = {
 						Operable21CheckBox,
 						Operable22CheckBox,
 						Operable23CheckBox,
@@ -128,6 +170,8 @@ public partial class WCAGPage : ContentPage
 
 				case "Understandable":
 
+                    WCAG3.IsVisible = true;
+
                     CheckBox[] boxesUnderstandable = {
                         Understandable31CheckBox,
                         Understandable32CheckBox,
@@ -139,6 +183,8 @@ public partial class WCAGPage : ContentPage
 					break;
 
 				case "Robust":
+
+                    WCAG4.IsVisible = true;
 
                     CheckBox[] boxesRobust = {
                         Robust41CheckBox,
@@ -155,10 +201,29 @@ public partial class WCAGPage : ContentPage
 
 			if (targetCheckBox != null)
 			{
-                WCAGScrollView.ScrollToAsync(targetCheckBox, ScrollToPosition.Center, true);
-
                 targetCheckBox.Focus();
+
+                timer = new Timer(new TimerCallback((s) => ScrollToWCAGCheckBox(targetCheckBox)),
+                                   null, TimeSpan.Zero, TimeSpan.FromMilliseconds(500));
             }
         }
+    }
+
+    private Timer timer;
+
+    private void ScrollToWCAGCheckBox(CheckBox targetCheckBox)
+    {
+        timer.Dispose();
+
+        var newThread = new System.Threading.Thread(() =>
+        {
+            Application.Current.Dispatcher.Dispatch(() =>
+            {
+                Debug.WriteLine("Perform delayed scroll to WCAG CheckBox.");
+
+                WCAGScrollView.ScrollToAsync(targetCheckBox, ScrollToPosition.Center, true);
+            });
+        });
+        newThread.Start();
     }
 }
