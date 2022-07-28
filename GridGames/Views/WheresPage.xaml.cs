@@ -10,6 +10,8 @@ using GridGames.ResX;
 
 namespace GridGames.Views
 {
+    // Barker TODO: There's loads of duplicated code across the WheresPage and MatchingPage. Remove this duplication.
+
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class WheresPage : ContentPage
     {
@@ -20,6 +22,7 @@ namespace GridGames.Views
             InitializeComponent();
 
             SquaresCollectionView.SizeChanged += SquaresCollectionView_SizeChanged;
+            SquaresCollectionView.Focused += SquaresCollectionView_Focused;
 
             Application.Current.RequestedThemeChanged += (s, a) =>
             {
@@ -32,6 +35,19 @@ namespace GridGames.Views
                 var vm = this.BindingContext as WheresViewModel;
                 vm.ShowDarkTheme = (currentTheme == AppTheme.Dark);
             };
+        }
+
+        private void SquaresCollectionView_Focused(object sender, FocusEventArgs e)
+        {
+            // If the grid has no selected item by the time it gets focus, 
+            // select the first square now. The grid must always have a 
+            // selected item if it's to respond to keyboard input.
+            var item = SquaresCollectionView.SelectedItem as WheresCard;
+            if (item == null)
+            {
+                var vm = this.BindingContext as WheresViewModel;
+                SquaresCollectionView.SelectedItem = vm.WheresListCollection[0];
+            }
         }
 
         private void SquaresCollectionView_SizeChanged(object sender, EventArgs e)
@@ -155,24 +171,36 @@ namespace GridGames.Views
             bool gameIsWon = vm.AttemptToAnswerQuestion(itemCollectionIndex, out answerIsCorrect);
 
             // Show a bonus question if appropriate.
-            if (answerIsCorrect && vm.WheresSettingsVM.ShowBonusQuestion && 
-                (vm.WheresSettingsVM.QuestionListCollection.Count == 15))
+            if (answerIsCorrect)
             {
-                int questionIndex = 0;
-
-                foreach (WheresCard card in vm.WheresListCollection)
+                if (vm.WheresSettingsVM.ShowBonusQuestion &&
+                    (vm.WheresSettingsVM.QuestionListCollection.Count == 15))
                 {
-                    if (card.IsFound)
+                    int questionIndex = 0;
+
+                    foreach (WheresCard card in vm.WheresListCollection)
                     {
-                        ++questionIndex;
+                        if (card.IsFound)
+                        {
+                            ++questionIndex;
+                        }
                     }
+
+                    // Barker: IMPORTANT! Reduce the time it takes to present the bonus question page.
+                    await Navigation.PushModalAsync(new WCAGPage(
+                        vm.WheresSettingsVM.QuestionListCollection[questionIndex - 1]));
                 }
 
-                // Barker: IMPORTANT! Reduce the time it takes to present the bonus question page.
-                await Navigation.PushModalAsync(new WCAGPage(
-                    vm.WheresSettingsVM.QuestionListCollection[questionIndex - 1]));
-
                 vm.MoveToNextQuestion();
+            }
+            else
+            {
+                await DisplayAlert(
+                    AppResources.ResourceManager.GetString("Wheres"),
+                    "Sorry, \"" + vm.CurrentQuestionWCAG + "\" isn't WCAG " +
+                     vm.WheresListCollection[itemIndex].WCAGNumber + ".\r\n\r\nPlease do try again!",
+                    AppResources.ResourceManager.GetString("OK"));
+
             }
 
             if (gameIsWon)

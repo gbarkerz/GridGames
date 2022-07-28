@@ -290,7 +290,10 @@ namespace GridGames.ViewModels
         {
             ++CurrentQuestionIndex;
 
-            CurrentQuestionWCAG = wcagNames[CurrentQuestionIndex];
+            if (CurrentQuestionIndex < wcagNames.Length)
+            {
+                CurrentQuestionWCAG = wcagNames[CurrentQuestionIndex];
+            }
         }
 
         public bool AttemptTurnUpBySelection(object currentSelection)

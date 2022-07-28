@@ -208,6 +208,9 @@ namespace GridGames.Views
                     vm.SetupDefaultMatchingCardList();
                 }
             }
+
+            // Try to always set keyboard focus to the cards when the page appears.
+            SquaresCollectionView.Focus();
         }
 
         private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
