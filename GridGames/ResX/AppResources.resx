@@ -892,6 +892,11 @@ The help content can be reached via the Open Navigation button at the top left c
 
 Would you like to play another game?</value>
   </data>
+  <data name="WonInMovesWithBonusQuestionCount" xml:space="preserve">
+    <value>You won the game in {0} goes, and got {1} bonus questions correct!
+
+Would you like to play another game?</value>
+  </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
   </data>

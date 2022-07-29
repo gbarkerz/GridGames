@@ -143,11 +143,13 @@ namespace GridGames.ViewModels
             wheresList = new ObservableCollection<WheresCard>();
 
             AnswerAttemptCount = 0;
+            BonusQuestionCount = 0;
 
             wheresSettingsVM = new WheresSettingsViewModel();
         }
 
         public int AnswerAttemptCount { get; set; }
+        public int BonusQuestionCount { get; set; }
         public int CurrentQuestionIndex { get; set; }
 
         private WheresSettingsViewModel wheresSettingsVM;
@@ -340,6 +342,7 @@ namespace GridGames.ViewModels
         public void ResetGrid(bool shuffle)
         {
             AnswerAttemptCount = 0;
+            BonusQuestionCount = 0;
 
             if (shuffle)
             {

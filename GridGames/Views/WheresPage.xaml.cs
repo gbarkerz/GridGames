@@ -16,7 +16,6 @@ namespace GridGames.Views
     public partial class WheresPage : ContentPage
     {
         private bool restartGame = true;
-        private int countBonusQuestionsCorrect;
 
         public WheresPage()
         {
@@ -127,8 +126,6 @@ namespace GridGames.Views
             {
                 vm.ResetGrid(true);
             }
-
-            countBonusQuestionsCorrect = 0;
         }
 
         private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
@@ -191,15 +188,13 @@ namespace GridGames.Views
 
                     // Barker: IMPORTANT! Reduce the time it takes to present the bonus question page.
                     AppShell.AppWCAGPage.PrepareToAskQuestion(
+                        this,
+                        gameIsWon,
                         vm.WheresSettingsVM.QuestionListCollection[questionIndex - 1]);
 
                     try
                     {
-                        var wcagPage = new WCAGPage();
-                        wcagPage.PrepareToAskQuestion(
-                            vm.WheresSettingsVM.QuestionListCollection[questionIndex - 1]);
-
-                        await Navigation.PushModalAsync(wcagPage);
+                        await Navigation.PushModalAsync(AppShell.AppWCAGPage);
                     }
                     catch (Exception ex)
                     {
@@ -218,9 +213,9 @@ namespace GridGames.Views
                     AppResources.ResourceManager.GetString("OK"));
             }
 
-            if (gameIsWon)
+            if (gameIsWon && !vm.WheresSettingsVM.ShowBonusQuestion)
             {
-                await OfferToRestartGame();
+                await OfferToRestartGame(false);
             }
         }
 
@@ -264,19 +259,18 @@ namespace GridGames.Views
             }
         }
 
-        private async Task OfferToRestartGame()
+        public async Task OfferToRestartGame(bool showBonusQuestionCount)
         {
             var vm = this.BindingContext as WheresViewModel;
             if (!vm.FirstRunWheres)
             {
-                var message = String.Format(
-                    AppResources.ResourceManager.GetString("WonInMoves"), 
-                    15 + vm.AnswerAttemptCount);
-
-                if (vm.WheresSettingsVM.ShowBonusQuestion)
-                {
-                    message += " " + countBonusQuestionsCorrect;
-                }
+                var message = showBonusQuestionCount ?
+                    String.Format(
+                        AppResources.ResourceManager.GetString("WonInMovesWithBonusQuestionCount"),
+                        15 + vm.AnswerAttemptCount, vm.BonusQuestionCount) :
+                    String.Format(
+                        AppResources.ResourceManager.GetString("WonInMoves"),
+                        15 + vm.AnswerAttemptCount);
 
                 var answer = await DisplayAlert(
                     AppResources.ResourceManager.GetString("Congratulations"),

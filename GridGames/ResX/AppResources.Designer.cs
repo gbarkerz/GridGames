@@ -2280,6 +2280,17 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You won the game in {0} goes, and got {1} bonus questions correct!
+        ///
+        ///Would you like to play another game?.
+        /// </summary>
+        internal static string WonInMovesWithBonusQuestionCount {
+            get {
+                return ResourceManager.GetString("WonInMovesWithBonusQuestionCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Yes.
         /// </summary>
         internal static string Yes {

@@ -6,7 +6,9 @@ namespace GridGames.Views;
 
 public partial class WCAGPage : ContentPage
 {
-	private QAPair qaPair;
+    private QAPair qaPair;
+    private WheresPage wheresPage;
+    private bool gameIsWon;
 	private Collection<string> playerAnswers = new Collection<string>();
     private Collection<CheckBox> checkedAnswers = new Collection<CheckBox>();
     private bool verifyingAnswer = false;
@@ -26,9 +28,11 @@ public partial class WCAGPage : ContentPage
         WCAGScrollView.IsVisible = true;
     }
 
-    public void PrepareToAskQuestion(QAPair qaPair)
+    public void PrepareToAskQuestion(WheresPage wheresPage, bool gameIsWon, QAPair qaPair)
     {
         this.qaPair = qaPair;
+        this.gameIsWon = gameIsWon;
+        this.wheresPage = wheresPage;
 
         WCAGQuestion.Text = qaPair.Question;
 
@@ -86,7 +90,13 @@ public partial class WCAGPage : ContentPage
 	            "Congratulations! You answer was the same answer as the one I have.",
             "OK");
 
-        await Navigation.PopModalAsync();
+        if (!foundIncorrectAnswer)
+        {
+            var vm = wheresPage.BindingContext as WheresViewModel;
+            vm.BonusQuestionCount++;
+        }
+
+        await CloseWCAGPage();
     }
 
     private async void CancelButton_Clicked(object sender, EventArgs e)
@@ -96,6 +106,16 @@ public partial class WCAGPage : ContentPage
         foreach (CheckBox checkedAnswer in checkedAnswers)
         {
             checkedAnswer.IsChecked = false;
+        }
+
+        await CloseWCAGPage();
+    }
+
+    private async Task CloseWCAGPage()
+    {
+        if (gameIsWon)
+        {
+            await wheresPage.OfferToRestartGame(true);
         }
 
         await Navigation.PopModalAsync();
