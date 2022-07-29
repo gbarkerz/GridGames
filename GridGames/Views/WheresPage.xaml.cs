@@ -282,6 +282,9 @@ namespace GridGames.Views
                         AppResources.ResourceManager.GetString("WonInMoves"),
                         15 + vm.AnswerAttemptCount);
 
+                // Barker: Tidy this up... 
+                message.Replace("1 bonus questions", "1 bonus question");
+
                 var answer = await DisplayAlert(
                     AppResources.ResourceManager.GetString("Congratulations"),
                     message,

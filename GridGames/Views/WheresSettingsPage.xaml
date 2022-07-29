@@ -16,16 +16,22 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <Grid Padding="10">
+        <Grid Margin="0" Padding="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" FontSize="Title" Margin="0,10,0,0"
-                SemanticProperties.HeadingLevel="Level1"
-                Text="{x:Static resources:AppResources.WheresSettings}" />
-            <ScrollView Grid.Row="1" Margin="4,4,4,2">
+
+            <Grid Grid.Row="0" Padding="10" Margin="0"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}">
+                <Label Text="{x:Static resources:AppResources.WheresSettings}"
+                    SemanticProperties.HeadingLevel="Level1" FontSize="Title"
+                    TextColor="{AppThemeBinding Light=White, Dark=White}"
+                    HorizontalOptions="Center" VerticalOptions="Center" />
+            </Grid>
+
+            <ScrollView Grid.Row="1" Margin="14,4,14,2">
                 <Grid Grid.Row="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
