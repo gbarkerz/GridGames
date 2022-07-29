@@ -15,6 +15,7 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
+            <localviews:FirstRunToGridVisible x:Key="FirstRunToGridVisible" />
             <localviews:FirstRunToGridOpacity x:Key="FirstRunToGridOpacity" />
             <localviews:WheresLabelContainerHeightToFontSize x:Key="WheresLabelContainerHeightToFontSize" />
             <localviews:WCAGTitleToQuestion x:Key="WCAGTitleToQuestion" />
@@ -64,11 +65,13 @@
                     FontSize="Header" 
                     Margin="10,0,0,0"
                     HorizontalOptions="Start"
-                    Opacity="{Binding FirstRunWheres, Mode=OneWay,
+                    IsVisible="{Binding FirstRunWheres, Mode=OneWay,
                         Converter={StaticResource FirstRunToGridOpacity}}" />
             </Grid>
             
             <Grid Grid.Row="1" BackgroundColor="Transparent" HeightRequest="5" 
+                Opacity="{Binding FirstRunWheres, Mode=OneWay,
+                    Converter={StaticResource FirstRunToGridVisible}}"                  
                 Margin="0" Padding="0" />
 
             <!-- Barker: I don't know how to customise the colours for keyboard focus around a grid item.
@@ -172,15 +175,17 @@
 
             </CollectionView>
 
-            <Grid Grid.Row="2" SemanticProperties.Description="Game grid" BackgroundColor="Transparent">
+            <Grid Grid.Row="2" SemanticProperties.Description="Game grid" 
+                  BackgroundColor="Transparent">
                 <Grid.GestureRecognizers>
                     <TapGestureRecognizer Tapped="FallthroughGrid_Tapped" />
                 </Grid.GestureRecognizers>
             </Grid>
 
-            <Frame Grid.Row="0" Grid.RowSpan="2" Margin="4" Padding="8"
+            <Frame Grid.Row="0" Grid.RowSpan="3" x:Name="WelcomeFrame" 
+                Margin="4" Padding="8"
                 IsVisible="{Binding FirstRunWheres}"
-                SemanticProperties.Description="{x:Static resources:AppResources.PairsWelcome}"
+                BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
                 VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -201,8 +206,8 @@
                             </Label.FormattedText>
                         </Label>
                     </ScrollView>
-                    <Button Grid.Row="2"
-                        Text="{x:Static resources:AppResources.Close}" 
+                    <Button Grid.Row="2" x:Name="WelcomeCloseButton"
+                        Text="Close welcome message" 
                         Clicked="WheresWelcomeOKButton_Clicked"
                         windows:VisualElement.AccessKey="C"
                         HorizontalOptions="End" Margin="0,0,4,4" Padding="8" />

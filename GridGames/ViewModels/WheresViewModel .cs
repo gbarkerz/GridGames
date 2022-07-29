@@ -265,24 +265,10 @@ namespace GridGames.ViewModels
 
                 // Has the game been won?
                 gameIsWon = GameIsWon();
-                if (!gameIsWon)
-                {
-                    var message = String.Format(
-                        AppResources.ResourceManager.GetString("CorrectWCAG"),
-                        card.WCAGName, CurrentQuestionWCAG);
-
-                    RaiseNotificationEvent(message);
-                }
             }
             else if (card.WCAGName != "Tip")
             {
                 ++AnswerAttemptCount;
-
-                var message = String.Format(
-                    AppResources.ResourceManager.GetString("IncorrectWCAG"),
-                    card.WCAGNumber, CurrentQuestionWCAG);
-
-                RaiseNotificationEvent(message);
             }
 
             return gameIsWon;

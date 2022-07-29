@@ -15,8 +15,17 @@ namespace GridGames
         {
             InitializeComponent();
 
-            //this.BindingContext = new WheresSettingsViewModel();
             this.BindingContext = wheresSettingsVM;
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            // Calling SetSemanticFocus() raises an exception.
+            //PairsSettingsTitle.SetSemanticFocus();
+            var vm = this.BindingContext as BaseViewModel;
+            vm.RaiseNotificationEvent(WheresSettingsTitle.Text);
         }
 
         private async void CloseButton_Clicked(object sender, EventArgs e)

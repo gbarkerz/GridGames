@@ -74,5 +74,31 @@ namespace GridGames.ViewModels
 
             SemanticScreenReader.Default.Announce(notification);
         }
+
+        public void RaiseDelayedNotificationEvent(string notification)
+        {
+            timer = new Timer(new TimerCallback((s) => NowAnnounce(notification)),
+                               null, 
+                               TimeSpan.FromMilliseconds(1000),
+                               TimeSpan.FromMilliseconds(Timeout.Infinite));
+        }
+
+        private Timer timer;
+
+        private void NowAnnounce(string notification)
+        {
+            timer.Dispose();
+
+            var newThread = new System.Threading.Thread(() =>
+            {
+                Application.Current.Dispatcher.Dispatch(() =>
+                {
+                    Debug.WriteLine("Perform delayed announcement.");
+
+                    SemanticScreenReader.Default.Announce(notification);
+                });
+            });
+            newThread.Start();
+        }
     }
 }

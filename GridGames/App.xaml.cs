@@ -1,7 +1,4 @@
-﻿
-using System.Diagnostics;
-
-namespace GridGames;
+﻿namespace GridGames;
 
 public partial class App : Application
 {

@@ -42,6 +42,16 @@ namespace GridGames
             LoadCustomPictureData();
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            // Calling SetSemanticFocus() raises an exception.
+            //PairsSettingsTitle.SetSemanticFocus();
+            var vm = this.BindingContext as BaseViewModel;
+            vm.RaiseNotificationEvent(PairsSettingsTitle.Text);
+        }
+
         private void LoadCustomPictureData()
         {
             var vm = this.BindingContext as MatchingSettingsViewModel;

@@ -21,6 +21,8 @@ namespace GridGames.Views
         {
             InitializeComponent();
 
+            WelcomeFrame.Loaded += WelcomeFrame_Loaded;
+
             SquaresCollectionView.SizeChanged += SquaresCollectionView_SizeChanged;
             SquaresCollectionView.Focused += SquaresCollectionView_Focused;
 
@@ -35,6 +37,21 @@ namespace GridGames.Views
                 var vm = this.BindingContext as WheresViewModel;
                 vm.ShowDarkTheme = (currentTheme == AppTheme.Dark);
             };
+        }
+
+        private void WelcomeFrame_Loaded(object sender, EventArgs e)
+        {
+            if ((sender as Frame).IsVisible)
+            {
+                WheresSettingsButton.Focus();
+
+                var vm = this.BindingContext as WheresViewModel;
+                vm.RaiseDelayedNotificationEvent(
+                    WheresWelcomeTitleLabel.Text + ", " + 
+                    WheresWelcomeTitleInstructions.FormattedText);
+
+                SquaresCollectionView.IsVisible = false;
+            }
         }
 
         private void SquaresCollectionView_Focused(object sender, FocusEventArgs e)
@@ -70,11 +87,6 @@ namespace GridGames.Views
             var vm = this.BindingContext as WheresViewModel;
 
             vm.FirstRunWheres = Preferences.Get("FirstRunWheres", true);
-            if (vm.FirstRunWheres)
-            {
-                vm.RaiseNotificationEvent(
-                    WheresWelcomeTitleLabel.Text + ", " + WheresWelcomeTitleInstructions.Text);
-            }
 
             var currentTheme = Application.Current.UserAppTheme;
             if (currentTheme == AppTheme.Unspecified)
@@ -223,9 +235,21 @@ namespace GridGames.Views
                     AppResources.ResourceManager.GetString("OK"));
             }
 
-            if (gameIsWon && !vm.WheresSettingsVM.ShowBonusQuestion)
+            if (!vm.WheresSettingsVM.ShowBonusQuestion)
             {
-                await OfferToRestartGame(false);
+                if (gameIsWon)
+                {
+                    await OfferToRestartGame(false);
+                }
+                else if (answerIsCorrect)
+                {
+                    var message = String.Format(
+                        AppResources.ResourceManager.GetString("CorrectWCAG"),
+                        vm.WheresListCollection[itemIndex].WCAGName,
+                        vm.CurrentQuestionWCAG);
+
+                    vm.RaiseNotificationEvent(message);
+                }
             }
         }
 
@@ -318,6 +342,12 @@ namespace GridGames.Views
         {
             var vm = this.BindingContext as WheresViewModel;
             vm.FirstRunWheres = false;
+
+            SquaresCollectionView.IsVisible = true;
+
+            vm.RaiseNotificationEvent("Your first question is, Where's " + vm.CurrentQuestionWCAG);
+
+            SquaresCollectionView.Focus();
         }
 
         private async void FallthroughGrid_Tapped(object sender, EventArgs e)

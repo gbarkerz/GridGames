@@ -22,6 +22,7 @@ namespace GridGames.Views
         {
             InitializeComponent();
 
+            this.Loaded += MatchingPage_Loaded;
             SquaresCollectionView.SizeChanged += SquaresCollectionView_SizeChanged;
             SquaresCollectionView.Focused += SquaresCollectionView_Focused;
 
@@ -38,6 +39,22 @@ namespace GridGames.Views
             };
 
             (this.BindingContext as MatchingViewModel).SetMatchingPage(this);
+        }
+
+        private void MatchingPage_Loaded(object sender, EventArgs e)
+        {
+            if (WelcomeFrame.IsVisible)
+            {
+                PairsSettingsButton.Focus();
+
+                WelcomeFrame.SetSemanticFocus();
+
+                var vm = this.BindingContext as MatchingViewModel;
+                vm.RaiseNotificationEvent(
+                    MatchingWelcomeTitleLabel.Text + ", " + MatchingWelcomeTitleInstructions.Text);
+
+                SquaresCollectionView.IsVisible = false;
+            }
         }
 
         private void SquaresCollectionView_Focused(object sender, FocusEventArgs e)
@@ -337,6 +354,8 @@ namespace GridGames.Views
         {
             var vm = this.BindingContext as MatchingViewModel;
             vm.FirstRunMatching = false;
+
+            SquaresCollectionView.IsVisible = true;
         }
 
         private async void FallthroughGrid_Tapped(object sender, EventArgs e)

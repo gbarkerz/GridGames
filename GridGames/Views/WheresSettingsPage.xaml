@@ -25,7 +25,8 @@
 
             <Grid Grid.Row="0" Padding="10" Margin="0"
                 BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}">
-                <Label Text="{x:Static resources:AppResources.WheresSettings}"
+                <Label x:Name="WheresSettingsTitle"
+                    Text="{x:Static resources:AppResources.WheresSettings}"
                     SemanticProperties.HeadingLevel="Level1" FontSize="Title"
                     TextColor="{AppThemeBinding Light=White, Dark=White}"
                     HorizontalOptions="Center" VerticalOptions="Center" />

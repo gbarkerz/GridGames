@@ -1,6 +1,5 @@
 ﻿using GridGames.ViewModels;
 using GridGames.Views;
-using System.Diagnostics;
 
 namespace GridGames;
 

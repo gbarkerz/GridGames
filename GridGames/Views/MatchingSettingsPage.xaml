@@ -24,7 +24,8 @@
             
             <Grid Grid.Row="0" Padding="10" Margin="0"
                 BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}">
-                <Label Text="{x:Static resources:AppResources.PairsSettings}"
+                <Label x:Name="PairsSettingsTitle"
+                    Text="{x:Static resources:AppResources.PairsSettings}"
                     SemanticProperties.HeadingLevel="Level1" FontSize="Title"
                     TextColor="{AppThemeBinding Light=White, Dark=White}"
                     HorizontalOptions="Center" VerticalOptions="Center" />

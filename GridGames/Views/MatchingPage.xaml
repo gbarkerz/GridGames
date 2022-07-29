@@ -31,7 +31,8 @@
                 SemanticProperties.HeadingLevel="Level1" FontSize="Title"
                 TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}"
                 HorizontalOptions="Center" VerticalOptions="Center" />
-            <Button Grid.Column="1" Text="&#xf013;" Clicked="MatchingGameSettingsButton_Clicked"
+            <Button Grid.Column="1" Text="&#xf013;" x:Name="PairsSettingsButton"
+                Clicked="MatchingGameSettingsButton_Clicked"
                 BorderWidth="0"
                 windows:VisualElement.AccessKey="S"
                 FontFamily="FA" FontSize="Title" HorizontalOptions="End"
@@ -99,15 +100,17 @@
                 
             </CollectionView>
 
-            <Grid Grid.Row="0" SemanticProperties.Description="Game grid" BackgroundColor="Transparent">
+            <Grid Grid.Row="0" SemanticProperties.Description="Game grid" 
+                BackgroundColor="Transparent">
                 <Grid.GestureRecognizers>
                     <TapGestureRecognizer Tapped="FallthroughGrid_Tapped" />
                 </Grid.GestureRecognizers>
             </Grid>
 
-            <Frame Grid.Row="0" Margin="4" Padding="8"
+            <Frame Grid.Row="0" Margin="4" Padding="8" x:Name="WelcomeFrame" 
                 IsVisible="{Binding FirstRunMatching}"
                 SemanticProperties.Description="{x:Static resources:AppResources.PairsWelcome}"
+                BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
                 VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
                 <Grid>
                     <Grid.RowDefinitions>
