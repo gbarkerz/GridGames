@@ -22,7 +22,8 @@ namespace GridGames.Views
         {
             InitializeComponent();
 
-            this.Loaded += MatchingPage_Loaded;
+            WelcomeFrame.Loaded += WelcomeFrame_Loaded;
+
             SquaresCollectionView.SizeChanged += SquaresCollectionView_SizeChanged;
             SquaresCollectionView.Focused += SquaresCollectionView_Focused;
 
@@ -41,17 +42,17 @@ namespace GridGames.Views
             (this.BindingContext as MatchingViewModel).SetMatchingPage(this);
         }
 
-        private void MatchingPage_Loaded(object sender, EventArgs e)
+
+        private void WelcomeFrame_Loaded(object sender, EventArgs e)
         {
-            if (WelcomeFrame.IsVisible)
+            if ((sender as Frame).IsVisible)
             {
                 PairsSettingsButton.Focus();
 
-                WelcomeFrame.SetSemanticFocus();
-
                 var vm = this.BindingContext as MatchingViewModel;
-                vm.RaiseNotificationEvent(
-                    MatchingWelcomeTitleLabel.Text + ", " + MatchingWelcomeTitleInstructions.Text);
+                vm.RaiseDelayedNotificationEvent(
+                    MatchingWelcomeTitleLabel.Text + ", " +
+                    MatchingWelcomeTitleInstructions.FormattedText);
 
                 SquaresCollectionView.IsVisible = false;
             }
@@ -104,11 +105,6 @@ namespace GridGames.Views
             var vm = this.BindingContext as MatchingViewModel;
 
             vm.FirstRunMatching = Preferences.Get("FirstRunMatching", true);
-            if (vm.FirstRunMatching)
-            {
-                vm.RaiseNotificationEvent(
-                    MatchingWelcomeTitleLabel.Text + ", " + MatchingWelcomeTitleInstructions.Text);
-            }
 
             var currentTheme = Application.Current.UserAppTheme;
             if (currentTheme == AppTheme.Unspecified)
@@ -356,6 +352,10 @@ namespace GridGames.Views
             vm.FirstRunMatching = false;
 
             SquaresCollectionView.IsVisible = true;
+
+            vm.RaiseNotificationEvent("The Pairs game is ready to play!");
+
+            SquaresCollectionView.Focus();
         }
 
         private async void FallthroughGrid_Tapped(object sender, EventArgs e)

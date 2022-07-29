@@ -109,7 +109,6 @@
 
             <Frame Grid.Row="0" Margin="4" Padding="8" x:Name="WelcomeFrame" 
                 IsVisible="{Binding FirstRunMatching}"
-                SemanticProperties.Description="{x:Static resources:AppResources.PairsWelcome}"
                 BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
                 VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
                 <Grid>
@@ -132,7 +131,7 @@
                         </Label>
                     </ScrollView>
                     <Button Grid.Row="2"
-                        Text="{x:Static resources:AppResources.Close}" 
+                        Text="Close welcome message" 
                         Clicked="MatchingWelcomeOKButton_Clicked"
                         windows:VisualElement.AccessKey="C"
                         HorizontalOptions="End" Margin="0,0,4,4" Padding="8" />
