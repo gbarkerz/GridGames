@@ -36,15 +36,22 @@ public partial class WCAGPage : ContentPage
 
         WCAGQuestion.Text = qaPair.Question;
 
+        playerAnswers.Clear();
+        checkedAnswers.Clear();
+
+        verifyingAnswer = false;
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
         PerceivablePicker.SelectedItem = null;
         OperablePicker.SelectedItem = null;
         UnderstandablePicker.SelectedItem = null;
         RobustPicker.SelectedItem = null;
 
-        playerAnswers.Clear();
-        checkedAnswers.Clear();
-
-        verifyingAnswer = false;
+        PerceivablePicker.Focus();
     }
 
     private async void SubmitButton_Clicked(object sender, EventArgs e)
@@ -87,7 +94,7 @@ public partial class WCAGPage : ContentPage
 	   await DisplayAlert("WCAG Bonus Question",
             foundIncorrectAnswer ? 
                 "Sorry, your answer wasn't the same answer as the one that I have." :
-	            "Congratulations! You answer was the same answer as the one I have.",
+	            "Congratulations! Your answer was the same answer as the one I have.",
             "OK");
 
         if (!foundIncorrectAnswer)
@@ -224,7 +231,9 @@ public partial class WCAGPage : ContentPage
                 targetCheckBox.Focus();
 
                 timer = new Timer(new TimerCallback((s) => ScrollToWCAGCheckBox(targetCheckBox)),
-                                   null, TimeSpan.Zero, TimeSpan.FromMilliseconds(500));
+                                   null, 
+                                   TimeSpan.FromMilliseconds(500), 
+                                   TimeSpan.FromMilliseconds(Timeout.Infinite));
             }
         }
     }

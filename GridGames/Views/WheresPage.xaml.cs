@@ -197,22 +197,18 @@ namespace GridGames.Views
                         }
                     }
 
-                    if (vm.WheresSettingsVM.QuestionListCollection.Count == 15)
-                    {
-                        // Barker: IMPORTANT! Reduce the time it takes to present the bonus question page.
-                        AppShell.AppWCAGPage.PrepareToAskQuestion(
-                            this,
-                            gameIsWon,
-                            vm.WheresSettingsVM.QuestionListCollection[questionIndex - 1]);
-                    }
-                    else
-                    {
-                        // Ask a default question.
-                        AppShell.AppWCAGPage.PrepareToAskQuestion(
-                            this,
-                            gameIsWon,
-                            vm.WheresSettingsVM.DefaultBonusQAList[questionIndex - 1]);
-                    }
+                    var bonusQuestion = vm.WheresSettingsVM.QuestionListCollection.Count == 15 ?
+                        vm.WheresSettingsVM.QuestionListCollection[questionIndex - 1] :
+                        vm.WheresSettingsVM.DefaultBonusQAList[questionIndex - 1];
+
+                    vm.RaiseNotificationEvent(
+                        "You found " + vm.WheresListCollection[itemIndex].WCAGName + 
+                        ", so here's your bonus question. " + bonusQuestion.Question);
+
+                    AppShell.AppWCAGPage.PrepareToAskQuestion(
+                        this,
+                        gameIsWon,
+                        bonusQuestion);
 
                     try
                     {
