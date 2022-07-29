@@ -173,8 +173,7 @@ namespace GridGames.Views
             // Show a bonus question if appropriate.
             if (answerIsCorrect)
             {
-                if (vm.WheresSettingsVM.ShowBonusQuestion &&
-                    (vm.WheresSettingsVM.QuestionListCollection.Count == 15))
+                if (vm.WheresSettingsVM.ShowBonusQuestion)
                 {
                     int questionIndex = 0;
 
@@ -186,11 +185,22 @@ namespace GridGames.Views
                         }
                     }
 
-                    // Barker: IMPORTANT! Reduce the time it takes to present the bonus question page.
-                    AppShell.AppWCAGPage.PrepareToAskQuestion(
-                        this,
-                        gameIsWon,
-                        vm.WheresSettingsVM.QuestionListCollection[questionIndex - 1]);
+                    if (vm.WheresSettingsVM.QuestionListCollection.Count == 15)
+                    {
+                        // Barker: IMPORTANT! Reduce the time it takes to present the bonus question page.
+                        AppShell.AppWCAGPage.PrepareToAskQuestion(
+                            this,
+                            gameIsWon,
+                            vm.WheresSettingsVM.QuestionListCollection[questionIndex - 1]);
+                    }
+                    else
+                    {
+                        // Ask a default question.
+                        AppShell.AppWCAGPage.PrepareToAskQuestion(
+                            this,
+                            gameIsWon,
+                            vm.WheresSettingsVM.DefaultBonusQAList[questionIndex - 1]);
+                    }
 
                     try
                     {

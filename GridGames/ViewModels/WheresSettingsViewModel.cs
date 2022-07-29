@@ -1,6 +1,7 @@
 ﻿using GridGames.ResX;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Shapes;
 using Microsoft.Maui.Controls.Xaml;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -93,21 +94,116 @@ namespace GridGames.ViewModels
                 "3.3.3",
                 "3.3.4",
                 "3.3.5",
-                "3.3.6",
-                "3.3.7",
-                "3.3.8",
-            };
+            "3.3.6",
+            "3.3.7",
+            "3.3.8",
+        };
+
+        private string[] defaultQuestionListCollection =
+        {
+            "Q:What AA WCAG relate to the contrast of text and icons against their background?",
+            "A:1.4.3,1.4.11",
+            "Q:What's AA WCAG relates to providing helpful suggestions after an error is detected following customer input?",
+            "A:3.3.3",
+            "Q:What A and AA WCAG relate to providing prerecorded and live captions?",
+            "A:1.2.2,1.2.4",
+            "Q:What A WCAG relates to not using color as the only visual means of conveying information.",
+            "A:1.4.1",
+            "Q:What A WCAG relates to having all functionality in an app be operable using only the keyboard?",
+            "A:2.1.1",
+            "Q:What's 1.1?",
+            "A:1.1.1",
+            "Q:What's 1.1?",
+            "A:1.1.1",
+            "Q:What's 1.1?",
+            "A:1.1.1",
+            "Q:What's 1.1?",
+            "A:1.1.1",
+            "Q:What's 1.1?",
+            "A:1.1.1",
+            "Q:What's 1.1?",
+            "A:1.1.1",
+            "Q:What's 1.1?",
+            "A:1.1.1",
+            "Q:What's 1.1?",
+            "A:1.1.1",
+            "Q:What's 1.1?",
+            "A:1.1.1",
+            "Q:What's 1.1?",
+            "A:1.1.1",
+            "Q:What's 1.1?",
+            "A:1.1.1",
+            "Q:What's 1.1?",
+            "A:1.1.1",
+            "Q:What's 1.1?",
+            "A:1.1.1",
+            "Q:What's 1.1?",
+            "A:1.1.1",
+        };
 
         public WheresSettingsViewModel()
         {
             Title = AppResources.ResourceManager.GetString("WheresSettings");
 
-            this.QuestionListCollection = new ObservableCollection<QAPair>();
+            QuestionListCollection = new ObservableCollection<QAPair>();
+
+            DefaultBonusQAList = new Collection<QAPair>();
+            LoadDefaultBonusQuestions();
 
             ShowBonusQuestion = Preferences.Get("ShowBonusQuestion", false);
             BonusQuestionFile = Preferences.Get("BonusQuestionFile", "");
 
             LoadBonusQuestions(BonusQuestionFile);
+        }
+
+        private void LoadDefaultBonusQuestions()
+        {
+            for (int i = 0; i < 16; i++)
+            {
+                int qaIndex = i * 2;
+
+                var content = defaultQuestionListCollection[qaIndex];
+
+                var question = content.Substring(2).Trim();
+
+                var qaPair = new QAPair();
+                qaPair.Question = question;
+
+                content = defaultQuestionListCollection[qaIndex + 1];
+                var answer = content.Substring(2).Trim();
+
+                var foundInvalidAnswer = false;
+
+                var answerSeparator = answer.IndexOf(',');
+                while (answerSeparator != -1)
+                {
+                    foundInvalidAnswer = ProcessNextAnswer(qaPair, answer, answerSeparator);
+                    if (foundInvalidAnswer)
+                    {
+                        break;
+                    }
+
+                    answer = answer.Substring(answerSeparator + 1).Trim();
+                    answerSeparator = answer.IndexOf(',');
+                }
+
+                if (!foundInvalidAnswer)
+                {
+                    foundInvalidAnswer = ProcessNextAnswer(qaPair, answer, answerSeparator);
+                }
+
+                if (!foundInvalidAnswer)
+                {
+                    foundInvalidAnswer = (qaPair.Answers.Count == 0);
+                }
+
+                if (foundInvalidAnswer)
+                {
+                    break;
+                }
+
+                DefaultBonusQAList.Add(qaPair);
+            }
         }
 
         private bool showBonusQuestion;
@@ -144,6 +240,13 @@ namespace GridGames.ViewModels
                     Preferences.Set("BonusQuestionFile", value);
                 }
             }
+        }
+
+        private Collection<QAPair> defaultBonusQAList;
+        public Collection<QAPair> DefaultBonusQAList
+        {
+            get { return defaultBonusQAList; }
+            set { this.defaultBonusQAList = value; }
         }
 
         private ObservableCollection<QAPair> questionList;
