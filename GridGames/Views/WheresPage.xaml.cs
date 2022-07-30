@@ -18,7 +18,7 @@ namespace GridGames.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class WheresPage : ContentPage
     {
-        private bool restartGame = true;
+        private bool initialiseGame = true;
 
         public WheresPage()
         {
@@ -99,14 +99,20 @@ namespace GridGames.Views
 
             vm.ShowDarkTheme = (currentTheme == AppTheme.Dark);
 
-            if (restartGame)
+            if (initialiseGame)
             {
-                restartGame = false;
+                initialiseGame = false;
 
                 // Reset all cached game progress setting, but don't bother to shuffle.
                 vm.ResetGrid(false);
 
                 vm.SetupWheresCardList();
+            }
+            else
+            {
+                // When returning to the page, remind players of the current question.
+                vm.RaiseNotificationEvent(
+                    "Where's " + vm.CurrentQuestionWCAG);
             }
 
             // Try to always set keyboard focus to the cards when the page appears.
