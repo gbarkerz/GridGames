@@ -167,7 +167,7 @@ namespace GridGames.ViewModels
         {
             get
             {
-                return gridRowHeight;
+                return Math.Max(gridRowHeight, 20);
             }
             set
             {
