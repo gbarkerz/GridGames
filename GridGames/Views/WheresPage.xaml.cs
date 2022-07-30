@@ -75,7 +75,7 @@ namespace GridGames.Views
             if (SquaresCollectionView.Height > 0)
             {
                 var vm = this.BindingContext as WheresViewModel;
-                vm.GridRowHeight = (SquaresCollectionView.Height / 4) - 8;
+                vm.GridRowHeight = (SquaresCollectionView.Height / 4) - 4;
             }
         }
 

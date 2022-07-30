@@ -47,14 +47,13 @@
     </Shell.TitleView>
 
     <ContentPage.Content>
-        <Grid x:Name="PageGrid" BackgroundColor="LightGray">
+        <Grid x:Name="PageGrid">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0" 
+            <Grid Grid.Row="0" Margin="0,0,0,20"
                 BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
                 <Label 
                     Text="{Binding
@@ -69,19 +68,13 @@
                         Converter={StaticResource FirstRunToGridOpacity}}" />
             </Grid>
             
-            <Grid Grid.Row="1" BackgroundColor="Transparent" HeightRequest="5" 
-                Opacity="{Binding FirstRunWheres, Mode=OneWay,
-                    Converter={StaticResource FirstRunToGridVisible}}"                  
-                Margin="0" Padding="0" />
-
             <!-- Barker: I don't know how to customise the colours for keyboard focus around a grid item.
                 So for now, always show dark on light feedback regardless of the current light/dark mode. -->
 
-            <CollectionView Grid.Row="2"
+            <CollectionView Grid.Row="1"
                 x:Name="SquaresCollectionView"
                 SemanticProperties.Description="WCAG Groups"
                 InputTransparent="True"
-                Margin="5,0,5,0"
                 Opacity="{Binding FirstRunWheres, Mode=OneWay,
                     Converter={StaticResource FirstRunToGridOpacity}}"
                 SelectionMode="Single" 
@@ -101,7 +94,7 @@
                                 Source={x:Reference WheresPageInstance},
                                     Path=BindingContext.GridRowHeight,
                                     Mode=OneWay}"
-                            Padding="0" Margin="2"
+                            Padding="2" Margin="0"
                             AutomationProperties.IsInAccessibleTree="False"
                             SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}">
                             <Grid.GestureRecognizers>
@@ -175,14 +168,14 @@
 
             </CollectionView>
 
-            <Grid Grid.Row="2" SemanticProperties.Description="Game grid" 
+            <Grid Grid.Row="1" SemanticProperties.Description="Game grid" 
                   BackgroundColor="Transparent">
                 <Grid.GestureRecognizers>
                     <TapGestureRecognizer Tapped="FallthroughGrid_Tapped" />
                 </Grid.GestureRecognizers>
             </Grid>
 
-            <Frame Grid.Row="0" Grid.RowSpan="3" x:Name="WelcomeFrame" 
+            <Frame Grid.Row="0" Grid.RowSpan="2" x:Name="WelcomeFrame" 
                 Margin="4" Padding="8"
                 IsVisible="{Binding FirstRunWheres}"
                 BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
