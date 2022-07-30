@@ -100,7 +100,9 @@
                 
             </CollectionView>
 
-            <Grid Grid.Row="0" SemanticProperties.Description="Game grid" 
+            <Grid Grid.Row="0" 
+                SemanticProperties.Description="Game input blocker" 
+                SemanticProperties.Hint="This only exists to prevent mouse and touch input from hanging the app when used with a screen reader."
                 BackgroundColor="Transparent">
                 <Grid.GestureRecognizers>
                     <TapGestureRecognizer Tapped="FallthroughGrid_Tapped" />
