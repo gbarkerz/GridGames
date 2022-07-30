@@ -293,6 +293,9 @@ Review the Help content for details on how to play the game using only the keybo
   <data name="GameReady" xml:space="preserve">
     <value>Game is ready to play.</value>
   </data>
+  <data name="GetTip" xml:space="preserve">
+    <value>Get a tip</value>
+  </data>
   <data name="GridGames" xml:space="preserve">
     <value>Grid Games</value>
   </data>

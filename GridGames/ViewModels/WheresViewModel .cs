@@ -217,7 +217,7 @@ namespace GridGames.ViewModels
                     new WheresCard
                     {
                         Index = i,
-                        AccessibleName = (i < 15 ? wcagNumbers[i] : "Get a tip"),
+                        AccessibleName = (i < 15 ? wcagNumbers[i] : AppResources.ResourceManager.GetString("GetTip")),
                         WCAGNumber = (i < 15 ? wcagNumbers[i] : "?"),
                         WCAGName = (i  < 15 ? wcagNames[i] : "Tip")
                     });
@@ -236,6 +236,24 @@ namespace GridGames.ViewModels
             get { return wheresList; }
             set { this.wheresList = value; }
         }
+
+        // Barker: TEMPORARY. It seems that https://github.com/dotnet/maui/issues/8722 is impacting
+        // the ability to update items' accessible names. Until this is resolved, this app takes
+        // a variety of steps which seems to get things working well enough for the player. The steps
+        // may seems excessive, but leave them here until issue 8722 is resolved, and this whole
+        // thing can be re-examined, (and hopefully all the temporary code removed).
+
+        // Take excessive action when setting the accessible name and description on an item.
+        // This seems to leave the item in a state that's usable for the player.
+        private void SetAccessibleDetails(WheresCard card)
+        {
+            // Set the accessible name twice, which apparently leaves the bound UI in a usable state.
+            var temp = card.AccessibleName;
+            card.AccessibleName = card.AccessibleName + ".";
+            card.AccessibleName = temp;
+        }
+
+        // Barker: End of TEMPORARY code.
 
         public bool AttemptToAnswerQuestion(int squareIndex, out bool answerIsCorrect)
         {
@@ -256,12 +274,9 @@ namespace GridGames.ViewModels
                 answerIsCorrect = true;
 
                 card.IsFound = true;
+                card.AccessibleName = card.WCAGNumber + ", " + card.WCAGName;
 
-                // Barker: The bound name doesn't always get propagated up to the containing list items,
-                // but this double setting seems to workaround that. Revisit this at some point.
-                var fullAccessibleName = card.WCAGNumber + ", " + card.WCAGName;
-                card.AccessibleName = fullAccessibleName + ".";
-                card.AccessibleName = fullAccessibleName; 
+                SetAccessibleDetails(card);
 
                 // Has the game been won?
                 gameIsWon = GameIsWon();
@@ -342,6 +357,19 @@ namespace GridGames.ViewModels
             for (int i = 0; i < this.wheresList.Count; i++)
             {
                 this.wheresList[i].IsFound = false;
+                
+                this.wheresList[i].AccessibleName = i < (this.wheresList.Count - 1) ?
+                    this.wheresList[i].WCAGNumber :
+                    AppResources.ResourceManager.GetString("GetTip");
+                
+                SetAccessibleDetails(this.wheresList[i]);
+            }
+
+            if (shuffle)
+            {
+                RaiseNotificationEvent(
+                    "Where's WCAG? game restarted. Now where's " +
+                    CurrentQuestionWCAG + "?");
             }
         }
 

@@ -585,6 +585,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Get a tip.
+        /// </summary>
+        internal static string GetTip {
+            get {
+                return ResourceManager.GetString("GetTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Grid Games.
         /// </summary>
         internal static string GridGames {

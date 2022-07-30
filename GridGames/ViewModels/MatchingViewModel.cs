@@ -471,6 +471,11 @@ namespace GridGames.ViewModels
             secondCardInMatchAttempt = null;
 
             matchingPage.SetUpCards();
+
+            if (shuffle)
+            {
+                RaiseNotificationEvent("Pairs game restarted.");
+            }
         }
 
         public class Shuffler

@@ -23,7 +23,7 @@ namespace GridGames
             base.OnAppearing();
 
             // Calling SetSemanticFocus() raises an exception.
-            //PairsSettingsTitle.SetSemanticFocus();
+            //WheresSettingsTitle.SetSemanticFocus();
             var vm = this.BindingContext as BaseViewModel;
             vm.RaiseNotificationEvent(WheresSettingsTitle.Text);
         }

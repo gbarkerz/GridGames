@@ -8,6 +8,9 @@ using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Xaml;
 using GridGames.ResX;
 
+// BARKER: Fix these...
+// When returning to main Where page after returning from Bonus Question page
+
 namespace GridGames.Views
 {
     // Barker TODO: There's loads of duplicated code across the WheresPage and MatchingPage. Remove this duplication.
