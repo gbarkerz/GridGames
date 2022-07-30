@@ -36,8 +36,8 @@ namespace GridGames
             vm.PicturePathMatching = Preferences.Get("PicturePathMatching", "");
             vm.PictureOriginalPathMatching = Preferences.Get("PictureOriginalPathMatching", "");
 
-            // Default to Fill and Clip.
-            vm.PictureAspect = (Aspect)Preferences.Get("PictureAspect", 1);
+            // Default to Fill and Don't Clip.
+            vm.PictureAspect = (Aspect)Preferences.Get("PictureAspect", 2);
 
             LoadCustomPictureData();
         }

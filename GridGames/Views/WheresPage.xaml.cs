@@ -1,15 +1,7 @@
-﻿using GridGames.Services;
-using GridGames.ViewModels;
-using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Xaml;
-using GridGames.ResX;
+﻿using System.Diagnostics;
 
-// BARKER: Fix these...
-// When returning to main Where page after returning from Bonus Question page
+using GridGames.ResX;
+using GridGames.ViewModels;
 
 namespace GridGames.Views
 {

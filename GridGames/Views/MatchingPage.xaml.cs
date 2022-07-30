@@ -114,8 +114,8 @@ namespace GridGames.Views
 
             vm.ShowDarkTheme = (currentTheme == AppTheme.Dark);
 
-            // Default to Fill and Clip.
-            vm.PictureAspect = (Aspect)Preferences.Get("PictureAspect", 1);
+            // Default to Fill and Don't Clip.
+            vm.PictureAspect = (Aspect)Preferences.Get("PictureAspect", 2);
 
             // Has something changed related to custom picture use since the last time
             // we were in OnAppearing()?
@@ -130,11 +130,16 @@ namespace GridGames.Views
                 previousShowCustomPictures = showCustomPictures;
                 previousPicturePathMatching = picturePathMatching;
             }
+
+            // Try to always set keyboard focus to the cards when the page appears.
+            SquaresCollectionView.Focus();
         }
 
         public void SetUpCards()
         {
             var vm = this.BindingContext as MatchingViewModel;
+
+            vm.ResetGameStatus();
 
             var showCustomPictures = Preferences.Get("ShowCustomPictures", false);
             var picturePathMatching = Preferences.Get("PicturePathMatching", "");

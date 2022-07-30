@@ -463,12 +463,17 @@ namespace GridGames.ViewModels
             return true;
         }
 
-        public void ResetGrid(bool shuffle)
+        public void ResetGameStatus()
         {
             TryAgainCount = 0;
 
             firstCardInMatchAttempt = null;
             secondCardInMatchAttempt = null;
+        }
+
+        public void ResetGrid(bool shuffle)
+        {
+            ResetGameStatus();
 
             matchingPage.SetUpCards();
 
