@@ -1,0 +1,30 @@
+Q:What AA WCAG relate to the contrast of text and icons against their background?
+A:1.4.3,1.4.11
+Q:What's AA WCAG relates to providing helpful suggestions after an error is detected following customer input?
+A:3.3.3
+Q:What A and AA WCAG relate to providing prerecorded and live captions?
+A:1.2.2,1.2.4
+Q:Placeholder text.
+A:1.1.1
+Q:Placeholder text.
+A:1.1.1
+Q:Placeholder text.
+A:1.1.1
+Q:Placeholder text.
+A:1.1.1
+Q:Placeholder text.
+A:1.1.1
+Q:Placeholder text.
+A:1.1.1
+Q:Placeholder text.
+A:1.1.1
+Q:Placeholder text.
+A:1.1.1
+Q:Placeholder text.
+A:1.1.1
+Q:Placeholder text.
+A:1.1.1
+Q:Placeholder text.
+A:1.1.1
+Q:Placeholder text.
+A:1.1.1
