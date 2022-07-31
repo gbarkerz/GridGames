@@ -129,9 +129,6 @@
   <data name="AppSettingsIntro" xml:space="preserve">
     <value>Settings here apply to all games in the Grid Games app.</value>
   </data>
-  <data name="BonusQAInstructions" xml:space="preserve">
-    <value>Select the text file with the bonus questions and answers. The file must contain at least fifteen question and answer pairs, with each question and each answer on their own lines in the file. A question line must start with "Q:" and is followed with an answer line starting with "A:". An answer is a WCAG number, such as "3.3.2". Questions with multiple answers have answers separated with a comma in the file, such as "1.4.3,1.4.11".</value>
-  </data>
   <data name="BrowsePicture" xml:space="preserve">
     <value>Browse for picture</value>
   </data>
@@ -880,6 +877,12 @@ The help content can be reached via the Open Navigation button at the top left c
   </data>
   <data name="Wheres" xml:space="preserve">
     <value>Where's WCAG?</value>
+  </data>
+  <data name="WheresBonusQuestionsInstructions" xml:space="preserve">
+    <value>By default, the bonus questions are from a fixed set of questions that come with the Where's WCAG? game. But if you'd prefer, you can select your own set of questions for players to answer. Select your own set of questions with the "Select Questions" button below. The text file you select must contain fifteen question and answer pairs. Each question lies on its own line in the file, and starts with "Q:". Each answer lies on the line that follows the associated question, and starts with "A:". An answer is a WCAG number, such as "3.3.2". Questions with multiple answers have answers separated with a comma, such as "1.4.3,1.4.11".</value>
+  </data>
+  <data name="WheresBonusQuestionsViewSample" xml:space="preserve">
+    <value>A sample bonus question file is available at https://github.com/gbarkerz/GridGames/blob/master/GridGames/SampleWheresWCAGBonusQuestions.txt. Consider copying the contents of that file into your own Q&amp;A file, and then changing the Q&amp;A pairs to suit your own purposes.</value>
   </data>
   <data name="WheresGameHelp" xml:space="preserve">
     <value>Where's WCAG? Help</value>

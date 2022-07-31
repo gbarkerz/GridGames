@@ -39,7 +39,6 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -60,8 +59,26 @@
                                 VerticalOptions="Center" />
                         </StackLayout>
 
-                        <Label Text="{x:Static resources:AppResources.BonusQAInstructions}"
+                        <Label Text="{x:Static resources:AppResources.WheresBonusQuestionsInstructions}"
                                Margin="0,4,0,10" />
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0" Text="{x:Static resources:AppResources.WheresBonusQuestionsViewSample}"
+                               Margin="0,4,0,10" />
+
+                            <Button Grid.Row="1"
+                                windows:VisualElement.AccessKey="V"
+                                Padding="10"
+                                Text="View sample file"
+                                HorizontalOptions="Start" Margin="0,0,0,20"
+                                Clicked="ViewSampleButton_Clicked" />
+
+                        </Grid>
 
                         <Grid>
                             <Grid.RowDefinitions>
@@ -82,61 +99,61 @@
                             <Button Grid.Row="1" x:Name="QuestionsClearButton" 
                                 windows:VisualElement.AccessKey="S"
                                 Padding="10"
-                                Text="Clear Selection"
+                                Text="Clear selected file"
                                 HorizontalOptions="Fill" Margin="0,0,0,10"
                                 Clicked="QuestionsClearButton_Clicked" />
                         </Grid>
                     </StackLayout>
 
-                    <StackLayout Grid.Row="3" Margin="10"
+                    <Frame Grid.Row="3" 
+                        Margin="0" Padding="10"
                         IsVisible="{Binding BonusQuestionFile,
                             Mode=OneWay,
-                            Converter={StaticResource FilePathToIsVisible}}">
-
+                            Converter={StaticResource FilePathToIsVisible}}"
+                        BorderColor="{AppThemeBinding Light=Black, Dark=White}">
+                        
+                        <StackLayout Margin="0" Padding="0">
+                            
                             <Label Text="Selected questions file:" 
                                 IsVisible="{Binding BonusQuestionFile,
                                     Mode=OneWay,
                                     Converter={StaticResource FilePathToIsVisible}}"
                                Margin="0,0,0,4" />
-                        <Label Text="{Binding BonusQuestionFile}" />
-                    </StackLayout>
 
-                    <StackLayout Grid.Row="4" Margin="10,0,10,0"
-                        IsVisible="{Binding BonusQuestionFile,
-                            Mode=OneWay,
-                            Converter={StaticResource FilePathToIsVisible}}">
+                            <Label Text="{Binding BonusQuestionFile}" Margin="0,0,0,10"/>
 
-                        <Label Text="Loaded questions:" />
+                            <Label Text="Loaded questions:" />
 
-                        <CollectionView x:Name="QuestionCollectionView"  
-                                SemanticProperties.Description="Selected questions and answers"
-                                ItemsSource="{Binding QuestionListCollection}">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid Margin="4">
-                                        <SemanticProperties.Description>
-                                            <MultiBinding Converter="{StaticResource QAToItemName}">
-                                                <Binding Path="Question" />
-                                                <Binding Path="Answers" 
-                                                    Converter="{StaticResource AnswerSetToAnswersString}" />
-                                            </MultiBinding>
-                                        </SemanticProperties.Description>
+                            <CollectionView x:Name="QuestionCollectionView"  
+                                    SemanticProperties.Description="Selected questions and answers"
+                                    ItemsSource="{Binding QuestionListCollection}">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="4">
+                                            <SemanticProperties.Description>
+                                                <MultiBinding Converter="{StaticResource QAToItemName}">
+                                                    <Binding Path="Question" />
+                                                    <Binding Path="Answers" 
+                                                        Converter="{StaticResource AnswerSetToAnswersString}" />
+                                                </MultiBinding>
+                                            </SemanticProperties.Description>
 
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
-                                        <Label Grid.Row="0" FontAttributes="Bold" 
-                                                Text="{Binding Question, Mode=OneWay,
-                                                Converter={StaticResource QuestionToQuestionString}}" />
-                                        <Label Grid.Row="1" Text="{Binding Answers, Mode=OneWay,
-                                                Converter={StaticResource AnswerSetToAnswersString}}" />
-                                    </Grid>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-
-                    </StackLayout>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <Label Grid.Row="0" FontAttributes="Bold" 
+                                                    Text="{Binding Question, Mode=OneWay,
+                                                    Converter={StaticResource QuestionToQuestionString}}" />
+                                            <Label Grid.Row="1" Text="{Binding Answers, Mode=OneWay,
+                                                    Converter={StaticResource AnswerSetToAnswersString}}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </StackLayout>
+                       
+                    </Frame>
                     
                 </Grid>
             </ScrollView>

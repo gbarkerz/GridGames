@@ -97,15 +97,6 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select the text file with the bonus questions and answers. The file must contain at least fifteen question and answer pairs, with each question and each answer on their own lines in the file. A question line must start with &quot;Q:&quot; and is followed with an answer line starting with &quot;A:&quot;. An answer is a WCAG number, such as &quot;3.3.2&quot;. Questions with multiple answers have answers separated with a comma in the file, such as &quot;1.4.3,1.4.11&quot;..
-        /// </summary>
-        internal static string BonusQAInstructions {
-            get {
-                return ResourceManager.GetString("BonusQAInstructions", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Browse for picture.
         /// </summary>
         internal static string BrowsePicture {
@@ -2247,6 +2238,24 @@ namespace GridGames.ResX {
         internal static string Wheres {
             get {
                 return ResourceManager.GetString("Wheres", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By default, the bonus questions are from a fixed set of questions that come with the Where&apos;s WCAG? game. But if you&apos;d prefer, you can select your own set of questions for players to answer. Select your own set of questions with the &quot;Select Questions&quot; button below. The text file you select must contain fifteen question and answer pairs. Each question lies on its own line in the file, and starts with &quot;Q:&quot;. Each answer lies on the line that follows the associated question, and starts with &quot;A:&quot;. An answer is a  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string WheresBonusQuestionsInstructions {
+            get {
+                return ResourceManager.GetString("WheresBonusQuestionsInstructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A sample bonus question file is available at https://github.com/gbarkerz/GridGames/blob/master/GridGames/SampleWheresWCAGBonusQuestions.txt. Consider copying the contents of that file into your own Q&amp;A file, and then changing the Q&amp;A pairs to suit your own purposes..
+        /// </summary>
+        internal static string WheresBonusQuestionsViewSample {
+            get {
+                return ResourceManager.GetString("WheresBonusQuestionsViewSample", resourceCulture);
             }
         }
         

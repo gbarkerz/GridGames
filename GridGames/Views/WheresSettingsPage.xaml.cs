@@ -41,6 +41,12 @@ namespace GridGames
             vm.QuestionListCollection.Clear();
         }
 
+        private async void ViewSampleButton_Clicked(object sender, EventArgs e)
+        {
+            await Launcher.OpenAsync(
+                "https://github.com/gbarkerz/GridGames/blob/master/GridGames/SampleWheresWCAGBonusQuestions.txt");
+        }
+
         private async void QuestionsBrowseButton_Clicked(object sender, EventArgs e)
         {
             var options = new PickOptions
