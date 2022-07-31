@@ -160,7 +160,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select any file from the folder which contains only the eight custom pictures and also the text file with the names and optionally the descriptions of the pictures. The file containing the names must be called &quot;MatchingGamePictureDetails.txt&quot;. Each line in that file contains details for one picture, and a line starts with the filename of the picture, followed by a tab, and then the name of the picture. If a description is also provided, the name is followed by a tab, and then the description..
+        ///   Looks up a localized string similar to To prepare custom pictures for showing in the Pairs game, first create a new folder and copy in the eight pictures that you&apos;d like to have shown. Then create a text file in the same folder, called &quot;MatchingGamePictureDetails.txt&quot;. Edit the text file so that each line in the file contains the accessible details for one of the pictures in the folder. A line starts with the filename of the picture, followed by a tab, and then the accessible name of the picture. If a description is also provided, the name is fo [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CustomPicturesInstructions {
             get {
@@ -818,6 +818,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A sample custom pictures folder is available at https://github.com/gbarkerz/GridGames/tree/master/GridGames/PairsSamples/LittleMoretonHall. Consider making your own set of pictures and accessible details, and showing in the Pairs game..
+        /// </summary>
+        internal static string PairsCustomPicturesViewSample {
+            get {
+                return ResourceManager.GetString("PairsCustomPicturesViewSample", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pairs Help.
         /// </summary>
         internal static string PairsGameHelp {
@@ -872,7 +881,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Picture Path:.
+        ///   Looks up a localized string similar to Selected picture folder:.
         /// </summary>
         internal static string PicturePath {
             get {
@@ -908,7 +917,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select Picture.
+        ///   Looks up a localized string similar to Select picture folder.
         /// </summary>
         internal static string SelectPicture {
             get {

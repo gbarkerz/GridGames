@@ -38,22 +38,11 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                    </Grid>
-
-                    <Grid Grid.Row="1">
-                        <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
@@ -62,23 +51,30 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                            Text="Select how you would like the pictures to be shown in the cards." Margin="0,10,0,10" />
-                        <Label Grid.Row="1" Grid.Column="0" x:Name="PictureAspectLabel" 
+                            FontSize="Subtitle" SemanticProperties.HeadingLevel="Level2"
+                            Text="Pictures" Margin="0,10,0,10" />
+                        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                            Text="Select how you would like the pictures to be shown in the cards." Margin="0,4,0,10" />
+                        <Label Grid.Row="2" Grid.Column="0" x:Name="PictureAspectLabel" 
                             Text="{x:Static resources:AppResources.PictureAspectLabel}"
                             VerticalOptions="Center" />
-                        <Picker Grid.Row="1" Grid.Column="1" x:Name="MatchingPictureAspectPicker"
+                        <Picker Grid.Row="2" Grid.Column="1" x:Name="MatchingPictureAspectPicker"
                             VerticalOptions="Center" Margin="8,0,0,0"
                             SemanticProperties.Description="{x:Static resources:AppResources.PictureAspectLabel}"
                             SelectedIndex="{Binding PictureAspect, Mode=TwoWay,
                                 Converter={StaticResource PictureAspectToInt}}" />
                     </Grid>
 
-                    <StackLayout Grid.Row="2" Margin="0,20,0,10">
-                        <Label Text="Custom Pictures" FontSize="Subtitle" Margin="0,0,0,10" />
+                    <StackLayout Grid.Row="1" Margin="0,30,0,10">
+                        
+                        <Label Text="Custom Pictures" 
+                            FontSize="Subtitle" SemanticProperties.HeadingLevel="Level2"
+                            Margin="0,0,0,10" />
+                        
                         <Label Text="Have your own pictures shown in the cards in the Pairs game." />
 
                         <StackLayout Orientation="Horizontal" Margin="10">
-                            <CheckBox x:Name="ShowCustomPicturesCheckBox" Margin="10,0,0,0"
+                            <CheckBox x:Name="ShowCustomPicturesCheckBox" Margin="0"
                                 windows:VisualElement.AccessKey="H"                                      
                                 SemanticProperties.Description="{x:Static resources:AppResources.ShowCustomPictures}"
                                 VerticalOptions="Center" IsChecked="{Binding ShowCustomPictures}" />
@@ -89,6 +85,27 @@
 
                         <Label Text="{x:Static resources:AppResources.CustomPicturesInstructions}"
                                    Margin="0,4,0,10" />
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0" Text="{x:Static resources:AppResources.WheresBonusQuestionsViewSample}"
+                               Margin="0,4,0,10" />
+
+                            <Button Grid.Row="1"
+                                windows:VisualElement.AccessKey="V"
+                                Padding="10"
+                                Text="View sample picture folder"
+                                HorizontalOptions="Start" Margin="0,0,0,20"
+                                Clicked="ViewSampleButton_Clicked" />
+
+                        </Grid>
+
+                        <Label Grid.Row="0" Margin="0,0,0,10"
+                            Text="To select the picture folder, browse to the folder of interest and select any file in that folder." />
 
                         <Grid>
                             <Grid.RowDefinitions>
@@ -116,79 +133,88 @@
 
                     </StackLayout>
 
-                    <Grid Grid.Row="3" Margin="0,10,0,10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Margin="0,0,10,0" 
-                            Text="{x:Static resources:AppResources.PicturePath}" 
-                            IsVisible="{Binding PicturePathMatching, Mode=OneWay,
-                                Converter={StaticResource FilePathToIsVisible}}" />
-                        <!--<Label Grid.Column="1" 
-                            Text="{x:Static resources:AppResources.NoFolderSelected}"                               
-                            IsVisible="{Binding PicturePathMatching, Mode=OneWay,
-                                Converter={StaticResource FilePathToIsVisible}}" />-->
-                        <Label Grid.Column="1" Text="{Binding PictureOriginalPathMatching, Mode=TwoWay}" 
-                            IsVisible="{Binding PicturePathMatching, Mode=OneWay,
-                                Converter={StaticResource FilePathToIsVisible}}"/>
-                    </Grid>
+                    <Frame Grid.Row="2" 
+                        Margin="0" Padding="10"
+                        IsVisible="{Binding PicturePathMatching, Mode=OneWay,
+                            Converter={StaticResource FilePathToIsVisible}}"
+                        BorderColor="{AppThemeBinding Light=Black, Dark=White}">
 
-                    <CollectionView Grid.Row="4" x:Name="PicturesCollectionView"  
-                        SemanticProperties.Description="Custom pictures"
-                        ItemsSource="{Binding PictureListCollection}">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="4">
-                                    <SemanticProperties.Description>
-                                        <MultiBinding Converter="{StaticResource CustomPictureToItemName}">
-                                            <Binding Path="Index" />
-                                            <Binding Path="FileName" />
-                                            <Binding Path="AccessibleName" />
-                                        </MultiBinding>
-                                    </SemanticProperties.Description>
+                        <StackLayout>
+                            <Grid Margin="0,10,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Margin="0,0,10,0" 
+                                    Text="{x:Static resources:AppResources.PicturePath}" 
+                                    IsVisible="{Binding PicturePathMatching, Mode=OneWay,
+                                        Converter={StaticResource FilePathToIsVisible}}" />
+                                <!--<Label Grid.Column="1" 
+                                    Text="{x:Static resources:AppResources.NoFolderSelected}"                               
+                                    IsVisible="{Binding PicturePathMatching, Mode=OneWay,
+                                        Converter={StaticResource FilePathToIsVisible}}" />-->
+                                <Label Grid.Column="1" Text="{Binding PictureOriginalPathMatching, Mode=TwoWay}" 
+                                    IsVisible="{Binding PicturePathMatching, Mode=OneWay,
+                                        Converter={StaticResource FilePathToIsVisible}}"/>
+                            </Grid>
+
+                            <CollectionView x:Name="PicturesCollectionView"  
+                                SemanticProperties.Description="Custom pictures"
+                                ItemsSource="{Binding PictureListCollection}">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="4">
+                                            <SemanticProperties.Description>
+                                                <MultiBinding Converter="{StaticResource CustomPictureToItemName}">
+                                                    <Binding Path="Index" />
+                                                    <Binding Path="FileName" />
+                                                    <Binding Path="AccessibleName" />
+                                                </MultiBinding>
+                                            </SemanticProperties.Description>
                                     
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Label Grid.Column="0" FontAttributes="Bold" 
-                                            Text="{Binding Index}" />
-                                        <Label Grid.Column="1" FontAttributes="Bold"
-                                            Margin="8,0,0,0"
-                                            Text="{Binding FileName}" />
-                                    </Grid>
-                                    <Grid Grid.Row="1">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Label Grid.Column="0" Margin="0,0,10,0"
-                                            Text="{x:Static resources:AppResources.Name}" />
-                                        <Label Grid.Column="1" Text="{Binding AccessibleName}"/>
-                                    </Grid>
-                                    <Grid Grid.Row="2" Margin="0,0,0,20">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Label Grid.Column="0" Margin="0,0,10,0"
-                                            Text="{x:Static resources:AppResources.Description}" />
-                                        <Label Grid.Column="1" Text="{Binding AccessibleDescription}"/>
-                                    </Grid>
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <!--<Label Grid.Column="0" FontAttributes="Bold" 
+                                                    Margin="0,0,8,0"
+                                                    Text="{Binding Index}" />-->
+                                                <Label Grid.Column="1" FontAttributes="Bold"
+                                                    Text="{Binding FileName}" />
+                                            </Grid>
+                                            <Grid Grid.Row="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Label Grid.Column="0" Margin="0,0,10,0"
+                                                    Text="{x:Static resources:AppResources.Name}" />
+                                                <Label Grid.Column="1" Text="{Binding AccessibleName}"/>
+                                            </Grid>
+                                            <Grid Grid.Row="2" Margin="0,0,0,20">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Label Grid.Column="0" Margin="0,0,10,0"
+                                                    Text="{x:Static resources:AppResources.Description}" />
+                                                <Label Grid.Column="1" Text="{Binding AccessibleDescription}"/>
+                                            </Grid>
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </StackLayout>
+                    </Frame>
                 </Grid>
             </ScrollView>
-            
+
             <Button Grid.Row="2" x:Name="CloseButton" 
                 windows:VisualElement.AccessKey="C"                                    
                 HorizontalOptions="End" Margin="0,0,4,4" Padding="8"

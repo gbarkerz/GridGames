@@ -151,7 +151,7 @@
     <value>You found {0}. Now where's {1}?</value>
   </data>
   <data name="CustomPicturesInstructions" xml:space="preserve">
-    <value>Select any file from the folder which contains only the eight custom pictures and also the text file with the names and optionally the descriptions of the pictures. The file containing the names must be called "MatchingGamePictureDetails.txt". Each line in that file contains details for one picture, and a line starts with the filename of the picture, followed by a tab, and then the name of the picture. If a description is also provided, the name is followed by a tab, and then the description.</value>
+    <value>To prepare custom pictures for showing in the Pairs game, first create a new folder and copy in the eight pictures that you'd like to have shown. Then create a text file in the same folder, called "MatchingGamePictureDetails.txt". Edit the text file so that each line in the file contains the accessible details for one of the pictures in the folder. A line starts with the filename of the picture, followed by a tab, and then the accessible name of the picture. If a description is also provided, the name is followed by a tab, and then the description.</value>
   </data>
   <data name="DefaultMatchingCard1Description" xml:space="preserve">
     <value>A smiling man with a red coat and arms outstretched, standing in front of 3 large Daleks and a TARDIS. The Daleks seem to be raised above the grass beneath them, and a slightly cloudy sky is in the background.</value>
@@ -402,6 +402,9 @@ Would you like to play another game?</value>
   <data name="Pairs" xml:space="preserve">
     <value>Pairs</value>
   </data>
+  <data name="PairsCustomPicturesViewSample" xml:space="preserve">
+    <value>A sample custom pictures folder is available at https://github.com/gbarkerz/GridGames/tree/master/GridGames/PairsSamples/LittleMoretonHall. Consider making your own set of pictures and accessible details, and showing in the Pairs game.</value>
+  </data>
   <data name="PairsGameHelp" xml:space="preserve">
     <value>Pairs Help</value>
   </data>
@@ -421,7 +424,7 @@ Would you like to play another game?</value>
     <value>Picture Name:</value>
   </data>
   <data name="PicturePath" xml:space="preserve">
-    <value>Picture Path:</value>
+    <value>Selected picture folder:</value>
   </data>
   <data name="RestartGame" xml:space="preserve">
     <value>Restart Game</value>
@@ -433,7 +436,7 @@ Would you like to play another game?</value>
     <value>Selected:</value>
   </data>
   <data name="SelectPicture" xml:space="preserve">
-    <value>Select Picture</value>
+    <value>Select picture folder</value>
   </data>
   <data name="Seven" xml:space="preserve">
     <value>seven</value>

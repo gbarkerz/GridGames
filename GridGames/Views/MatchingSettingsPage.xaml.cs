@@ -139,6 +139,12 @@ namespace GridGames
             await Navigation.PopModalAsync();
         }
 
+        private async void ViewSampleButton_Clicked(object sender, EventArgs e)
+        {
+            await Launcher.OpenAsync(
+                "https://github.com/gbarkerz/GridGames/tree/master/GridGames/PairsSamples/LittleMoretonHall");
+        }
+
         private void PictureClearButton_Clicked(object sender, EventArgs e)
         {
             ResetCustomPictureData();
