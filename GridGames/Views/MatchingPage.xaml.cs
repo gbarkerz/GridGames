@@ -98,7 +98,7 @@ namespace GridGames.Views
 
             base.OnAppearing();
 
-            Preferences.Set("InitialGame", "Matching");
+            Preferences.Set("InitialGame", "Pairs");
 
             // We must account for the app settings changing since the page was last shown.
 
