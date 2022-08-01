@@ -151,7 +151,7 @@
     <value>You found {0}. Now where's {1}?</value>
   </data>
   <data name="CustomPicturesInstructions" xml:space="preserve">
-    <value>To prepare custom pictures for showing in the Pairs game, first create a new folder and copy in the eight pictures that you'd like to have shown. Then create a text file in the same folder, called "MatchingGamePictureDetails.txt". Edit the text file so that each line in the file contains the accessible details for one of the pictures in the folder. A line starts with the filename of the picture, followed by a tab, and then the accessible name of the picture. If a description is also provided, the name is followed by a tab, and then the description.</value>
+    <value>To prepare custom pictures for showing in the Pairs game, first create a new folder and copy in the eight pictures that you'd like to have shown. Then create a text file in the same folder, called "PairsGamePictureDetails.txt". Edit the text file so that each line in the file contains the accessible details for one of the pictures in the folder. A line starts with the filename of the picture, followed by a tab, and then the accessible name of the picture. If a description is also provided, the name is followed by a tab, and then the description.</value>
   </data>
   <data name="DefaultMatchingCard1Description" xml:space="preserve">
     <value>A smiling man with a red coat and arms outstretched, standing in front of 3 large Daleks and a TARDIS. The Daleks seem to be raised above the grass beneath them, and a slightly cloudy sky is in the background.</value>
@@ -375,8 +375,8 @@ Would you like to play another game?</value>
   <data name="Medium" xml:space="preserve">
     <value>Medium</value>
   </data>
-  <data name="MissingMatchingGamePictureDetails" xml:space="preserve">
-    <value>The folder containing the 8 picture must also contain a MatchingGamePictureDetails file. Please review the Pairs Help for more details.</value>
+  <data name="MissingPairsGamePictureDetails" xml:space="preserve">
+    <value>The folder containing the 8 picture must also contain a PairsGamePictureDetails file. Please review the Pairs Help for more details.</value>
   </data>
   <data name="Moved" xml:space="preserve">
     <value>Moved</value>
@@ -559,7 +559,7 @@ Would you like to play another game?</value>
     <value>two</value>
   </data>
   <data name="UnexpectedDataInFile" xml:space="preserve">
-    <value>The MatchingGamePictureDetails file does not contain the expected data. Please review the Pairs Help for more details.</value>
+    <value>The PairsGamePictureDetails file does not contain the expected data. Please review the Pairs Help for more details.</value>
   </data>
   <data name="UnmatchedTurnedBack" xml:space="preserve">
     <value>Unmatched cards turned back.</value>

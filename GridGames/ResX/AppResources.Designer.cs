@@ -160,7 +160,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To prepare custom pictures for showing in the Pairs game, first create a new folder and copy in the eight pictures that you&apos;d like to have shown. Then create a text file in the same folder, called &quot;MatchingGamePictureDetails.txt&quot;. Edit the text file so that each line in the file contains the accessible details for one of the pictures in the folder. A line starts with the filename of the picture, followed by a tab, and then the accessible name of the picture. If a description is also provided, the name is fo [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to To prepare custom pictures for showing in the Pairs game, first create a new folder and copy in the eight pictures that you&apos;d like to have shown. Then create a text file in the same folder, called &quot;PairsGamePictureDetails.txt&quot;. Edit the text file so that each line in the file contains the accessible details for one of the pictures in the folder. A line starts with the filename of the picture, followed by a tab, and then the accessible name of the picture. If a description is also provided, the name is follo [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CustomPicturesInstructions {
             get {
@@ -719,11 +719,11 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The folder containing the 8 picture must also contain a MatchingGamePictureDetails file. Please review the Pairs Help for more details..
+        ///   Looks up a localized string similar to The folder containing the 8 picture must also contain a PairsGamePictureDetails file. Please review the Pairs Help for more details..
         /// </summary>
-        internal static string MissingMatchingGamePictureDetails {
+        internal static string MissingPairsGamePictureDetails {
             get {
-                return ResourceManager.GetString("MissingMatchingGamePictureDetails", resourceCulture);
+                return ResourceManager.GetString("MissingPairsGamePictureDetails", resourceCulture);
             }
         }
         
@@ -1268,7 +1268,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The MatchingGamePictureDetails file does not contain the expected data. Please review the Pairs Help for more details..
+        ///   Looks up a localized string similar to The PairsGamePictureDetails file does not contain the expected data. Please review the Pairs Help for more details..
         /// </summary>
         internal static string UnexpectedDataInFile {
             get {

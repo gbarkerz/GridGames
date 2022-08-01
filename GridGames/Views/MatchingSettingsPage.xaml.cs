@@ -185,12 +185,12 @@ namespace GridGames
                     var picturePathIsValid = await IsPicturePathValid(pathToPictures);
                     if (picturePathIsValid)
                     {
-                        var pictureDetailsFileName = "MatchingGamePictureDetails.txt";
+                        var pictureDetailsFileName = "PairsGamePictureDetails.txt";
 
                         var displayLanguage = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
                         if (displayLanguage == "nl")
                         {
-                            pictureDetailsFileName = "MatchingGamePictureDetails-nl.txt";
+                            pictureDetailsFileName = "PairsGamePictureDetails-nl.txt";
                         }
 
                         // Check the file containing the accessible details for the pictures exists in the folder.
@@ -201,7 +201,7 @@ namespace GridGames
                         {
                             await DisplayAlert(
                                 AppResources.ResourceManager.GetString("PairsSettings"),
-                                AppResources.ResourceManager.GetString("MissingMatchingGamePictureDetails"),
+                                AppResources.ResourceManager.GetString("MissingPairsGamePictureDetails"),
                                 AppResources.ResourceManager.GetString("OK"));
 
                             return;
