@@ -20,12 +20,16 @@ namespace GridGames
         {
             if (currentPage is MatchingPage)
             {
+                HelpPageTitle.Text = "Pairs Help";
+
                 WheresGameHelpContent.IsVisible = false;
 
                 PairsHelpEditor.Focus();
             }
             else if (currentPage is WheresPage)
             {
+                HelpPageTitle.Text = "Where's WCAG? Help";
+
                 MatchingGameHelpContent.IsVisible = false;
 
                 WheresHelpEditor.Focus();

@@ -302,11 +302,15 @@ Review the Help content for details on how to play the game using only the keybo
   <data name="HelpContentPairs" xml:space="preserve">
     <value>The Pairs Game is based on a traditional card matching game, where face-down cards are turned over in order to find pairs of cards.
 
-When the game is run, a 4 by 4 grid of blank squares appears, each square representing a card. When a card is tapped, an image is shown on the card. When another card is clicked, an image is also shown on that second card. If the two images are the same, then the cards are considered to be matched, and will not change again for the rest of the game. If the images do not match, then the cards are considered to be unmatched, and cards must be turned back over by tapping on any card. These steps are to be repeated until all matching images have been found, and a "Congratulations" window appears.
+When the game is run, a 4 by 4 grid of blank squares appears, each square representing a face-down card. When one of the cards is turned up, it reveals an image on the face-up card. When another card is turned up, an image is also shown on that second face-up card. If the two images are the same, then the cards are considered to be matched, and will not change again for the rest of the game. If the images do not match, then the cards are considered to be unmatched, and cards must be then turned back down. These steps are then repeated until all matching images have been found, and a "Congratulations" window appears.
 
-When using a screen reader with the game, move your finger around the screen to have the number of the card beneath your finger announced. Double tap to turn up a card. When a turned up card is matched, its name will be prefixed with "Matched".
+The Pairs game can only be played using the keyboard, and cards cannot be turned up using a mouse, touch, or speech. To use the keyboard to play the game, first use the Tab key to move keyboard focus into the grid of cards. Once keyboard focus in on the grid, use the arrow keys to move to a card of interest. Once at a card of interest, press either the Space key or Enter key to turn the card up. To turn two unmatched face-up cards back down, press Space or Enter at any card.
 
-Please note when a screen reader moves to the Menu button near the top left corner of the app, it may announce the button as the OK button or Menu button, or only announce the word button.</value>
+Press the F1 key to show this Help content, or the F5 key to restart a game. 
+
+Press and release the Alt key to have any available access keys shown. For example, press Alt+S to have the game's Settings page shown. To have your own pictures shown in the game, along with custom accessible names and descriptions, please follow the steps described in the Settings page.
+
+At the top left corner of the game is the Open Navigation button, which can be used to move to another game. Please note when a screen reader moves to the drop-down menu available from the Open Navigation button, it may announce a meaningless name for all the items in the menu. If so, please use the screen reader's navigation commands to move into the menu item, and the screen reader can then announce the text shown on the menu item.</value>
   </data>
   <data name="HelpContentSquares" xml:space="preserve">
     <value>The Squares Game is based on a square sliding puzzle, where squares in a grid of squares are rearranged by the player to form an ordered sequence in the grid.
@@ -330,15 +334,17 @@ Please note when a screen reader moves to the Menu button near the top left corn
   <data name="HelpContentWheres" xml:space="preserve">
     <value>"WCAG" is the Web Content Accessibility Guidelines (WCAG) international standard, which helps web content authors create content that's more accessible. The WCAG standard has been used as the base for European accessibility standards which apply to both web content and software.
 
-The Where's WCAG? game presents a question asking the player to find a particular WCAG group. For example, "Where's Enough Time?". Below the question in the app is a grid of squares showing fifteen WCAG group numbers. For example, "2.2". The aim of the game is for the player to click the square in the grid which shows the number matching the WCAG group in the question. If successful, the square changes to also show both the number and name of the WCAG group, and the question changes to ask the player to find a different WCAG group. If not successful, the player tries again by clicking another square. Once all the WCAG groups are found, the player has won, and a "Congratulations" window appears. 
+The Where's WCAG? game presents a question asking the player to find a particular WCAG group. For example, "Where's Enough Time?". Below the question in the app is a 4 by 4 grid of squares showing fifteen WCAG group numbers. For example, "2.2". The aim of the game is for the player to click the square in the grid which shows the number matching the WCAG group in the question. If successful, the square changes to also show both the number and name of the WCAG group, and the question changes to ask the player to find a different WCAG group. If not successful, the player tries again by clicking another square. Once all the WCAG groups are found, the player has won, and a "Congratulations" window appears. 
 
 Note that the game only presents WCAG groups relating to content being perceivable, operable, and understandable, and from the WCAG 2.1 Standard.
 
-When using a screen reader with the game, move your finger around the screen to have the WCAG number shown on the square beneath your finger announced. Double tap to click on the square.
+The Where's WCAG game can only be played using the keyboard, and squares cannot be clicked up using a mouse, touch, or speech. To use the keyboard to play the game, first use the Tab key to move keyboard focus into the grid of squares. Once keyboard focus in on the grid, use the arrow keys to move to a square of interest. Once at a square of interest, press either the Space key or Enter key to click the square.
 
-Please note when a screen reader moves to the Menu button near the top left corner of the app, it may announce the button as the OK button or Menu button, or only announce the word “button”.
+Press the F1 key to show this Help content, or the F5 key to restart a game. 
 
-The last square in the grid shows a question mark, and is announced by a screen reader as being the "Get a tip" button. When this button is clicked a page appears presenting a little information on the high-level WCAG group associated with the question, along with a reference to the WCAG documentation relating to that high-level group.</value>
+Press and release the Alt key to have any available access keys shown. For example, press Alt+S to have the game's Settings page shown. To have bonus questions asked in the game, please follow the steps described in the Settings page.
+
+At the top left corner of the game is the Open Navigation button, which can be used to move to another game. Please note when a screen reader moves to the drop-down menu available from the Open Navigation button, it may announce a meaningless name for all the items in the menu. If so, please use the screen reader's navigation commands to move into the menu item, and the screen reader can then announce the text shown on the menu item.</value>
   </data>
   <data name="IncorrectWCAG" xml:space="preserve">
     <value>{0} isn't {1}.</value>

@@ -605,7 +605,7 @@ namespace GridGames.ResX {
         /// <summary>
         ///   Looks up a localized string similar to The Pairs Game is based on a traditional card matching game, where face-down cards are turned over in order to find pairs of cards.
         ///
-        ///When the game is run, a 4 by 4 grid of blank squares appears, each square representing a card. When a card is tapped, an image is shown on the card. When another card is clicked, an image is also shown on that second card. If the two images are the same, then the cards are considered to be matched, and will not change again for the rest of the game. If the images do not matc [rest of string was truncated]&quot;;.
+        ///When the game is run, a 4 by 4 grid of blank squares appears, each square representing a face-down card. When one of the cards is turned up, it reveals an image on the face-up card. When another card is turned up, an image is also shown on that second face-up card. If the two images are the same, then the cards are considered to be matched, and will not change again for the  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string HelpContentPairs {
             get {
@@ -627,7 +627,7 @@ namespace GridGames.ResX {
         /// <summary>
         ///   Looks up a localized string similar to &quot;WCAG&quot; is the Web Content Accessibility Guidelines (WCAG) international standard, which helps web content authors create content that&apos;s more accessible. The WCAG standard has been used as the base for European accessibility standards which apply to both web content and software.
         ///
-        ///The Where&apos;s WCAG? game presents a question asking the player to find a particular WCAG group. For example, &quot;Where&apos;s Enough Time?&quot;. Below the question in the app is a grid of squares showing fifteen WCAG group numbers. For example [rest of string was truncated]&quot;;.
+        ///The Where&apos;s WCAG? game presents a question asking the player to find a particular WCAG group. For example, &quot;Where&apos;s Enough Time?&quot;. Below the question in the app is a 4 by 4 grid of squares showing fifteen WCAG group numbers. For  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string HelpContentWheres {
             get {
