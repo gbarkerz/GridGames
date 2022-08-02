@@ -47,7 +47,7 @@
                     
                     <StackLayout Grid.Row="2" Margin="0,10,0,10">
                         <Label Text="Bonus Questions" FontSize="Subtitle" Margin="0,0,0,10" />
-                        <Label Text="After every correct answer in the Where's WCAG game, have a bonus WCAG-related question asked." />
+                        <Label Text="{x:Static resources:AppResources.WheresBonusQuestionsIntro}" />
 
                         <StackLayout Orientation="Horizontal" Margin="10">
                             <CheckBox x:Name="ShowBonusQuestionCheckBox"
@@ -60,6 +60,9 @@
                         </StackLayout>
 
                         <Label Text="{x:Static resources:AppResources.WheresBonusQuestionsInstructions}"
+                               Margin="0,4,0,10" />
+
+                        <Label Text="{x:Static resources:AppResources.WheresBonusQuestionsOrder}"
                                Margin="0,4,0,10" />
 
                         <Grid>

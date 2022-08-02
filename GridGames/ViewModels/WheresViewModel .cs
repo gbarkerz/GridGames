@@ -225,6 +225,7 @@ namespace GridGames.ViewModels
 
             var shuffler = new Shuffler();
             shuffler.Shuffle(wcagNames);
+            shuffler.ShuffleQAPairs(wheresSettingsVM.DefaultBonusQAList);
 
             CurrentQuestionIndex = 0;
             CurrentQuestionWCAG = wcagNames[CurrentQuestionIndex];
@@ -349,6 +350,7 @@ namespace GridGames.ViewModels
             {
                 var shuffler = new Shuffler();
                 shuffler.Shuffle(wcagNames);
+                shuffler.ShuffleQAPairs(wheresSettingsVM.DefaultBonusQAList);
             }
 
             CurrentQuestionIndex = 0;
@@ -393,6 +395,21 @@ namespace GridGames.ViewModels
                     string temp = titles[i];
                     titles[i] = titles[j];
                     titles[j] = temp;
+                }
+            }
+
+            // Barker: Avoid having a shuffle method per object type.
+            public void ShuffleQAPairs(Collection<QAPair> collection)
+            {
+                for (int i = collection.Count; i > 1;)
+                {
+                    int j = this.random.Next(i);
+
+                    --i;
+
+                    QAPair temp = collection[i];
+                    collection[i] = collection[j];
+                    collection[j] = temp;
                 }
             }
         }

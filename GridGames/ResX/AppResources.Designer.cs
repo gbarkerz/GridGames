@@ -2260,6 +2260,24 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to After every correct answer in the Where&apos;s WCAG game, have a bonus WCAG-related question asked..
+        /// </summary>
+        internal static string WheresBonusQuestionsIntro {
+            get {
+                return ResourceManager.GetString("WheresBonusQuestionsIntro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Questions from the default set of questions will be presented in a random order. Questions loaded from your own set of custom questions will be presented in the order that they were loaded from the questions file..
+        /// </summary>
+        internal static string WheresBonusQuestionsOrder {
+            get {
+                return ResourceManager.GetString("WheresBonusQuestionsOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A sample bonus question file is available at https://github.com/gbarkerz/GridGames/blob/master/GridGames/SampleWheresWCAGBonusQuestions.txt. Consider copying the contents of that file into your own Q&amp;A file, and then changing the Q&amp;A pairs to suit your own purposes..
         /// </summary>
         internal static string WheresBonusQuestionsViewSample {

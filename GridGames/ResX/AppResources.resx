@@ -890,6 +890,12 @@ The help content can be reached via the Open Navigation button at the top left c
   <data name="WheresBonusQuestionsInstructions" xml:space="preserve">
     <value>By default, the bonus questions are from a fixed set of questions that come with the Where's WCAG? game. But if you'd prefer, you can select your own set of questions for players to answer. Select your own set of questions with the "Select Questions" button below. The text file you select must contain fifteen question and answer pairs. Each question lies on its own line in the file, and starts with "Q:". Each answer lies on the line that follows the associated question, and starts with "A:". An answer is a WCAG number, such as "3.3.2". Questions with multiple answers have answers separated with a comma, such as "1.4.3,1.4.11".</value>
   </data>
+  <data name="WheresBonusQuestionsIntro" xml:space="preserve">
+    <value>After every correct answer in the Where's WCAG game, have a bonus WCAG-related question asked.</value>
+  </data>
+  <data name="WheresBonusQuestionsOrder" xml:space="preserve">
+    <value>Questions from the default set of questions will be presented in a random order. Questions loaded from your own set of custom questions will be presented in the order that they were loaded from the questions file.</value>
+  </data>
   <data name="WheresBonusQuestionsViewSample" xml:space="preserve">
     <value>A sample bonus question file is available at https://github.com/gbarkerz/GridGames/blob/master/GridGames/SampleWheresWCAGBonusQuestions.txt. Consider copying the contents of that file into your own Q&amp;A file, and then changing the Q&amp;A pairs to suit your own purposes.</value>
   </data>

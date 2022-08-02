@@ -6,6 +6,8 @@ using Microsoft.Maui.Controls.Xaml;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
 
+// Barker: Add a setting to control whether bonus questions should be shown in a random order.
+
 namespace GridGames
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
