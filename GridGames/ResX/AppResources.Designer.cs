@@ -97,6 +97,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please check one or more WCAG before submitting your answer. Groups of WCAG will be shown after making selections at the WCAG group pickers..
+        /// </summary>
+        internal static string BonusAnswerRequired {
+            get {
+                return ResourceManager.GetString("BonusAnswerRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Browse for picture.
         /// </summary>
         internal static string BrowsePicture {
@@ -1237,6 +1246,15 @@ namespace GridGames.ResX {
         internal static string Three {
             get {
                 return ResourceManager.GetString("Three", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Many apps that ship in Europe are subject to the European standard for digital accessibility, EN 301 549. Many of those standards are based on WCAG..
+        /// </summary>
+        internal static string TipVisitEN301 {
+            get {
+                return ResourceManager.GetString("TipVisitEN301", resourceCulture);
             }
         }
         

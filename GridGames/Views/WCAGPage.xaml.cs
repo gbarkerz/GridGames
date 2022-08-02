@@ -1,3 +1,4 @@
+using GridGames.ResX;
 using GridGames.ViewModels;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -56,6 +57,15 @@ public partial class WCAGPage : ContentPage
 
     private async void SubmitButton_Clicked(object sender, EventArgs e)
 	{
+        if (checkedAnswers.Count == 0)
+        {
+            await DisplayAlert("WCAG Bonus Question",
+                AppResources.ResourceManager.GetString("BonusAnswerRequired"),
+                "OK");
+
+            return;
+        }
+
         verifyingAnswer = true;
 
         foreach (CheckBox checkedAnswer in checkedAnswers)

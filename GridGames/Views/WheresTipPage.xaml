@@ -1,11 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:resources="clr-namespace:GridGames.ResX"
              xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
              x:Class="GridGames.Views.WheresTipPage">
 
     <Grid Margin="0" Padding="0">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -29,7 +32,7 @@
                     <FormattedString>
                         <Span Text="The &quot;" />
                         <Span Text="{Binding wcagName}" />
-                        <Span Text="&quot; WCAG relates to content being " />
+                        <Span Text="&quot; WCAG group relates to content being " />
                         <Span Text="{Binding wcagGroupName}" />
                         <Span Text=", and all WCAG relating to content being " />
                         <Span Text="{Binding wcagGroupName}" />
@@ -41,34 +44,24 @@
             </Label>
         </Grid>
 
-        <!-- From...
-            https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/text/label#hyperlinks
-            Barker: But this link isn't keyboard accessible, so don't do it.
-        -->
-        <!--<Label Grid.Row="2" >
-            <Label.FormattedText>
-                <FormattedString>
-                    <Span Text="For more details, visit " />
-                    <Span Text="{Binding wcagGroupName}"
-                        TextColor="Blue"
-                        TextDecorations="Underline">
-                        <Span.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding TapCommand}"
-                                CommandParameter="{Binding wcagURL, Mode=OneWay}" />
-                        </Span.GestureRecognizers>
-                    </Span>%
-                    <Span Text=" at the WCAG 2.1 documentation." />
-                </FormattedString>
-            </Label.FormattedText>
-        </Label>-->
+        <!-- Barker: Accessible links don't seem natively supported in MAUI at the moment, so used buttons instead. -->
 
         <Button Grid.Row="2" Margin="0,20,0,0" Padding="8"
-            windows:VisualElement.AccessKey="L"                
-            Text="Learn more at the WCAG documentation"
+            windows:VisualElement.AccessKey="W"    
+            Text="Learn more about this WCAG group at the WCAG documentation"
             HorizontalOptions="Center"
             Clicked="LearnMoreButton_Clicked" />
 
-        <Button Grid.Row="4" Text="Close"
+        <Label Grid.Row="3" Margin="20,30,20,10"
+            Text="{x:Static resources:AppResources.TipVisitEN301}" />
+
+        <Button Grid.Row="4" Margin="0" Padding="8"
+            windows:VisualElement.AccessKey="E"                
+            Text="Learn more about the EN 301 549 standard"
+            HorizontalOptions="Center"
+            Clicked="LearnMoreEN301Button_Clicked" />
+
+        <Button Grid.Row="6" Text="Close"
             windows:VisualElement.AccessKey="C"                
             HorizontalOptions="End" Margin="0,0,4,4" Padding="8"
             Clicked="WheresTipCloseButton_Clicked" />

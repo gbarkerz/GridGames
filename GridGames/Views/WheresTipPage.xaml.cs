@@ -56,5 +56,10 @@ namespace GridGames.Views
         {
             await Launcher.OpenAsync("https://www.w3.org/TR/WCAG21/#" + groupName.ToLower());
         }
+
+        private async void LearnMoreEN301Button_Clicked(object sender, EventArgs e)
+        {
+            await Launcher.OpenAsync("https://www.etsi.org/deliver/etsi_en/301500_301599/301549/03.02.01_60/en_301549v030201p.pdf");
+        }
     }
 }

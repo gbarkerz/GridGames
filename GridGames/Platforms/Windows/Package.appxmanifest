@@ -3,12 +3,14 @@
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
-  IgnorableNamespaces="uap rescap">
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  IgnorableNamespaces="uap rescap mp">
 
-  <Identity Publisher="CN=User Name" />
+  <Identity Publisher="CN=3BE60520-BC7D-411E-93E3-E4D4CA0B8E86"  Version="1.1.0.0" Name="59985Herbi.org.GridGames"/>
 
   <Properties>
-    <PublisherDisplayName>User Name</PublisherDisplayName>
+    <PublisherDisplayName>Herbi.org</PublisherDisplayName>
+    <DisplayName>Grid Games</DisplayName>
   </Properties>
 
   <Dependencies>
@@ -22,12 +24,16 @@
 
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="$targetentrypoint$">
-      <uap:VisualElements />
+      <uap:VisualElements  DisplayName="Grid Games" Description="This app demonstrates some techniques for app builders relating to building accessible .NET MAUI apps.">
+        <uap:DefaultTile/>
+      </uap:VisualElements >
     </Application>
   </Applications>
 
   <Capabilities>
     <rescap:Capability Name="runFullTrust" />
   </Capabilities>
+
+  <!--<mp:PhoneIdentity PhoneProductId="d72b8477-37ca-4a71-a7f6-91acded79359"/>-->
 
 </Package>

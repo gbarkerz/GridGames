@@ -129,6 +129,9 @@
   <data name="AppSettingsIntro" xml:space="preserve">
     <value>Settings here apply to all games in the Grid Games app.</value>
   </data>
+  <data name="BonusAnswerRequired" xml:space="preserve">
+    <value>Please check one or more WCAG before submitting your answer. Groups of WCAG will be shown after making selections at the WCAG group pickers.</value>
+  </data>
   <data name="BrowsePicture" xml:space="preserve">
     <value>Browse for picture</value>
   </data>
@@ -548,6 +551,9 @@ Would you like to play another game?</value>
   </data>
   <data name="Three" xml:space="preserve">
     <value>three</value>
+  </data>
+  <data name="TipVisitEN301" xml:space="preserve">
+    <value>Many apps that ship in Europe are subject to the European standard for digital accessibility, EN 301 549. Many of those standards are based on WCAG.</value>
   </data>
   <data name="TurnedUp" xml:space="preserve">
     <value>Turned up</value>
