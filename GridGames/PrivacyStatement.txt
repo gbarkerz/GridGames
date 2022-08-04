@@ -1,0 +1,7 @@
+This is the Grid Games for Windows Privacy Statement.
+
+The Grid Games app does not access, collect, or transmit personal information.
+
+The only data stored by the app are the player's choices made in the Settings pages in the game.
+
+To learn more about the app, including access to all the source code for the app, please visit https://github.com/gbarkerz/GridGames.
