@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-    <TargetFrameworks>net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
+    <TargetFrameworks>net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
     <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net6.0-windows10.0.19041.0</TargetFrameworks>
     <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net6.0-tizen</TargetFrameworks> -->
@@ -30,16 +30,21 @@
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
     <DefaultLanguage>en</DefaultLanguage>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
   </PropertyGroup>
 
-	<ItemGroup>
+  <ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\appicon.svg" ForegroundFile="Resources\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appicon.png" BaseSize="128,128" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\appiconfg.svg" Color="#512BD4" BaseSize="128,128" />
+    <MauiSplashScreen Include="Resources\Splash\splashscreen.png" BaseSize="1040,912" />
 
-		<!-- Images -->
+    <!-- Images -->
     <MauiImage Include="Resources\Images\*" />
 		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
 
@@ -72,6 +77,7 @@
 
 	<ItemGroup>
 	  <None Remove="matchinggameicon.png" />
+	  <None Remove="Resources\AppIcon\appicon.png" />
 	  <None Remove="Resources\DefaultMatchingBackgrounds\Card2.jpg" />
 	  <None Remove="Resources\DefaultMatchingBackgrounds\Card3.jpg" />
 	  <None Remove="Resources\DefaultMatchingBackgrounds\Card4.jpg" />
@@ -109,6 +115,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Properties\PublishProfiles\" />
 	  <Folder Include="Resources\DefaultMatchingBackgrounds\" />
 	</ItemGroup>
 
