@@ -39,9 +39,9 @@
 
   <ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" BaseSize="550,550" />
+    <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="white" />
 
-		<!-- Splash Screen -->
+    <!-- Splash Screen -->
     <MauiSplashScreen Include="Resources\Splash\splashscreen.png" BaseSize="1040,912" />
 
     <!-- Images -->
@@ -77,7 +77,6 @@
 
 	<ItemGroup>
 	  <None Remove="matchinggameicon.png" />
-	  <None Remove="Resources\AppIcon\appicon.png" />
 	  <None Remove="Resources\DefaultMatchingBackgrounds\Card2.jpg" />
 	  <None Remove="Resources\DefaultMatchingBackgrounds\Card3.jpg" />
 	  <None Remove="Resources\DefaultMatchingBackgrounds\Card4.jpg" />
