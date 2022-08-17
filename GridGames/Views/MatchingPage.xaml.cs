@@ -17,6 +17,7 @@ namespace GridGames.Views
     {
         private bool previousShowCustomPictures;
         private string previousPicturePathMatching;
+        private bool firstRunThisInstance = true;
 
         public MatchingPage()
         {
@@ -122,9 +123,12 @@ namespace GridGames.Views
             var showCustomPictures = Preferences.Get("ShowCustomPictures", false);
             var picturePathMatching = Preferences.Get("PicturePathMatching", "");
 
-            if ((showCustomPictures != previousShowCustomPictures) ||
+            if (firstRunThisInstance || 
+                (showCustomPictures != previousShowCustomPictures) ||
                 (picturePathMatching != previousPicturePathMatching))
             {
+                firstRunThisInstance = false;
+
                 SetUpCards();
 
                 previousShowCustomPictures = showCustomPictures;
