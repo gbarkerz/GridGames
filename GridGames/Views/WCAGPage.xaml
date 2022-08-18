@@ -35,9 +35,15 @@
         <Label Grid.Row="2" Margin="30,10,20,0" FontSize="Medium"
             Text="Select the WCAG groups containing the answer, and then check all WCAG that apply." />
 
-        <FlexLayout Grid.Row="3" Wrap="Wrap" Margin="10,0,0,0" Padding="0"
-            SemanticProperties.Description="WCAG Groups">
-                
+        <!-- Barker Todo: Originally this FlexLayout had no HeightRequest set, because it would grow to 
+            accomodate the size of its contents. However, after upgrading to VS 17.4.0 Preview 1.0
+            the FlexLayout seemed to be the height it would be if it had no contents. It seems at 
+            StackOverflow others also hit issues with the FlexLayout after upgrading VS to 17.4.0. 
+            So for now, set an explicit height on the FlexHeight, but remove this when possible. -->
+        
+        <FlexLayout Grid.Row="3" Wrap="Wrap" Margin="10,0,0,0" Padding="0" 
+            SemanticProperties.Description="WCAG Groups" HeightRequest="80">
+
             <Picker x:Name="PerceivablePicker" ClassId="Perceivable" windows:VisualElement.AccessKey="P" 
                 Title="Perceivable groups"
                 Margin="10"
@@ -66,7 +72,7 @@
                 </Picker.ItemsSource>
             </Picker>
             <Picker x:Name="UnderstandablePicker" ClassId="Understandable" windows:VisualElement.AccessKey="U" 
-                Title="Understandble groups"
+                Title="Understandable groups"
                 Margin="10"
                 SelectedIndexChanged="JumpToPicker_SelectedIndexChanged">
                 <Picker.ItemsSource>
@@ -88,7 +94,7 @@
                 </Picker.ItemsSource>
             </Picker>
         </FlexLayout>
-
+        
         <Frame Grid.Row="4" Padding="0" Margin="10"
             BorderColor="{AppThemeBinding Light=Black, Dark=White}">
             <ScrollView x:Name="WCAGScrollView">
