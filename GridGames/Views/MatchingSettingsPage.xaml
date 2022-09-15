@@ -59,6 +59,7 @@
                             Text="{x:Static resources:AppResources.PictureAspectLabel}"
                             VerticalOptions="Center" />
                         <Picker Grid.Row="2" Grid.Column="1" x:Name="MatchingPictureAspectPicker"
+                            windows:VisualElement.AccessKey="T"    
                             VerticalOptions="Center" Margin="8,0,0,0"
                             SemanticProperties.Description="{x:Static resources:AppResources.PictureAspectLabel}"
                             SelectedIndex="{Binding PictureAspect, Mode=TwoWay,
@@ -159,6 +160,7 @@
                             </Grid>
 
                             <CollectionView x:Name="PicturesCollectionView"  
+                            windows:VisualElement.AccessKey="Z"    
                                 SemanticProperties.Description="Custom pictures"
                                 ItemsSource="{Binding PictureListCollection}">
                                 <CollectionView.ItemTemplate>

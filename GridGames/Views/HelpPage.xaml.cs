@@ -34,6 +34,8 @@ namespace GridGames
 
                 WheresHelpEditor.Focus();
             }
+
+            SemanticProperties.SetDescription(WheresHelpEditor, HelpPageTitle.Text); 
         }
 
         private async void CloseButton_Clicked(object sender, EventArgs e)
