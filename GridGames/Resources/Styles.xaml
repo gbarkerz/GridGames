@@ -41,7 +41,8 @@
     <Color x:Key="WheresAnsweredBackgroundColor">Green</Color>
     <Color x:Key="WheresAnsweredTextColorDark">White</Color>
     <Color x:Key="WheresAnsweredBackgroundColorDark">Green</Color>
-
+    <Color x:Key="SquaresNumberBackgroundColor">White</Color>
+     
     <!-- Barker: Add this CollectionView selected item styling. -->
     <Style TargetType="Grid">
         <Setter Property="VisualStateManager.VisualStateGroups">

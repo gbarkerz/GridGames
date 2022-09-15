@@ -23,6 +23,13 @@
         </Tab>
     </FlyoutItem>
 
+    <FlyoutItem Title="Squares"
+                Icon="squaresgameicon.png">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate views:SquaresPage}" />
+        </Tab>
+    </FlyoutItem>
+
     <MenuItem Text="Help (F1)" 
         StyleClass="MenuItemLayoutStyle" Clicked="OnHelpMenuItemClicked">
         <MenuItem.IconImageSource>

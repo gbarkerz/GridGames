@@ -19,18 +19,22 @@ public static class MauiProgram
             if (e.OriginalSource is Microsoft.UI.Xaml.Controls.GridViewItem)
             {
                 var currentPage = (Application.Current.MainPage as Microsoft.Maui.Controls.Shell).CurrentPage;
-                if ((currentPage is MatchingPage) || (currentPage is WheresPage))
+                if (currentPage is MatchingPage)
                 {
                     var page = currentPage as MatchingPage;
-                    if (page != null)
-                    {
-                        page.ReactToKeyInputOnSelectedCard();
-                    }
-                    else
-                    {
-                        (currentPage as WheresPage).ReactToKeyInputOnSelectedCard();
-                    }
-
+                    page.ReactToKeyInputOnSelectedCard();
+                    e.Handled = true;
+                }
+                else if (currentPage is SquaresPage)
+                {
+                    var page = currentPage as SquaresPage;
+                    page.ReactToKeyInputOnSelectedCard();
+                    e.Handled = true;
+                }
+                else if (currentPage is WheresPage)
+                {
+                    var page = currentPage as WheresPage;
+                    page.ReactToKeyInputOnSelectedCard();
                     e.Handled = true;
                 }
             }
