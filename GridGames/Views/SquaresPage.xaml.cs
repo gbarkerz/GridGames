@@ -1,14 +1,7 @@
 ﻿using GridGames.ResX;
-using GridGames.Services;
 using GridGames.ViewModels;
-using System;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
-using System.Threading.Tasks;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Xaml;
+using Size = System.Drawing.Size;
 
 namespace GridGames.Views
 {
@@ -21,6 +14,8 @@ namespace GridGames.Views
         public SquaresPage()
         {
             InitializeComponent();
+
+            SquaresCollectionView.SizeChanged += SquaresCollectionView_SizeChanged;
         }
 
         // This gets called when switching from the Matching Game to the Squares Game,
@@ -57,7 +52,9 @@ namespace GridGames.Views
             if (vm.ShowPicture && (vm.PicturePathSquares != previousLoadedPicture))
             {
                 // Prevent input on the grid while the image is being loaded into the squares.
-                vm.GameIsLoading = true;
+
+                // Barker: No loading for now.
+                //vm.GameIsLoading = true;
 
                 // Future: Without a delay here, the loading UI rarely shows up on iOS.
                 // Investigate this further and remove this delay.
@@ -81,6 +78,8 @@ namespace GridGames.Views
                     // once the loading of another picture begins.
 
                     // Barker: No image editor for now.
+                    LoadCustomPictureIntoSquares(vm.PicturePathSquares, true);
+
                     //GridGameImageEditor.Source = ImageSource.FromFile(vm.PicturePathSquares);
                     //Debug.WriteLine("Grid Games: ImageEditor source now " + GridGameImageEditor.Source.ToString());
                 }
@@ -256,224 +255,185 @@ namespace GridGames.Views
             }
         }
 
+        private void SquaresCollectionView_SizeChanged(object sender, EventArgs e)
+        {
+            var vm = this.BindingContext as SquaresViewModel;
 
-        // Barker: No image editor for now. 
-        /*
-                // Important: The remainder of this file relates to setting of pictures on the squares in the
-                // grid. However, the threading model for the various event handlers below is not understood,
-                // so while the code seems to work it seems almost certain that the code will change once the
-                // threading model is understood.
+            if (vm.ShowPicture && !String.IsNullOrWhiteSpace(vm.PicturePathSquares))
+            {
+                LoadCustomPictureIntoSquares(vm.PicturePathSquares, false);
+            }
+        }
 
-                // The use of nextSquareIndexForImageSourceSetting as the index of the square whose
-                // PictureImageSource property is being set, assumes that the squares have not yet
-                // been shuffled in the view model's collection of Squares.
-                private int nextSquareIndexForImageSourceSetting = 0;
+        double xImageScale;
+        double yImageScale;
 
-                // ImageLoad is called once following the picture being set on the control.
-                private void GridGameImageEditor_ImageLoaded(object sender, ImageLoadedEventArgs args)
+        // Copied with thanks from:
+        // https://stackoverflow.com/questions/552467/how-do-i-reliably-get-an-image-dimensions-in-net-without-loading-the-image
+
+        public static Size GetJpegImageSize(string filename)
+        {
+            FileStream stream = null;
+            BinaryReader rdr = null;
+            try
+            {
+                stream = File.OpenRead(filename);
+                rdr = new BinaryReader(stream);
+                // keep reading packets until we find one that contains Size info
+                for (; ; )
                 {
-                    Debug.WriteLine("MobileGridGames: In ImageLoaded, calling PerformCrop.");
-
-                    // Don't load a picture if this picture is already fully loaded.
-                    var vm = this.BindingContext as SquaresViewModel;
-                    if (vm.PicturePathSquares == previousLoadedPicture)
+                    byte code = rdr.ReadByte();
+                    if (code != 0xFF) throw new ApplicationException(
+                            "Unexpected value in file " + filename);
+                    code = rdr.ReadByte();
+                    switch (code)
                     {
-                        return;
+                        // filler byte
+                        case 0xFF:
+                            stream.Position--;
+                            break;
+                        // packets without data
+                        case 0xD0:
+                        case 0xD1:
+                        case 0xD2:
+                        case 0xD3:
+                        case 0xD4:
+                        case 0xD5:
+                        case 0xD6:
+                        case 0xD7:
+                        case 0xD8:
+                        case 0xD9:
+                            break;
+                        // packets with size information
+                        case 0xC0:
+                        case 0xC1:
+                        case 0xC2:
+                        case 0xC3:
+                        case 0xC4:
+                        case 0xC5:
+                        case 0xC6:
+                        case 0xC7:
+                        case 0xC8:
+                        case 0xC9:
+                        case 0xCA:
+                        case 0xCB:
+                        case 0xCC:
+                        case 0xCD:
+                        case 0xCE:
+                        case 0xCF:
+                            ReadBEUshort(rdr);
+                            rdr.ReadByte();
+                            ushort h = ReadBEUshort(rdr);
+                            ushort w = ReadBEUshort(rdr);
+                            return new Size(w, h);
+                        // irrelevant variable-length packets
+                        default:
+                            int len = ReadBEUshort(rdr);
+                            stream.Position += len - 2;
+                            break;
                     }
-
-                    // Prevent interaction with any of the flyout items by preventing access to the flyout.
-                    // This can't be done in OnAppearing() because the Shell.Current might still be null
-                    // then. Future: While Shell.Current seems to be set here, is this robust? Change this
-                    // approach so I can have some reason to think it's robust.
-                    Shell.Current.FlyoutBehavior = FlyoutBehavior.Disabled;
-
-                    if (nextSquareIndexForImageSourceSetting != 0)
-                    {
-                        Debug.WriteLine("MobileGridGames: Error in ImageLoaded, nextSquareIndexForImageSourceSetting should be zero, " +
-                            nextSquareIndexForImageSourceSetting.ToString());
-
-                        vm.GameIsLoading = false;
-                        nextSquareIndexForImageSourceSetting = 0;
-
-                        return;
-                    }
-
-                    // Perform a crop for first square.
-                    PerformCrop();
-
-                    Debug.WriteLine("MobileGridGames: Leave ImageLoaded, done call to PerformCrop.");
                 }
+            }
+            finally
+            {
+                if (rdr != null) rdr.Close();
+                if (stream != null) stream.Close();
+            }
+        }
 
-                private void PerformCrop()
+        private static ushort ReadBEUshort(BinaryReader rdr)
+        {
+            ushort hi = rdr.ReadByte();
+            hi <<= 8;
+            ushort lo = rdr.ReadByte();
+            return (ushort)(hi | lo);
+        }
+
+        double originalLoadedImageWidth;
+        double originalLoadedImageHeight;
+
+        private void LoadCustomPictureIntoSquares(string picturePathSquares, bool setSources)
+        {
+            var vm = this.BindingContext as SquaresViewModel;
+
+            var originalLoadedImageSize = GetJpegImageSize(picturePathSquares);
+
+            originalLoadedImageWidth = originalLoadedImageSize.Width;
+            originalLoadedImageHeight = originalLoadedImageSize.Height;
+
+            if (setSources)
+            {
+                for (int i = 0; i < 16; ++i)
                 {
-                    // The x,y values for cropping are a percentage of the full image size.
-                    int x = 25 * (nextSquareIndexForImageSourceSetting % 4);
-                    int y = 25 * (nextSquareIndexForImageSourceSetting / 4);
-
-                    // Future: On release builds, often the fisrt square contains the full image,
-                    // with no cropping at all. This unexpected result does not seem to happen if
-                    // we don't set the origin to 0,0. So until this issue is understood, set the
-                    // origin of the first crop to 1,1.
-                    if (nextSquareIndexForImageSourceSetting == 0)
-                    {
-                        x = 1;
-                        y = 1;
-                    }
-
-                    Debug.WriteLine("MobileGridGames: In PerformCrop, crop at " + x + ", " + y + ".");
-
-                    // Set up the bounds for the next crop operation.
-                    GridGameImageEditor.ToggleCropping(new Rectangle(x, y, 25, 25));
-
-                    Debug.WriteLine("MobileGridGames: Called ToggleCropping.");
-
-                    // Crop() seems to need to be run on the UI thread.
-                    Device.BeginInvokeOnMainThread(() =>
-                    {
-                        Debug.WriteLine("MobileGridGames: PerformCrop, about to call Crop.");
-
-                        GridGameImageEditor.Crop();
-
-                        Debug.WriteLine("MobileGridGames: PerformCrop, called Crop.");
-                    });
-
-                    Debug.WriteLine("MobileGridGames: Leave PerformCrop.");
+                    vm.SquareListCollection[i].PictureImageSource = ImageSource.FromFile(picturePathSquares);
                 }
+            }
 
-                private int mostRecentSquareWithImageEdited = -1;
+            xImageScale = SquaresCollectionView.Width / originalLoadedImageWidth;
+            yImageScale = SquaresCollectionView.Height / originalLoadedImageHeight;
 
-                // ImageEdited is called following a Crop operation and when the image is reset.
-                private void GridGameImageEditor_ImageEdited(object sender, ImageEditedEventArgs e)
+            vm.ResetGrid();
+
+            timer = new Timer(new TimerCallback((s) => NowTranslate()),
+                               null,
+                               TimeSpan.FromMilliseconds(100),
+                               TimeSpan.FromMilliseconds(Timeout.Infinite));
+        }
+
+        // Worth noting details at
+        // https://learn.microsoft.com/en-us/dotnet/maui/user-interface/graphics/transforms
+        // For example, when to apply the transform relative to when the ImageSource was set.
+
+        private Timer timer;
+
+        private void NowTranslate()
+        {
+            var vm = this.BindingContext as SquaresViewModel;
+
+            if (timer != null)
+            {
+                timer.Dispose();
+            }
+
+            var newThread = new System.Threading.Thread(() =>
+            {
+                Application.Current.Dispatcher.Dispatch(() =>
                 {
-                    Debug.WriteLine("MobileGridGames: In ImageEdited.");
+                    var imageCount = 0;
 
-                    // On iOS, GridGameImageEditor_ImageEdited seems to be called multiple times
-                    // in succession, without a specific edit in between. If that happens here,
-                    // only react to the first call to GridGameImageEditor_ImageEdited.
-                    if (mostRecentSquareWithImageEdited == nextSquareIndexForImageSourceSetting)
+                    var descendants = SquaresCollectionView.GetVisualTreeDescendants();
+                    for (int i = 0; i < descendants.Count; i++)
                     {
-                        return;
+                        if (descendants[i] is Image)
+                        {
+                            var image = descendants[i] as Image;
+
+                            image.WidthRequest = originalLoadedImageWidth;
+                            image.HeightRequest = originalLoadedImageHeight;
+
+                            image.ScaleX = xImageScale;
+                            image.ScaleY = yImageScale;
+
+                            var squareWidth = (SquaresCollectionView.Width / 4);
+                            var squareHeight = (SquaresCollectionView.Height / 4);
+
+                            var squareIndex = vm.SquareListCollection[imageCount].TargetIndex;
+
+                            double xIndex = (squareIndex % 4);
+                            double yIndex = (squareIndex / 4);
+
+                            image.TranslationX = (1.5 - xIndex) * squareWidth;
+                            image.TranslationY = (1.5 - yIndex) * squareHeight;
+
+                            ++imageCount;
+                        }
                     }
 
-                    // If we're here following a resetting of the image, take no follow-up action.
-                    if (e.IsImageEdited)
-                    {
-                        mostRecentSquareWithImageEdited = nextSquareIndexForImageSourceSetting;
-
-                        // We must be here following a crop operation.
-                        GridGameImageEditor.Save();
-                    }
-
-                    Debug.WriteLine("MobileGridGames: Leave ImageEdited.");
-                }
-
-                // ImageSaving is called following each crop of the picture.
-                private void GridGameImageEditor_ImageSaving(object sender, ImageSavingEventArgs args)
-                {
-                    Debug.WriteLine("MobileGridGames: In ImageSaving." + Shell.Current);
-
-                    // Important: Prevent the cropped image from being saved to a file.
-                    args.Cancel = true;
-
-                    var vm = this.BindingContext as SquaresViewModel;
-
-                    // Get the image data for the previous crop operation.
-                    var source = GetImageSourceFromPictureStream(args.Stream);
-
-                    // We assume here that the use of nextSquareIndexForImageSourceSetting is synchronous
-                    // as all the cropping operations are performed.
-
-                    if (nextSquareIndexForImageSourceSetting > 14)
-                    {
-                        Debug.WriteLine("MobileGridGames: Error in ImageSaving, nextSquareIndexForImageSourceSetting too high, " +
-                            nextSquareIndexForImageSourceSetting);
-
-                        vm.GameIsLoading = false;
-                        nextSquareIndexForImageSourceSetting = 0;
-
-                        return;
-                    }
-
-                    // Set the cropped image on the next square.
-                    var square = vm.SquareListCollection[nextSquareIndexForImageSourceSetting];
-                    square.PictureImageSource = source;
-
-                    // Now reset the image to its original form, in order to perform the next crop.
-                    // This seems to need to be run on the UI thread.
-                    Device.BeginInvokeOnMainThread(() =>
-                    {
-                        Debug.WriteLine("MobileGridGames: About to call Reset.");
-
-                        GridGameImageEditor.Reset();
-
-                        Debug.WriteLine("MobileGridGames: Back from call to Reset.");
-                    });
-
-                    Debug.WriteLine("MobileGridGames: Leave ImageSaving.");
-                }
-
-                private ImageSource GetImageSourceFromPictureStream(Stream stream)
-                {
-                    stream.Position = 0;
-
-                    // The input stream will get closed, so create a new stream from it here.
-                    var buffer = new byte[stream.Length];
-
-                    MemoryStream ms = new MemoryStream();
-
-                    int read;
-                    while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
-                    {
-                        ms.Write(buffer, 0, read);
-                    }
-
-                    var imageSource = ImageSource.FromStream(() => new MemoryStream(buffer));
-
-                    return imageSource;
-                }
-
-                // EndResetis called as the original image is reset to perform the crop operation for the next square.
-                private void GridGameImageEditor_EndReset(object sender, EndResetEventArgs args)
-                {
-                    Debug.WriteLine("MobileGridGames: In EndReset.");
-
-                    var vm = this.BindingContext as SquaresViewModel;
-
-                    // Provide a "3 2 1" countdown for players using screen readers.
-                    if (nextSquareIndexForImageSourceSetting % 5 == 0)
-                    {
-                        var countdown = (15 - nextSquareIndexForImageSourceSetting) / 5;
-                        vm.RaiseNotificationEvent(countdown.ToString());
-                    }
-
-                    // We've completed the image settings for a square. Continue with the next square if there is one.
-                    ++nextSquareIndexForImageSourceSetting;
-
-                    Debug.WriteLine("MobileGridGames: nextSquareIndexForImageSourceSetting now " + nextSquareIndexForImageSourceSetting);
-
-                    // If we're not done loading pictures into squares, load a picture into the next square.
-                    if (nextSquareIndexForImageSourceSetting < 15)
-                    {
-                        PerformCrop();
-                    }
-                    else
-                    {
-                        vm.GameIsLoading = false;
-                        nextSquareIndexForImageSourceSetting = 0;
-
-                        // We've loaded all the pictures, so shuffle them and enable the game.
-                        vm.ResetGrid();
-
-                        Shell.Current.FlyoutBehavior = FlyoutBehavior.Flyout;
-
-                        // Now that a picture has been fully loaded, cache the path to the loaded picture.
-                        // We'll not load another picture until the picture being loaded is different from
-                        // this successfully loaded picture.
-                        previousLoadedPicture = vm.PicturePathSquares;
-                    }
-
-                    Debug.WriteLine("MobileGridGames: Leave EndReset");
-                }
-        */
+                    Debug.WriteLine("Number of images: " + imageCount);
+                });
+            });
+     
+            newThread.Start();
+        }
     }
 }

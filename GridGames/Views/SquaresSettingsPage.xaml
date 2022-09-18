@@ -85,7 +85,6 @@
                                     VerticalOptions="Center" />
                                 <CheckBox x:Name="ShowPictureCheckBox" VerticalOptions="Center"
                                     windows:VisualElement.AccessKey="P"
-                                    IsEnabled="False"
                                     AutomationProperties.Name="{Binding ShowPicture,
                                         Mode=OneWay,
                                         Converter={StaticResource CheckBoxStateToAccessibleName},
@@ -102,7 +101,6 @@
                                     VerticalTextAlignment="Center"
                                     Text="{x:Static resources:AppResources.PictureNameLabel}" />
                                 <Entry Grid.Column="1" x:Name="PictureNameEditor"
-                                    IsEnabled="False"
                                     windows:VisualElement.AccessKey="M"
                                     VerticalTextAlignment="Center"
                                     Text="{Binding PictureName, Mode=TwoWay}" 
@@ -110,7 +108,6 @@
                             </Grid>
                             
                             <Button Grid.Row="2" x:Name="PictureBrowseButton" 
-                                IsEnabled="False"
                                 Margin="10,10,0,0"
                                 windows:VisualElement.AccessKey="B"                                    
                                 Text="{x:Static resources:AppResources.BrowsePicture}"
@@ -135,7 +132,6 @@
                             </Grid>
                             
                             <Button Grid.Row="4" x:Name="PictureClearButton" 
-                                IsEnabled="False"
                                 Margin="10,0,0,0"                                    
                                 windows:VisualElement.AccessKey="R" 
                                 Text="{x:Static resources:AppResources.ClearSelection}"

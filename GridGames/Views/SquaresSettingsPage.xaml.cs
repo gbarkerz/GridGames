@@ -84,11 +84,16 @@ namespace GridGames
                         file.Delete();
                     }
 
-                    File.Copy(result.FullPath, targetFolder);
+                    var filenameSource = Path.GetFileName(result.FullPath);
 
-                    var filename = Path.GetFileName(result.FullPath);
+                    var filenameDest = Path.Combine(targetFolder, filenameSource);
 
-                    settingsViewModel.PicturePathSquares = Path.Combine(targetFolder, filename);
+                    // Barker: Windows required destination filename, but other platforms expect destination directory?
+                    File.Copy(result.FullPath, filenameDest);
+
+                    settingsViewModel.PicturePathSquares = filenameDest;
+
+
                 }
             }
             catch (Exception ex)

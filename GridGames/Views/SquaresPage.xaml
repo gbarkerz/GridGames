@@ -6,6 +6,7 @@
              x:Class="GridGames.Views.SquaresPage"
              xmlns:localviews="clr-namespace:GridGames.Views"
              xmlns:vm="clr-namespace:GridGames.ViewModels"
+             xmlns:drawable="clr-namespace:GridGames.Views"
              xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
              Title="{Binding Title}">
 
@@ -133,7 +134,7 @@
 
                                     <Image Grid.Row="0" Grid.RowSpan="2"
                                         Source="{Binding PictureImageSource}"
-                                        Aspect="Fill"
+                                        Aspect="Center"
                                         InputTransparent="True">
                                         <Image.IsVisible>
                                             <MultiBinding Mode="OneWay" Converter="{StaticResource SquareTargetIndexToIsVisible}">
