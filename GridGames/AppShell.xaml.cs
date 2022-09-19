@@ -78,6 +78,15 @@ public partial class AppShell : Shell
                 vm.ResetGrid(true);
             }
         }
+        else if (currentPage is SquaresPage)
+        {
+            var vm = (CurrentPage as SquaresPage).BindingContext as SquaresViewModel;
+            if (!vm.FirstRunSquares)
+            {
+                var squaresPage = (CurrentPage as SquaresPage);
+                squaresPage.ShowCustomPictureInSquares(vm.PicturePathSquares, true);
+            }
+        }
         else if (currentPage is WheresPage)
         {
             var vm = (CurrentPage as WheresPage).BindingContext as WheresViewModel;

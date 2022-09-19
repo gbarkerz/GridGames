@@ -268,6 +268,16 @@ namespace GridGames.Views
             }
         }
 
+        public void RestartGame()
+        {
+            var vm = this.BindingContext as SquaresViewModel;
+            if (!vm.FirstRunSquares)
+            {
+                ShowCustomPictureInSquares(vm.PicturePathSquares, true);
+            }
+        }
+
+
         // The remainder of this file relates to setting the images shown on the squares in the game.
 
         private void SquaresCollectionView_SizeChanged(object sender, EventArgs e)
@@ -296,7 +306,7 @@ namespace GridGames.Views
 
         private bool loadedCustomImageOnSquares = false;
 
-        private void ShowCustomPictureInSquares(string picturePathSquares, bool setSources)
+        public void ShowCustomPictureInSquares(string picturePathSquares, bool setSources)
         {
             Debug.WriteLine("ShowCustomPictureInSquares: " + setSources);
 
@@ -305,6 +315,8 @@ namespace GridGames.Views
             // If necessary, load up the original image to be shown on all the squares.
             if (setSources)
             {
+                SquaresCollectionView.Margin = new Thickness(0);
+
                 Size originalLoadedImageSize;
 
                 try
@@ -348,8 +360,8 @@ namespace GridGames.Views
                 xImageScale = SquaresCollectionView.Width / originalLoadedImageWidth;
                 yImageScale = SquaresCollectionView.Height / originalLoadedImageHeight;
 
-                if ((timer == null) && 
-                    ((xPreviousImageScale != xImageScale) || (yPreviousImageScale != yImageScale)))
+                if (timer == null)//  && 
+//                    ((xPreviousImageScale != xImageScale) || (yPreviousImageScale != yImageScale)))
                 {
                     // Once the picture has been loaded into the image element, we can apply the transform
                     // to have the apropriate portion of the picture shown based on the index and size of
