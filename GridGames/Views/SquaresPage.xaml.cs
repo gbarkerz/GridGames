@@ -257,7 +257,18 @@ namespace GridGames.Views
             }
         }
 
-        // The remained of this file relates to setting the images shown on the squares in the game.
+        public async void ShowHelp()
+        {
+            var vm = this.BindingContext as SquaresViewModel;
+            if (!vm.FirstRunSquares)
+            {
+                await Navigation.PushModalAsync(new HelpPage(this));
+
+                SquaresCollectionView.Focus();
+            }
+        }
+
+        // The remainder of this file relates to setting the images shown on the squares in the game.
 
         private void SquaresCollectionView_SizeChanged(object sender, EventArgs e)
         {
@@ -277,6 +288,9 @@ namespace GridGames.Views
 
         private double originalLoadedImageWidth;
         private double originalLoadedImageHeight;
+
+        private double previousWidth;                 
+
 
         private Timer timer;
 
@@ -342,10 +356,17 @@ namespace GridGames.Views
                     // the square. There seem to be no events raised to let us know when the picture has 
                     // been loaded, so just wait a moment. 
 
-                    timer = new Timer(new TimerCallback((s) => TransformImagesOnSquares()),
-                                       null,
-                                       TimeSpan.FromMilliseconds(setSources ? 500 : 0),
-                                       TimeSpan.FromMilliseconds(Timeout.Infinite));
+                    if (setSources)
+                    {
+                        timer = new Timer(new TimerCallback((s) => TransformImagesOnSquares()),
+                                           null,
+                                           TimeSpan.FromMilliseconds(2000),
+                                           TimeSpan.FromMilliseconds(Timeout.Infinite));
+                    }
+                    else
+                    {
+                        TransformImagesOnSquares();
+                    }
                 }
             }
         }
@@ -409,14 +430,13 @@ namespace GridGames.Views
                             image.TranslationX = (1.5 - xIndex) * squareWidth;
                             image.TranslationY = (1.5 - yIndex) * squareHeight;
 
-                            // It seems the first time the scaling and translation are set,
-                            // we have to nudge the Images here to show the result.
-                            image.IsVisible = false;
-                            image.IsVisible = true;
-
                             ++imageCount;
                         }
                     }
+
+                    // It seems we have to trigger a repaint of the squares for the first transformation,
+                    // so make it so.
+                    SquaresCollectionView.Margin = new Thickness(1);
 
                     Debug.WriteLine("TransformImagesOnSquares: Done transform");
 

@@ -23,14 +23,25 @@ namespace GridGames
                 HelpPageTitle.Text = "Pairs Help";
 
                 WheresGameHelpContent.IsVisible = false;
+                SquaresGameHelpContent.IsVisible = false;
 
                 PairsHelpEditor.Focus();
+            }
+            else if (currentPage is SquaresPage)
+            {
+                HelpPageTitle.Text = "Squares Help";
+
+                WheresGameHelpContent.IsVisible = false;
+                MatchingGameHelpContent.IsVisible = false;
+
+                SquaresHelpEditor.Focus();
             }
             else if (currentPage is WheresPage)
             {
                 HelpPageTitle.Text = "Where's WCAG? Help";
 
                 MatchingGameHelpContent.IsVisible = false;
+                SquaresGameHelpContent.IsVisible = false;
 
                 WheresHelpEditor.Focus();
             }

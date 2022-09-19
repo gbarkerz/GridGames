@@ -34,13 +34,19 @@
                     </Label.FormattedText>
                 </Label>-->
             </ScrollView>
-            
+
             <ScrollView x:Name="MatchingGameHelpContent" Grid.Row="1" 
                 Margin="4,4,4,2">
                 <Editor x:Name="PairsHelpEditor" IsReadOnly="True" FontSize="Medium" 
                     Text="{x:Static resources:AppResources.HelpContentPairs}" />
             </ScrollView>
-            
+
+            <ScrollView x:Name="SquaresGameHelpContent" Grid.Row="1" 
+                Margin="4,4,4,2">
+                <Editor x:Name="SquaresHelpEditor" IsReadOnly="True" FontSize="Medium" 
+                    Text="{x:Static resources:AppResources.HelpContentSquares}" />
+            </ScrollView>
+
             <Button Grid.Row="2" x:Name="CloseButton" 
                 windows:VisualElement.AccessKey="C"                                    
                 HorizontalOptions="End" Margin="0,8,4,4" Padding="8"

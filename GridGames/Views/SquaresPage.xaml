@@ -86,6 +86,7 @@
             <CollectionView Grid.Row="1"
                 x:Name="SquaresCollectionView"
                 IsVisible="True"
+                VerticalScrollBarVisibility="Never"
                 SelectionMode="Single"
                 ItemsSource="{Binding SquareListCollection}">
                 <CollectionView.Opacity>

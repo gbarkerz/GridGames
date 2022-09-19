@@ -11,12 +11,16 @@ public partial class AppShell : Shell
 
         // By default, we show the Where's WCAG? game.
         var initialGame = Preferences.Get("InitialGame", "Wheres");
-        if (initialGame == "Pairs")
+        // Assume we know the order of the items in the app flyout.
+        if (this.Items.Count > 0)
         {
-            // Assume we know the order of the items in the app flyout.
-            if (this.Items.Count > 0)
+            if (initialGame == "Pairs")
             {
                 this.CurrentItem = this.Items[1];
+            }
+            else if (initialGame == "Squares")
+            {
+                this.CurrentItem = this.Items[2];
             }
         }
 
@@ -39,6 +43,14 @@ public partial class AppShell : Shell
         {
             var vm = (CurrentPage as MatchingPage).BindingContext as MatchingViewModel;
             if (!vm.FirstRunMatching)
+            {
+                await Navigation.PushModalAsync(new HelpPage(currentPage));
+            }
+        }
+        else if (currentPage is SquaresPage)
+        {
+            var vm = (CurrentPage as SquaresPage).BindingContext as SquaresViewModel;
+            if (!vm.FirstRunSquares)
             {
                 await Navigation.PushModalAsync(new HelpPage(currentPage));
             }
