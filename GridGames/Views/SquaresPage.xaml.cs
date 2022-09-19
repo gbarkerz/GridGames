@@ -77,11 +77,13 @@ namespace GridGames.Views
                     // previous attempt to load a picture, those event handlers will no longer be called
                     // once the loading of another picture begins.
 
-                    // Barker: No image editor for now.
-                    LoadCustomPictureIntoSquares(vm.PicturePathSquares, true);
+                    // Set the images shown on the squares.
+                    ShowCustomPictureInSquares(vm.PicturePathSquares, true);
 
-                    //GridGameImageEditor.Source = ImageSource.FromFile(vm.PicturePathSquares);
-                    //Debug.WriteLine("Grid Games: ImageEditor source now " + GridGameImageEditor.Source.ToString());
+                    // Now that a picture has been fully loaded, cache the path to the loaded picture.
+                    // We'll not load another picture until the picture being loaded is different from
+                    // this successfully loaded picture.
+                    previousLoadedPicture = vm.PicturePathSquares;
                 }
                 else
                 {
@@ -255,20 +257,192 @@ namespace GridGames.Views
             }
         }
 
+        // The remained of this file relates to setting the images shown on the squares in the game.
+
         private void SquaresCollectionView_SizeChanged(object sender, EventArgs e)
         {
             var vm = this.BindingContext as SquaresViewModel;
 
-            if (vm.ShowPicture && !String.IsNullOrWhiteSpace(vm.PicturePathSquares))
+            if (loadedCustomImageOnSquares && 
+                vm.ShowPicture && !String.IsNullOrWhiteSpace(vm.PicturePathSquares))
             {
-                LoadCustomPictureIntoSquares(vm.PicturePathSquares, false);
+                ShowCustomPictureInSquares(vm.PicturePathSquares, false);
             }
         }
 
-        double xImageScale;
-        double yImageScale;
+        private double xImageScale;
+        private double yImageScale;
+        private double xPreviousImageScale = -1.0;
+        private double yPreviousImageScale = -1.0;
 
-        // Copied with thanks from:
+        private double originalLoadedImageWidth;
+        private double originalLoadedImageHeight;
+
+        private Timer timer;
+
+        private bool loadedCustomImageOnSquares = false;
+
+        private void ShowCustomPictureInSquares(string picturePathSquares, bool setSources)
+        {
+            Debug.WriteLine("ShowCustomPictureInSquares: " + setSources);
+
+            var vm = this.BindingContext as SquaresViewModel;
+
+            // If necessary, load up the original image to be shown on all the squares.
+            if (setSources)
+            {
+                Size originalLoadedImageSize;
+
+                try
+                {
+                    originalLoadedImageSize = GetJpegImageSize(picturePathSquares);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Squares Game: Exception trying to find original image dimenstions, " +
+                        picturePathSquares + ", " + ex.Message);
+
+                    return;
+                }
+
+                // Leave the 16th square empty.
+                for (int i = 0; i < 15; ++i)
+                {
+                    vm.SquareListCollection[i].PictureImageSource = ImageSource.FromFile(picturePathSquares);
+                }
+
+                // Barker: Figure out why on some jpgs, the dimensions seem switched.
+                originalLoadedImageWidth = originalLoadedImageSize.Width;
+                originalLoadedImageHeight = originalLoadedImageSize.Height;
+
+                Debug.WriteLine("ShowCustomPictureInSquares: originalLoadedImageWidth " + originalLoadedImageWidth +
+                    ", originalLoadedImageHeight " + originalLoadedImageHeight);
+
+                // Now jumble the squares.
+                vm.ResetGrid();
+            }
+            else
+            {
+                if (vm.SquareListCollection[0].PictureImageSource == null)
+                {
+                    return;
+                }
+            }
+
+            if ((originalLoadedImageWidth > 0) && (originalLoadedImageHeight > 0))
+            {
+                xImageScale = SquaresCollectionView.Width / originalLoadedImageWidth;
+                yImageScale = SquaresCollectionView.Height / originalLoadedImageHeight;
+
+                if ((timer == null) && 
+                    ((xPreviousImageScale != xImageScale) || (yPreviousImageScale != yImageScale)))
+                {
+                    // Once the picture has been loaded into the image element, we can apply the transform
+                    // to have the apropriate portion of the picture shown based on the index and size of
+                    // the square. There seem to be no events raised to let us know when the picture has 
+                    // been loaded, so just wait a moment. 
+
+                    timer = new Timer(new TimerCallback((s) => TransformImagesOnSquares()),
+                                       null,
+                                       TimeSpan.FromMilliseconds(setSources ? 500 : 0),
+                                       TimeSpan.FromMilliseconds(Timeout.Infinite));
+                }
+            }
+        }
+
+        // Worth noting details at
+        // https://learn.microsoft.com/en-us/dotnet/maui/user-interface/graphics/transforms
+        // For example, when to apply the transform relative to when the ImageSource was set.
+
+        private void TransformImagesOnSquares()
+        {
+            var vm = this.BindingContext as SquaresViewModel;
+
+            Debug.WriteLine("TransformImagesOnSquares: xImageScale " + xImageScale +
+                ", yImageScale " + yImageScale);
+
+            if ((xPreviousImageScale == xImageScale) && 
+                (yPreviousImageScale == yImageScale))
+            {
+                if (timer != null)
+                {
+                    Debug.WriteLine("TransformImagesOnSquares: End timer");
+
+                    timer.Dispose();
+                    timer = null;
+                }
+
+                return;
+            }
+
+            var newThread = new System.Threading.Thread(() =>
+            {
+                Application.Current.Dispatcher.Dispatch(() =>
+                {
+                    var imageCount = 0;
+
+                    Debug.WriteLine("TransformImagesOnSquares: SquaresCollectionView.Width " + 
+                        SquaresCollectionView.Width + ", SquaresCollectionView.Height " + 
+                        SquaresCollectionView.Height);
+
+                    var descendants = SquaresCollectionView.GetVisualTreeDescendants();
+                    for (int i = 0; i < descendants.Count; i++)
+                    {
+                        if (descendants[i] is Image)
+                        {
+                            var image = descendants[i] as Image;
+
+                            image.WidthRequest = originalLoadedImageWidth;
+                            image.HeightRequest = originalLoadedImageHeight;
+
+                            image.ScaleX = xImageScale;
+                            image.ScaleY = yImageScale;
+
+                            var squareWidth = (SquaresCollectionView.Width / 4);
+                            var squareHeight = (SquaresCollectionView.Height / 4);
+
+                            var squareIndex = vm.SquareListCollection[imageCount].TargetIndex;
+
+                            double xIndex = (squareIndex % 4);
+                            double yIndex = (squareIndex / 4);
+
+                            image.TranslationX = (1.5 - xIndex) * squareWidth;
+                            image.TranslationY = (1.5 - yIndex) * squareHeight;
+
+                            // It seems the first time the scaling and translation are set,
+                            // we have to nudge the Images here to show the result.
+                            image.IsVisible = false;
+                            image.IsVisible = true;
+
+                            ++imageCount;
+                        }
+                    }
+
+                    Debug.WriteLine("TransformImagesOnSquares: Done transform");
+
+                    xPreviousImageScale = xImageScale;
+                    yPreviousImageScale = yImageScale;
+
+                    loadedCustomImageOnSquares = true;
+
+                    if (timer != null)
+                    {
+                        timer.Dispose();
+                        timer = null;
+                    }
+
+                    Debug.WriteLine("Number of images: " + imageCount);
+                });
+            });
+     
+            newThread.Start();
+        }
+
+        // Barker: At the time of writing this, I couldn't find a way to determine
+        // the original dimensions of the image loaded from file. (As stated at
+        // https://learn.microsoft.com/en-us/dotnet/maui/user-interface/graphics/images,
+        // "The PlatformImage type isn't supported on Windows.") So the jpg-related
+        // code below was copied with thanks from:
         // https://stackoverflow.com/questions/552467/how-do-i-reliably-get-an-image-dimensions-in-net-without-loading-the-image
 
         public static Size GetJpegImageSize(string filename)
@@ -347,93 +521,6 @@ namespace GridGames.Views
             hi <<= 8;
             ushort lo = rdr.ReadByte();
             return (ushort)(hi | lo);
-        }
-
-        double originalLoadedImageWidth;
-        double originalLoadedImageHeight;
-
-        private void LoadCustomPictureIntoSquares(string picturePathSquares, bool setSources)
-        {
-            var vm = this.BindingContext as SquaresViewModel;
-
-            var originalLoadedImageSize = GetJpegImageSize(picturePathSquares);
-
-            originalLoadedImageWidth = originalLoadedImageSize.Width;
-            originalLoadedImageHeight = originalLoadedImageSize.Height;
-
-            if (setSources)
-            {
-                for (int i = 0; i < 16; ++i)
-                {
-                    vm.SquareListCollection[i].PictureImageSource = ImageSource.FromFile(picturePathSquares);
-                }
-            }
-
-            xImageScale = SquaresCollectionView.Width / originalLoadedImageWidth;
-            yImageScale = SquaresCollectionView.Height / originalLoadedImageHeight;
-
-            vm.ResetGrid();
-
-            timer = new Timer(new TimerCallback((s) => NowTranslate()),
-                               null,
-                               TimeSpan.FromMilliseconds(100),
-                               TimeSpan.FromMilliseconds(Timeout.Infinite));
-        }
-
-        // Worth noting details at
-        // https://learn.microsoft.com/en-us/dotnet/maui/user-interface/graphics/transforms
-        // For example, when to apply the transform relative to when the ImageSource was set.
-
-        private Timer timer;
-
-        private void NowTranslate()
-        {
-            var vm = this.BindingContext as SquaresViewModel;
-
-            if (timer != null)
-            {
-                timer.Dispose();
-            }
-
-            var newThread = new System.Threading.Thread(() =>
-            {
-                Application.Current.Dispatcher.Dispatch(() =>
-                {
-                    var imageCount = 0;
-
-                    var descendants = SquaresCollectionView.GetVisualTreeDescendants();
-                    for (int i = 0; i < descendants.Count; i++)
-                    {
-                        if (descendants[i] is Image)
-                        {
-                            var image = descendants[i] as Image;
-
-                            image.WidthRequest = originalLoadedImageWidth;
-                            image.HeightRequest = originalLoadedImageHeight;
-
-                            image.ScaleX = xImageScale;
-                            image.ScaleY = yImageScale;
-
-                            var squareWidth = (SquaresCollectionView.Width / 4);
-                            var squareHeight = (SquaresCollectionView.Height / 4);
-
-                            var squareIndex = vm.SquareListCollection[imageCount].TargetIndex;
-
-                            double xIndex = (squareIndex % 4);
-                            double yIndex = (squareIndex / 4);
-
-                            image.TranslationX = (1.5 - xIndex) * squareWidth;
-                            image.TranslationY = (1.5 - yIndex) * squareHeight;
-
-                            ++imageCount;
-                        }
-                    }
-
-                    Debug.WriteLine("Number of images: " + imageCount);
-                });
-            });
-     
-            newThread.Start();
         }
     }
 }
