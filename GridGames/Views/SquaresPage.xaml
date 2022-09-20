@@ -211,10 +211,6 @@
                     FontSize="Large" />
             </Border>
 
-            <!-- This Grid is here to support a setting to visually hide the game grid contents. -->
-            <Grid Grid.Row="1" IsVisible="{Binding HideGrid}"
-                BackgroundColor="{DynamicResource GridBackgroundColor}" />
-
             <Border Grid.Row="1" Margin="4" Padding="8"
                 IsVisible="{Binding FirstRunSquares}"
                 Stroke="{AppThemeBinding Light=Black, Dark=White}"

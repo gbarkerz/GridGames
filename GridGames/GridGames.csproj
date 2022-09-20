@@ -65,7 +65,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Platforms\Windows\DependencyService.cs" />
 	  <Compile Remove="ViewModels\AppSettingsViewModel.cs" />
 	  <Compile Remove="Views\AppSettingsPage.xaml.cs" />
 	  <Compile Remove="Views\AppSettingsViewModel.cs" />

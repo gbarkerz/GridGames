@@ -72,7 +72,15 @@ namespace GridGames.ViewModels
         {
             Debug.WriteLine("GridGames: Announcing \"" + notification + "\"");
 
-            SemanticScreenReader.Default.Announce(notification);
+            var reader = SemanticScreenReader.Default;
+            if (reader != null)
+            {
+                reader.Announce(notification);
+            }
+            else
+            {
+                Debug.WriteLine("GridGames: ALERT! SemanticScreenReader.Default is null");
+            }
         }
 
         public void RaiseDelayedNotificationEvent(string notification)
@@ -93,11 +101,13 @@ namespace GridGames.ViewModels
             {
                 Application.Current.Dispatcher.Dispatch(() =>
                 {
-                    Debug.WriteLine("Perform delayed announcement.");
+                    Debug.WriteLine("Perform delayed announcement. \"" + 
+                        notification + "\"");
 
                     SemanticScreenReader.Default.Announce(notification);
                 });
             });
+
             newThread.Start();
         }
     }

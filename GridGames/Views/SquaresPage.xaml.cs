@@ -18,9 +18,9 @@ namespace GridGames.Views
             SquaresCollectionView.SizeChanged += SquaresCollectionView_SizeChanged;
         }
 
-        // This gets called when switching from the Matching Game to the Squares Game,
+        // This gets called when switching to the Squares Game from other games,
         // and also when closing the Squares Settings page.
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
             Debug.Write("Squares Game: OnAppearing called.");
 
@@ -43,9 +43,6 @@ namespace GridGames.Views
             vm.PicturePathSquares = Preferences.Get("PicturePathSquares", "");
             vm.PictureName = Preferences.Get("PictureName", "");
 
-            // Barker: Remove the Hide Grid feature.
-            //vm.HideGrid = Preferences.Get("HideGrid", false);
-
             // Has the state of the picture being shown changed since we were last changed?
             if (vm.ShowPicture && (vm.PicturePathSquares != null) &&
                 (vm.PicturePathSquares != previousLoadedPicture))
@@ -56,8 +53,6 @@ namespace GridGames.Views
                 // Check whether the image file exists before trying to load it into the ImageEditor.
                 if (vm.IsImageFilePathValid(vm.PicturePathSquares))
                 {
-                    vm.RaiseDelayedNotificationEvent(PleaseWaitLabel.Text);
-
                     // Future: Verify that if the various event handlers are still being called from the
                     // previous attempt to load a picture, those event handlers will no longer be called
                     // once the loading of another picture begins.
@@ -171,7 +166,7 @@ namespace GridGames.Views
                     AppResources.ResourceManager.GetString("No"));
                 if (answer)
                 {
-                    vm.ResetGrid();
+                    RestartGame();
                 }
             }
         }
@@ -282,17 +277,6 @@ namespace GridGames.Views
 
         // The remainder of this file relates to setting the images shown on the squares in the game.
 
-        private void SquaresCollectionView_SizeChanged(object sender, EventArgs e)
-        {
-            var vm = this.BindingContext as SquaresViewModel;
-
-            if (loadedCustomImageOnSquares && 
-                vm.ShowPicture && !String.IsNullOrWhiteSpace(vm.PicturePathSquares))
-            {
-                ShowCustomPictureInSquares(vm.PicturePathSquares, false);
-            }
-        }
-
         private double xImageScale;
         private double yImageScale;
         private double xPreviousImageScale = -1.0;
@@ -301,9 +285,17 @@ namespace GridGames.Views
         private double originalLoadedImageWidth;
         private double originalLoadedImageHeight;
 
-        private Timer timer;
+        private Timer timerTransformImages;
 
-        private bool loadedCustomImageOnSquares = false;
+        private void SquaresCollectionView_SizeChanged(object sender, EventArgs e)
+        {
+            var vm = this.BindingContext as SquaresViewModel;
+
+            if (vm.ShowPicture && !String.IsNullOrWhiteSpace(vm.PicturePathSquares))
+            {
+                ShowCustomPictureInSquares(vm.PicturePathSquares, false);
+            }
+        }
 
         public void ShowCustomPictureInSquares(string picturePathSquares, bool setSources)
         {
@@ -316,6 +308,8 @@ namespace GridGames.Views
             {
                 // Prevent input on the grid while the image is being loaded into the squares.
                 vm.GameIsLoading = true;
+
+                vm.RaiseNotificationEvent(PleaseWaitLabel.Text);
 
                 SquaresCollectionView.Margin = new Thickness(0);
 
@@ -349,12 +343,9 @@ namespace GridGames.Views
                 // Now jumble the squares.
                 vm.ResetGrid();
             }
-            else
+            else if (vm.SquareListCollection[0].PictureImageSource == null)
             {
-                if (vm.SquareListCollection[0].PictureImageSource == null)
-                {
-                    return;
-                }
+                return;
             }
 
             if ((originalLoadedImageWidth > 0) && (originalLoadedImageHeight > 0))
@@ -362,7 +353,7 @@ namespace GridGames.Views
                 xImageScale = SquaresCollectionView.Width / originalLoadedImageWidth;
                 yImageScale = SquaresCollectionView.Height / originalLoadedImageHeight;
 
-                if (timer == null)
+                if (timerTransformImages == null)
                 {
                     // Once the picture has been loaded into the image element, we can apply the transform
                     // to have the apropriate portion of the picture shown based on the index and size of
@@ -371,7 +362,7 @@ namespace GridGames.Views
 
                     if (setSources)
                     {
-                        timer = new Timer(new TimerCallback((s) => TransformImagesOnSquares()),
+                        timerTransformImages = new Timer(new TimerCallback((s) => TransformImagesOnSquares()),
                                            null,
                                            TimeSpan.FromMilliseconds(2000),
                                            TimeSpan.FromMilliseconds(Timeout.Infinite));
@@ -398,12 +389,12 @@ namespace GridGames.Views
             if ((xPreviousImageScale == xImageScale) && 
                 (yPreviousImageScale == yImageScale))
             {
-                if (timer != null)
+                if (timerTransformImages != null)
                 {
                     Debug.WriteLine("TransformImagesOnSquares: End timer");
 
-                    timer.Dispose();
-                    timer = null;
+                    timerTransformImages.Dispose();
+                    timerTransformImages = null;
                 }
 
                 return;
@@ -458,16 +449,17 @@ namespace GridGames.Views
                     xPreviousImageScale = xImageScale;
                     yPreviousImageScale = yImageScale;
 
-                    loadedCustomImageOnSquares = true;
-
-                    vm.GameIsLoading = false;
-
-                    vm.RaiseNotificationEvent(AppResources.ResourceManager.GetString("GameReady"));
-
-                    if (timer != null)
+                    if (vm.GameIsLoading)
                     {
-                        timer.Dispose();
-                        timer = null;
+                        vm.GameIsLoading = false;
+
+                        vm.RaiseNotificationEvent(AppResources.ResourceManager.GetString("GameReady"));
+                    }
+
+                    if (timerTransformImages != null)
+                    {
+                        timerTransformImages.Dispose();
+                        timerTransformImages = null;
                     }
 
                     Debug.WriteLine("Number of images: " + imageCount);
