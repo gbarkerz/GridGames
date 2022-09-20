@@ -84,7 +84,8 @@ public partial class AppShell : Shell
             if (!vm.FirstRunSquares)
             {
                 var squaresPage = (CurrentPage as SquaresPage);
-                squaresPage.ShowCustomPictureInSquares(vm.PicturePathSquares, true);
+
+                squaresPage.RestartGame();
             }
         }
         else if (currentPage is WheresPage)

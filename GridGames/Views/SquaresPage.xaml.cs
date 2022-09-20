@@ -271,6 +271,9 @@ namespace GridGames.Views
             var vm = this.BindingContext as SquaresViewModel;
             if (!vm.FirstRunSquares)
             {
+                // Restore the order of the squares in the grid.
+                vm.RestoreEmptyGrid();
+
                 ShowCustomPictureInSquares(vm.PicturePathSquares, true);
             }
         }
