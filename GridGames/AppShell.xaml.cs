@@ -11,6 +11,7 @@ public partial class AppShell : Shell
 
         // By default, we show the Where's WCAG? game.
         var initialGame = Preferences.Get("InitialGame", "Wheres");
+
         // Assume we know the order of the items in the app flyout.
         if (this.Items.Count > 0)
         {

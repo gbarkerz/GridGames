@@ -30,6 +30,7 @@ namespace GridGames.Views
 
             // Account for the app settings changing since the page was last shown.
             var vm = this.BindingContext as SquaresViewModel;
+
             vm.FirstRunSquares = Preferences.Get("FirstRunSquares", true);
             if (vm.FirstRunSquares)
             {

@@ -22,8 +22,7 @@ namespace GridGames
             {
                 HelpPageTitle.Text = "Pairs Help";
 
-                WheresGameHelpContent.IsVisible = false;
-                SquaresGameHelpContent.IsVisible = false;
+                MatchingGameHelpContent.IsVisible = true;
 
                 PairsHelpEditor.Focus();
             }
@@ -31,8 +30,7 @@ namespace GridGames
             {
                 HelpPageTitle.Text = "Squares Help";
 
-                WheresGameHelpContent.IsVisible = false;
-                MatchingGameHelpContent.IsVisible = false;
+                SquaresGameHelpContent.IsVisible = true;
 
                 SquaresHelpEditor.Focus();
             }
@@ -40,8 +38,7 @@ namespace GridGames
             {
                 HelpPageTitle.Text = "Where's WCAG? Help";
 
-                MatchingGameHelpContent.IsVisible = false;
-                SquaresGameHelpContent.IsVisible = false;
+                WheresGameHelpContent.IsVisible = true;
 
                 WheresHelpEditor.Focus();
             }

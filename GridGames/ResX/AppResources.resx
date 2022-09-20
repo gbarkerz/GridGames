@@ -147,7 +147,7 @@
   <data name="CompletedSquaresPictureInMoves" xml:space="preserve">
     <value>You completed {0} in {1} goes.
 
-Would you like to play another game?</value>    
+Would you like to play another game?</value>
   </data>
   <data name="Congratulations" xml:space="preserve">
     <value>Congratulations!</value>
@@ -318,23 +318,17 @@ Press and release the Alt key to have any available access keys shown. For examp
 At the top left corner of the game is the Open Navigation button, which can be used to move to another game. Please note when a screen reader moves to the drop-down menu available from the Open Navigation button, it may announce a meaningless name for all the items in the menu. If so, please use the screen reader's navigation commands to move into the menu item, and the screen reader can then announce the text shown on the menu item.</value>
   </data>
   <data name="HelpContentSquares" xml:space="preserve">
-    <value>The Squares Game is based on a square sliding puzzle, where squares in a grid of squares are rearranged by the player to form an ordered sequence in the grid.
+    <value>The Squares Game is based on a square sliding puzzle, where squares in a grid of squares are rearranged by the player to form an ordered sequence of squares in the grid.
 
-When the game is run, a 4 by 4 grid of squares appears, with fifteen of those squares occupied with a movable element, and one square being empty. When a square is tapped, if it is adjacent to the empty square, the tapped square moves into the empty square. The space where the tapped square was then becomes the empty square. The aim is to arrange all the squares in a sorted order, leaving the empty square in the bottom right corner of the grid. Once all the squares are ordered, a "Congratulations" window appears.
+When the game is run, a 4 by 4 grid of squares appears, with fifteen of those squares occupied with a movable element, and one square being empty. When a square is clicked, if it is adjacent to the empty square, the clicked square moves into the empty square. The space where the tapped square was then becomes the empty square. The aim is to arrange all the squares in a sorted order, leaving the empty square in the bottom right corner of the grid. Once all the squares are ordered, a "Congratulations" window appears.
 
-Tip: Don't use a swipe gesture to move a square. Support for swipe gestures has yet to be added to the game.
+The Squares game can only be played using the keyboard, and squares cannot be moved using a mouse, touch, or speech. To use the keyboard to play the game, first use the Tab key to move keyboard focus into the grid of squares. Once keyboard focus in on the grid, use the arrow keys to move to a square of interest. Once at a square of interest, press either the Space key or Enter key to click the square.
 
-Tip: Don't tap on the empty square. Instead tap on the squares next to the empty square.
+Press the F1 key to show this Help content, or the F5 key to restart a game. 
 
-When the game first runs, the setting to have numbers shown on squares is on, and the settings to have pictures shown on the squares is off. This means a number is shown in the top left corner of the squares. When the squares are sorted, the square showing number 1 is at the top left of the grid, and the numbers increase from left to right then top to bottom.
+Press and release the Alt key to have any available access keys shown. For example, press Alt+S to have the game's Settings page shown. To have your own picture shown in the game, please follow the steps described in the Settings page.
 
-Tip: Practice moving numbered squares around before changing the setting to have a picture shown on the squares.
-
-When the game setting to have a picture shown on the squares is on, then a single picture is shown across all the squares. The sections of the picture will appear jumbled until the squares are arranged in their sorted order.
-
-When using a screen reader with the game, move your finger around the screen to have the number of the square beneath your finger announced. Double tap to move a square.
-
-Please note when a screen reader moves to the Menu button near the top left corner of the app, it may announce the button as the OK button or Menu button, or only announce the word button.</value>
+At the top left corner of the game is the Open Navigation button, which can be used to move to another game. Please note when a screen reader moves to the drop-down menu available from the Open Navigation button, it may announce a meaningless name for all the items in the menu. If so, please use the screen reader's navigation commands to move into the menu item, and the screen reader can then announce the text shown on the menu item.</value>
   </data>
   <data name="HelpContentWheres" xml:space="preserve">
     <value>"WCAG" is the Web Content Accessibility Guidelines (WCAG) international standard, which helps web content authors create content that's more accessible. The WCAG standard has been used as the base for European accessibility standards which apply to both web content and software.

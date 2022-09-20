@@ -22,6 +22,7 @@
             </Grid>
             
             <ScrollView x:Name="WheresGameHelpContent" Grid.Row="1"
+                IsVisible="False"
                 Margin="4,4,4,2">
                 <!-- Labels don't seem scrollable with the keyboard here, so use an Editor instead. -->
                 <Editor x:Name="WheresHelpEditor" IsReadOnly="True" FontSize="Medium" 
@@ -36,12 +37,14 @@
             </ScrollView>
 
             <ScrollView x:Name="MatchingGameHelpContent" Grid.Row="1" 
+                IsVisible="False"
                 Margin="4,4,4,2">
                 <Editor x:Name="PairsHelpEditor" IsReadOnly="True" FontSize="Medium" 
                     Text="{x:Static resources:AppResources.HelpContentPairs}" />
             </ScrollView>
 
             <ScrollView x:Name="SquaresGameHelpContent" Grid.Row="1" 
+                IsVisible="False"
                 Margin="4,4,4,2">
                 <Editor x:Name="SquaresHelpEditor" IsReadOnly="True" FontSize="Medium" 
                     Text="{x:Static resources:AppResources.HelpContentSquares}" />

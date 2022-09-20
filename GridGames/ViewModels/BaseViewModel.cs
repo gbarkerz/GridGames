@@ -75,7 +75,14 @@ namespace GridGames.ViewModels
             var reader = SemanticScreenReader.Default;
             if (reader != null)
             {
-                reader.Announce(notification);
+                try
+                {
+                    reader.Announce(notification);
+                }
+                catch(Exception ex)
+                {
+                    Debug.WriteLine("GridGames: ALERT! " + ex.Message);
+                }
             }
             else
             {
