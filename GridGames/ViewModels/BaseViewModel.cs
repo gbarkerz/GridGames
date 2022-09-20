@@ -79,7 +79,7 @@ namespace GridGames.ViewModels
         {
             timer = new Timer(new TimerCallback((s) => NowAnnounce(notification)),
                                null, 
-                               TimeSpan.FromMilliseconds(1000),
+                               TimeSpan.FromMilliseconds(2000),
                                TimeSpan.FromMilliseconds(Timeout.Infinite));
         }
 

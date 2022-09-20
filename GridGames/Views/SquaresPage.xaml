@@ -114,7 +114,7 @@
                             </Grid.GestureRecognizers>
                             <Frame Margin="3" Padding="0"
                                 AutomationProperties.IsInAccessibleTree="False"
-                                BackgroundColor="{Binding TargetIndex, 
+                                BackgroundColor="{Binding TargetIndex,  
                                     Converter={StaticResource SquareTargetIndexToBackgroundColor}}">
                                 <Grid AutomationProperties.IsInAccessibleTree="False"> 
                                     <Grid.RowDefinitions>
@@ -157,13 +157,12 @@
                                         <Frame Margin="0" Padding="4,0,4,0" HorizontalOptions="Start"
                                             AutomationProperties.IsInAccessibleTree="False"
                                             BorderColor="Transparent"
-                                            BackgroundColor="{Binding TargetIndex, 
-                                                Converter={StaticResource SquareTargetIndexToBackgroundColor}}"
+                                            BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
                                             IsVisible="{Binding TargetIndex, 
                                                 Converter={StaticResource SquareTargetIndexToContainerFrameVisibility}}">
                                             <Label Text="{Binding VisualLabel}"
                                                 AutomationProperties.IsInAccessibleTree="False"
-                                                TextColor="{DynamicResource SquaresNumberTextColor}"                                               
+                                                TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
                                                 Margin="2,0,4,0"
                                                 HorizontalOptions="Center" VerticalOptions="Center"
                                                 HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type Grid}}, Path=Height}">

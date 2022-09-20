@@ -66,8 +66,9 @@
 
                                 <Label Grid.Row="1" Grid.Column="0" x:Name="NumberSizeLabel" 
                                     Text="{x:Static resources:AppResources.NumberSize}"
-                                    VerticalOptions="Center" />
+                                    VerticalOptions="Center" HorizontalOptions="End" />
                                 <Picker Grid.Row="1" Grid.Column="1" x:Name="SquaresNumberSizePicker"
+                                    Margin="0,6,0,6"
                                     windows:VisualElement.AccessKey="Z"
                                     AutomationProperties.LabeledBy="{x:Reference NumberSizeLabel}"
                                     VerticalOptions="Center" 
