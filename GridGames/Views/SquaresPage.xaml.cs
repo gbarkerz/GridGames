@@ -51,22 +51,12 @@ namespace GridGames.Views
             // Has the state of the picture being shown changed since we were last changed?
             if (vm.ShowPicture && (vm.PicturePathSquares != previousLoadedPicture))
             {
-                // Prevent input on the grid while the image is being loaded into the squares.
-
-                // Barker: No loading for now.
-                //vm.GameIsLoading = true;
-
                 // Future: Without a delay here, the loading UI rarely shows up on iOS.
                 // Investigate this further and remove this delay.
-                await Task.Delay(200);
+                // await Task.Delay(200);
 
                 // Restore the order of the squares in the grid.
                 vm.RestoreEmptyGrid();
-
-                // The loading of the images into the squares is made synchronously through the first 15 squares.
-
-                // Barker: No image editor for now.
-                //nextSquareIndexForImageSourceSetting = 0;
 
                 // Check whether the image file exists before trying to load it into the ImageEditor.
                 if (vm.IsImageFilePathValid(vm.PicturePathSquares))
@@ -299,9 +289,6 @@ namespace GridGames.Views
         private double originalLoadedImageWidth;
         private double originalLoadedImageHeight;
 
-        private double previousWidth;                 
-
-
         private Timer timer;
 
         private bool loadedCustomImageOnSquares = false;
@@ -315,6 +302,9 @@ namespace GridGames.Views
             // If necessary, load up the original image to be shown on all the squares.
             if (setSources)
             {
+                // Prevent input on the grid while the image is being loaded into the squares.
+                vm.GameIsLoading = true;
+
                 SquaresCollectionView.Margin = new Thickness(0);
 
                 Size originalLoadedImageSize;
@@ -360,8 +350,7 @@ namespace GridGames.Views
                 xImageScale = SquaresCollectionView.Width / originalLoadedImageWidth;
                 yImageScale = SquaresCollectionView.Height / originalLoadedImageHeight;
 
-                if (timer == null)//  && 
-//                    ((xPreviousImageScale != xImageScale) || (yPreviousImageScale != yImageScale)))
+                if (timer == null)
                 {
                     // Once the picture has been loaded into the image element, we can apply the transform
                     // to have the apropriate portion of the picture shown based on the index and size of
@@ -456,6 +445,10 @@ namespace GridGames.Views
                     yPreviousImageScale = yImageScale;
 
                     loadedCustomImageOnSquares = true;
+
+                    vm.GameIsLoading = false;
+
+                    vm.RaiseNotificationEvent(AppResources.ResourceManager.GetString("GameReady"));
 
                     if (timer != null)
                     {

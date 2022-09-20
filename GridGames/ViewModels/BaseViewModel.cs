@@ -19,7 +19,7 @@ namespace GridGames.ViewModels
             set { SetProperty(ref title, value); }
         }
 
-        private bool gameIsLoading = false;
+        private bool gameIsLoading = true;
         public bool GameIsLoading
         {
             get { return gameIsLoading; }

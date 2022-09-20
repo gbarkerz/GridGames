@@ -300,7 +300,7 @@ namespace GridGames.Views
             }
             else if (gameIsLoading)
             {
-                opacity = 0.3;
+                opacity = 0.0;
             }
 
             return opacity;

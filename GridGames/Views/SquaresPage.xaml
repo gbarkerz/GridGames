@@ -184,24 +184,25 @@
             </CollectionView>
 
             <!-- Show a message when the pictures are being loaded into the squares. -->
-            <Frame Grid.Row="1"
+            <Border Grid.Row="1"
                 IsVisible="{Binding GameIsLoading}"
-                BorderColor="{DynamicResource MessageTextColor}"
+                Stroke="{AppThemeBinding Light=Black, Dark=White}"
                 BackgroundColor="{DynamicResource PageBackgroundColor}"
                 AutomationProperties.Name="{x:Static resources:AppResources.LoadingPleaseWait}"
                 VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
                 <Label x:Name="PleaseWaitLabel"
+                    Margin="8"
                     Text="{x:Static resources:AppResources.LoadingPleaseWait}"
                     FontSize="Large" />
-            </Frame>
+            </Border>
 
             <!-- This Grid is here to support a setting to visually hide the game grid contents. -->
             <Grid Grid.Row="1" IsVisible="{Binding HideGrid}"
                 BackgroundColor="{DynamicResource GridBackgroundColor}" />
 
-            <Frame Grid.Row="1" Margin="4" Padding="8"
+            <Border Grid.Row="1" Margin="4" Padding="8"
                 IsVisible="{Binding FirstRunSquares}"
-                BorderColor="{DynamicResource MessageTextColor}"
+                Stroke="{AppThemeBinding Light=Black, Dark=White}"
                 BackgroundColor="{DynamicResource PageBackgroundColor}"
                 AutomationProperties.Name="{x:Static resources:AppResources.SquaresWelcome}"
                 VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
@@ -228,7 +229,7 @@
                             Clicked="SquaresWelcomeOKButton_Clicked"
                             HorizontalOptions="End" />
                 </Grid>
-            </Frame>
+            </Border>
 
         </Grid>
     </ContentPage.Content>

@@ -267,8 +267,6 @@ namespace GridGames.ViewModels
             MoveCount = 0;
 
             Shuffle(squareList);
-
-            RaiseNotificationEvent(AppResources.ResourceManager.GetString("GameReady"));
         }
 
         private void CreateDefaultSquares()
