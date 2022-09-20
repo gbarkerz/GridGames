@@ -54,10 +54,6 @@ namespace GridGames.Views
                 // Check whether the image file exists before trying to load it into the ImageEditor.
                 if (vm.IsImageFilePathValid(vm.PicturePathSquares))
                 {
-                    // Future: Verify that if the various event handlers are still being called from the
-                    // previous attempt to load a picture, those event handlers will no longer be called
-                    // once the loading of another picture begins.
-
                     // Set the images shown on the squares.
                     ShowCustomPictureInSquares(vm.PicturePathSquares, true);
 
