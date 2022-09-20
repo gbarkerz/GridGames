@@ -47,7 +47,8 @@ namespace GridGames.Views
             //vm.HideGrid = Preferences.Get("HideGrid", false);
 
             // Has the state of the picture being shown changed since we were last changed?
-            if (vm.ShowPicture && (vm.PicturePathSquares != previousLoadedPicture))
+            if (vm.ShowPicture && (vm.PicturePathSquares != null) &&
+                (vm.PicturePathSquares != previousLoadedPicture))
             {
                 // Restore the order of the squares in the grid.
                 vm.RestoreEmptyGrid();
@@ -55,7 +56,7 @@ namespace GridGames.Views
                 // Check whether the image file exists before trying to load it into the ImageEditor.
                 if (vm.IsImageFilePathValid(vm.PicturePathSquares))
                 {
-                    //vm.RaiseDelayedNotificationEvent(PleaseWaitLabel.Text);
+                    vm.RaiseDelayedNotificationEvent(PleaseWaitLabel.Text);
 
                     // Future: Verify that if the various event handlers are still being called from the
                     // previous attempt to load a picture, those event handlers will no longer be called
@@ -268,10 +269,16 @@ namespace GridGames.Views
                 // Restore the order of the squares in the grid.
                 vm.RestoreEmptyGrid();
 
-                ShowCustomPictureInSquares(vm.PicturePathSquares, true);
+                if (vm.ShowPicture && !String.IsNullOrWhiteSpace(vm.PicturePathSquares))
+                {
+                    ShowCustomPictureInSquares(vm.PicturePathSquares, true);
+                }
+                else
+                {
+                    vm.ResetGrid();
+                }
             }
         }
-
 
         // The remainder of this file relates to setting the images shown on the squares in the game.
 
