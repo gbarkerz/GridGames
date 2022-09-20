@@ -387,20 +387,6 @@ namespace GridGames.Views
             Debug.WriteLine("TransformImagesOnSquares: xImageScale " + xImageScale +
                 ", yImageScale " + yImageScale);
 
-            if ((xPreviousImageScale == xImageScale) && 
-                (yPreviousImageScale == yImageScale))
-            {
-                if (timerTransformImages != null)
-                {
-                    Debug.WriteLine("TransformImagesOnSquares: End timer");
-
-                    timerTransformImages.Dispose();
-                    timerTransformImages = null;
-                }
-
-                return;
-            }
-
             var newThread = new System.Threading.Thread(() =>
             {
                 Application.Current.Dispatcher.Dispatch(() =>

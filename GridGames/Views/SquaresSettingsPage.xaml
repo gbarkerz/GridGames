@@ -103,23 +103,7 @@
                                     IsChecked="{Binding ShowPicture}" />
                                 </StackLayout>
 
-                                <Grid Grid.Row="1" Margin="10,10,0,0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Label Grid.Column="0" x:Name="PictureNameLabel" 
-                                        Margin="0,0,8,0"
-                                        VerticalTextAlignment="Center"
-                                        Text="{x:Static resources:AppResources.PictureNameLabel}" />
-                                    <Entry Grid.Column="1" x:Name="PictureNameEditor"
-                                        windows:VisualElement.AccessKey="M"
-                                        VerticalTextAlignment="Center"
-                                        Text="{Binding PictureName, Mode=TwoWay}" 
-                                        AutomationProperties.LabeledBy="PictureNameLabel" />
-                                </Grid>
-                                
-                                <Grid Grid.Row="2"
+                                <Grid Grid.Row="1"
                                     Margin="10,10,0,0">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
@@ -143,7 +127,7 @@
                                         Clicked="PictureClearButton_Clicked" />
                                 </Grid>
 
-                                <Grid Grid.Row="3"
+                                <Grid Grid.Row="2"
                                     Margin="10,10,0,0"
                                     IsVisible="{Binding PicturePathSquares, 
                                         Converter={StaticResource SettingsPicturePathToPicturePathLabelIsVisible}}">
@@ -159,6 +143,26 @@
                                             Converter={StaticResource PathToFileName}}" 
                                         Margin="0,0,0,0" Padding="0,0,0,0" />
                                 </Grid>
+
+                                <StackLayout Grid.Row="3" Margin="10,20,0,0">
+                                    <Label Text="Optionally provide a name to be shown when the game is completed." />
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0" x:Name="PictureNameLabel" 
+                                            Margin="0,0,8,0"
+                                            VerticalTextAlignment="Center"
+                                            Text="{x:Static resources:AppResources.PictureNameLabel}" />
+                                        <Entry Grid.Column="1" x:Name="PictureNameEditor"
+                                            windows:VisualElement.AccessKey="M"
+                                            VerticalTextAlignment="Center"
+                                            Text="{Binding PictureName, Mode=TwoWay}" 
+                                            AutomationProperties.LabeledBy="PictureNameLabel" />
+                                    </Grid>
+                                </StackLayout>
+                                
                             </Grid>
                         </Border>
                     </StackLayout>
