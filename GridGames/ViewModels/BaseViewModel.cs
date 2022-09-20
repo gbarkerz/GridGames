@@ -72,11 +72,7 @@ namespace GridGames.ViewModels
         {
             Debug.WriteLine("GridGames: Announcing \"" + notification + "\"");
 
-            if (SemanticScreenReader.Default != null)
-            {
-                // Barker: Get custom announcements working.
-                //SemanticScreenReader.Default.Announce(notification);
-            }
+            SemanticScreenReader.Default.Announce(notification);
         }
 
         public void RaiseDelayedNotificationEvent(string notification)

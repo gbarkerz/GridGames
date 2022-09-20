@@ -85,6 +85,7 @@
 
             <CollectionView Grid.Row="1"
                 x:Name="SquaresCollectionView"
+                SemanticProperties.Description="Squares"
                 IsVisible="True"
                 VerticalScrollBarVisibility="Never"
                 SelectionMode="Single"
@@ -106,15 +107,16 @@
                             Path=Height, Converter={StaticResource CollectionViewHeightToRowHeight}}"
                             BackgroundColor="{DynamicResource GridBackgroundColor}"
                             AutomationProperties.IsInAccessibleTree="True"
-                            AutomationProperties.Name="{Binding AccessibleName}"
-                            AutomationProperties.HelpText="{Binding AccessibleDescription}">
+                            SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}"
+                            SemanticProperties.Hint="{Binding AccessibleDescription, Mode=OneWay}">
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
                             </Grid.GestureRecognizers>
-                            <Frame Margin="2" Padding="0"
+                            <Frame Margin="3" Padding="0"
+                                AutomationProperties.IsInAccessibleTree="False"
                                 BackgroundColor="{Binding TargetIndex, 
                                     Converter={StaticResource SquareTargetIndexToBackgroundColor}}">
-                                <Grid>
+                                <Grid AutomationProperties.IsInAccessibleTree="False"> 
                                     <Grid.RowDefinitions>
                                         <RowDefinition 
                                             x:Name="SquareNumberGridRow"
@@ -136,6 +138,7 @@
                                     <Image Grid.Row="0" Grid.RowSpan="2"
                                         Source="{Binding PictureImageSource}"
                                         Aspect="Center"
+                                        AutomationProperties.IsInAccessibleTree="False"
                                         InputTransparent="True">
                                         <Image.IsVisible>
                                             <MultiBinding Mode="OneWay" Converter="{StaticResource SquareTargetIndexToIsVisible}">
@@ -147,16 +150,19 @@
 
                                     <Grid Grid.Row="0" x:Name="LabelPanel"
                                         BackgroundColor="Transparent"
+                                        AutomationProperties.IsInAccessibleTree="False"
                                         IsVisible="{Binding
                                         Source={x:Reference SquaresPageInstance},
                                         Path=BindingContext.ShowNumbers}">
                                         <Frame Margin="0" Padding="4,0,4,0" HorizontalOptions="Start"
+                                            AutomationProperties.IsInAccessibleTree="False"
                                             BorderColor="Transparent"
                                             BackgroundColor="{Binding TargetIndex, 
                                                 Converter={StaticResource SquareTargetIndexToBackgroundColor}}"
                                             IsVisible="{Binding TargetIndex, 
                                                 Converter={StaticResource SquareTargetIndexToContainerFrameVisibility}}">
                                             <Label Text="{Binding VisualLabel}"
+                                                AutomationProperties.IsInAccessibleTree="False"
                                                 TextColor="{DynamicResource SquaresNumberTextColor}"                                               
                                                 Margin="2,0,4,0"
                                                 HorizontalOptions="Center" VerticalOptions="Center"
@@ -175,7 +181,8 @@
                                             </Label>
                                         </Frame>
                                     </Grid>
-                                    <StackLayout Grid.Row="1" BackgroundColor="Transparent" />
+                                    <StackLayout AutomationProperties.IsInAccessibleTree="False"
+                                        Grid.Row="1" BackgroundColor="Transparent" />
                                 </Grid>
                             </Frame>
                         </Grid>

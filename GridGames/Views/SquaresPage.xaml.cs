@@ -33,10 +33,8 @@ namespace GridGames.Views
             vm.FirstRunSquares = Preferences.Get("FirstRunSquares", true);
             if (vm.FirstRunSquares)
             {
-                // Barker: Update steps for custom announcements.
-                //var service = DependencyService.Get<IMobileGridGamesPlatformAction>();
-                //service.ScreenReaderAnnouncement(
-                //    SquaresWelcomeTitleLabel.Text + ", " + SquaresWelcomeTitleInstructions.Text);
+                vm.RaiseNotificationEvent(
+                    SquaresWelcomeTitleLabel.Text + ", " + SquaresWelcomeTitleInstructions.Text);
             }
 
             vm.ShowNumbers = Preferences.Get("ShowNumbers", true);
@@ -51,17 +49,13 @@ namespace GridGames.Views
             // Has the state of the picture being shown changed since we were last changed?
             if (vm.ShowPicture && (vm.PicturePathSquares != previousLoadedPicture))
             {
-                // Future: Without a delay here, the loading UI rarely shows up on iOS.
-                // Investigate this further and remove this delay.
-                // await Task.Delay(200);
-
                 // Restore the order of the squares in the grid.
                 vm.RestoreEmptyGrid();
 
                 // Check whether the image file exists before trying to load it into the ImageEditor.
                 if (vm.IsImageFilePathValid(vm.PicturePathSquares))
                 {
-                    vm.RaiseNotificationEvent(PleaseWaitLabel.Text);
+                    //vm.RaiseDelayedNotificationEvent(PleaseWaitLabel.Text);
 
                     // Future: Verify that if the various event handlers are still being called from the
                     // previous attempt to load a picture, those event handlers will no longer be called
@@ -412,6 +406,8 @@ namespace GridGames.Views
             {
                 Application.Current.Dispatcher.Dispatch(() =>
                 {
+                    SquaresSettingsButton.Focus();
+
                     var imageCount = 0;
 
                     Debug.WriteLine("TransformImagesOnSquares: SquaresCollectionView.Width " + 

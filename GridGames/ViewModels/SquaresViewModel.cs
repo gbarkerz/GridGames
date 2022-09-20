@@ -229,9 +229,6 @@ namespace GridGames.ViewModels
 
             // Make an announcement regardless of whether a square is moved.
 
-            // Barker: Update steps for custom announcements.
-            //var service = DependencyService.Get<IGridGamesPlatformAction>();
-
             // If we found an adjacent empty square, swap the clicked square with the empty square.
             if (emptySquareIndex != -1)
             {
@@ -249,13 +246,13 @@ namespace GridGames.ViewModels
                 {
                     string announcement = resManager.GetString("Moved") +
                         " " + clickedSquareName + " " + direction + ".";
-                    //service.ScreenReaderAnnouncement(announcement);
+                    RaiseNotificationEvent(announcement);
                 }
             }
             else
             {
                 string announcement = resManager.GetString("NoMovePossible");
-                //service.ScreenReaderAnnouncement(announcement);
+                RaiseNotificationEvent(announcement);
             }
 
             return gameIsWon;

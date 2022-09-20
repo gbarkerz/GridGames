@@ -348,7 +348,7 @@ namespace GridGames.Views
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return ((double)value / 4) - 1;
+            return ((double)value / 4) - 2;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
