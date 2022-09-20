@@ -93,6 +93,14 @@ namespace GridGames.Views
             }
         }
 
+        private async void FallthroughGrid_Tapped(object sender, EventArgs e)
+        {
+            await DisplayAlert(
+                AppResources.ResourceManager.GetString("GridGames"),
+                AppResources.ResourceManager.GetString("FallthroughTapMessage"),
+                AppResources.ResourceManager.GetString("OK"));
+        }
+
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
             var vm = this.BindingContext as SquaresViewModel;

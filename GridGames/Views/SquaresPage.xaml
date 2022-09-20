@@ -183,6 +183,15 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
+            <Grid Grid.Row="1" 
+                SemanticProperties.Description="Game input blocker" 
+                SemanticProperties.Hint="This only exists to prevent mouse and touch input from hanging the app when used with a screen reader."
+                BackgroundColor="Transparent">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="FallthroughGrid_Tapped" />
+                </Grid.GestureRecognizers>
+            </Grid>
+
             <!-- Show a message when the pictures are being loaded into the squares. -->
             <Border Grid.Row="1"
                 IsVisible="{Binding GameIsLoading}"

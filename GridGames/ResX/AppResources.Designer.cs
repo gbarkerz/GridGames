@@ -142,7 +142,9 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You completed {0} in {1} goes..
+        ///   Looks up a localized string similar to You completed {0} in {1} goes.
+        ///
+        ///Would you like to play another game?.
         /// </summary>
         internal static string CompletedSquaresPictureInMoves {
             get {
@@ -1061,7 +1063,9 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You won the game in {0} moves..
+        ///   Looks up a localized string similar to You won the game in {0} moves.
+        ///
+        ///Would you like to play another game?.
         /// </summary>
         internal static string SquaresWonInGoes {
             get {
