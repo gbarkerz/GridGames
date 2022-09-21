@@ -2,6 +2,7 @@
 using GridGames.ViewModels;
 using System.Globalization;
 using System.Collections.ObjectModel;
+using System;
 
 namespace GridGames.Views
 {
@@ -462,17 +463,34 @@ namespace GridGames.Views
         }
     }
 
-    public class SquareTargetIndexToBackgroundColor : IValueConverter
+    public class SquareTargetIndexToBackgroundColor : IMultiValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var targetIndex = (int)value;
+            if (values == null || (values.Length < 2))
+            {
+                return "";
+            }
 
-            return targetIndex != 15 ?
-                App.Current.Resources["SquaresNumberBackgroundColor"] : Colors.DarkGray;
+            if ((values[0] == null) || (values[1] == null))
+            {
+                return "";
+            }
+
+            var targetIndex = (int)values[0];
+            bool showDarkTheme = (bool)values[1];
+
+            var colorName = "MidGray";
+
+            if (targetIndex < 15)
+            {
+                colorName = showDarkTheme ? "Black" : "White";
+            }
+
+            return App.Current.Resources[colorName];
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

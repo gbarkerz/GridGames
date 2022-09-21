@@ -113,10 +113,16 @@
                                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
                             </Grid.GestureRecognizers>
                             <Frame Margin="3" Padding="0"
-                                AutomationProperties.IsInAccessibleTree="False"
-                                BackgroundColor="{Binding TargetIndex,  
-                                    Converter={StaticResource SquareTargetIndexToBackgroundColor}}">
-                                <Grid AutomationProperties.IsInAccessibleTree="False"> 
+                                AutomationProperties.IsInAccessibleTree="False">
+                                <Frame.BackgroundColor >
+                                    <MultiBinding Mode="OneWay"
+                                            Converter="{StaticResource SquareTargetIndexToBackgroundColor}" >
+                                        <Binding Path="TargetIndex" />
+                                        <Binding Source="{x:Reference SquaresPageInstance}"
+                                            Path="BindingContext.ShowDarkTheme" />
+                                    </MultiBinding>
+                                </Frame.BackgroundColor>
+                                <Grid AutomationProperties.IsInAccessibleTree="False">
                                     <Grid.RowDefinitions>
                                         <RowDefinition 
                                             x:Name="SquareNumberGridRow"
@@ -203,7 +209,7 @@
                 IsVisible="{Binding GameIsLoading}"
                 Stroke="{AppThemeBinding Light=Black, Dark=White}"
                 BackgroundColor="{DynamicResource PageBackgroundColor}"
-                AutomationProperties.Name="{x:Static resources:AppResources.LoadingPleaseWait}"
+                SemanticProperties.Description="{x:Static resources:AppResources.LoadingPleaseWait}"
                 VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
                 <Label x:Name="PleaseWaitLabel"
                     Margin="8"
@@ -215,7 +221,7 @@
                 IsVisible="{Binding FirstRunSquares}"
                 Stroke="{AppThemeBinding Light=Black, Dark=White}"
                 BackgroundColor="{DynamicResource PageBackgroundColor}"
-                AutomationProperties.Name="{x:Static resources:AppResources.SquaresWelcome}"
+                SemanticProperties.Description="{x:Static resources:AppResources.SquaresWelcome}"
                 VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
                 <Grid>
                     <Grid.RowDefinitions>

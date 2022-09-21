@@ -16,6 +16,18 @@ namespace GridGames.Views
             InitializeComponent();
 
             SquaresCollectionView.SizeChanged += SquaresCollectionView_SizeChanged;
+
+            Application.Current.RequestedThemeChanged += (s, a) =>
+            {
+                var currentTheme = a.RequestedTheme;
+                if (currentTheme == AppTheme.Unspecified)
+                {
+                    currentTheme = Application.Current.PlatformAppTheme;
+                }
+
+                var vm = this.BindingContext as WheresViewModel;
+                vm.ShowDarkTheme = (currentTheme == AppTheme.Dark);
+            };
         }
 
         // This gets called when switching to the Squares Game from other games,
@@ -37,6 +49,14 @@ namespace GridGames.Views
                 vm.RaiseNotificationEvent(
                     SquaresWelcomeTitleLabel.Text + ", " + SquaresWelcomeTitleInstructions.Text);
             }
+
+            var currentTheme = Application.Current.UserAppTheme;
+            if (currentTheme == AppTheme.Unspecified)
+            {
+                currentTheme = Application.Current.PlatformAppTheme;
+            }
+
+            vm.ShowDarkTheme = (currentTheme == AppTheme.Dark);
 
             vm.ShowNumbers = Preferences.Get("ShowNumbers", true);
             vm.NumberHeight = Preferences.Get("NumberSizeIndex", 1);
@@ -97,7 +117,7 @@ namespace GridGames.Views
             }
 
             var itemGrid = (Grid)sender;
-            var itemAccessibleName = AutomationProperties.GetName(itemGrid);
+            var itemAccessibleName = SemanticProperties.GetDescription(itemGrid);
 
             Debug.WriteLine("Grid Games: Tapped on Square " + itemAccessibleName);
 

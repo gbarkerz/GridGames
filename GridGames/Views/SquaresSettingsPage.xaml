@@ -23,7 +23,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0" Padding="10" Margin="10"
+            <Grid Grid.Row="0" Padding="10" Margin="0"
                 BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}">
                 <Label x:Name="SquaresSettingsTitle"
                     Text="{x:Static resources:AppResources.SquaresSettings}"
@@ -41,9 +41,8 @@
                         <Border Margin="10"
                             IsVisible="{Binding GameIsLoading}"
                             Stroke="{AppThemeBinding Light=Black, Dark=White}"
-                            BackgroundColor="{DynamicResource PageBackgroundColor}"
-                            AutomationProperties.Name="{x:Static resources:AppResources.LoadingPleaseWait}">
-                            <Grid Margin="10">
+                            BackgroundColor="{DynamicResource PageBackgroundColor}">
+                            <Grid Margin="10" SemanticProperties.Description="Numbers">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
@@ -58,7 +57,7 @@
                                     VerticalOptions="Center" />
                                 <CheckBox Grid.Row="0" Grid.Column="1" x:Name="ShowNumbersCheckBox"
                                     windows:VisualElement.AccessKey="N"                                    
-                                    AutomationProperties.Name="{Binding ShowNumbers,
+                                    SemanticProperties.Description="{Binding ShowNumbers,
                                         Mode=OneWay,
                                         Converter={StaticResource CheckBoxStateToAccessibleName},
                                         ConverterParameter=ShowNumbers}"
@@ -70,7 +69,7 @@
                                 <Picker Grid.Row="1" Grid.Column="1" x:Name="SquaresNumberSizePicker"
                                     Margin="0,6,0,6"
                                     windows:VisualElement.AccessKey="Z"
-                                    AutomationProperties.LabeledBy="{x:Reference NumberSizeLabel}"
+                                    SemanticProperties.Description="{x:Static resources:AppResources.NumberSize}"
                                     VerticalOptions="Center" 
                                     SelectedIndex="{Binding NumberSizeIndex}" />
                             </Grid>
@@ -79,10 +78,9 @@
                         <Border Margin="10"
                             IsVisible="{Binding GameIsLoading}"
                             Stroke="{AppThemeBinding Light=Black, Dark=White}"
-                            BackgroundColor="{DynamicResource PageBackgroundColor}"
-                            AutomationProperties.Name="{x:Static resources:AppResources.LoadingPleaseWait}">
+                            BackgroundColor="{DynamicResource PageBackgroundColor}">
 
-                            <Grid Margin="10">
+                            <Grid Margin="10" SemanticProperties.Description="Picture">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
@@ -95,11 +93,11 @@
                                     Text="{x:Static resources:AppResources.ShowPicture}"
                                     VerticalOptions="Center" />
                                     <CheckBox x:Name="ShowPictureCheckBox" VerticalOptions="Center"
-                                    windows:VisualElement.AccessKey="P"
-                                    AutomationProperties.Name="{Binding ShowPicture,
-                                        Mode=OneWay,
-                                        Converter={StaticResource CheckBoxStateToAccessibleName},
-                                        ConverterParameter=ShowPicture}"
+                                        windows:VisualElement.AccessKey="P"
+                                        SemanticProperties.Description="{Binding ShowPicture,
+                                            Mode=OneWay,
+                                            Converter={StaticResource CheckBoxStateToAccessibleName},
+                                            ConverterParameter=ShowPicture}"
                                     IsChecked="{Binding ShowPicture}" />
                                 </StackLayout>
 
@@ -159,7 +157,7 @@
                                             windows:VisualElement.AccessKey="M"
                                             VerticalTextAlignment="Center"
                                             Text="{Binding PictureName, Mode=TwoWay}" 
-                                            AutomationProperties.LabeledBy="PictureNameLabel" />
+                                            SemanticProperties.Description="{x:Static resources:AppResources.PictureNameLabel}" />
                                     </Grid>
                                 </StackLayout>
                                 
