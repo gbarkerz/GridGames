@@ -23,7 +23,7 @@ namespace GridGames.Views
         {
             InitializeComponent();
 
-            WelcomeFrame.Loaded += WelcomeFrame_Loaded;
+            WelcomeBorder.Loaded += WelcomeBorder_Loaded;
 
             SquaresCollectionView.SizeChanged += SquaresCollectionView_SizeChanged;
             SquaresCollectionView.Focused += SquaresCollectionView_Focused;
@@ -41,12 +41,15 @@ namespace GridGames.Views
             };
 
             (this.BindingContext as MatchingViewModel).SetMatchingPage(this);
+
+#if ANDROID
+            InputBlockingGrid.IsVisible = false;
+#endif
         }
 
-
-        private void WelcomeFrame_Loaded(object sender, EventArgs e)
+        private void WelcomeBorder_Loaded(object sender, EventArgs e)
         {
-            if ((sender as Frame).IsVisible)
+            if ((sender as Border).IsVisible)
             {
                 PairsSettingsButton.Focus();
 

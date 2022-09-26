@@ -16,6 +16,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <localviews:FirstRunToGridOpacity x:Key="FirstRunToGridOpacity" />
+            <localviews:CardFaceUpToImageWidth x:Key="CardFaceUpToImageWidth" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -52,7 +53,6 @@
             
             <CollectionView Grid.Row="0"
                 x:Name="SquaresCollectionView"
-                InputTransparent="True"
                 SemanticProperties.Description="Pairs cards"
                 Margin="5,5,5,0"
                 Opacity="{Binding FirstRunMatching, Mode=OneWay,
@@ -82,25 +82,33 @@
                                     CommandParameter="{Binding Index}" />
                             </Grid.GestureRecognizers>
 
-                            <Frame Margin="2" Padding="0"
+                            <Border Margin="2" Padding="0"
+                                Stroke="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
                                 AutomationProperties.IsInAccessibleTree="False"
                                 BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
                                 <Image 
                                     SemanticProperties.Description="{Binding CurrentAccessibleDescription, Mode=OneWay}"
-                                    IsVisible="{Binding FaceUp}"
                                     Aspect="{Binding Source={x:Reference MatchingPageInstance},
                                        Path=BindingContext.PictureAspect,
                                        Mode=OneWay}"
                                     Source="{Binding PictureImageSource}">
+                                    <Image.WidthRequest>
+                                        <MultiBinding Mode="OneWay" 
+                                            Converter="{StaticResource CardFaceUpToImageWidth}">
+                                            <Binding Path="FaceUp" />
+                                            <Binding Source="{RelativeSource AncestorType={x:Type Grid}}" 
+                                                Path="Width" />
+                                        </MultiBinding>
+                                    </Image.WidthRequest>
                                 </Image>
-                            </Frame>
+                            </Border>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
                 
             </CollectionView>
 
-            <Grid Grid.Row="0" 
+            <Grid Grid.Row="0" x:Name="InputBlockingGrid"
                 SemanticProperties.Description="Game input blocker" 
                 SemanticProperties.Hint="This only exists to prevent mouse and touch input from hanging the app when used with a screen reader."
                 BackgroundColor="Transparent">
@@ -109,7 +117,7 @@
                 </Grid.GestureRecognizers>
             </Grid>
 
-            <Frame Grid.Row="0" Margin="4" Padding="8" x:Name="WelcomeFrame" 
+            <Border Grid.Row="0" Margin="4" Padding="8" x:Name="WelcomeBorder" 
                 IsVisible="{Binding FirstRunMatching}"
                 BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
                 VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
@@ -138,7 +146,7 @@
                         windows:VisualElement.AccessKey="C"
                         HorizontalOptions="End" Margin="0,0,4,4" Padding="8" />
                 </Grid>
-            </Frame>
+            </Border>
             
         </Grid>
     </ContentPage.Content>

@@ -157,6 +157,28 @@ namespace GridGames.Views
         }
     }
 
+
+    public class CardFaceUpToImageWidth : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if ((values == null) || (values.Length < 2) || (values[0] == null) || (values[1] == null))
+            {
+                return 0;
+            }
+
+            var faceUp = (bool)values[0];
+            var containerWidthPixels = (double)values[1];
+
+            return faceUp ? containerWidthPixels : 0;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class WheresAnsweredToTextColor : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
