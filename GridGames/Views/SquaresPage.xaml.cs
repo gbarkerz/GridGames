@@ -1,7 +1,8 @@
 ﻿using GridGames.ResX;
 using GridGames.ViewModels;
+using SkiaSharp;
+using SkiaSharp.Views.Maui.Controls;
 using System.Diagnostics;
-using Size = System.Drawing.Size;
 
 namespace GridGames.Views
 {
@@ -15,8 +16,6 @@ namespace GridGames.Views
         {
             InitializeComponent();
 
-            SquaresCollectionView.SizeChanged += SquaresCollectionView_SizeChanged;
-
             Application.Current.RequestedThemeChanged += (s, a) =>
             {
                 var currentTheme = a.RequestedTheme;
@@ -28,6 +27,14 @@ namespace GridGames.Views
                 var vm = this.BindingContext as WheresViewModel;
                 vm.ShowDarkTheme = (currentTheme == AppTheme.Dark);
             };
+
+#if WINDOWS
+            SquaresCollectionView.SizeChanged += SquaresCollectionView_SizeChanged;
+#endif
+
+#if ANDROID
+            InputBlockingGrid.IsVisible = false;
+#endif
         }
 
         // This gets called when switching to the Squares Game from other games,
@@ -75,7 +82,10 @@ namespace GridGames.Views
                 if (vm.IsImageFilePathValid(vm.PicturePathSquares))
                 {
                     // Set the images shown on the squares.
-                    ShowCustomPictureInSquares(vm.PicturePathSquares, true);
+                    if ((SquaresCollectionView.Width > 0) && (SquaresCollectionView.Height > 0))
+                    {
+                        ShowCustomPictureInSquares();
+                    }
 
                     // Now that a picture has been fully loaded, cache the path to the loaded picture.
                     // We'll not load another picture until the picture being loaded is different from
@@ -283,7 +293,7 @@ namespace GridGames.Views
 
                 if (vm.ShowPicture && !String.IsNullOrWhiteSpace(vm.PicturePathSquares))
                 {
-                    ShowCustomPictureInSquares(vm.PicturePathSquares, true);
+                    ShowCustomPictureInSquares();
                 }
                 else
                 {
@@ -294,14 +304,6 @@ namespace GridGames.Views
 
         // The remainder of this file relates to setting the images shown on the squares in the game.
 
-        private double xImageScale;
-        private double yImageScale;
-        private double xPreviousImageScale = -1.0;
-        private double yPreviousImageScale = -1.0;
-
-        private double originalLoadedImageWidth;
-        private double originalLoadedImageHeight;
-
         private Timer timerTransformImages;
 
         private void SquaresCollectionView_SizeChanged(object sender, EventArgs e)
@@ -310,251 +312,77 @@ namespace GridGames.Views
 
             if (vm.ShowPicture && !String.IsNullOrWhiteSpace(vm.PicturePathSquares))
             {
-                ShowCustomPictureInSquares(vm.PicturePathSquares, false);
-            }
-        }
-
-        public void ShowCustomPictureInSquares(string picturePathSquares, bool setSources)
-        {
-            Debug.WriteLine("ShowCustomPictureInSquares: " + setSources);
-
-            var vm = this.BindingContext as SquaresViewModel;
-
-            // If necessary, load up the original image to be shown on all the squares.
-            if (setSources)
-            {
-                // Prevent input on the grid while the image is being loaded into the squares.
-                vm.GameIsLoading = true;
-
-                vm.RaiseNotificationEvent(PleaseWaitLabel.Text);
-
-                SquaresCollectionView.Margin = new Thickness(0);
-
-                Size originalLoadedImageSize;
-
-                try
+                if ((SquaresCollectionView.Width > 0) && (SquaresCollectionView.Height > 0))
                 {
-                    originalLoadedImageSize = GetJpegImageSize(picturePathSquares);
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine("Squares Game: Exception trying to find original image dimenstions, " +
-                        picturePathSquares + ", " + ex.Message);
-
-                    return;
-                }
-
-                // Leave the 16th square empty.
-                for (int i = 0; i < 15; ++i)
-                {
-                    vm.SquareListCollection[i].PictureImageSource = ImageSource.FromFile(picturePathSquares);
-                }
-
-                // Barker: Figure out why on some jpgs, the dimensions seem switched.
-                originalLoadedImageWidth = originalLoadedImageSize.Width;
-                originalLoadedImageHeight = originalLoadedImageSize.Height;
-
-                Debug.WriteLine("ShowCustomPictureInSquares: originalLoadedImageWidth " + originalLoadedImageWidth +
-                    ", originalLoadedImageHeight " + originalLoadedImageHeight);
-
-                // Now jumble the squares.
-                vm.ResetGrid();
-            }
-            else if (vm.SquareListCollection[0].PictureImageSource == null)
-            {
-                return;
-            }
-
-            if ((originalLoadedImageWidth > 0) && (originalLoadedImageHeight > 0))
-            {
-                xImageScale = SquaresCollectionView.Width / originalLoadedImageWidth;
-                yImageScale = SquaresCollectionView.Height / originalLoadedImageHeight;
-
-                if (timerTransformImages == null)
-                {
-                    // Once the picture has been loaded into the image element, we can apply the transform
-                    // to have the apropriate portion of the picture shown based on the index and size of
-                    // the square. There seem to be no events raised to let us know when the picture has 
-                    // been loaded, so just wait a moment. 
-
-                    if (setSources)
-                    {
-                        timerTransformImages = new Timer(new TimerCallback((s) => TransformImagesOnSquares()),
-                                           null,
-                                           TimeSpan.FromMilliseconds(2000),
-                                           TimeSpan.FromMilliseconds(Timeout.Infinite));
-                    }
-                    else
-                    {
-                        TransformImagesOnSquares();
-                    }
+                    ShowCustomPictureInSquares();
                 }
             }
         }
 
-        // Worth noting details at
-        // https://learn.microsoft.com/en-us/dotnet/maui/user-interface/graphics/transforms
-        // For example, when to apply the transform relative to when the ImageSource was set.
-
-        private void TransformImagesOnSquares()
+        public void ShowCustomPictureInSquares()
         {
             var vm = this.BindingContext as SquaresViewModel;
 
-            Debug.WriteLine("TransformImagesOnSquares: xImageScale " + xImageScale +
-                ", yImageScale " + yImageScale);
+            string picturePathSquares = vm.PicturePathSquares;
 
-            var newThread = new System.Threading.Thread(() =>
+            // Prevent input on the grid while the image is being loaded into the squares.
+            vm.GameIsLoading = true;
+
+            //vm.RaiseNotificationEvent(PleaseWaitLabel.Text);
+
+            SquaresCollectionView.Margin = new Thickness(0);
+
+            Stream fileStream = File.OpenRead(picturePathSquares);
+
+            var originalStream = new SKManagedStream(fileStream);
+
+            var originalBitmap = SKBitmap.Decode(originalStream);
+
+            // Leave the 16th square empty.
+            for (int i = 0; i < 15; ++i)
             {
-                Application.Current.Dispatcher.Dispatch(() =>
-                {
-                    SquaresSettingsButton.Focus();
+                vm.SquareListCollection[i].PictureImageSource = GetImageSourceForSquare(originalBitmap, i);
+            }
 
-                    var imageCount = 0;
+            SquaresCollectionView.Margin = new Thickness(1);
 
-                    Debug.WriteLine("TransformImagesOnSquares: SquaresCollectionView.Width " + 
-                        SquaresCollectionView.Width + ", SquaresCollectionView.Height " + 
-                        SquaresCollectionView.Height);
+            vm.GameIsLoading = false;
 
-                    var descendants = SquaresCollectionView.GetVisualTreeDescendants();
-                    for (int i = 0; i < descendants.Count; i++)
-                    {
-                        if (descendants[i] is Image)
-                        {
-                            var image = descendants[i] as Image;
-
-                            image.WidthRequest = originalLoadedImageWidth;
-                            image.HeightRequest = originalLoadedImageHeight;
-
-                            image.ScaleX = xImageScale;
-                            image.ScaleY = yImageScale;
-
-                            var squareWidth = (SquaresCollectionView.Width / 4);
-                            var squareHeight = (SquaresCollectionView.Height / 4);
-
-                            var squareIndex = vm.SquareListCollection[imageCount].TargetIndex;
-
-                            double xIndex = (squareIndex % 4);
-                            double yIndex = (squareIndex / 4);
-
-                            image.TranslationX = (1.5 - xIndex) * squareWidth;
-                            image.TranslationY = (1.5 - yIndex) * squareHeight;
-
-                            ++imageCount;
-                        }
-                    }
-
-                    // It seems we have to trigger a repaint of the squares for the first transformation,
-                    // so make it so.
-                    SquaresCollectionView.Margin = new Thickness(1);
-
-                    Debug.WriteLine("TransformImagesOnSquares: Done transform");
-
-                    xPreviousImageScale = xImageScale;
-                    yPreviousImageScale = yImageScale;
-
-                    if (vm.GameIsLoading)
-                    {
-                        vm.GameIsLoading = false;
-
-                        vm.RaiseNotificationEvent(AppResources.ResourceManager.GetString("GameReady"));
-                    }
-
-                    if (timerTransformImages != null)
-                    {
-                        timerTransformImages.Dispose();
-                        timerTransformImages = null;
-                    }
-
-                    Debug.WriteLine("Number of images: " + imageCount);
-                });
-            });
-     
-            newThread.Start();
+            // Now jumble the squares.
+            vm.ResetGrid();
         }
 
-        // Barker: At the time of writing this, I couldn't find a way to determine
-        // the original dimensions of the image loaded from file. (As stated at
-        // https://learn.microsoft.com/en-us/dotnet/maui/user-interface/graphics/images,
-        // "The PlatformImage type isn't supported on Windows.") So the jpg-related
-        // code below was copied with thanks from:
-        // https://stackoverflow.com/questions/552467/how-do-i-reliably-get-an-image-dimensions-in-net-without-loading-the-image
-
-        public static Size GetJpegImageSize(string filename)
+        private ImageSource GetImageSourceForSquare(SKBitmap originalBitmap, int index)
         {
-            FileStream stream = null;
-            BinaryReader rdr = null;
-            try
-            {
-                stream = File.OpenRead(filename);
-                rdr = new BinaryReader(stream);
-                // keep reading packets until we find one that contains Size info
-                for (; ; )
-                {
-                    byte code = rdr.ReadByte();
-                    if (code != 0xFF) throw new ApplicationException(
-                            "Unexpected value in file " + filename);
-                    code = rdr.ReadByte();
-                    switch (code)
-                    {
-                        // filler byte
-                        case 0xFF:
-                            stream.Position--;
-                            break;
-                        // packets without data
-                        case 0xD0:
-                        case 0xD1:
-                        case 0xD2:
-                        case 0xD3:
-                        case 0xD4:
-                        case 0xD5:
-                        case 0xD6:
-                        case 0xD7:
-                        case 0xD8:
-                        case 0xD9:
-                            break;
-                        // packets with size information
-                        case 0xC0:
-                        case 0xC1:
-                        case 0xC2:
-                        case 0xC3:
-                        case 0xC4:
-                        case 0xC5:
-                        case 0xC6:
-                        case 0xC7:
-                        case 0xC8:
-                        case 0xC9:
-                        case 0xCA:
-                        case 0xCB:
-                        case 0xCC:
-                        case 0xCD:
-                        case 0xCE:
-                        case 0xCF:
-                            ReadBEUshort(rdr);
-                            rdr.ReadByte();
-                            ushort h = ReadBEUshort(rdr);
-                            ushort w = ReadBEUshort(rdr);
-                            return new Size(w, h);
-                        // irrelevant variable-length packets
-                        default:
-                            int len = ReadBEUshort(rdr);
-                            stream.Position += len - 2;
-                            break;
-                    }
-                }
-            }
-            finally
-            {
-                if (rdr != null) rdr.Close();
-                if (stream != null) stream.Close();
-            }
-        }
+            var sourceImagePortionWidth = (int)(originalBitmap.Width / 4) - 10;
+            var sourceImagePortionHeight = (int)(originalBitmap.Height / 4) - 10;
 
-        private static ushort ReadBEUshort(BinaryReader rdr)
-        {
-            ushort hi = rdr.ReadByte();
-            hi <<= 8;
-            ushort lo = rdr.ReadByte();
-            return (ushort)(hi | lo);
+            var destGridPortionWidth = (int)(SquaresCollectionView.Width / 4) - 10;
+            var destGridPortionHeight = (int)(SquaresCollectionView.Height / 4) - 10;
+
+            SKRect destRect = new SKRect(0, 0, destGridPortionWidth, destGridPortionHeight);
+
+            // Barker: Check this.
+            int col = index % 4;
+            int row = index / 4;
+
+            SKRect sourceRect = new SKRect(
+                col * sourceImagePortionWidth, 
+                row * sourceImagePortionHeight, 
+                (col + 1) * sourceImagePortionWidth, 
+                (row + 1) * sourceImagePortionHeight);
+
+            // Copy 1/16 of the original into that bitmap
+            SKBitmap bitmap = new SKBitmap(sourceImagePortionWidth, sourceImagePortionHeight);
+
+            using (SKCanvas canvas = new SKCanvas(bitmap))
+            {
+                canvas.DrawBitmap(originalBitmap, sourceRect, destRect);
+            }
+
+            var croppedImageSource = (SKBitmapImageSource)bitmap;
+
+            return croppedImageSource;
         }
     }
 }

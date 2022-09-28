@@ -6,6 +6,7 @@
              x:Class="GridGames.Views.SquaresPage"
              xmlns:localviews="clr-namespace:GridGames.Views"
              xmlns:vm="clr-namespace:GridGames.ViewModels"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
              xmlns:drawable="clr-namespace:GridGames.Views"
              xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
              Title="{Binding Title}">
@@ -53,37 +54,7 @@
 
         <Grid x:Name="PageGrid">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-            <!-- The SfImageEditor is used to programmatically crop the picture in order to show it
-                on the squares, and is never shown to the player. -->
-
-            <!-- Barker: In the first version of this app, this imageeditor had an "IsVisible" of False.
-                The intent was that it was never to be shown visually or exposed to TalkBack. However,
-                after installing a later version of Syncfusion.Xamarin.SfImageEditor, it seemed that if
-                IsVisible is False, then the ImageLoaded event handler never got called after an image 
-                was loaded. This problem went away is IsVisible is not set False, and so the below was 
-                changed accordingly. Because the imageeditor is contained in a zero-height row, it still 
-                has no visuals on the screen. However I'm concerned that the imageeditor would now be 
-                exposed to TalkBack, and so this requires further investigation. In my testing, I can't
-                get TalkBack to move to the now-visible imageeditor, and so the player experience seems 
-                unchanged from the earlier version. 
-            -->
-
-            <!-- Barker: No image editor for now. -->
-            <!--<imageeditor:SfImageEditor Grid.Row="0" x:Name="GridGameImageEditor" 
-                ImageLoaded="GridGameImageEditor_ImageLoaded" 
-                ImageEdited="GridGameImageEditor_ImageEdited"                                              
-                ImageSaving="GridGameImageEditor_ImageSaving"
-                EndReset="GridGameImageEditor_EndReset" />-->
-
-            <!-- Future: Consider binding the CollectionView's IsEnabled on first run or loading.
-                A quick test of that set IsEnabled as expected, but that didn't prevent input. -->
-
-            <CollectionView Grid.Row="1"
+            <CollectionView
                 x:Name="SquaresCollectionView"
                 SemanticProperties.Description="Squares"
                 IsVisible="True"
@@ -195,7 +166,7 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <Grid Grid.Row="1" 
+            <Grid x:Name="InputBlockingGrid"
                 SemanticProperties.Description="Game input blocker" 
                 SemanticProperties.Hint="This only exists to prevent mouse and touch input from hanging the app when used with a screen reader."
                 BackgroundColor="Transparent">
@@ -205,7 +176,7 @@
             </Grid>
 
             <!-- Show a message when the pictures are being loaded into the squares. -->
-            <Border Grid.Row="1"
+            <Border
                 IsVisible="{Binding GameIsLoading}"
                 Stroke="{AppThemeBinding Light=Black, Dark=White}"
                 BackgroundColor="{DynamicResource PageBackgroundColor}"
@@ -217,7 +188,7 @@
                     FontSize="Large" />
             </Border>
 
-            <Border Grid.Row="1" Margin="4" Padding="8"
+            <Border Margin="4" Padding="8"
                 IsVisible="{Binding FirstRunSquares}"
                 Stroke="{AppThemeBinding Light=Black, Dark=White}"
                 BackgroundColor="{DynamicResource PageBackgroundColor}"
