@@ -157,7 +157,7 @@
                                             </Label>
                                         </Frame>
                                     </Grid>
-                                    <StackLayout AutomationProperties.IsInAccessibleTree="False"
+                                    <StackLayout InputTransparent="True" AutomationProperties.IsInAccessibleTree="False"
                                         Grid.Row="1" BackgroundColor="Transparent" />
                                 </Grid>
                             </Frame>
