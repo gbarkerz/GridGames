@@ -11,6 +11,7 @@ namespace GridGames.Views
     {
         // Path to most recently fully loaded picture.
         private string previousLoadedPicture = "";
+        private SKBitmap originalCustomPictureBitmap = null;
 
         public SquaresPage()
         {
@@ -35,6 +36,19 @@ namespace GridGames.Views
 #if ANDROID
             InputBlockingGrid.IsVisible = false;
 #endif
+        }
+
+        private void SquaresCollectionView_SizeChanged(object sender, EventArgs e)
+        {
+            var vm = this.BindingContext as SquaresViewModel;
+
+            if (vm.ShowPicture && !String.IsNullOrWhiteSpace(vm.PicturePathSquares))
+            {
+                if ((SquaresCollectionView.Width > 0) && (SquaresCollectionView.Height > 0))
+                {
+                    ShowCustomPictureInSquares();
+                }
+            }
         }
 
         // This gets called when switching to the Squares Game from other games,
@@ -75,6 +89,11 @@ namespace GridGames.Views
             if (vm.ShowPicture && (vm.PicturePathSquares != null) &&
                 (vm.PicturePathSquares != previousLoadedPicture))
             {
+                if (vm.PicturePathSquares != previousLoadedPicture)
+                {
+                    originalCustomPictureBitmap = null;
+                }
+
                 // Restore the order of the squares in the grid.
                 vm.RestoreEmptyGrid();
 
@@ -100,7 +119,7 @@ namespace GridGames.Views
                     Preferences.Set("PicturePathSquares", "");
                     vm.PicturePathSquares = "";
 
-                    vm.GameIsLoading = false;
+                    originalCustomPictureBitmap = null;
 
                     if (Shell.Current != null)
                     {
@@ -302,67 +321,63 @@ namespace GridGames.Views
             }
         }
 
-        // The remainder of this file relates to setting the images shown on the squares in the game.
-
-        private Timer timerTransformImages;
-
-        private void SquaresCollectionView_SizeChanged(object sender, EventArgs e)
-        {
-            var vm = this.BindingContext as SquaresViewModel;
-
-            if (vm.ShowPicture && !String.IsNullOrWhiteSpace(vm.PicturePathSquares))
-            {
-                if ((SquaresCollectionView.Width > 0) && (SquaresCollectionView.Height > 0))
-                {
-                    ShowCustomPictureInSquares();
-                }
-            }
-        }
-
         public void ShowCustomPictureInSquares()
         {
             var vm = this.BindingContext as SquaresViewModel;
 
             string picturePathSquares = vm.PicturePathSquares;
+            if (String.IsNullOrWhiteSpace(picturePathSquares))
+            {
+                return;
+            }
 
             // Prevent input on the grid while the image is being loaded into the squares.
             vm.GameIsLoading = true;
 
-            //vm.RaiseNotificationEvent(PleaseWaitLabel.Text);
+            vm.RaiseNotificationEvent(PleaseWaitLabel.Text);
 
-            SquaresCollectionView.Margin = new Thickness(0);
-
-            Stream fileStream = File.OpenRead(picturePathSquares);
-
-            var originalStream = new SKManagedStream(fileStream);
-
-            var originalBitmap = SKBitmap.Decode(originalStream);
-
-            // Leave the 16th square empty.
-            for (int i = 0; i < 15; ++i)
+            try
             {
-                vm.SquareListCollection[i].PictureImageSource = GetImageSourceForSquare(originalBitmap, i);
-            }
+                if (originalCustomPictureBitmap == null)
+                {
+                    using (Stream fileStream = File.OpenRead(picturePathSquares))
+                    {
+                        using (SKManagedStream originalStream = new SKManagedStream(fileStream))
+                        {
+                            originalCustomPictureBitmap = SKBitmap.Decode(originalStream);
+                        }
+                    }
+                }
 
-            SquaresCollectionView.Margin = new Thickness(1);
+                // Leave the 16th square empty.
+                for (int i = 0; i < 15; ++i)
+                {
+                    vm.SquareListCollection[i].PictureImageSource = GetImageSourceForSquare(
+                                                                        originalCustomPictureBitmap,
+                                                                        vm.SquareListCollection[i].TargetIndex);
+                }
+            }
+            catch (Exception ex) 
+            {
+                Debug.WriteLine("Load custom picture: " + ex.Message);
+            }
 
             vm.GameIsLoading = false;
 
             // Now jumble the squares.
-            vm.ResetGrid();
+            //vm.ResetGrid();
         }
 
         private ImageSource GetImageSourceForSquare(SKBitmap originalBitmap, int index)
         {
-            var sourceImagePortionWidth = (int)(originalBitmap.Width / 4) - 10;
-            var sourceImagePortionHeight = (int)(originalBitmap.Height / 4) - 10;
+            var sourceImagePortionWidth = (int)(originalBitmap.Width / 4);
+            var sourceImagePortionHeight = (int)(originalBitmap.Height / 4);
 
-            var destGridPortionWidth = (int)(SquaresCollectionView.Width / 4) - 10;
-            var destGridPortionHeight = (int)(SquaresCollectionView.Height / 4) - 10;
+            var destGridPortionWidth = (int)(SquaresCollectionView.Width / 4);
+            var destGridPortionHeight = (int)(SquaresCollectionView.Height / 4);
 
             SKRect destRect = new SKRect(0, 0, destGridPortionWidth, destGridPortionHeight);
 
-            // Barker: Check this.
             int col = index % 4;
             int row = index / 4;
 
@@ -372,17 +387,14 @@ namespace GridGames.Views
                 (col + 1) * sourceImagePortionWidth, 
                 (row + 1) * sourceImagePortionHeight);
 
-            // Copy 1/16 of the original into that bitmap
-            SKBitmap bitmap = new SKBitmap(sourceImagePortionWidth, sourceImagePortionHeight);
+            SKBitmap destBitmap = new SKBitmap(destGridPortionWidth, destGridPortionHeight);
 
-            using (SKCanvas canvas = new SKCanvas(bitmap))
+            using (SKCanvas canvas = new SKCanvas(destBitmap))
             {
                 canvas.DrawBitmap(originalBitmap, sourceRect, destRect);
             }
 
-            var croppedImageSource = (SKBitmapImageSource)bitmap;
-
-            return croppedImageSource;
+            return (SKBitmapImageSource)destBitmap;
         }
     }
 }

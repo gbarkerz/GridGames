@@ -107,8 +107,6 @@ namespace GridGames.ViewModels
 
             if (!ShowPicture || !IsImageFilePathValid(PicturePathSquares))
             {
-                GameIsLoading = false;
-
                 ResetGrid();
             }
         }
