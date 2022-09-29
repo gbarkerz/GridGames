@@ -66,7 +66,7 @@ namespace GridGames
             try
             {
                 // Barker: For now only load jpg images.
-                options.FileTypes = FilePickerFileType.Jpeg;
+                options.FileTypes = FilePickerFileType.Images;
 
                 var result = await FilePicker.PickAsync(options);
                 if (result != null)

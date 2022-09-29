@@ -13,6 +13,9 @@ namespace GridGames.Views
         private string previousLoadedPicture = "";
         private SKBitmap originalCustomPictureBitmap = null;
 
+        private Timer timerSetCustomPicture;
+        private bool inShowCustomPictureIfReady = false;
+
         public SquaresPage()
         {
             InitializeComponent();
@@ -40,15 +43,62 @@ namespace GridGames.Views
 
         private void SquaresCollectionView_SizeChanged(object sender, EventArgs e)
         {
+            ShowCustomPicture();
+        }
+
+        private void ShowCustomPicture()
+        {
             var vm = this.BindingContext as SquaresViewModel;
 
             if (vm.ShowPicture && !String.IsNullOrWhiteSpace(vm.PicturePathSquares))
             {
-                if ((SquaresCollectionView.Width > 0) && (SquaresCollectionView.Height > 0))
+                // If the CollectionView isn't sized yet, wait a while and try again.
+                if ((SquaresCollectionView.Width <= 0) || (SquaresCollectionView.Height <= 0))
                 {
+                    if (timerSetCustomPicture == null)
+                    {
+                        timerSetCustomPicture = new Timer(
+                            new TimerCallback((s) => ShowCustomPictureIfReady()),
+                                       null,
+                                       TimeSpan.FromMilliseconds(2000),
+                                       TimeSpan.FromMilliseconds(2000));
+                    }
+                }
+                else
+                {
+                    // The CollectionView is reader for the pictures.
+                    if (timerSetCustomPicture != null)
+                    {
+                        timerSetCustomPicture.Dispose();
+                        timerSetCustomPicture = null;
+                    }
+
                     ShowCustomPictureInSquares();
                 }
             }
+        }
+
+        private void ShowCustomPictureIfReady()
+        {
+            if (inShowCustomPictureIfReady)
+            {
+                return;
+            }
+
+            inShowCustomPictureIfReady = true;
+
+            if ((SquaresCollectionView.Width > 0) && (SquaresCollectionView.Height > 0))
+            {
+                if (timerSetCustomPicture != null)
+                {
+                    timerSetCustomPicture.Dispose();
+                    timerSetCustomPicture = null;
+                }
+
+                ShowCustomPictureInSquares();
+            }
+
+            inShowCustomPictureIfReady = false;
         }
 
         // This gets called when switching to the Squares Game from other games,
@@ -101,10 +151,7 @@ namespace GridGames.Views
                 if (vm.IsImageFilePathValid(vm.PicturePathSquares))
                 {
                     // Set the images shown on the squares.
-                    if ((SquaresCollectionView.Width > 0) && (SquaresCollectionView.Height > 0))
-                    {
-                        ShowCustomPictureInSquares();
-                    }
+                    ShowCustomPicture();
 
                     // Now that a picture has been fully loaded, cache the path to the loaded picture.
                     // We'll not load another picture until the picture being loaded is different from
@@ -312,7 +359,7 @@ namespace GridGames.Views
 
                 if (vm.ShowPicture && !String.IsNullOrWhiteSpace(vm.PicturePathSquares))
                 {
-                    ShowCustomPictureInSquares();
+                    ShowCustomPicture();
                 }
                 else
                 {
@@ -375,6 +422,10 @@ namespace GridGames.Views
 
             var destGridPortionWidth = (int)(SquaresCollectionView.Width / 4);
             var destGridPortionHeight = (int)(SquaresCollectionView.Height / 4);
+
+            Debug.WriteLine("Picture portioning: Source " +
+                sourceImagePortionWidth + ", " + sourceImagePortionHeight + ", Dest " +
+                destGridPortionWidth + ", " + destGridPortionHeight);
 
             SKRect destRect = new SKRect(0, 0, destGridPortionWidth, destGridPortionHeight);
 

@@ -39,7 +39,6 @@
                 <ScrollView>
                     <StackLayout>
                         <Border Margin="10"
-                            IsVisible="{Binding GameIsLoading}"
                             Stroke="{AppThemeBinding Light=Black, Dark=White}"
                             BackgroundColor="{DynamicResource PageBackgroundColor}">
                             <Grid Margin="10" SemanticProperties.Description="Numbers">
@@ -76,7 +75,6 @@
                         </Border>
 
                         <Border Margin="10"
-                            IsVisible="{Binding GameIsLoading}"
                             Stroke="{AppThemeBinding Light=Black, Dark=White}"
                             BackgroundColor="{DynamicResource PageBackgroundColor}">
 
