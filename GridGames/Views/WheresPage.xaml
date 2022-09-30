@@ -104,15 +104,15 @@
                             
                             <!-- Barker Todo: Add support for Voice Access. -->
 
-                            <Frame Margin="2" Padding="0" AutomationProperties.IsInAccessibleTree="False">
-                                <Frame.BackgroundColor>
+                            <Border Margin="2" Padding="0" AutomationProperties.IsInAccessibleTree="False">
+                                <Border.BackgroundColor>
                                     <MultiBinding Mode="OneWay" 
                                             Converter="{StaticResource WheresAnsweredToBackgroundColor}">
                                         <Binding Path="IsFound" />
                                         <Binding Source="{x:Reference WheresPageInstance}" 
                                             Path="BindingContext.ShowDarkTheme" />
                                     </MultiBinding>
-                                </Frame.BackgroundColor>
+                                </Border.BackgroundColor>
 
                                 <Grid AutomationProperties.IsInAccessibleTree="False">
                                     <Grid.RowDefinitions>
@@ -161,7 +161,7 @@
                                         </Label.TextColor>
                                     </Label>
                                 </Grid>
-                            </Frame>
+                            </Border>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -177,7 +177,7 @@
                 </Grid.GestureRecognizers>
             </Grid>
 
-            <Frame Grid.Row="0" Grid.RowSpan="2" x:Name="WelcomeFrame" 
+            <Border Grid.Row="0" Grid.RowSpan="2" x:Name="WelcomeBorder" 
                 Margin="4" Padding="8"
                 IsVisible="{Binding FirstRunWheres}"
                 BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
@@ -207,7 +207,7 @@
                         windows:VisualElement.AccessKey="C"
                         HorizontalOptions="End" Margin="0,0,4,4" Padding="8" />
                 </Grid>
-            </Frame>
+            </Border>
 
         </Grid>
     </ContentPage.Content>

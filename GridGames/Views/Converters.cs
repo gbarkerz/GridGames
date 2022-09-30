@@ -469,13 +469,13 @@ namespace GridGames.Views
         }
     }
 
-    public class SquareTargetIndexToContainerFrameVisibility : IValueConverter
+    public class SquareTargetIndexToContainerBorderVisibility : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var targetIndex = (int)value;
 
-            // The Frame on the empty square is not visible.
+            // The Border on the empty square is not visible.
             return (targetIndex != 15);
         }
 

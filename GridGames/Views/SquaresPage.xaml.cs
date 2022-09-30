@@ -381,6 +381,8 @@ namespace GridGames.Views
             // Prevent input on the grid while the image is being loaded into the squares.
             vm.GameIsLoading = true;
 
+            Debug.WriteLine("Loading pictures into squares...");
+
             vm.RaiseNotificationEvent(PleaseWaitLabel.Text);
 
             try
@@ -411,8 +413,10 @@ namespace GridGames.Views
 
             vm.GameIsLoading = false;
 
+            Debug.WriteLine("Done loading pictures into squares.");
+
             // Now jumble the squares.
-            //vm.ResetGrid();
+            vm.ResetGrid();
         }
 
         private ImageSource GetImageSourceForSquare(SKBitmap originalBitmap, int index)

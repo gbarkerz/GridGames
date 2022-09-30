@@ -95,8 +95,8 @@
             </Picker>
         </FlexLayout>
         
-        <Frame Grid.Row="4" Padding="0" Margin="10"
-            BorderColor="{AppThemeBinding Light=Black, Dark=White}">
+        <Border Grid.Row="4" Padding="0" Margin="10"
+            Stroke="{AppThemeBinding Light=Black, Dark=White}">
             <ScrollView x:Name="WCAGScrollView">
                 <StackLayout Margin="40,0,40,0">
 
@@ -625,7 +625,7 @@
 
                 </StackLayout>
             </ScrollView>
-        </Frame>
+        </Border>
         
         <StackLayout Grid.Row="5" Orientation="Horizontal"
             HorizontalOptions="End">

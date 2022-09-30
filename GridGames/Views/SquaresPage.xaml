@@ -24,7 +24,7 @@
             <localviews:NumberSizeIndexToGridRowHeight x:Key="NumberSizeIndexToGridRowHeight" />
             <localviews:LabelContainerHeightToFontSize x:Key="LabelContainerHeightToFontSize" />
             <localviews:SquareTargetIndexToIsVisible x:Key="SquareTargetIndexToIsVisible" />
-            <localviews:SquareTargetIndexToContainerFrameVisibility x:Key="SquareTargetIndexToContainerFrameVisibility" />
+            <localviews:SquareTargetIndexToContainerBorderVisibility x:Key="SquareTargetIndexToContainerBorderVisibility" />
             <localviews:SquareTargetIndexToBackgroundColor x:Key="SquareTargetIndexToBackgroundColor" />
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -134,7 +134,7 @@
                                             AutomationProperties.IsInAccessibleTree="False"
                                             BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
                                             IsVisible="{Binding TargetIndex, 
-                                                Converter={StaticResource SquareTargetIndexToContainerFrameVisibility}}">
+                                                Converter={StaticResource SquareTargetIndexToContainerBorderVisibility}}">
                                             <Label Padding="4,0,4,0" Text="{Binding VisualLabel}"
                                                 AutomationProperties.IsInAccessibleTree="False"
                                                 TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"

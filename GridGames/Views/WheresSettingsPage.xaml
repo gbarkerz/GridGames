@@ -108,12 +108,12 @@
                         </Grid>
                     </StackLayout>
 
-                    <Frame Grid.Row="3" 
+                    <Border Grid.Row="3" 
                         Margin="0" Padding="10"
                         IsVisible="{Binding BonusQuestionFile,
                             Mode=OneWay,
                             Converter={StaticResource FilePathToIsVisible}}"
-                        BorderColor="{AppThemeBinding Light=Black, Dark=White}">
+                        Stroke="{AppThemeBinding Light=Black, Dark=White}">
                         
                         <StackLayout Margin="0" Padding="0">
                             
@@ -156,7 +156,7 @@
                             </CollectionView>
                         </StackLayout>
                        
-                    </Frame>
+                    </Border>
                     
                 </Grid>
             </ScrollView>
