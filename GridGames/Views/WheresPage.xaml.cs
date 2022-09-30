@@ -32,6 +32,10 @@ namespace GridGames.Views
                 var vm = this.BindingContext as WheresViewModel;
                 vm.ShowDarkTheme = (currentTheme == AppTheme.Dark);
             };
+
+#if ANDROID
+            InputBlockingGrid.IsVisible = false;
+#endif
         }
 
         private void WelcomeBorder_Loaded(object sender, EventArgs e)

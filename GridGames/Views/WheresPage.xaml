@@ -74,7 +74,6 @@
             <CollectionView Grid.Row="1"
                 x:Name="SquaresCollectionView"
                 SemanticProperties.Description="WCAG Groups"
-                InputTransparent="True"
                 Opacity="{Binding FirstRunWheres, Mode=OneWay,
                     Converter={StaticResource FirstRunToGridOpacity}}"
                 SelectionMode="Single" 
@@ -168,7 +167,7 @@
 
             </CollectionView>
 
-            <Grid Grid.Row="1" 
+            <Grid Grid.Row="1" x:Name="InputBlockingGrid"
                 SemanticProperties.Description="Game input blocker" 
                 SemanticProperties.Hint="This only exists to prevent mouse and touch input from hanging the app when used with a screen reader."
                 BackgroundColor="Transparent">
