@@ -1,8 +1,7 @@
 ﻿using GridGames.ResX;
-using GridGames.ViewModels;
 using System.Globalization;
 using System.Collections.ObjectModel;
-using System;
+using System.Diagnostics;
 
 namespace GridGames.Views
 {
@@ -380,35 +379,30 @@ namespace GridGames.Views
         }
     }
 
-    public class NumberSizeIndexToGridRowHeight : IValueConverter
+    public class NumberSizeIndexToGridRowHeightMultiplier : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var numberSizeIndex = (int)value;
 
-            double gridRowHeight = 0.35;
+            double gridRowHeightMultiplier = 0.3;
 
             switch (numberSizeIndex)
             {
                 case 0:
-                    gridRowHeight = 0.2;
+                    gridRowHeightMultiplier = 0.2;
                     break;
                 case 2:
-                    gridRowHeight = 0.5;
+                    gridRowHeightMultiplier = 0.4;
                     break;
                 case 3:
-                    gridRowHeight = 0.65;
+                    gridRowHeightMultiplier = 0.5;
                     break;
                 default:
                     break;
             }
 
-            if ((string)parameter == "1")
-            {
-                gridRowHeight = 1.0 - gridRowHeight;
-            }
-
-            return new GridLength(gridRowHeight, GridUnitType.Star);
+            return gridRowHeightMultiplier;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -421,24 +415,26 @@ namespace GridGames.Views
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((values == null) || (values.Length < 2) || (values[0] == null) || (values[1] == null))
+            if ((values == null) || (values.Length < 2) || 
+                (values[0] == null) || (values[1] == null))
             {
                 return 0;
             }
 
-            var showNumbers = (bool)values[0];
-            var containerHeightPixels = (double)values[1];
+            var collectionViewHeight = (double)values[0];
+            var gridHeightMultipler = (double)values[1];
+
+            Debug.WriteLine("Squares label data: gridHeight " + collectionViewHeight +
+                ", gridHeightMultiplier " + gridHeightMultipler);
+
+            if (collectionViewHeight <= 0)
+            {
+                return 0;
+            }
 
             // Future: Properly account for line height etc. For now, just shrink the value.
             // Also this reduces the size to account for tall cells in portrait orientation.
-            double fontHeightPoints = 0;
-
-            if (showNumbers)
-            {
-                fontHeightPoints = containerHeightPixels * 0.6;
-            }
-
-            return fontHeightPoints;
+            return collectionViewHeight * 0.25 * gridHeightMultipler;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
@@ -469,7 +465,7 @@ namespace GridGames.Views
         }
     }
 
-    public class SquareTargetIndexToContainerBorderVisibility : IValueConverter
+    public class ShowNumbersSquareTargetIndexToLabelVisibility : IMultiValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -479,7 +475,25 @@ namespace GridGames.Views
             return (targetIndex != 15);
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values == null || (values.Length < 2))
+            {
+                return "";
+            }
+
+            if ((values[0] == null) || (values[1] == null))
+            {
+                return "";
+            }
+
+            var showNumbers = (bool)values[0];
+            var targetIndex = (int)values[1];
+
+            return showNumbers && (targetIndex < 15);
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
