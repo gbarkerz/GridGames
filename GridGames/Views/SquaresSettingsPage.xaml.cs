@@ -95,8 +95,6 @@ namespace GridGames
                     File.Copy(result.FullPath, filenameDest);
 
                     settingsViewModel.PicturePathSquares = filenameDest;
-
-
                 }
             }
             catch (Exception ex)

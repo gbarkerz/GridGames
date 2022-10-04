@@ -32,18 +32,9 @@ namespace GridGames.Views
                 vm.ShowDarkTheme = (currentTheme == AppTheme.Dark);
             };
 
-#if WINDOWS
-            SquaresCollectionView.SizeChanged += SquaresCollectionView_SizeChanged;
-#endif
-
 #if ANDROID
             InputBlockingGrid.IsVisible = false;
 #endif
-        }
-
-        private void SquaresCollectionView_SizeChanged(object sender, EventArgs e)
-        {
-            ShowCustomPicture();
         }
 
         private void ShowCustomPicture()
@@ -52,11 +43,15 @@ namespace GridGames.Views
 
             if (vm.ShowPicture && !String.IsNullOrWhiteSpace(vm.PicturePathSquares))
             {
+                vm.GameIsLoading = true;
+
                 // If the CollectionView isn't sized yet, wait a while and try again.
                 if ((SquaresCollectionView.Width <= 0) || (SquaresCollectionView.Height <= 0))
                 {
                     if (timerSetCustomPicture == null)
                     {
+                        Debug.WriteLine("ShowCustomPicture: Start timer while CollectionView dimensions not set.");
+
                         timerSetCustomPicture = new Timer(
                             new TimerCallback((s) => ShowCustomPictureIfReady()),
                                        null,
@@ -73,7 +68,7 @@ namespace GridGames.Views
                         timerSetCustomPicture = null;
                     }
 
-                    ShowCustomPictureInSquares();
+                    ShowCustomPictureInSquaresInBackground();
                 }
             }
         }
@@ -87,6 +82,9 @@ namespace GridGames.Views
 
             inShowCustomPictureIfReady = true;
 
+            Debug.WriteLine("ShowCustomPictureIfReady: CollectionView dimensions: " +
+                SquaresCollectionView.Width + ", " + SquaresCollectionView.Height);
+
             if ((SquaresCollectionView.Width > 0) && (SquaresCollectionView.Height > 0))
             {
                 if (timerSetCustomPicture != null)
@@ -95,10 +93,34 @@ namespace GridGames.Views
                     timerSetCustomPicture = null;
                 }
 
-                ShowCustomPictureInSquares();
+                ShowCustomPictureInSquaresInBackground();
             }
 
             inShowCustomPictureIfReady = false;
+        }
+
+        private int destGridPortionWidth = 0;
+        private int destGridPortionHeight = 0;
+
+        private void ShowCustomPictureInSquaresInBackground()
+        {
+            var vm = this.BindingContext as SquaresViewModel;
+
+            vm.GameIsLoading = true;
+
+            vm.RaiseNotificationEvent(PleaseWaitLabel.Text);
+
+            destGridPortionWidth = (int)(SquaresCollectionView.Width / 4);
+            destGridPortionHeight = (int)(SquaresCollectionView.Height / 4);
+
+            Debug.WriteLine("ShowCustomPictureInSquaresInBackground: Thread.CurrentThread.IsBackground " 
+                + Thread.CurrentThread.IsBackground);
+
+            var th = new Thread(ShowCustomPictureInSquares);
+
+            th.IsBackground = true;
+
+            th.Start(this);
         }
 
         // This gets called when switching to the Squares Game from other games,
@@ -145,7 +167,7 @@ namespace GridGames.Views
                 }
 
                 // Restore the order of the squares in the grid.
-                vm.RestoreEmptyGrid();
+                //vm.RestoreEmptyGrid();
 
                 // Check whether the image file exists before trying to load it into the ImageEditor.
                 if (vm.IsImageFilePathValid(vm.PicturePathSquares))
@@ -368,9 +390,14 @@ namespace GridGames.Views
             }
         }
 
-        public void ShowCustomPictureInSquares()
+        private static void ShowCustomPictureInSquares(Object obj)
         {
-            var vm = this.BindingContext as SquaresViewModel;
+            Debug.WriteLine("ShowCustomPictureInSquares: Thread.CurrentThread.IsBackground "
+                + Thread.CurrentThread.IsBackground);
+
+            var page = obj as SquaresPage;
+
+            var vm = page.BindingContext as SquaresViewModel;
 
             string picturePathSquares = vm.PicturePathSquares;
             if (String.IsNullOrWhiteSpace(picturePathSquares))
@@ -378,31 +405,32 @@ namespace GridGames.Views
                 return;
             }
 
-            // Prevent input on the grid while the image is being loaded into the squares.
-            vm.GameIsLoading = true;
+            Debug.WriteLine("ShowCustomPictureInSquares: Loading pictures into squares now.");
 
-            Debug.WriteLine("Loading pictures into squares...");
-
-            vm.RaiseNotificationEvent(PleaseWaitLabel.Text);
+            Debug.WriteLine("ShowCustomPictureInSquares: Thread.CurrentThread.IsBackground " + 
+                Thread.CurrentThread.IsBackground);
 
             try
             {
-                if (originalCustomPictureBitmap == null)
+                if (page.originalCustomPictureBitmap == null)
                 {
                     using (Stream fileStream = File.OpenRead(picturePathSquares))
                     {
                         using (SKManagedStream originalStream = new SKManagedStream(fileStream))
                         {
-                            originalCustomPictureBitmap = SKBitmap.Decode(originalStream);
+                            page.originalCustomPictureBitmap = SKBitmap.Decode(originalStream);
+
+                            originalStream.Dispose();
                         }
+
+                        fileStream.Close();
                     }
                 }
 
                 // Leave the 16th square empty.
                 for (int i = 0; i < 15; ++i)
                 {
-                    vm.SquareListCollection[i].PictureImageSource = GetImageSourceForSquare(
-                                                                        originalCustomPictureBitmap,
+                    vm.SquareListCollection[i].PictureImageSource = page.GetImageSourceForSquare(
                                                                         vm.SquareListCollection[i].TargetIndex);
                 }
             }
@@ -411,21 +439,18 @@ namespace GridGames.Views
                 Debug.WriteLine("Load custom picture: " + ex.Message);
             }
 
-            vm.GameIsLoading = false;
-
-            Debug.WriteLine("Done loading pictures into squares.");
-
             // Now jumble the squares.
             vm.ResetGrid();
+
+            Debug.WriteLine("ShowCustomPictureInSquares: Done loading pictures into squares.");
+
+            vm.GameIsLoading = false;
         }
 
-        private ImageSource GetImageSourceForSquare(SKBitmap originalBitmap, int index)
+        private ImageSource GetImageSourceForSquare(int index)
         {
-            var sourceImagePortionWidth = (int)(originalBitmap.Width / 4);
-            var sourceImagePortionHeight = (int)(originalBitmap.Height / 4);
-
-            var destGridPortionWidth = (int)(SquaresCollectionView.Width / 4);
-            var destGridPortionHeight = (int)(SquaresCollectionView.Height / 4);
+            var sourceImagePortionWidth = (int)(originalCustomPictureBitmap.Width / 4);
+            var sourceImagePortionHeight = (int)(originalCustomPictureBitmap.Height / 4);
 
             Debug.WriteLine("Picture portioning: Source " +
                 sourceImagePortionWidth + ", " + sourceImagePortionHeight + ", Dest " +
@@ -446,7 +471,7 @@ namespace GridGames.Views
 
             using (SKCanvas canvas = new SKCanvas(destBitmap))
             {
-                canvas.DrawBitmap(originalBitmap, sourceRect, destRect);
+                canvas.DrawBitmap(originalCustomPictureBitmap, sourceRect, destRect);
             }
 
             return (SKBitmapImageSource)destBitmap;
