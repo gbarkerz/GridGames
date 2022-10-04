@@ -150,8 +150,28 @@ namespace GridGames
             ResetCustomPictureData();
         }
 
+        public async Task<PermissionStatus> CheckAndRequestStoragePermission()
+        {
+            PermissionStatus status = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
+
+            if (status == PermissionStatus.Granted)
+            {
+                return status;
+            }
+
+            status = await Permissions.RequestAsync<Permissions.StorageRead>();
+
+            return status;
+        }
+
         private async void PictureBrowseButton_Clicked(object sender, EventArgs e)
         {
+            PermissionStatus status = await CheckAndRequestStoragePermission();
+            if (status != PermissionStatus.Granted)
+            {
+                return;
+            }
+
             var options = new PickOptions
             {
                 PickerTitle = "Please select a picture from a folder containing only 8 pictures."

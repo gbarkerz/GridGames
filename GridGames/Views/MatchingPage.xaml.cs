@@ -139,7 +139,9 @@ namespace GridGames.Views
             }
 
             // Try to always set keyboard focus to the cards when the page appears.
+#if WINDOWS
             SquaresCollectionView.Focus();
+#endif 
         }
 
         public void SetUpCards()
@@ -235,7 +237,9 @@ namespace GridGames.Views
             }
 
             // Try to always set keyboard focus to the cards when the page appears.
+#if WINDOWS
             SquaresCollectionView.Focus();
+#endif 
         }
 
         private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
@@ -260,7 +264,9 @@ namespace GridGames.Views
             {
                 await Navigation.PushModalAsync(new HelpPage(this));
 
-                SquaresCollectionView.Focus();
+#if WINDOWS
+            SquaresCollectionView.Focus();
+#endif 
             }
         }
 
@@ -367,7 +373,9 @@ namespace GridGames.Views
 
             vm.RaiseNotificationEvent("The Pairs game is ready to play!");
 
+#if WINDOWS
             SquaresCollectionView.Focus();
+#endif 
         }
 
         private async void FallthroughGrid_Tapped(object sender, EventArgs e)
