@@ -111,8 +111,10 @@ namespace GridGames.Views
                     "Where's " + vm.CurrentQuestionWCAG);
             }
 
+#if WINDOWS
             // Try to always set keyboard focus to the cards when the page appears.
             SquaresCollectionView.Focus();
+#endif
         }
 
         private async void WheresGameSettingsButton_Clicked(object sender, EventArgs e)
@@ -132,7 +134,9 @@ namespace GridGames.Views
             {
                 await Navigation.PushModalAsync(new HelpPage(this));
 
+#if WINDOWS
                 SquaresCollectionView.Focus();
+#endif
             }
         }
 
@@ -348,7 +352,9 @@ namespace GridGames.Views
 
             vm.RaiseNotificationEvent("Your first question is, Where's " + vm.CurrentQuestionWCAG);
 
+#if WINDOWS
             SquaresCollectionView.Focus();
+#endif
         }
 
         private async void FallthroughGrid_Tapped(object sender, EventArgs e)

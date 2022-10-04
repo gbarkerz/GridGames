@@ -27,12 +27,12 @@
         <Grid Grid.Row="1" Padding="0" Margin="20,10,20,20"
               BackgroundColor="{AppThemeBinding Light=White, Dark=Black}">
             <Label Margin="10,0,0,0" x:Name="WCAGQuestion" 
-                SemanticProperties.HeadingLevel="Level2" FontSize="Header"
+                SemanticProperties.HeadingLevel="Level2" FontSize="Medium"
                 TextColor="{AppThemeBinding Light=Black, Dark=White}"
                 HorizontalOptions="Start" />
         </Grid>
 
-        <Label Grid.Row="2" Margin="30,10,20,0" FontSize="Medium"
+        <Label Grid.Row="2" Margin="30,10,20,0"
             Text="Select the WCAG groups containing the answer, and then check all WCAG that apply." />
 
         <!-- Barker Todo: Originally this FlexLayout had no HeightRequest set, because it would grow to 

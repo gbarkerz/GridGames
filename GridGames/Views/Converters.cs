@@ -145,7 +145,7 @@ namespace GridGames.Views
 
             if (showNumbers)
             {
-                fontHeightPoints = containerHeightPixels * 0.4;
+                fontHeightPoints = containerHeightPixels * 0.3;
             }
 
             return fontHeightPoints;
