@@ -46,9 +46,10 @@
 
         <!-- Barker: Accessible links don't seem natively supported in MAUI at the moment, so used buttons instead. -->
 
-        <Button Grid.Row="2" Margin="0,20,0,0" Padding="8"
+        <Button Grid.Row="2" Margin="0" Padding="8"
             windows:VisualElement.AccessKey="W"    
             Text="Learn more about this WCAG group at the WCAG documentation"
+            LineBreakMode="WordWrap"
             HorizontalOptions="Center"
             Clicked="LearnMoreButton_Clicked" />
 
@@ -58,6 +59,7 @@
         <Button Grid.Row="4" Margin="0" Padding="8"
             windows:VisualElement.AccessKey="E"                
             Text="Learn more about the EN 301 549 standard"
+            LineBreakMode="WordWrap"
             HorizontalOptions="Center"
             Clicked="LearnMoreEN301Button_Clicked" />
 
