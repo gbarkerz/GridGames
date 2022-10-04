@@ -32,7 +32,7 @@
                 HorizontalOptions="Start" />
         </Grid>
 
-        <Label Grid.Row="2" Margin="10,4,10,4"
+        <Label Grid.Row="2" Margin="10,14,10,0"
             Text="Select the WCAG groups containing the answer, and then check all WCAG that apply." />
 
         <!-- Barker Todo: Originally this FlexLayout had no HeightRequest set, because it would grow to 
@@ -42,7 +42,7 @@
             So for now, set an explicit height on the FlexHeight, but remove this when possible. -->
         
         <FlexLayout Grid.Row="3" Wrap="Wrap" Margin="4,0,4,0" Padding="0" 
-            SemanticProperties.Description="WCAG Groups" MinimumHeightRequest="120">
+            SemanticProperties.Description="WCAG Groups" MinimumHeightRequest="110">
 
             <Picker x:Name="PerceivablePicker" ClassId="Perceivable" windows:VisualElement.AccessKey="P" 
                 Title="Perceivable groups"
@@ -95,7 +95,7 @@
             </Picker>
         </FlexLayout>
 
-        <Border Grid.Row="4" Margin="4" Padding="2" 
+        <Border Grid.Row="4" Margin="4,10,4,4" Padding="2" 
             Stroke="{AppThemeBinding Light=Black, Dark=White}">
             <ScrollView x:Name="WCAGScrollView">
                 <StackLayout Margin="40,0,40,0">
