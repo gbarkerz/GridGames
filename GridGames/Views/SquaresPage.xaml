@@ -24,7 +24,8 @@
             <localviews:NumberSizeIndexToGridRowHeightMultiplier x:Key="NumberSizeIndexToGridRowHeightMultiplier" />
             <localviews:LabelContainerHeightToFontSize x:Key="LabelContainerHeightToFontSize" />
             <localviews:SquareTargetIndexToIsVisible x:Key="SquareTargetIndexToIsVisible" />
-            <localviews:ShowNumbersSquareTargetIndexToLabelVisibility x:Key="ShowNumbersSquareTargetIndexToLabelVisibility" />
+            <localviews:SquareTargetIndexToPictureImageSource x:Key="SquareTargetIndexToPictureImageSource" />
+            <localviews:SquareVisualLabelToLabelBackgroundColor x:Key="SquareVisualLabelToLabelBackgroundColor" />
             <localviews:SquareTargetIndexToBackgroundColor x:Key="SquareTargetIndexToBackgroundColor" />
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -56,8 +57,7 @@
 
             <CollectionView
                 x:Name="SquaresCollectionView"
-                SemanticProperties.Description="Squares"
-                IsVisible="True"
+                SemanticProperties.Description="Squares"               
                 VerticalScrollBarVisibility="Never"
                 SelectionMode="Single"
                 ItemsSource="{Binding SquareListCollection}">
@@ -77,69 +77,55 @@
                         <Grid HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, 
                                 Path=Height, Converter={StaticResource CollectionViewHeightToRowHeight}}"
                             BackgroundColor="{DynamicResource GridBackgroundColor}"
-                            AutomationProperties.IsInAccessibleTree="True"
+                            Margin="1"
                             SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}"
                             SemanticProperties.Hint="{Binding AccessibleDescription, Mode=OneWay}">
-                            <Grid.GestureRecognizers>
+                            <!--<Grid.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                            </Grid.GestureRecognizers>
-                            <Border
-                                AutomationProperties.IsInAccessibleTree="False">
-                                <Border.BackgroundColor>
-                                    <MultiBinding Mode="OneWay"
-                                            Converter="{StaticResource SquareTargetIndexToBackgroundColor}" >
-                                        <Binding Path="TargetIndex" />
+                            </Grid.GestureRecognizers>-->
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <!-- Barker: Binding IsVisible generally doesn't seem robust. So achieve the desired
+                                effect through binding of other properties. -->
+                            
+                            <Image Grid.Row="0" Grid.RowSpan="2"
+                                Aspect="Fill"
+                                InputTransparent="True"
+                                Source="{Binding PictureImageSource}">
+                            </Image>
+
+                            <Label Grid.Row="0" Margin="2,2,0,0" Padding="2,0,2,0"  InputTransparent="True"
+                                Text="{Binding VisualLabel}"
+                                TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
+                                HorizontalOptions="Start" VerticalOptions="Start">
+                                <Label.BackgroundColor>
+                                    <MultiBinding Mode="OneWay" 
+                                        Converter="{StaticResource SquareVisualLabelToLabelBackgroundColor}">
                                         <Binding Source="{x:Reference SquaresPageInstance}"
-                                            Path="BindingContext.ShowDarkTheme" />
+                                            Path="BindingContext.ShowNumbers" />
+                                        <Binding Path="VisualLabel" />
+                                        <Binding Source="{x:Reference SquaresPageInstance}" 
+                                                    Path="BindingContext.ShowDarkTheme" />
                                     </MultiBinding>
-                                </Border.BackgroundColor>                                
-                                <Grid AutomationProperties.IsInAccessibleTree="False">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
+                                </Label.BackgroundColor>
+                                <Label.FontSize>
+                                    <MultiBinding Mode="OneWay" 
+                                        Converter="{StaticResource LabelContainerHeightToFontSize}">
+                                        <Binding Source="{x:Reference SquaresPageInstance}"
+                                            Path="BindingContext.ShowNumbers" />
+                                        <Binding Source="{RelativeSource AncestorType={x:Type CollectionView}}" 
+                                            Path="Height" />
+                                        <Binding Source="{x:Reference SquaresPageInstance}"
+                                            Path="BindingContext.NumberHeight"
+                                            Mode="OneWay"
+                                            Converter="{StaticResource NumberSizeIndexToGridRowHeightMultiplier}" />
+                                    </MultiBinding>
+                                </Label.FontSize>
+                            </Label>
 
-                                    <Image Grid.Row="0" Grid.RowSpan="2"
-                                        Source="{Binding PictureImageSource}"
-                                        Aspect="Fill"
-                                        AutomationProperties.IsInAccessibleTree="False">
-                                        <Image.IsVisible>
-                                            <MultiBinding Mode="OneWay" Converter="{StaticResource SquareTargetIndexToIsVisible}">
-                                                <Binding Path="TargetIndex" />
-                                                <Binding Source="{x:Reference SquaresPageInstance}" Path="BindingContext.ShowPicture" />
-                                            </MultiBinding>
-                                        </Image.IsVisible>
-                                    </Image>
-
-                                    <Label Grid.Row="0" Margin="2,2,0,0" Padding="2,0,2,0" 
-                                        Text="{Binding VisualLabel}"
-                                        BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
-                                        AutomationProperties.IsInAccessibleTree="False"
-                                        TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
-                                        HorizontalOptions="Start" VerticalOptions="Start">
-                                        <Label.IsVisible>
-                                            <MultiBinding Mode="OneWay" 
-                                                Converter="{StaticResource ShowNumbersSquareTargetIndexToLabelVisibility}">
-                                                <Binding Source="{x:Reference SquaresPageInstance}"
-                                                    Path="BindingContext.ShowNumbers" />
-                                                <Binding Path="TargetIndex" />
-                                            </MultiBinding>
-                                        </Label.IsVisible>
-                                        <Label.FontSize>
-                                            <MultiBinding Mode="OneWay" 
-                                                Converter="{StaticResource LabelContainerHeightToFontSize}">
-                                                <Binding Source="{RelativeSource AncestorType={x:Type CollectionView}}" 
-                                                    Path="Height" />
-                                                <Binding Source="{x:Reference SquaresPageInstance}"
-                                                    Path="BindingContext.NumberHeight"
-                                                    Mode="OneWay"
-                                                    Converter="{StaticResource NumberSizeIndexToGridRowHeightMultiplier}" />
-                                            </MultiBinding>
-                                        </Label.FontSize>
-                                    </Label>
-
-                                </Grid>
-                            </Border>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

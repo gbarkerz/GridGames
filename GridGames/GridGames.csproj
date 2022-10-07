@@ -41,6 +41,90 @@
 	  <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-maccatalyst|AnyCPU'">
+	  <ApplicationTitle>Grid Games</ApplicationTitle>
+	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
+	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
+	  <ApplicationVersion>1</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-maccatalyst|AnyCPU'">
+	  <ApplicationTitle>Grid Games</ApplicationTitle>
+	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
+	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
+	  <ApplicationVersion>1</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-maccatalyst|ARM64'">
+	  <ApplicationTitle>Grid Games</ApplicationTitle>
+	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
+	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
+	  <ApplicationVersion>1</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-maccatalyst|ARM64'">
+	  <ApplicationTitle>Grid Games</ApplicationTitle>
+	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
+	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
+	  <ApplicationVersion>1</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android33.0|AnyCPU'">
+	  <ApplicationTitle>Grid Games</ApplicationTitle>
+	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
+	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
+	  <ApplicationVersion>1</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android33.0|AnyCPU'">
+	  <ApplicationTitle>Grid Games</ApplicationTitle>
+	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
+	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
+	  <ApplicationVersion>1</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android33.0|ARM64'">
+	  <ApplicationTitle>Grid Games</ApplicationTitle>
+	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
+	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
+	  <ApplicationVersion>1</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android33.0|ARM64'">
+	  <ApplicationTitle>Grid Games</ApplicationTitle>
+	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
+	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
+	  <ApplicationVersion>1</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|AnyCPU'">
+	  <ApplicationTitle>Grid Games</ApplicationTitle>
+	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
+	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
+	  <ApplicationVersion>1</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|AnyCPU'">
+	  <ApplicationTitle>Grid Games</ApplicationTitle>
+	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
+	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
+	  <ApplicationVersion>1</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|ARM64'">
+	  <ApplicationTitle>Grid Games</ApplicationTitle>
+	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
+	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
+	  <ApplicationVersion>1</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|ARM64'">
+	  <ApplicationTitle>Grid Games</ApplicationTitle>
+	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
+	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
+	  <ApplicationVersion>1</ApplicationVersion>
+	</PropertyGroup>
+
   <ItemGroup>
 		<!-- App Icon -->
     <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="white" />
@@ -134,11 +218,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="SkiaSharp" Version="2.88.2" />
-	  <PackageReference Include="SkiaSharp.Views" Version="2.88.2" />
-	  <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.2" />
-	  <PackageReference Include="SkiaSharp.Views.Maui.Controls.Compatibility" Version="2.88.2" />
-	  <PackageReference Include="SkiaSharp.Views.Maui.Core" Version="2.88.2" />
+	  <PackageReference Include="SkiaSharp" Version="2.88.3" />
+	  <PackageReference Include="SkiaSharp.Views" Version="2.88.3" />
+	  <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.3" />
+	  <PackageReference Include="SkiaSharp.Views.Maui.Controls.Compatibility" Version="2.88.3" />
+	  <PackageReference Include="SkiaSharp.Views.Maui.Core" Version="2.88.3" />
 	</ItemGroup>
 
 </Project>

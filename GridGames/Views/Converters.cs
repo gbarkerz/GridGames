@@ -379,6 +379,40 @@ namespace GridGames.Views
         }
     }
 
+    public class SquareVisualLabelToLabelBackgroundColor : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if ((values == null) || (values.Length < 3) ||
+                (values[0] == null) || (values[1] == null) || (values[2] == null))
+            {
+                return 0;
+            }
+
+            var showNumbers = (bool)values[0];
+            var visualLabel = (string)values[1];
+            var showDarkTheme = (bool)values[2];
+
+            Color backgroundColour;
+
+            if (!showNumbers || String.IsNullOrWhiteSpace(visualLabel))
+            {
+                backgroundColour = Colors.Transparent;
+            }
+            else
+            {
+                backgroundColour = showDarkTheme ? Colors.Black : Colors.White;
+            }
+
+            return backgroundColour;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class NumberSizeIndexToGridRowHeightMultiplier : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -415,21 +449,22 @@ namespace GridGames.Views
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((values == null) || (values.Length < 2) || 
-                (values[0] == null) || (values[1] == null))
+            if ((values == null) || (values.Length < 3) || 
+                (values[0] == null) || (values[1] == null) || (values[2] == null))
             {
                 return 0;
             }
 
-            var collectionViewHeight = (double)values[0];
-            var gridHeightMultipler = (double)values[1];
+            var showNumbers = (bool)values[0];
+            var collectionViewHeight = (double)values[1];
+            var gridHeightMultipler = (double)values[2];
 
             Debug.WriteLine("Squares label data: gridHeight " + collectionViewHeight +
                 ", gridHeightMultiplier " + gridHeightMultipler);
 
-            if (collectionViewHeight <= 0)
+            if ((collectionViewHeight <= 0) || !showNumbers)
             {
-                return 0;
+                return 1;
             }
 
             // Future: Properly account for line height etc. For now, just shrink the value.
@@ -456,7 +491,7 @@ namespace GridGames.Views
             var picturesVisible = (bool)values[1];
 
             // Only show a picture if pictures are to be shown and this is not the empty square.
-            return picturesVisible && (targetIndex != 15);
+            return picturesVisible && (targetIndex < 15);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
@@ -465,32 +500,21 @@ namespace GridGames.Views
         }
     }
 
-    public class ShowNumbersSquareTargetIndexToLabelVisibility : IMultiValueConverter
+    public class SquareTargetIndexToPictureImageSource : IMultiValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var targetIndex = (int)value;
-
-            // The Border on the empty square is not visible.
-            return (targetIndex != 15);
-        }
-
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values == null || (values.Length < 2))
+            if ((values == null) || (values.Length < 2) || (values[0] == null) || (values[1] == null))
             {
-                return "";
+                return 0;
             }
 
-            if ((values[0] == null) || (values[1] == null))
-            {
-                return "";
-            }
+            var targetIndex = (int)values[0];
 
-            var showNumbers = (bool)values[0];
-            var targetIndex = (int)values[1];
+            var pictureSource = values[1] as ImageSource;
 
-            return showNumbers && (targetIndex < 15);
+            // Only show a picture if pictures are to be shown and this is not the empty square.
+            return targetIndex < 15 ? pictureSource : null;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

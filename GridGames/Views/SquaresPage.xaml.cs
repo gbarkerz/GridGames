@@ -3,6 +3,7 @@ using GridGames.ViewModels;
 using SkiaSharp;
 using SkiaSharp.Views.Maui.Controls;
 using System.Diagnostics;
+using static GridGames.ViewModels.SquaresViewModel;
 
 namespace GridGames.Views
 {
@@ -28,14 +29,39 @@ namespace GridGames.Views
                     currentTheme = Application.Current.PlatformAppTheme;
                 }
 
-                var vm = this.BindingContext as WheresViewModel;
+                var vm = this.BindingContext as SquaresViewModel;
                 vm.ShowDarkTheme = (currentTheme == AppTheme.Dark);
             };
 
 #if ANDROID
             InputBlockingGrid.IsVisible = false;
+
+            SquaresCollectionView.SelectionChanged += SquaresCollectionView_SelectionChanged;
 #endif
         }
+
+#if ANDROID
+        private async void SquaresCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var collectionView = sender as CollectionView;
+            if (collectionView != null)
+            {
+                if (collectionView.SelectedItem != null)
+                {
+                    // Don't leave any square selected after this attempt to move.
+                    collectionView.SelectedItem = null;
+
+                    var vm = this.BindingContext as SquaresViewModel;
+                    bool gameIsWon = vm.AttemptMoveBySelection(collectionView.SelectedItem);
+                    if (gameIsWon)
+                    {
+                        await OfferToRestartGame();
+                    }
+
+                }
+            }
+        }
+#endif
 
         private void ShowCustomPicture()
         {
@@ -286,36 +312,6 @@ namespace GridGames.Views
             }
         }
 
-        // SelectionChanged handling only exists today in the app to support Android Switch Access. 
-        // At some point SelectionChanged may also be a part of keyboard support, but currently the
-        // rest of the app is not keyboard accessible, and focus feedback is unusable on the items.
-
-        private async void SquaresGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Debug.WriteLine("Squares Grid Game: Selection changed. Selection count is " + e.CurrentSelection.Count);
-
-            // Do nothing here if pictures have not been loaded yet onto the squares.
-            var vm = this.BindingContext as SquaresViewModel;
-            if (vm.FirstRunSquares || vm.GameIsLoading)
-            {
-                return;
-            }
-
-            // No action required here if there is no selected item.
-            if (e.CurrentSelection.Count > 0)
-            {
-                bool gameIsWon = vm.AttemptMoveBySelection(e.CurrentSelection[0]);
-
-                // Clear the selection now to support the same square moving again.
-                SquaresCollectionView.SelectedItem = null;
-
-                if (gameIsWon)
-                {
-                    await OfferToRestartGame();
-                }
-            }
-        }
-
         private void SquaresWelcomeOKButton_Clicked(object sender, EventArgs e)
         {
             var vm = this.BindingContext as SquaresViewModel;
@@ -433,6 +429,8 @@ namespace GridGames.Views
                     vm.SquareListCollection[i].PictureImageSource = page.GetImageSourceForSquare(
                                                                         vm.SquareListCollection[i].TargetIndex);
                 }
+
+                vm.SquareListCollection[15].PictureImageSource = ImageSource.FromFile("emptysquare.jpg");
             }
             catch (Exception ex) 
             {

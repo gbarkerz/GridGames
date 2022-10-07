@@ -35,135 +35,133 @@
             <Label Grid.Row="1" Margin="10"
                 Text="{x:Static resources:AppResources.SquaresSettingsInstructions}" />
             
-            <StackLayout Grid.Row="2" Padding="10">
-                <ScrollView>
-                    <StackLayout>
-                        <Border Margin="10"
-                            Stroke="{AppThemeBinding Light=Black, Dark=White}"
-                            BackgroundColor="{DynamicResource PageBackgroundColor}">
-                            <Grid Margin="10" SemanticProperties.Description="Numbers">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
+            <ScrollView Grid.Row="2" Margin="10">
+                <StackLayout>
+                    <Border Margin="10"
+                        Stroke="{AppThemeBinding Light=Black, Dark=White}"
+                        BackgroundColor="{DynamicResource PageBackgroundColor}">
+                        <Grid Margin="10" SemanticProperties.Description="Numbers">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
                                 
-                                <Label Grid.Row="0" Grid.Column="0" x:Name="ShowNumbersLabel" 
-                                    Text="{x:Static resources:AppResources.ShowNumbers}"
-                                    VerticalOptions="Center" />
-                                <CheckBox Grid.Row="0" Grid.Column="1" x:Name="ShowNumbersCheckBox"
-                                    windows:VisualElement.AccessKey="N"                                    
-                                    SemanticProperties.Description="{Binding ShowNumbers,
+                            <Label Grid.Row="0" Grid.Column="0" x:Name="ShowNumbersLabel" 
+                                Text="{x:Static resources:AppResources.ShowNumbers}"
+                                VerticalOptions="Center" />
+                            <CheckBox Grid.Row="0" Grid.Column="1" x:Name="ShowNumbersCheckBox"
+                                windows:VisualElement.AccessKey="N"                                    
+                                SemanticProperties.Description="{Binding ShowNumbers,
+                                    Mode=OneWay,
+                                    Converter={StaticResource CheckBoxStateToAccessibleName},
+                                    ConverterParameter=ShowNumbers}"
+                                VerticalOptions="Center" IsChecked="{Binding ShowNumbers}" />
+
+                            <Label Grid.Row="1" Grid.Column="0" x:Name="NumberSizeLabel" 
+                                Text="{x:Static resources:AppResources.NumberSize}"
+                                VerticalOptions="Center" HorizontalOptions="End" />
+                            <Picker Grid.Row="1" Grid.Column="1" x:Name="SquaresNumberSizePicker"
+                                Margin="0,6,0,6"
+                                windows:VisualElement.AccessKey="Z"
+                                SemanticProperties.Description="{x:Static resources:AppResources.NumberSize}"
+                                VerticalOptions="Center" 
+                                SelectedIndex="{Binding NumberSizeIndex}" />
+                        </Grid>
+                    </Border>
+
+                    <Border Margin="10"
+                        Stroke="{AppThemeBinding Light=Black, Dark=White}"
+                        BackgroundColor="{DynamicResource PageBackgroundColor}">
+
+                        <Grid Margin="10" SemanticProperties.Description="Picture">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <StackLayout Grid.Row="0" Orientation="Horizontal">
+                                <Label x:Name="ShowPictureLabel" 
+                                Text="{x:Static resources:AppResources.ShowPicture}"
+                                VerticalOptions="Center" />
+                                <CheckBox x:Name="ShowPictureCheckBox" VerticalOptions="Center"
+                                    windows:VisualElement.AccessKey="P"
+                                    SemanticProperties.Description="{Binding ShowPicture,
                                         Mode=OneWay,
                                         Converter={StaticResource CheckBoxStateToAccessibleName},
-                                        ConverterParameter=ShowNumbers}"
-                                    VerticalOptions="Center" IsChecked="{Binding ShowNumbers}" />
+                                        ConverterParameter=ShowPicture}"
+                                IsChecked="{Binding ShowPicture}" />
+                            </StackLayout>
 
-                                <Label Grid.Row="1" Grid.Column="0" x:Name="NumberSizeLabel" 
-                                    Text="{x:Static resources:AppResources.NumberSize}"
-                                    VerticalOptions="Center" HorizontalOptions="End" />
-                                <Picker Grid.Row="1" Grid.Column="1" x:Name="SquaresNumberSizePicker"
-                                    Margin="0,6,0,6"
-                                    windows:VisualElement.AccessKey="Z"
-                                    SemanticProperties.Description="{x:Static resources:AppResources.NumberSize}"
-                                    VerticalOptions="Center" 
-                                    SelectedIndex="{Binding NumberSizeIndex}" />
-                            </Grid>
-                        </Border>
-
-                        <Border Margin="10"
-                            Stroke="{AppThemeBinding Light=Black, Dark=White}"
-                            BackgroundColor="{DynamicResource PageBackgroundColor}">
-
-                            <Grid Margin="10" SemanticProperties.Description="Picture">
+                            <Grid Grid.Row="1"
+                                Margin="10,10,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-
-                                <StackLayout Grid.Row="0" Orientation="Horizontal">
-                                    <Label x:Name="ShowPictureLabel" 
-                                    Text="{x:Static resources:AppResources.ShowPicture}"
-                                    VerticalOptions="Center" />
-                                    <CheckBox x:Name="ShowPictureCheckBox" VerticalOptions="Center"
-                                        windows:VisualElement.AccessKey="P"
-                                        SemanticProperties.Description="{Binding ShowPicture,
-                                            Mode=OneWay,
-                                            Converter={StaticResource CheckBoxStateToAccessibleName},
-                                            ConverterParameter=ShowPicture}"
-                                    IsChecked="{Binding ShowPicture}" />
-                                </StackLayout>
-
-                                <Grid Grid.Row="1"
-                                    Margin="10,10,0,0">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>         
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>         
                                     
-                                    <Button Grid.Row="0" x:Name="PictureBrowseButton" 
-                                        windows:VisualElement.AccessKey="B"                                    
-                                        Text="{x:Static resources:AppResources.BrowsePicture}"
-                                        Clicked="PictureBrowseButton_Clicked" />
+                                <Button Grid.Row="0" x:Name="PictureBrowseButton" 
+                                    windows:VisualElement.AccessKey="B"                                    
+                                    Text="{x:Static resources:AppResources.BrowsePicture}"
+                                    Clicked="PictureBrowseButton_Clicked" />
 
-                                    <Button Grid.Row="1" x:Name="PictureClearButton" 
-                                        Margin="0,10,0,0"                                    
-                                        windows:VisualElement.AccessKey="R" 
-                                        IsEnabled="{Binding PicturePathSquares, 
-                                            Converter={StaticResource SettingsPicturePathToPicturePathLabelIsVisible}}"
-                                        Text="{x:Static resources:AppResources.ClearSelection}"
-                                        Clicked="PictureClearButton_Clicked" />
-                                </Grid>
+                                <Button Grid.Row="1" x:Name="PictureClearButton" 
+                                    Margin="0,10,0,0"                                    
+                                    windows:VisualElement.AccessKey="R" 
+                                    IsEnabled="{Binding PicturePathSquares, 
+                                        Converter={StaticResource SettingsPicturePathToPicturePathLabelIsVisible}}"
+                                    Text="{x:Static resources:AppResources.ClearSelection}"
+                                    Clicked="PictureClearButton_Clicked" />
+                            </Grid>
 
-                                <Grid Grid.Row="2"
-                                    Margin="10,10,0,0"
-                                    IsVisible="{Binding PicturePathSquares, 
-                                        Converter={StaticResource SettingsPicturePathToPicturePathLabelIsVisible}}">
+                            <Grid Grid.Row="2"
+                                Margin="10,10,0,0"
+                                IsVisible="{Binding PicturePathSquares, 
+                                    Converter={StaticResource SettingsPicturePathToPicturePathLabelIsVisible}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" 
+                                    Text="{x:Static resources:AppResources.Selected}"
+                                    Margin="0,0,10,0" Padding="0,0,0,0" />
+                                <Label Grid.Column="1" 
+                                    Text="{Binding PicturePathSquares, 
+                                        Converter={StaticResource PathToFileName}}" 
+                                    Margin="0,0,0,0" Padding="0,0,0,0" />
+                            </Grid>
+
+                            <StackLayout Grid.Row="3" Margin="10,20,0,0">
+                                <Label Text="Optionally provide a name to be shown when the game is completed." />
+                                <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    <Label Grid.Column="0" 
-                                        Text="{x:Static resources:AppResources.Selected}"
-                                        Margin="0,0,10,0" Padding="0,0,0,0" />
-                                    <Label Grid.Column="1" 
-                                        Text="{Binding PicturePathSquares, 
-                                            Converter={StaticResource PathToFileName}}" 
-                                        Margin="0,0,0,0" Padding="0,0,0,0" />
+                                    <Label Grid.Column="0" x:Name="PictureNameLabel" 
+                                        Margin="0,0,8,0"
+                                        VerticalTextAlignment="Center"
+                                        Text="{x:Static resources:AppResources.PictureNameLabel}" />
+                                    <Entry Grid.Column="1" x:Name="PictureNameEditor"
+                                        windows:VisualElement.AccessKey="M"
+                                        VerticalTextAlignment="Center"
+                                        Text="{Binding PictureName, Mode=TwoWay}" 
+                                        SemanticProperties.Description="{x:Static resources:AppResources.PictureNameLabel}" />
                                 </Grid>
-
-                                <StackLayout Grid.Row="3" Margin="10,20,0,0">
-                                    <Label Text="Optionally provide a name to be shown when the game is completed." />
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Label Grid.Column="0" x:Name="PictureNameLabel" 
-                                            Margin="0,0,8,0"
-                                            VerticalTextAlignment="Center"
-                                            Text="{x:Static resources:AppResources.PictureNameLabel}" />
-                                        <Entry Grid.Column="1" x:Name="PictureNameEditor"
-                                            windows:VisualElement.AccessKey="M"
-                                            VerticalTextAlignment="Center"
-                                            Text="{Binding PictureName, Mode=TwoWay}" 
-                                            SemanticProperties.Description="{x:Static resources:AppResources.PictureNameLabel}" />
-                                    </Grid>
-                                </StackLayout>
+                            </StackLayout>
                                 
-                            </Grid>
-                        </Border>
-                    </StackLayout>
-                </ScrollView>
-            </StackLayout>
+                        </Grid>
+                    </Border>
+                </StackLayout>
+            </ScrollView>
             
             <Button Grid.Row="3" x:Name="CloseButton" 
                 windows:VisualElement.AccessKey="C"                                    

@@ -10,6 +10,7 @@ using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Xaml;
 using GridGames.ResX;
 using GridGames.Views;
+using System.Diagnostics;
 
 namespace GridGames.ViewModels
 {
@@ -169,7 +170,7 @@ namespace GridGames.ViewModels
         {
             bool gameIsWon = false;
 
-            Square adjacentSquare = null;
+            Square adjacentSquare;
             int emptySquareIndex = -1;
             string direction = "";
 
@@ -228,15 +229,15 @@ namespace GridGames.ViewModels
             // Make an announcement regardless of whether a square is moved.
 
             // If we found an adjacent empty square, swap the clicked square with the empty square.
-            if (emptySquareIndex != -1)
+            if ((emptySquareIndex != -1) && (emptySquareIndex != SquareIndex))
             {
                 ++MoveCount;
 
                 var clickedSquareName = squareList[SquareIndex].AccessibleName;
 
-                Square temp = squareList[SquareIndex];
-                squareList[SquareIndex] = squareList[emptySquareIndex];
-                squareList[emptySquareIndex] = temp;
+                // Now swap the item.
+                (squareList[emptySquareIndex], squareList[SquareIndex]) =
+                    (squareList[SquareIndex], squareList[emptySquareIndex]);
 
                 // Has the game been won?
                 gameIsWon = GameIsWon(squareList);
@@ -313,10 +314,45 @@ namespace GridGames.ViewModels
 
         public class Square : INotifyPropertyChanged
         {
-            public int TargetIndex { get; set; }
-            public string VisualLabel { get; set; }
-            public string AccessibleName { get; set; }
-            public string AccessibleDescription { get; set; }
+            private string accessibleName;
+            public string AccessibleName
+            {
+                get { return accessibleName; }
+                set
+                {
+                    SetProperty(ref accessibleName, value);
+                }
+            }
+
+            private string accessibleDescription;
+            public string AccessibleDescription
+            {
+                get { return accessibleDescription; }
+                set
+                {
+                    SetProperty(ref accessibleDescription, value);
+                }
+            }
+
+            private string visualLabel;
+            public string VisualLabel
+            {
+                get { return visualLabel; }
+                set
+                {
+                    SetProperty(ref visualLabel, value);
+                }
+            }
+
+            public int targetIndex;
+            public int TargetIndex
+            {
+                get { return targetIndex; }
+                set
+                {
+                    SetProperty(ref targetIndex, value);
+                }
+            }
 
             private ImageSource pictureImageSource;
             public ImageSource PictureImageSource
@@ -394,7 +430,7 @@ namespace GridGames.ViewModels
             }
 
             // The following only applies to an grid with an even number of rows and columns.
-            bool gridCanBeSolved = false;
+            bool gridCanBeSolved;
 
             if (emptySquareRow % 2 == 0)
             {
@@ -425,9 +461,7 @@ namespace GridGames.ViewModels
 
                     --i;
 
-                    Square temp = collection[i];
-                    collection[i] = collection[j];
-                    collection[j] = temp;
+                    (collection[j], collection[i]) = (collection[i], collection[j]);
                 }
             }
         }
