@@ -119,7 +119,7 @@ namespace GridGames.ViewModels
 "A:2.1.1",
 "Q:Which WCAG relates to providing helpful suggestions after an error is detected following customer input?",
 "A:3.3.3",
-"Q:Which Level AA WCAG relates to helping customers understand what information is contained on a page and how that information is organized.",
+"Q:Which Level AA WCAG relates to helping customers understand what information is contained on a page and how that information is organized?",
 "A:2.4.6",
 "Q:Which WCAG relates to helping customers know the meaning of acronyms shown in content?",
 "A:3.1.4",

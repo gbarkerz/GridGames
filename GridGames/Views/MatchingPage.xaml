@@ -75,14 +75,14 @@
                                 Source={x:Reference MatchingPageInstance},
                                     Path=BindingContext.GridRowHeight,
                                     Mode=OneWay}"
-                            Padding="2" Margin="0">
+                            Padding="0" Margin="0">
 
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"
                                     CommandParameter="{Binding Index}" />
                             </Grid.GestureRecognizers>
 
-                            <Border Margin="2" Padding="0"
+                            <Border Margin="0" Padding="0"
                                 Stroke="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
                                 AutomationProperties.IsInAccessibleTree="False"
                                 BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">

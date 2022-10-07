@@ -94,7 +94,7 @@
                                 Source={x:Reference WheresPageInstance},
                                     Path=BindingContext.GridRowHeight,
                                     Mode=OneWay}"
-                            Padding="2" Margin="0"
+                            Padding="0" Margin="0"
                             AutomationProperties.IsInAccessibleTree="False"
                             SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}">
                             <Grid.GestureRecognizers>
@@ -104,7 +104,7 @@
                             
                             <!-- Barker Todo: Add support for Voice Access. -->
 
-                            <Border Margin="2" Padding="0" AutomationProperties.IsInAccessibleTree="False">
+                            <Border Margin="0" Padding="0" AutomationProperties.IsInAccessibleTree="False">
                                 <Border.BackgroundColor>
                                     <MultiBinding Mode="OneWay" 
                                             Converter="{StaticResource WheresAnsweredToBackgroundColor}">
