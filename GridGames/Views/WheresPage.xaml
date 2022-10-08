@@ -122,6 +122,10 @@
                                     <Label Grid.Row="0" Text="{Binding WCAGNumber, Mode=OneWay}" 
                                         Margin="0" Padding="0"
                                         HorizontalOptions="Center" VerticalOptions="Center"
+                                        FontSize="{Binding 
+                                           Source={x:Reference SquaresCollectionView},
+                                           Path=Height, 
+                                           Converter={StaticResource WheresLabelContainerHeightToFontSize }}"
                                         AutomationProperties.IsInAccessibleTree="False">
                                         <Label.TextColor>
                                             <MultiBinding Mode="OneWay" 
@@ -131,15 +135,6 @@
                                                     Path="BindingContext.ShowDarkTheme" />
                                             </MultiBinding>
                                         </Label.TextColor>
-                                        <Label.FontSize>
-                                            <MultiBinding Mode="OneWay" 
-                                                    Converter="{StaticResource WheresLabelContainerHeightToFontSize}">
-                                                <Binding Source="{RelativeSource AncestorType={x:Type Grid}}" 
-                                                                Path="IsVisible" />
-                                                <Binding Source="{RelativeSource AncestorType={x:Type Grid}}" 
-                                                                Path="Height" />
-                                            </MultiBinding>
-                                        </Label.FontSize>
                                     </Label>
 
                                     <Label Grid.Row="1" Text="{Binding WCAGName, Mode=OneWay}"

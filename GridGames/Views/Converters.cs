@@ -126,36 +126,26 @@ namespace GridGames.Views
         }
     }
 
-    public class WheresLabelContainerHeightToFontSize : IMultiValueConverter
+    public class WheresLabelContainerHeightToFontSize : IValueConverter
     {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((values == null) || (values.Length < 2) || (values[0] == null) || (values[1] == null))
-            {
-                return 0;
-            }
-
-            var showNumbers = (bool)values[0];
-            var containerHeightPixels = (double)values[1];
+            var containerHeightPixels = (double)value;
 
             // Future: Properly account for line height etc. For now, just shrink the value.
             // Also this reduces the size to account for tall cells in portrait orientation.
-            double fontHeightPoints = 0;
 
-            if (showNumbers)
-            {
-                fontHeightPoints = containerHeightPixels * 0.3;
-            }
-
-            return fontHeightPoints;
+            // Note: The container here is the main CollectionView, and we have 4 rows.
+            return (containerHeightPixels * 0.3) * 0.25;
         }
 
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            var intValue = (int)value;
+
+            return (Aspect)intValue;
         }
     }
-
 
     public class CardFaceUpToImageWidth : IMultiValueConverter
     {
@@ -379,7 +369,42 @@ namespace GridGames.Views
         }
     }
 
-    public class SquareVisualLabelToLabelBackgroundColor : IMultiValueConverter
+    public class ShowPictureToImageOpacity : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (bool)value ? 1 : 0;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class ShowNumbersToLabelOpacity : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if ((values == null) || (values.Length < 2) ||
+                (values[0] == null) || (values[1] == null))
+            {
+                return 0;
+            }
+
+            var visualLabel = (string)values[0];
+            var showNumbers = (bool)values[1];
+
+            return showNumbers && !String.IsNullOrWhiteSpace(visualLabel) ? 1 : 0;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+        public class SquareVisualLabelToLabelBackgroundColor : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
@@ -389,9 +414,11 @@ namespace GridGames.Views
                 return 0;
             }
 
-            var showNumbers = (bool)values[0];
-            var visualLabel = (string)values[1];
-            var showDarkTheme = (bool)values[2];
+            var isBackgroundColor = ((string)parameter == "1");
+
+            var visualLabel = (string)values[0];
+            var showDarkTheme = (bool)values[1];
+            var showNumbers = (bool)values[2];
 
             Color backgroundColour;
 
@@ -401,7 +428,8 @@ namespace GridGames.Views
             }
             else
             {
-                backgroundColour = showDarkTheme ? Colors.Black : Colors.White;
+                backgroundColour = (showDarkTheme == isBackgroundColor ? 
+                    Colors.Black : Colors.White);
             }
 
             return backgroundColour;
@@ -449,27 +477,43 @@ namespace GridGames.Views
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((values == null) || (values.Length < 3) || 
-                (values[0] == null) || (values[1] == null) || (values[2] == null))
+            if ((values == null) || (values.Length < 2) || 
+                (values[0] == null) || (values[1] == null))
             {
                 return 0;
             }
 
-            var showNumbers = (bool)values[0];
-            var collectionViewHeight = (double)values[1];
-            var gridHeightMultipler = (double)values[2];
+            var collectionViewHeight = (double)values[0];
+            var numberSizeIndex = (int)values[1];
 
-            Debug.WriteLine("Squares label data: gridHeight " + collectionViewHeight +
-                ", gridHeightMultiplier " + gridHeightMultipler);
-
-            if ((collectionViewHeight <= 0) || !showNumbers)
+            if (collectionViewHeight <= 0)
             {
                 return 1;
             }
 
+            double gridRowHeightMultiplier = 0.3;
+
+            switch (numberSizeIndex)
+            {
+                case 0:
+                    gridRowHeightMultiplier = 0.2;
+                    break;
+                case 2:
+                    gridRowHeightMultiplier = 0.4;
+                    break;
+                case 3:
+                    gridRowHeightMultiplier = 0.5;
+                    break;
+                default:
+                    break;
+            }
+
+            Debug.WriteLine("Squares label data: gridHeight " + collectionViewHeight +
+                ", gridRowHeightMultiplier " + gridRowHeightMultiplier);
+
             // Future: Properly account for line height etc. For now, just shrink the value.
             // Also this reduces the size to account for tall cells in portrait orientation.
-            return collectionViewHeight * 0.25 * gridHeightMultipler;
+            return collectionViewHeight * 0.25 * gridRowHeightMultiplier;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

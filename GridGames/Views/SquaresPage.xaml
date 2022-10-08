@@ -27,6 +27,8 @@
             <localviews:SquareTargetIndexToPictureImageSource x:Key="SquareTargetIndexToPictureImageSource" />
             <localviews:SquareVisualLabelToLabelBackgroundColor x:Key="SquareVisualLabelToLabelBackgroundColor" />
             <localviews:SquareTargetIndexToBackgroundColor x:Key="SquareTargetIndexToBackgroundColor" />
+            <localviews:ShowPictureToImageOpacity x:Key="ShowPictureToImageOpacity" />
+            <localviews:ShowNumbersToLabelOpacity x:Key="ShowNumbersToLabelOpacity" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -74,59 +76,70 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, 
-                                Path=Height, Converter={StaticResource CollectionViewHeightToRowHeight}}"
-                            BackgroundColor="{DynamicResource GridBackgroundColor}"
-                            Margin="1"
-                            SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}"
-                            SemanticProperties.Hint="{Binding AccessibleDescription, Mode=OneWay}">
-                            <!--<Grid.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                            </Grid.GestureRecognizers>-->
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
+                        <Border StrokeThickness="1"
+                            Stroke="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}">
 
-                            <!-- Barker: Binding IsVisible generally doesn't seem robust. So achieve the desired
-                                effect through binding of other properties. -->
-                            
-                            <Image Grid.Row="0" Grid.RowSpan="2"
-                                Aspect="Fill"
-                                InputTransparent="True"
-                                Source="{Binding PictureImageSource}">
-                            </Image>
+                            <Grid 
+                                HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, 
+                                    Path=Height, Converter={StaticResource CollectionViewHeightToRowHeight}}"
+                                BackgroundColor="{DynamicResource GridBackgroundColor}"
+                                Margin="1"
+                                SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}"
+                                SemanticProperties.Hint="{Binding AccessibleDescription, Mode=OneWay}">
 
-                            <Label Grid.Row="0" Margin="2,2,0,0" Padding="2,0,2,0"  InputTransparent="True"
-                                Text="{Binding VisualLabel}"
-                                TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
-                                HorizontalOptions="Start" VerticalOptions="Start">
-                                <Label.BackgroundColor>
-                                    <MultiBinding Mode="OneWay" 
-                                        Converter="{StaticResource SquareVisualLabelToLabelBackgroundColor}">
-                                        <Binding Source="{x:Reference SquaresPageInstance}"
-                                            Path="BindingContext.ShowNumbers" />
-                                        <Binding Path="VisualLabel" />
-                                        <Binding Source="{x:Reference SquaresPageInstance}" 
-                                                    Path="BindingContext.ShowDarkTheme" />
-                                    </MultiBinding>
-                                </Label.BackgroundColor>
-                                <Label.FontSize>
-                                    <MultiBinding Mode="OneWay" 
-                                        Converter="{StaticResource LabelContainerHeightToFontSize}">
-                                        <Binding Source="{x:Reference SquaresPageInstance}"
-                                            Path="BindingContext.ShowNumbers" />
-                                        <Binding Source="{RelativeSource AncestorType={x:Type CollectionView}}" 
-                                            Path="Height" />
-                                        <Binding Source="{x:Reference SquaresPageInstance}"
-                                            Path="BindingContext.NumberHeight"
-                                            Mode="OneWay"
-                                            Converter="{StaticResource NumberSizeIndexToGridRowHeightMultiplier}" />
-                                    </MultiBinding>
-                                </Label.FontSize>
-                            </Label>
+                                <!-- Barker: Couldn't seem to get some binding of various elements' IsVisible 
+                                    to work as expected. So for now achieve the desired experience through 
+                                    binding of other properties. -->
 
-                        </Grid>
+                                <Image 
+                                    Aspect="Fill"
+                                    BackgroundColor="Transparent"
+                                    InputTransparent="True"
+                                    Opacity="{Binding Source={x:Reference SquaresPageInstance},
+                                        Path=BindingContext.ShowPicture,
+                                        Converter={StaticResource ShowPictureToImageOpacity}}"
+                                    Source="{Binding PictureImageSource}">
+                                </Image>
+
+                                <Label Margin="2,2,0,0" Padding="2,0,2,0"  
+                                    InputTransparent="True"
+                                    Text="{Binding VisualLabel}"
+                                    HorizontalOptions="Start" VerticalOptions="Start">
+                                    <Label.TextColor>
+                                        <MultiBinding Mode="OneWay" ConverterParameter="0"
+                                            Converter="{StaticResource SquareVisualLabelToLabelBackgroundColor}">
+                                            <Binding Path="VisualLabel" />
+                                            <Binding Source="{x:Reference SquaresPageInstance}" 
+                                                        Path="BindingContext.ShowDarkTheme" />
+                                            <Binding Source="{x:Reference SquaresPageInstance}" 
+                                                        Path="BindingContext.ShowNumbers" />
+                                        </MultiBinding>
+                                    </Label.TextColor>
+                                    <Label.BackgroundColor>
+                                        <MultiBinding Mode="OneWay" ConverterParameter="1" 
+                                            Converter="{StaticResource SquareVisualLabelToLabelBackgroundColor}">
+                                            <Binding Path="VisualLabel" />
+                                            <Binding Source="{x:Reference SquaresPageInstance}" 
+                                                        Path="BindingContext.ShowDarkTheme" />
+                                            <Binding Source="{x:Reference SquaresPageInstance}" 
+                                                        Path="BindingContext.ShowNumbers" />
+                                        </MultiBinding>
+                                    </Label.BackgroundColor>
+                                    <Label.FontSize>
+                                        <MultiBinding Mode="OneWay" 
+                                            Converter="{StaticResource LabelContainerHeightToFontSize}">
+                                            <Binding 
+                                                Source="{RelativeSource AncestorType={x:Type CollectionView}}" 
+                                                Path="Height" />
+                                            <Binding 
+                                                Source="{x:Reference SquaresPageInstance}"
+                                                Path="BindingContext.NumberHeight" />
+                                        </MultiBinding>
+                                    </Label.FontSize>
+                                </Label>
+
+                            </Grid>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

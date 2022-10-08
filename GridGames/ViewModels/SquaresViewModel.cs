@@ -32,7 +32,14 @@ namespace GridGames.ViewModels
             set
             {
                 SetProperty(ref numberHeight, value);
+                OnPropertyChanged("numberHeightAdjust");
             }
+        }
+
+        private int numberHeightAdjust;
+        public int NumberHeightAdjust
+        {
+            get { return numberHeight + 1; }
         }
 
         private bool showNumbers;

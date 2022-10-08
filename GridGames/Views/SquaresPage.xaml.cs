@@ -36,6 +36,10 @@ namespace GridGames.Views
 #if ANDROID
             InputBlockingGrid.IsVisible = false;
 
+            // IMPORTANT! TalkBack usage with a tapped handler is unreliable on Android, so don't use it.
+            //https://github.com/xamarin/Xamarin.Forms/issues/9991
+            //[Bug] Tap gesture recognizer doesn't fire in android with screen reader enabled #9991
+
             SquaresCollectionView.SelectionChanged += SquaresCollectionView_SelectionChanged;
 #endif
         }
@@ -157,6 +161,8 @@ namespace GridGames.Views
 
             base.OnAppearing();
 
+            Debug.Write("Squares Game: Done base OnAppearing.");
+
             Preferences.Set("InitialGame", "Squares");
 
             // Account for the app settings changing since the page was last shown.
@@ -193,7 +199,7 @@ namespace GridGames.Views
                 }
 
                 // Restore the order of the squares in the grid.
-                //vm.RestoreEmptyGrid();
+                vm.RestoreEmptyGrid();
 
                 // Check whether the image file exists before trying to load it into the ImageEditor.
                 if (vm.IsImageFilePathValid(vm.PicturePathSquares))
