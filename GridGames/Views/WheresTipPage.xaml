@@ -58,7 +58,7 @@
 
         <Button Grid.Row="4" Margin="0" Padding="8"
             windows:VisualElement.AccessKey="E"                
-            Text="Learn more about the EN 301 549 standard"
+            Text="Download the EN 301 549 standard"
             LineBreakMode="WordWrap"
             HorizontalOptions="Center"
             Clicked="LearnMoreEN301Button_Clicked" />
