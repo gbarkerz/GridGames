@@ -51,6 +51,33 @@ namespace GridGames.Views
             throw new NotImplementedException();
         }
     }
+        
+    public class DarkThemeToSquareLabelColor : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var showDarkTheme = (bool)value;
+
+            var color = Colors.Black;
+
+            // Is this the text colour?
+            if ((string)parameter == "0")
+            {
+                color = (showDarkTheme ? Colors.White : Colors.Black);
+            }
+            else
+            {
+                color = (showDarkTheme ? Colors.Black : Colors.White);
+            }
+
+            return color;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
     public class QuestionToQuestionString : IValueConverter
     {
@@ -249,21 +276,6 @@ namespace GridGames.Views
         }
     }
 
-    public class FirstRunToGridVisible : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var firstRun = (bool)value;
-
-            return firstRun ? false : true;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
     public class FirstRunToGridOpacity : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -324,147 +336,11 @@ namespace GridGames.Views
         }
     }
 
-    public class GameIsLoadingToGridOpacity : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var gameIsLoading = (bool)value;
-
-            double squareListOpacity = (gameIsLoading ? 0.3 : 1.0);
-
-            return squareListOpacity;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class GameIsLoadingToVisibility : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var isGameLoading = (bool)value;
-
-            return (isGameLoading ? false : true);
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
     public class CollectionViewHeightToRowHeight : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return ((double)value / 4) - 2;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class ShowPictureToImageOpacity : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return (bool)value ? 1 : 0;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class ShowNumbersToLabelOpacity : IMultiValueConverter
-    {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            if ((values == null) || (values.Length < 2) ||
-                (values[0] == null) || (values[1] == null))
-            {
-                return 0;
-            }
-
-            var visualLabel = (string)values[0];
-            var showNumbers = (bool)values[1];
-
-            return showNumbers && !String.IsNullOrWhiteSpace(visualLabel) ? 1 : 0;
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-        public class SquareVisualLabelToLabelBackgroundColor : IMultiValueConverter
-    {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            if ((values == null) || (values.Length < 3) ||
-                (values[0] == null) || (values[1] == null) || (values[2] == null))
-            {
-                return 0;
-            }
-
-            var isBackgroundColor = ((string)parameter == "1");
-
-            var visualLabel = (string)values[0];
-            var showDarkTheme = (bool)values[1];
-            var showNumbers = (bool)values[2];
-
-            Color backgroundColour;
-
-            if (!showNumbers || String.IsNullOrWhiteSpace(visualLabel))
-            {
-                backgroundColour = Colors.Transparent;
-            }
-            else
-            {
-                backgroundColour = (showDarkTheme == isBackgroundColor ? 
-                    Colors.Black : Colors.White);
-            }
-
-            return backgroundColour;
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class NumberSizeIndexToGridRowHeightMultiplier : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var numberSizeIndex = (int)value;
-
-            double gridRowHeightMultiplier = 0.3;
-
-            switch (numberSizeIndex)
-            {
-                case 0:
-                    gridRowHeightMultiplier = 0.2;
-                    break;
-                case 2:
-                    gridRowHeightMultiplier = 0.4;
-                    break;
-                case 3:
-                    gridRowHeightMultiplier = 0.5;
-                    break;
-                default:
-                    break;
-            }
-
-            return gridRowHeightMultiplier;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -514,84 +390,6 @@ namespace GridGames.Views
             // Future: Properly account for line height etc. For now, just shrink the value.
             // Also this reduces the size to account for tall cells in portrait orientation.
             return collectionViewHeight * 0.25 * gridRowHeightMultiplier;
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class SquareTargetIndexToIsVisible : IMultiValueConverter
-    {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            if ((values == null) || (values.Length < 2) || (values[0] == null) || (values[1] == null))
-            {
-                return 0;
-            }
-
-            var targetIndex = (int)values[0];
-            var picturesVisible = (bool)values[1];
-
-            // Only show a picture if pictures are to be shown and this is not the empty square.
-            return picturesVisible && (targetIndex < 15);
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class SquareTargetIndexToPictureImageSource : IMultiValueConverter
-    {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            if ((values == null) || (values.Length < 2) || (values[0] == null) || (values[1] == null))
-            {
-                return 0;
-            }
-
-            var targetIndex = (int)values[0];
-
-            var pictureSource = values[1] as ImageSource;
-
-            // Only show a picture if pictures are to be shown and this is not the empty square.
-            return targetIndex < 15 ? pictureSource : null;
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class SquareTargetIndexToBackgroundColor : IMultiValueConverter
-    {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (values == null || (values.Length < 2))
-            {
-                return "";
-            }
-
-            if ((values[0] == null) || (values[1] == null))
-            {
-                return "";
-            }
-
-            var targetIndex = (int)values[0];
-            bool showDarkTheme = (bool)values[1];
-
-            var colorName = "MidGray";
-
-            if (targetIndex < 15)
-            {
-                colorName = showDarkTheme ? "Black" : "White";
-            }
-
-            return App.Current.Resources[colorName];
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

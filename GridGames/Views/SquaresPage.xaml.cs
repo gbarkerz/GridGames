@@ -3,19 +3,72 @@ using GridGames.ViewModels;
 using SkiaSharp;
 using SkiaSharp.Views.Maui.Controls;
 using System.Diagnostics;
-using static GridGames.ViewModels.SquaresViewModel;
 
 namespace GridGames.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SquaresPage : ContentPage
     {
+        // Barker: IMPORTANT.
+        // While most of the binding of CollectionView item properties works great,
+        // in tests, binding of IsVisible was not 100% robust. That is, most times
+        // when two items were swapped in the collection while the Squares game is 
+        // played, the binding worked as expected, sometimes the binding on one or
+        // other items did not take effect. Presumably this is because my code was
+        // not in complience with binding requirements (eg related to threading),
+        // but so far I've not been able to pinpoint the cause of the issue. So for 
+        // now, add this temporary "Fixup" code to manually set the visibility on 
+        // all the items. This unblocks me while working on the game experience,
+        // and I'll revisit this once the full .NET 7.0 is released.
+
+        private void FixupSquaresWithDelay()
+        {
+            // Add a small delay after items have been updated, before setting
+            // the various item elements' visibility.
+            var timer = new Timer(
+                new TimerCallback((s) => FixupSquares()),
+                           null,
+                           TimeSpan.FromMilliseconds(200),
+                           TimeSpan.FromMilliseconds(Timeout.Infinite));
+        }
+
+        private void FixupSquares()
+        {
+            // Always run this on the UI thread.
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                var vm = this.BindingContext as SquaresViewModel;
+
+                // Set the visibility of the items' images and labels as appropriate.
+                var descendants = SquaresCollectionView.GetVisualTreeDescendants();
+                for (int i = 0; i < descendants.Count; ++i)
+                {
+                    var descendant = descendants[i];
+                    if (descendant is Label)
+                    {
+                        var label = descendant as Label;
+
+                        // The empty square nevers has its Label visible.
+                        label.IsVisible = vm.ShowNumbers && (label.Text != "");
+                    }
+                    else if (descendant is Image)
+                    {
+                        var image = descendant as Image;
+                        image.IsVisible = vm.ShowPicture;
+                    }
+                }
+            });
+        }
+
         // Path to most recently fully loaded picture.
         private string previousLoadedPicture = "";
         private SKBitmap originalCustomPictureBitmap = null;
 
         private Timer timerSetCustomPicture;
         private bool inShowCustomPictureIfReady = false;
+
+        private int destGridPortionWidth = 0;
+        private int destGridPortionHeight = 0;
 
         public SquaresPage()
         {
@@ -57,11 +110,13 @@ namespace GridGames.Views
 
                     var vm = this.BindingContext as SquaresViewModel;
                     bool gameIsWon = vm.AttemptMoveBySelection(collectionView.SelectedItem);
+
+                    FixupSquaresWithDelay();
+
                     if (gameIsWon)
                     {
                         await OfferToRestartGame();
                     }
-
                 }
             }
         }
@@ -98,7 +153,7 @@ namespace GridGames.Views
                         timerSetCustomPicture = null;
                     }
 
-                    ShowCustomPictureInSquaresInBackground();
+                    ShowCustomPictureInSquares();
                 }
             }
         }
@@ -123,34 +178,10 @@ namespace GridGames.Views
                     timerSetCustomPicture = null;
                 }
 
-                ShowCustomPictureInSquaresInBackground();
+                ShowCustomPictureInSquares();
             }
 
             inShowCustomPictureIfReady = false;
-        }
-
-        private int destGridPortionWidth = 0;
-        private int destGridPortionHeight = 0;
-
-        private void ShowCustomPictureInSquaresInBackground()
-        {
-            var vm = this.BindingContext as SquaresViewModel;
-
-            vm.GameIsLoading = true;
-
-            vm.RaiseNotificationEvent(PleaseWaitLabel.Text);
-
-            destGridPortionWidth = (int)(SquaresCollectionView.Width / 4);
-            destGridPortionHeight = (int)(SquaresCollectionView.Height / 4);
-
-            Debug.WriteLine("ShowCustomPictureInSquaresInBackground: Thread.CurrentThread.IsBackground " 
-                + Thread.CurrentThread.IsBackground);
-
-            var th = new Thread(ShowCustomPictureInSquares);
-
-            th.IsBackground = true;
-
-            th.Start(this);
         }
 
         // This gets called when switching to the Squares Game from other games,
@@ -228,6 +259,8 @@ namespace GridGames.Views
                     }
                 }
             }
+
+            FixupSquaresWithDelay();
         }
 
         private async void FallthroughGrid_Tapped(object sender, EventArgs e)
@@ -392,14 +425,16 @@ namespace GridGames.Views
             }
         }
 
-        private static void ShowCustomPictureInSquares(Object obj)
+        private void ShowCustomPictureInSquares()
         {
-            Debug.WriteLine("ShowCustomPictureInSquares: Thread.CurrentThread.IsBackground "
-                + Thread.CurrentThread.IsBackground);
+            var vm = this.BindingContext as SquaresViewModel;
 
-            var page = obj as SquaresPage;
+            vm.GameIsLoading = true;
 
-            var vm = page.BindingContext as SquaresViewModel;
+            vm.RaiseNotificationEvent(PleaseWaitLabel.Text);
+
+            destGridPortionWidth = (int)(SquaresCollectionView.Width / 4);
+            destGridPortionHeight = (int)(SquaresCollectionView.Height / 4);
 
             string picturePathSquares = vm.PicturePathSquares;
             if (String.IsNullOrWhiteSpace(picturePathSquares))
@@ -409,18 +444,15 @@ namespace GridGames.Views
 
             Debug.WriteLine("ShowCustomPictureInSquares: Loading pictures into squares now.");
 
-            Debug.WriteLine("ShowCustomPictureInSquares: Thread.CurrentThread.IsBackground " + 
-                Thread.CurrentThread.IsBackground);
-
             try
             {
-                if (page.originalCustomPictureBitmap == null)
+                if (originalCustomPictureBitmap == null)
                 {
                     using (Stream fileStream = File.OpenRead(picturePathSquares))
                     {
                         using (SKManagedStream originalStream = new SKManagedStream(fileStream))
                         {
-                            page.originalCustomPictureBitmap = SKBitmap.Decode(originalStream);
+                            originalCustomPictureBitmap = SKBitmap.Decode(originalStream);
 
                             originalStream.Dispose();
                         }
@@ -432,7 +464,7 @@ namespace GridGames.Views
                 // Leave the 16th square empty.
                 for (int i = 0; i < 15; ++i)
                 {
-                    vm.SquareListCollection[i].PictureImageSource = page.GetImageSourceForSquare(
+                    vm.SquareListCollection[i].PictureImageSource = GetImageSourceForSquare(
                                                                         vm.SquareListCollection[i].TargetIndex);
                 }
 
@@ -449,6 +481,8 @@ namespace GridGames.Views
             Debug.WriteLine("ShowCustomPictureInSquares: Done loading pictures into squares.");
 
             vm.GameIsLoading = false;
+
+            FixupSquaresWithDelay();
         }
 
         private ImageSource GetImageSourceForSquare(int index)

@@ -15,7 +15,6 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <localviews:FirstRunToGridVisible x:Key="FirstRunToGridVisible" />
             <localviews:FirstRunToGridOpacity x:Key="FirstRunToGridOpacity" />
             <localviews:WheresLabelContainerHeightToFontSize x:Key="WheresLabelContainerHeightToFontSize" />
             <localviews:WCAGTitleToQuestion x:Key="WCAGTitleToQuestion" />

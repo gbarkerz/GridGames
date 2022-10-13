@@ -18,17 +18,9 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <localviews:FirstRunLoadingSquaresToGridOpacity x:Key="FirstRunLoadingSquaresToGridOpacity" />
-            <localviews:GameIsLoadingToGridOpacity x:Key="GameIsLoadingToGridOpacity" />
-            <localviews:GameIsLoadingToVisibility x:Key="GameIsLoadingToVisibility" />
             <localviews:CollectionViewHeightToRowHeight x:Key="CollectionViewHeightToRowHeight" />
-            <localviews:NumberSizeIndexToGridRowHeightMultiplier x:Key="NumberSizeIndexToGridRowHeightMultiplier" />
             <localviews:LabelContainerHeightToFontSize x:Key="LabelContainerHeightToFontSize" />
-            <localviews:SquareTargetIndexToIsVisible x:Key="SquareTargetIndexToIsVisible" />
-            <localviews:SquareTargetIndexToPictureImageSource x:Key="SquareTargetIndexToPictureImageSource" />
-            <localviews:SquareVisualLabelToLabelBackgroundColor x:Key="SquareVisualLabelToLabelBackgroundColor" />
-            <localviews:SquareTargetIndexToBackgroundColor x:Key="SquareTargetIndexToBackgroundColor" />
-            <localviews:ShowPictureToImageOpacity x:Key="ShowPictureToImageOpacity" />
-            <localviews:ShowNumbersToLabelOpacity x:Key="ShowNumbersToLabelOpacity" />
+            <localviews:DarkThemeToSquareLabelColor x:Key="DarkThemeToSquareLabelColor" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -87,44 +79,29 @@
                                 SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}"
                                 SemanticProperties.Hint="{Binding AccessibleDescription, Mode=OneWay}">
 
-                                <!-- Barker: Couldn't seem to get some binding of various elements' IsVisible 
-                                    to work as expected. So for now achieve the desired experience through 
-                                    binding of other properties. -->
-
+                                <!-- Barker: IMPORTANT. Read the comment at the top of SquaresPage.xaml.cs
+                                    relating to not being able to find a reliable way of binding IsVisible
+                                    to the items being swapped around the CollectioView as the game is played. -->
+                                
                                 <Image 
                                     Aspect="Fill"
                                     BackgroundColor="Transparent"
                                     InputTransparent="True"
-                                    Opacity="{Binding Source={x:Reference SquaresPageInstance},
-                                        Path=BindingContext.ShowPicture,
-                                        Converter={StaticResource ShowPictureToImageOpacity}}"
                                     Source="{Binding PictureImageSource}">
                                 </Image>
-
+                                
                                 <Label Margin="2,2,0,0" Padding="2,0,2,0"  
                                     InputTransparent="True"
                                     Text="{Binding VisualLabel}"
+                                    TextColor="{Binding Source={x:Reference SquaresPageInstance},
+                                        Path=BindingContext.ShowDarkTheme,
+                                        ConverterParameter=0,
+                                        Converter={StaticResource DarkThemeToSquareLabelColor}}"
+                                    BackgroundColor="{Binding Source={x:Reference SquaresPageInstance},
+                                        Path=BindingContext.ShowDarkTheme,
+                                        ConverterParameter=1,
+                                        Converter={StaticResource DarkThemeToSquareLabelColor}}"
                                     HorizontalOptions="Start" VerticalOptions="Start">
-                                    <Label.TextColor>
-                                        <MultiBinding Mode="OneWay" ConverterParameter="0"
-                                            Converter="{StaticResource SquareVisualLabelToLabelBackgroundColor}">
-                                            <Binding Path="VisualLabel" />
-                                            <Binding Source="{x:Reference SquaresPageInstance}" 
-                                                        Path="BindingContext.ShowDarkTheme" />
-                                            <Binding Source="{x:Reference SquaresPageInstance}" 
-                                                        Path="BindingContext.ShowNumbers" />
-                                        </MultiBinding>
-                                    </Label.TextColor>
-                                    <Label.BackgroundColor>
-                                        <MultiBinding Mode="OneWay" ConverterParameter="1" 
-                                            Converter="{StaticResource SquareVisualLabelToLabelBackgroundColor}">
-                                            <Binding Path="VisualLabel" />
-                                            <Binding Source="{x:Reference SquaresPageInstance}" 
-                                                        Path="BindingContext.ShowDarkTheme" />
-                                            <Binding Source="{x:Reference SquaresPageInstance}" 
-                                                        Path="BindingContext.ShowNumbers" />
-                                        </MultiBinding>
-                                    </Label.BackgroundColor>
                                     <Label.FontSize>
                                         <MultiBinding Mode="OneWay" 
                                             Converter="{StaticResource LabelContainerHeightToFontSize}">
