@@ -21,14 +21,14 @@ namespace GridGames.Views
         // all the items. This unblocks me while working on the game experience,
         // and I'll revisit this once the full .NET 7.0 is released.
 
-        private void FixupSquaresWithDelay()
+        private void FixupSquaresWithDelay(int delay)
         {
             // Add a small delay after items have been updated, before setting
             // the various item elements' visibility.
             var timer = new Timer(
                 new TimerCallback((s) => FixupSquares()),
                            null,
-                           TimeSpan.FromMilliseconds(200),
+                           TimeSpan.FromMilliseconds(delay),
                            TimeSpan.FromMilliseconds(Timeout.Infinite));
         }
 
@@ -94,7 +94,18 @@ namespace GridGames.Views
             //[Bug] Tap gesture recognizer doesn't fire in android with screen reader enabled #9991
 
             SquaresCollectionView.SelectionChanged += SquaresCollectionView_SelectionChanged;
+
+            SquaresCollectionView.DescendantAdded += SquaresCollectionView_DescendantAdded;
 #endif
+        }
+
+
+        private void SquaresCollectionView_DescendantAdded(object sender, ElementEventArgs e)
+        {
+            // Manually setting the visibility of various elements after updating the 
+            // CollectionView is a temporary measure and will be removed once the full
+            // .NET 7.0 is available.
+            FixupSquares();
         }
 
 #if ANDROID
@@ -111,7 +122,7 @@ namespace GridGames.Views
                     var vm = this.BindingContext as SquaresViewModel;
                     bool gameIsWon = vm.AttemptMoveBySelection(collectionView.SelectedItem);
 
-                    FixupSquaresWithDelay();
+                    FixupSquaresWithDelay(200);
 
                     if (gameIsWon)
                     {
@@ -220,6 +231,8 @@ namespace GridGames.Views
             vm.PicturePathSquares = Preferences.Get("PicturePathSquares", "");
             vm.PictureName = Preferences.Get("PictureName", "");
 
+            bool loadedCustomPicture = false;
+
             // Has the state of the picture being shown changed since we were last changed?
             if (vm.ShowPicture && (vm.PicturePathSquares != null) &&
                 (vm.PicturePathSquares != previousLoadedPicture))
@@ -235,6 +248,8 @@ namespace GridGames.Views
                 // Check whether the image file exists before trying to load it into the ImageEditor.
                 if (vm.IsImageFilePathValid(vm.PicturePathSquares))
                 {
+                    loadedCustomPicture = true;
+
                     // Set the images shown on the squares.
                     ShowCustomPicture();
 
@@ -260,7 +275,10 @@ namespace GridGames.Views
                 }
             }
 
-            FixupSquaresWithDelay();
+            if (!loadedCustomPicture)
+            {
+                FixupSquaresWithDelay(500);
+            }
         }
 
         private async void FallthroughGrid_Tapped(object sender, EventArgs e)
@@ -481,8 +499,6 @@ namespace GridGames.Views
             Debug.WriteLine("ShowCustomPictureInSquares: Done loading pictures into squares.");
 
             vm.GameIsLoading = false;
-
-            FixupSquaresWithDelay();
         }
 
         private ImageSource GetImageSourceForSquare(int index)
