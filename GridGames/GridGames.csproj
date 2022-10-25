@@ -36,7 +36,7 @@
     <Platforms>AnyCPU;ARM64;x64</Platforms>
   </PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-maccatalyst|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-maccatalyst|AnyCPU'">
 	  <ApplicationTitle>Grid Games</ApplicationTitle>
 	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
 	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
@@ -67,29 +67,29 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android33.0|AnyCPU'">
 	  <ApplicationTitle>Grid Games</ApplicationTitle>
 	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
-	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
-	  <ApplicationVersion>1</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.0.2</ApplicationDisplayVersion>
+	  <ApplicationVersion>2</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android33.0|AnyCPU'">
 	  <ApplicationTitle>Grid Games</ApplicationTitle>
 	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
-	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
-	  <ApplicationVersion>1</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.0.2</ApplicationDisplayVersion>
+	  <ApplicationVersion>2</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android33.0|ARM64'">
 	  <ApplicationTitle>Grid Games</ApplicationTitle>
 	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
-	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
-	  <ApplicationVersion>1</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.0.2</ApplicationDisplayVersion>
+	  <ApplicationVersion>2</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android33.0|ARM64'">
 	  <ApplicationTitle>Grid Games</ApplicationTitle>
 	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
-	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
-	  <ApplicationVersion>1</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.0.2</ApplicationDisplayVersion>
+	  <ApplicationVersion>2</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|AnyCPU'">
@@ -118,6 +118,16 @@
 	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
 	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
 	  <ApplicationVersion>1</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android33.0|x64'">
+	  <ApplicationDisplayVersion>1.0.2</ApplicationDisplayVersion>
+	  <ApplicationVersion>2</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android33.0|x64'">
+	  <ApplicationDisplayVersion>1.0.2</ApplicationDisplayVersion>
+	  <ApplicationVersion>2</ApplicationVersion>
 	</PropertyGroup>
 
   <ItemGroup>
