@@ -6,7 +6,7 @@
     xmlns:views="clr-namespace:GridGames.Views"
     FlyoutBackdrop="#80000000"
     FlyoutBehavior="Flyout">
-
+    
     <!--The Squares game is currently unavailable in MAUI due to an unavailable 3rd party dependency.-->
 
     <FlyoutItem Title="Where's WCAG?"

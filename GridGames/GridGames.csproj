@@ -1,8 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-    <TargetFrameworks>net7.0-android33.0</TargetFrameworks>
-    
+    <TargetFrameworks>net7.0-android;net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
+
     <OutputType>Exe</OutputType>
 		<RootNamespace>GridGames</RootNamespace>
 		<UseMaui>true</UseMaui>
@@ -90,34 +91,6 @@
 	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
 	  <ApplicationDisplayVersion>1.0.2</ApplicationDisplayVersion>
 	  <ApplicationVersion>2</ApplicationVersion>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|AnyCPU'">
-	  <ApplicationTitle>Grid Games</ApplicationTitle>
-	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
-	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
-	  <ApplicationVersion>1</ApplicationVersion>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|AnyCPU'">
-	  <ApplicationTitle>Grid Games</ApplicationTitle>
-	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
-	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
-	  <ApplicationVersion>1</ApplicationVersion>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|ARM64'">
-	  <ApplicationTitle>Grid Games</ApplicationTitle>
-	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
-	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
-	  <ApplicationVersion>1</ApplicationVersion>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|ARM64'">
-	  <ApplicationTitle>Grid Games</ApplicationTitle>
-	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
-	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
-	  <ApplicationVersion>1</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android33.0|x64'">
@@ -220,6 +193,7 @@
 	<ItemGroup>
 	  <Folder Include="Properties\PublishProfiles\" />
 	  <Folder Include="Resources\DefaultMatchingBackgrounds\" />
+	  <Folder Include="Resources\Samples\" />
 	</ItemGroup>
 
 	<ItemGroup>

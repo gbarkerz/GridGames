@@ -67,30 +67,42 @@
                 <!-- Set AutomationProperties.IsInAccessibleTree="False" in some elements below 
                      in order to prevent containers being unnecessarily exposed through UIA. -->
 
+                <!-- An AutomationProperties.Hint set on the Grid here does not seem to get propagated
+                    up to the parent list item. So expose the contained image to have the hint exposed.
+                    SemanticProperties.Hint="{Binding CurrentAccessibleDescription, Mode=OneWay}"-->
+
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid 
-                            SemanticProperties.Description="{Binding CurrentAccessibleName, Mode=OneWay}"
-                            HeightRequest="{Binding 
-                                Source={x:Reference MatchingPageInstance},
-                                    Path=BindingContext.GridRowHeight,
-                                    Mode=OneWay}"
-                            Padding="0" Margin="0">
-
-                            <Grid.GestureRecognizers>
+                        <!-- Remove the Border from the UIA tree, otherwise it gets exposed unnecessarily as
+                            a group element. Still set a SemanticProperties.Description, as this will get
+                            propogated up to be the UIA Name on the containing list item. -->
+                        <Border Margin="0" Padding="0" 
+                            AutomationProperties.IsInAccessibleTree="False"
+                            SemanticProperties.Description="{Binding CurrentAccessibleName, Mode=OneWay}">
+                            <Border.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"
                                     CommandParameter="{Binding Index}" />
-                            </Grid.GestureRecognizers>
+                            </Border.GestureRecognizers>
 
-                            <Border Margin="0" Padding="0"
-                                Stroke="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
-                                AutomationProperties.IsInAccessibleTree="False"
-                                BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
+                            <Grid Padding="0" Margin="4"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
+                                HeightRequest="{Binding 
+                                    Source={x:Reference MatchingPageInstance},
+                                        Path=BindingContext.GridRowHeight,
+                                        Mode=OneWay}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <!-- Don't enable hit testing on the image, as screen readers should hit the containing
+                                    list item. If the customer is interested in the image details, the screen reader
+                                    can navigate to the image from the list item. -->
                                 <Image 
+                                    InputTransparent="True"
                                     SemanticProperties.Description="{Binding CurrentAccessibleDescription, Mode=OneWay}"
                                     Aspect="{Binding Source={x:Reference MatchingPageInstance},
-                                       Path=BindingContext.PictureAspect,
-                                       Mode=OneWay}"
+                                        Path=BindingContext.PictureAspect,
+                                        Mode=OneWay}"
                                     Source="{Binding PictureImageSource}">
                                     <Image.WidthRequest>
                                         <MultiBinding Mode="OneWay" 
@@ -101,21 +113,13 @@
                                         </MultiBinding>
                                     </Image.WidthRequest>
                                 </Image>
-                            </Border>
-                        </Grid>
+                            </Grid>
+                        </Border>
+                            
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
                 
             </CollectionView>
-
-            <Grid Grid.Row="0" x:Name="InputBlockingGrid"
-                SemanticProperties.Description="Game input blocker" 
-                SemanticProperties.Hint="This only exists to prevent mouse and touch input from hanging the app when used with a screen reader."
-                BackgroundColor="Transparent">
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="FallthroughGrid_Tapped" />
-                </Grid.GestureRecognizers>
-            </Grid>
 
             <Border Grid.Row="0" Margin="4" Padding="8" x:Name="WelcomeBorder" 
                 IsVisible="{Binding FirstRunMatching}"

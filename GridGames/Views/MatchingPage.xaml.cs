@@ -1,14 +1,7 @@
 ﻿using GridGames.ResX;
-using GridGames.Services;
 using GridGames.ViewModels;
-using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
-using System.Threading.Tasks;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Xaml;
 
 namespace GridGames.Views
 {
@@ -19,6 +12,8 @@ namespace GridGames.Views
         private string previousPicturePathMatching;
         private bool firstRunThisInstance = true;
 
+        public static DateTime timeOfMostRecentSelectionChanged = DateTime.Now;
+
         public MatchingPage()
         {
             InitializeComponent();
@@ -26,7 +21,6 @@ namespace GridGames.Views
             WelcomeBorder.Loaded += WelcomeBorder_Loaded;
 
             SquaresCollectionView.SizeChanged += SquaresCollectionView_SizeChanged;
-            SquaresCollectionView.Focused += SquaresCollectionView_Focused;
 
             Application.Current.RequestedThemeChanged += (s, a) =>
             {
@@ -42,9 +36,79 @@ namespace GridGames.Views
 
             (this.BindingContext as MatchingViewModel).SetMatchingPage(this);
 
-#if ANDROID
-            InputBlockingGrid.IsVisible = false;
-#endif
+            SquaresCollectionView.SelectionChanged += SquaresCollectionView_SelectionChanged;
+        }
+
+        private async void SquaresCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            timeOfMostRecentSelectionChanged = DateTime.Now;
+
+            // If this selection change is very likely due to a use of an Arrow key to move
+            // between squares, do nothing here. If instead the selection change is more
+            // likely due to programmatic selection via a screen reader, attempt to move 
+            // the square.
+            var timeSinceMostRecentArrowKeyPress = DateTime.Now - MauiProgram.timeOfMostRecentArrowKeyPress;
+            if (timeSinceMostRecentArrowKeyPress.TotalMilliseconds < 100)
+            {
+                return;
+            }
+
+            var collectionView = sender as CollectionView;
+            if (collectionView != null)
+            {
+                if (collectionView.SelectedItem != null)
+                {
+                    var item = SquaresCollectionView.SelectedItem as Card;
+                    if (item != null)
+                    {
+                        await ReactToInputOnCard(item.Index);
+                    }
+                }
+            }
+        }
+
+        private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            var timeSinceMostRecentSelectionChanged = DateTime.Now - timeOfMostRecentSelectionChanged;
+            if (timeSinceMostRecentSelectionChanged.TotalMilliseconds < 100)
+            {
+                return;
+            }
+
+            int itemIndex = (int)(e as Microsoft.Maui.Controls.TappedEventArgs).Parameter;
+            await ReactToInputOnCard(itemIndex);
+        }
+
+        public async void ReactToKeyInputOnSelectedCard()
+        {
+            var item = SquaresCollectionView.SelectedItem as Card;
+            if (item != null)
+            {
+                await ReactToInputOnCard(item.Index);
+            }
+        }
+
+        private async Task ReactToInputOnCard(int itemIndex)
+        {
+            Debug.WriteLine("Grid Games: Input on Square " + itemIndex);
+
+            var vm = this.BindingContext as MatchingViewModel;
+            if (vm.FirstRunMatching)
+            {
+                return;
+            }
+
+            int itemCollectionIndex = GetItemCollectionIndexFromItemIndex(itemIndex);
+            if (itemCollectionIndex == -1)
+            {
+                return;
+            }
+
+            bool gameIsWon = vm.AttemptToTurnOverSquare(itemCollectionIndex);
+            if (gameIsWon)
+            {
+                await OfferToRestartGame();
+            }
         }
 
         private void WelcomeBorder_Loaded(object sender, EventArgs e)
@@ -62,25 +126,12 @@ namespace GridGames.Views
             }
         }
 
-        private void SquaresCollectionView_Focused(object sender, FocusEventArgs e)
-        {
-            // If the grid has no selected item by the time it gets focus, 
-            // select the first square now. The grid must always have a 
-            // selected item if it's to respond to keyboard input.
-            var item = SquaresCollectionView.SelectedItem as Card;
-            if (item == null)
-            {
-                var vm = this.BindingContext as MatchingViewModel;
-                SquaresCollectionView.SelectedItem = vm.SquareListCollection[0];
-            }
-        }
-
         private void SquaresCollectionView_SizeChanged(object sender, EventArgs e)
         {
             if (SquaresCollectionView.Height > 0)
             {
                 var vm = this.BindingContext as MatchingViewModel;
-                vm.GridRowHeight = (SquaresCollectionView.Height / 4) - 4;
+                vm.GridRowHeight = (SquaresCollectionView.Height / 4) - 12;
             }
         }
 
@@ -137,11 +188,6 @@ namespace GridGames.Views
                 previousShowCustomPictures = showCustomPictures;
                 previousPicturePathMatching = picturePathMatching;
             }
-
-            // Try to always set keyboard focus to the cards when the page appears.
-#if WINDOWS
-            SquaresCollectionView.Focus();
-#endif 
         }
 
         public void SetUpCards()
@@ -235,26 +281,6 @@ namespace GridGames.Views
                     vm.SetupDefaultMatchingCardList();
                 }
             }
-
-            // Try to always set keyboard focus to the cards when the page appears.
-#if WINDOWS
-            SquaresCollectionView.Focus();
-#endif 
-        }
-
-        private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
-        {
-            int itemIndex = (int)(e as Microsoft.Maui.Controls.TappedEventArgs).Parameter;
-            await ReactToInputOnCard(itemIndex);
-        }
-
-        public async void ReactToKeyInputOnSelectedCard()
-        {
-            var item = SquaresCollectionView.SelectedItem as Card;
-            if (item != null)
-            {
-                await ReactToInputOnCard(item.Index);
-            }
         }
 
         public async void ShowHelp()
@@ -263,10 +289,6 @@ namespace GridGames.Views
             if (!vm.FirstRunMatching)
             {
                 await Navigation.PushModalAsync(new HelpPage(this));
-
-#if WINDOWS
-            SquaresCollectionView.Focus();
-#endif 
             }
         }
 
@@ -276,29 +298,6 @@ namespace GridGames.Views
             if (!vm.FirstRunMatching)
             {
                 vm.ResetGrid(true);
-            }
-        }
-
-        private async Task ReactToInputOnCard(int itemIndex)
-        {
-            Debug.WriteLine("Grid Games: Input on Square " + itemIndex);
-
-            var vm = this.BindingContext as MatchingViewModel;
-            if (vm.FirstRunMatching)
-            {
-                return;
-            }
-
-            int itemCollectionIndex = GetItemCollectionIndexFromItemIndex(itemIndex);
-            if (itemCollectionIndex == -1)
-            {
-                return;
-            }
-
-            bool gameIsWon = vm.AttemptToTurnOverSquare(itemCollectionIndex);
-            if (gameIsWon)
-            {
-                await OfferToRestartGame();
             }
         }
 
@@ -339,31 +338,6 @@ namespace GridGames.Views
             return itemCollectionIndex;
         }
 
-        private async void MatchingGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var vm = this.BindingContext as MatchingViewModel;
-            if (vm.FirstRunMatching)
-            {
-                return;
-            }
-
-            Debug.WriteLine("Matching Grid Game: Selection changed. Selection count is " + e.CurrentSelection.Count);
-
-            // No action required here if there is no selected item.
-            if (e.CurrentSelection.Count > 0)
-            {
-                bool gameIsWon = vm.AttemptTurnUpBySelection(e.CurrentSelection[0]);
-
-                // Clear the selection now to support the same square moving again.
-                SquaresCollectionView.SelectedItem = null;
-
-                if (gameIsWon)
-                {
-                    await OfferToRestartGame();
-                }
-            }
-        }
-
         private void MatchingWelcomeOKButton_Clicked(object sender, EventArgs e)
         {
             var vm = this.BindingContext as MatchingViewModel;
@@ -372,18 +346,6 @@ namespace GridGames.Views
             SquaresCollectionView.IsVisible = true;
 
             vm.RaiseNotificationEvent("The Pairs game is ready to play!");
-
-#if WINDOWS
-            SquaresCollectionView.Focus();
-#endif 
-        }
-
-        private async void FallthroughGrid_Tapped(object sender, EventArgs e)
-        {
-            await DisplayAlert(
-                AppResources.ResourceManager.GetString("GridGames"),
-                AppResources.ResourceManager.GetString("FallthroughTapMessage"),
-                AppResources.ResourceManager.GetString("OK"));
         }
     }
 }

@@ -6,7 +6,8 @@ namespace GridGames;
 
 public static class MauiProgram
 {
-#if WINDOWS
+    public static DateTime timeOfMostRecentArrowKeyPress = DateTime.Now;
+
     private static bool addedKeyEventHandler = false;
 
     static void MyKeyEventHandler(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
@@ -84,8 +85,14 @@ public static class MauiProgram
                 e.Handled = true;
             }
         }
+        else if ((e.Key == Windows.System.VirtualKey.Right) ||
+                 (e.Key == Windows.System.VirtualKey.Left) ||
+                 (e.Key == Windows.System.VirtualKey.Up) ||
+                 (e.Key == Windows.System.VirtualKey.Down))
+        {
+            timeOfMostRecentArrowKeyPress = DateTime.Now; 
+        }
     }
-#endif
 
     public static MauiApp CreateMauiApp()
     {

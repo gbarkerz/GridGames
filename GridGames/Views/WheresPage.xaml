@@ -83,91 +83,79 @@
                     <GridItemsLayout Orientation="Vertical" Span="4" />
                 </CollectionView.ItemsLayout>
 
-                <!-- Set AutomationProperties.IsInAccessibleTree="False" in some elements below 
-                     in order to prevent containers being unnecessarily exposed through UIA. -->
-
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid
-                            HeightRequest="{Binding 
-                                Source={x:Reference WheresPageInstance},
-                                    Path=BindingContext.GridRowHeight,
-                                    Mode=OneWay}"
-                            Padding="0" Margin="0"
+                        <!-- Remove the Border from the UIA tree, otherwise it gets exposed unnecessarily as
+                            a group element. Still set a SemanticProperties.Description, as this will get
+                            propogated up to be the UIA Name on the containing list item. -->
+                        <Border Margin="0" Padding="0" 
                             AutomationProperties.IsInAccessibleTree="False"
                             SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}">
-                            <Grid.GestureRecognizers>
+                            <Border.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"
                                     CommandParameter="{Binding Index}" />
-                            </Grid.GestureRecognizers>
-                            
-                            <!-- Barker Todo: Add support for Voice Access. -->
+                            </Border.GestureRecognizers>
 
-                            <Border Margin="0" Padding="0" AutomationProperties.IsInAccessibleTree="False">
-                                <Border.BackgroundColor>
+                            <Grid Padding="0" Margin="4"
+                                HeightRequest="{Binding 
+                                    Source={x:Reference WheresPageInstance},
+                                        Path=BindingContext.GridRowHeight,
+                                        Mode=OneWay}">
+                                <Grid.BackgroundColor>
                                     <MultiBinding Mode="OneWay" 
-                                            Converter="{StaticResource WheresAnsweredToBackgroundColor}">
+                                        Converter="{StaticResource WheresAnsweredToBackgroundColor}">
                                         <Binding Path="IsFound" />
                                         <Binding Source="{x:Reference WheresPageInstance}" 
-                                            Path="BindingContext.ShowDarkTheme" />
+                                        Path="BindingContext.ShowDarkTheme" />
                                     </MultiBinding>
-                                </Border.BackgroundColor>
+                                </Grid.BackgroundColor>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
 
-                                <Grid AutomationProperties.IsInAccessibleTree="False">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <Label Grid.Row="0" Text="{Binding WCAGNumber, Mode=OneWay}" 
-                                        Margin="0" Padding="0"
-                                        HorizontalOptions="Center" VerticalOptions="Center"
-                                        FontSize="{Binding 
-                                           Source={x:Reference SquaresCollectionView},
-                                           Path=Height, 
-                                           Converter={StaticResource WheresLabelContainerHeightToFontSize }}"
-                                        AutomationProperties.IsInAccessibleTree="False">
-                                        <Label.TextColor>
-                                            <MultiBinding Mode="OneWay" 
-                                                Converter="{StaticResource WheresAnsweredToTextColor}">
-                                                <Binding Path="IsFound" />
-                                                <Binding Source="{x:Reference WheresPageInstance}" 
-                                                    Path="BindingContext.ShowDarkTheme" />
-                                            </MultiBinding>
-                                        </Label.TextColor>
-                                    </Label>
+                                <Label Grid.Row="0" 
+                                    AutomationProperties.IsInAccessibleTree="False"
+                                    Text="{Binding WCAGNumber, Mode=OneWay}" 
+                                    Margin="0" Padding="0"
+                                    HorizontalOptions="Center" VerticalOptions="Center"
+                                    FontSize="{Binding 
+                                        Source={x:Reference SquaresCollectionView},
+                                        Path=Height, 
+                                        Converter={StaticResource WheresLabelContainerHeightToFontSize }}">
+                                    <Label.TextColor>
+                                        <MultiBinding Mode="OneWay" 
+                                            Converter="{StaticResource WheresAnsweredToTextColor}">
+                                            <Binding Path="IsFound" />
+                                            <Binding Source="{x:Reference WheresPageInstance}" 
+                                                Path="BindingContext.ShowDarkTheme" />
+                                        </MultiBinding>
+                                    </Label.TextColor>
+                                </Label>
 
-                                    <Label Grid.Row="1" Text="{Binding WCAGName, Mode=OneWay}"
-                                        AutomationProperties.IsInAccessibleTree="False"                                           
-                                        IsVisible="{Binding IsFound}"
-                                        MaxLines="3"
-                                        LineBreakMode="CharacterWrap"
-                                        Margin="4" Padding="0"
-                                        HorizontalOptions="Center">
-                                        <Label.TextColor>
-                                            <MultiBinding Mode="OneWay" 
-                                                Converter="{StaticResource WheresAnsweredToTextColor}">
-                                                <Binding Path="IsFound" />
-                                                <Binding Source="{x:Reference WheresPageInstance}" 
-                                                    Path="BindingContext.ShowDarkTheme" />
-                                            </MultiBinding>
-                                        </Label.TextColor>
-                                    </Label>
-                                </Grid>
-                            </Border>
-                        </Grid>
+                                <Label Grid.Row="1" 
+                                    AutomationProperties.IsInAccessibleTree="False"
+                                    Text="{Binding WCAGName, Mode=OneWay}"
+                                    IsVisible="{Binding IsFound}"
+                                    MaxLines="3"
+                                    LineBreakMode="CharacterWrap"
+                                    Margin="4" Padding="0"
+                                    HorizontalOptions="Center">
+                                    <Label.TextColor>
+                                        <MultiBinding Mode="OneWay" 
+                                            Converter="{StaticResource WheresAnsweredToTextColor}">
+                                            <Binding Path="IsFound" />
+                                            <Binding Source="{x:Reference WheresPageInstance}" 
+                                                Path="BindingContext.ShowDarkTheme" />
+                                        </MultiBinding>
+                                    </Label.TextColor>
+                                </Label>
+                            </Grid>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
 
             </CollectionView>
-
-            <Grid Grid.Row="1" x:Name="InputBlockingGrid"
-                SemanticProperties.Description="Game input blocker" 
-                SemanticProperties.Hint="This only exists to prevent mouse and touch input from hanging the app when used with a screen reader."
-                BackgroundColor="Transparent">
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="FallthroughGrid_Tapped" />
-                </Grid.GestureRecognizers>
-            </Grid>
 
             <Border Grid.Row="0" Grid.RowSpan="2" x:Name="WelcomeBorder" 
                 Margin="4" Padding="8"

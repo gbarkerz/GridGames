@@ -12,6 +12,9 @@ namespace GridGames.Views
     {
         private bool initialiseGame = true;
 
+        public static DateTime timeOfMostRecentSelectionChanged = DateTime.Now;
+        public static object mostRecentSelectedItem;
+
         public WheresPage()
         {
             InitializeComponent();
@@ -19,7 +22,6 @@ namespace GridGames.Views
             WelcomeBorder.Loaded += WelcomeBorder_Loaded;
 
             SquaresCollectionView.SizeChanged += SquaresCollectionView_SizeChanged;
-            SquaresCollectionView.Focused += SquaresCollectionView_Focused;
 
             Application.Current.RequestedThemeChanged += (s, a) =>
             {
@@ -33,124 +35,52 @@ namespace GridGames.Views
                 vm.ShowDarkTheme = (currentTheme == AppTheme.Dark);
             };
 
-#if ANDROID
-            InputBlockingGrid.IsVisible = false;
-#endif
+            SquaresCollectionView.SelectionChanged += SquaresCollectionView_SelectionChanged;
         }
 
-        private void WelcomeBorder_Loaded(object sender, EventArgs e)
+        private async void SquaresCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if ((sender as Border).IsVisible)
+            Debug.WriteLine("SquaresCollectionView_SelectionChanged");
+
+            timeOfMostRecentSelectionChanged = DateTime.Now;
+
+            // If this selection change is very likely due to a use of an Arrow key to move
+            // between squares, do nothing here. If instead the selection change is more
+            // likely due to programmatic selection via a screen reader, attempt to move 
+            // the square.
+            var timeSinceMostRecentArrowKeyPress = DateTime.Now - MauiProgram.timeOfMostRecentArrowKeyPress;
+            if (timeSinceMostRecentArrowKeyPress.TotalMilliseconds < 100)
             {
-                WheresSettingsButton.Focus();
-
-                var vm = this.BindingContext as WheresViewModel;
-                vm.RaiseDelayedNotificationEvent(
-                    WheresWelcomeTitleLabel.Text + ", " + 
-                    WheresWelcomeTitleInstructions.FormattedText);
-
-                SquaresCollectionView.IsVisible = false;
-            }
-        }
-
-        private void SquaresCollectionView_Focused(object sender, FocusEventArgs e)
-        {
-            // If the grid has no selected item by the time it gets focus, 
-            // select the first square now. The grid must always have a 
-            // selected item if it's to respond to keyboard input.
-            var item = SquaresCollectionView.SelectedItem as WheresCard;
-            if (item == null)
-            {
-                var vm = this.BindingContext as WheresViewModel;
-                SquaresCollectionView.SelectedItem = vm.WheresListCollection[0];
-            }
-        }
-
-        private void SquaresCollectionView_SizeChanged(object sender, EventArgs e)
-        {
-            if (SquaresCollectionView.Height > 0)
-            {
-                var vm = this.BindingContext as WheresViewModel;
-                vm.GridRowHeight = (SquaresCollectionView.Height / 4) - 4;
-            }
-        }
-
-        protected override void OnAppearing()
-        {
-            Debug.Write("Wheres Game: OnAppearing called.");
-
-            base.OnAppearing();
-
-            Preferences.Set("InitialGame", "Wheres");
-
-            var vm = this.BindingContext as WheresViewModel;
-
-            vm.FirstRunWheres = Preferences.Get("FirstRunWheres", true);
-
-            var currentTheme = Application.Current.UserAppTheme;
-            if (currentTheme == AppTheme.Unspecified)
-            {
-                currentTheme = Application.Current.PlatformAppTheme;
+                return;
             }
 
-            vm.ShowDarkTheme = (currentTheme == AppTheme.Dark);
-
-            if (initialiseGame)
+            var collectionView = sender as CollectionView;
+            if (collectionView != null)
             {
-                initialiseGame = false;
+                Debug.WriteLine("SelectionChanged: " + collectionView.SelectedItem);
 
-                // Reset all cached game progress setting, but don't bother to shuffle.
-                vm.ResetGrid(false);
+                if (collectionView.SelectedItem != null)
+                {
+                    // Don't leave any square selected after this attempt to move.
+                    collectionView.SelectedItem = null;
 
-                vm.SetupWheresCardList();
-            }
-            else
-            {
-                // When returning to the page, remind players of the current question.
-                vm.RaiseNotificationEvent(
-                    "Where's " + vm.CurrentQuestionWCAG);
-            }
-
-#if WINDOWS
-            // Try to always set keyboard focus to the cards when the page appears.
-            SquaresCollectionView.Focus();
-#endif
-        }
-
-        private async void WheresGameSettingsButton_Clicked(object sender, EventArgs e)
-        {
-            var vm = this.BindingContext as WheresViewModel;
-            if (!vm.FirstRunWheres)
-            {
-                var settingsPage = new WheresGameSettingsPage(vm.WheresSettingsVM);
-                await Navigation.PushModalAsync(settingsPage);
-            }
-        }
-
-        public async void ShowHelp()
-        {
-            var vm = this.BindingContext as WheresViewModel;
-            if (!vm.FirstRunWheres)
-            {
-                await Navigation.PushModalAsync(new HelpPage(this));
-
-#if WINDOWS
-                SquaresCollectionView.Focus();
-#endif
-            }
-        }
-
-        public void RestartGame()
-        {
-            var vm = this.BindingContext as WheresViewModel;
-            if (!vm.FirstRunWheres)
-            {
-                vm.ResetGrid(true);
+                    var item = SquaresCollectionView.SelectedItem as WheresCard;
+                    if (item != null)
+                    {
+                        await ReactToInputOnCard(item.Index);
+                    }
+                }
             }
         }
 
         private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
+            var timeSinceMostRecentSelectionChanged = DateTime.Now - timeOfMostRecentSelectionChanged;
+            if (timeSinceMostRecentSelectionChanged.TotalMilliseconds < 100)
+            {
+                return;
+            }
+
             int itemIndex = (int)(e as TappedEventArgs).Parameter;
 
             await ReactToInputOnCard(itemIndex);
@@ -211,7 +141,7 @@ namespace GridGames.Views
                         vm.WheresSettingsVM.DefaultBonusQAList[questionIndex - 1];
 
                     vm.RaiseNotificationEvent(
-                        "You found " + vm.WheresListCollection[itemIndex].WCAGName + 
+                        "You found " + vm.WheresListCollection[itemIndex].WCAGName +
                         ", so here's your bonus question. " + bonusQuestion.Question);
 
                     AppShell.AppWCAGPage.PrepareToAskQuestion(
@@ -255,6 +185,93 @@ namespace GridGames.Views
 
                     vm.RaiseNotificationEvent(message);
                 }
+            }
+        }
+
+        private void WelcomeBorder_Loaded(object sender, EventArgs e)
+        {
+            if ((sender as Border).IsVisible)
+            {
+                var vm = this.BindingContext as WheresViewModel;
+                vm.RaiseDelayedNotificationEvent(
+                    WheresWelcomeTitleLabel.Text + ", " + 
+                    WheresWelcomeTitleInstructions.FormattedText);
+
+                SquaresCollectionView.IsVisible = false;
+            }
+        }
+
+        private void SquaresCollectionView_SizeChanged(object sender, EventArgs e)
+        {
+            if (SquaresCollectionView.Height > 0)
+            {
+                var vm = this.BindingContext as WheresViewModel;
+                vm.GridRowHeight = (SquaresCollectionView.Height / 4) - 12;
+            }
+        }
+
+        protected override void OnAppearing()
+        {
+            Debug.Write("Wheres Game: OnAppearing called.");
+
+            base.OnAppearing();
+
+            Preferences.Set("InitialGame", "Wheres");
+
+            var vm = this.BindingContext as WheresViewModel;
+
+            vm.FirstRunWheres = Preferences.Get("FirstRunWheres", true);
+
+            var currentTheme = Application.Current.UserAppTheme;
+            if (currentTheme == AppTheme.Unspecified)
+            {
+                currentTheme = Application.Current.PlatformAppTheme;
+            }
+
+            vm.ShowDarkTheme = (currentTheme == AppTheme.Dark);
+
+            if (initialiseGame)
+            {
+                initialiseGame = false;
+
+                // Reset all cached game progress setting, but don't bother to shuffle.
+                vm.ResetGrid(false);
+
+                vm.SetupWheresCardList();
+            }
+            else
+            {
+                // When returning to the page, remind players of the current question.
+                vm.RaiseNotificationEvent(
+                    "Where's " + vm.CurrentQuestionWCAG);
+            }
+        }
+
+        private async void WheresGameSettingsButton_Clicked(object sender, EventArgs e)
+        {
+            var vm = this.BindingContext as WheresViewModel;
+            if (!vm.FirstRunWheres)
+            {
+                var settingsPage = new WheresGameSettingsPage(vm.WheresSettingsVM);
+                await Navigation.PushModalAsync(settingsPage);
+            }
+        }
+
+        public async void ShowHelp()
+        {
+            var vm = this.BindingContext as WheresViewModel;
+            if (!vm.FirstRunWheres)
+            {
+                await Navigation.PushModalAsync(new HelpPage(this));
+            }
+        }
+
+        public void RestartGame()
+        {
+            var vm = this.BindingContext as WheresViewModel;
+            if (!vm.FirstRunWheres)
+            {
+                vm.ResetGrid(true);
             }
         }
 
@@ -351,18 +368,6 @@ namespace GridGames.Views
             SquaresCollectionView.IsVisible = true;
 
             vm.RaiseNotificationEvent("Your first question is, Where's " + vm.CurrentQuestionWCAG);
-
-#if WINDOWS
-            SquaresCollectionView.Focus();
-#endif
-        }
-
-        private async void FallthroughGrid_Tapped(object sender, EventArgs e)
-        {
-            await DisplayAlert(
-                AppResources.ResourceManager.GetString("GridGames"),
-                AppResources.ResourceManager.GetString("FallthroughTapMessage"),
-                AppResources.ResourceManager.GetString("OK"));
         }
     }
 }

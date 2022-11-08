@@ -9,6 +9,8 @@ namespace GridGames.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SquaresPage : ContentPage
     {
+        public static DateTime timeOfMostRecentSelectionChanged = DateTime.Now;
+
         // Barker: IMPORTANT.
         // While most of the binding of CollectionView item properties works great,
         // in tests, binding of IsVisible was not 100% robust. That is, most times
@@ -34,30 +36,37 @@ namespace GridGames.Views
 
         private void FixupSquares()
         {
-            // Always run this on the UI thread.
-            MainThread.BeginInvokeOnMainThread(() =>
+            try
             {
-                var vm = this.BindingContext as SquaresViewModel;
-
-                // Set the visibility of the items' images and labels as appropriate.
-                var descendants = SquaresCollectionView.GetVisualTreeDescendants();
-                for (int i = 0; i < descendants.Count; ++i)
+                // Always run this on the UI thread.
+                MainThread.BeginInvokeOnMainThread(() =>
                 {
-                    var descendant = descendants[i];
-                    if (descendant is Label)
-                    {
-                        var label = descendant as Label;
+                    var vm = this.BindingContext as SquaresViewModel;
 
-                        // The empty square nevers has its Label visible.
-                        label.IsVisible = vm.ShowNumbers && (label.Text != "");
-                    }
-                    else if (descendant is Image)
+                    // Set the visibility of the items' images and labels as appropriate.
+                    var descendants = SquaresCollectionView.GetVisualTreeDescendants();
+                    for (int i = 0; i < descendants.Count; ++i)
                     {
-                        var image = descendant as Image;
-                        image.IsVisible = vm.ShowPicture;
+                        var descendant = descendants[i];
+                        if (descendant is Label)
+                        {
+                            var label = descendant as Label;
+
+                            // The empty square nevers has its Label visible.
+                            label.IsVisible = vm.ShowNumbers && (label.Text != "");
+                        }
+                        else if (descendant is Image)
+                        {
+                            var image = descendant as Image;
+                            image.IsVisible = vm.ShowPicture;
+                        }
                     }
-                }
-            });
+                });
+            }
+            catch (Exception ex) 
+            {
+                Debug.WriteLine("Error trying to fix up squares: " + ex.Message);
+            }
         }
 
         // Path to most recently fully loaded picture.
@@ -86,9 +95,6 @@ namespace GridGames.Views
                 vm.ShowDarkTheme = (currentTheme == AppTheme.Dark);
             };
 
-#if ANDROID
-            InputBlockingGrid.IsVisible = false;
-
             // IMPORTANT! TalkBack usage with a tapped handler is unreliable on Android, so don't use it.
             //https://github.com/xamarin/Xamarin.Forms/issues/9991
             //[Bug] Tap gesture recognizer doesn't fire in android with screen reader enabled #9991
@@ -96,21 +102,22 @@ namespace GridGames.Views
             SquaresCollectionView.SelectionChanged += SquaresCollectionView_SelectionChanged;
 
             SquaresCollectionView.DescendantAdded += SquaresCollectionView_DescendantAdded;
-#endif
         }
 
-
-        private void SquaresCollectionView_DescendantAdded(object sender, ElementEventArgs e)
-        {
-            // Manually setting the visibility of various elements after updating the 
-            // CollectionView is a temporary measure and will be removed once the full
-            // .NET 7.0 is available.
-            FixupSquares();
-        }
-
-#if ANDROID
         private async void SquaresCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            timeOfMostRecentSelectionChanged = DateTime.Now;
+
+            // If this selection change is very likely due to a use of an Arrow key to move
+            // between squares, do nothing here. If instead the selection change is more
+            // likely due to programmatic selection via a screen reader, attempt to move 
+            // the square.
+            var timeSinceMostRecentArrowKeyPress = DateTime.Now - MauiProgram.timeOfMostRecentArrowKeyPress;
+            if (timeSinceMostRecentArrowKeyPress.TotalMilliseconds < 100)
+            {
+                return;
+            }
+
             var collectionView = sender as CollectionView;
             if (collectionView != null)
             {
@@ -131,7 +138,79 @@ namespace GridGames.Views
                 }
             }
         }
-#endif
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            var timeSinceMostRecentSelectionChanged = DateTime.Now - timeOfMostRecentSelectionChanged;
+            if (timeSinceMostRecentSelectionChanged.TotalMilliseconds < 100)
+            {
+                return;
+            }
+
+            var vm = this.BindingContext as SquaresViewModel;
+            if (vm.FirstRunSquares || vm.GameIsLoading)
+            {
+                return;
+            }
+
+            var itemBorder = (Border)sender;
+            var itemAccessibleName = SemanticProperties.GetDescription(itemBorder);
+
+            Debug.WriteLine("Grid Games: Tapped on Square " + itemAccessibleName);
+
+            AttemptToMoveSquareByName(itemAccessibleName);
+        }
+
+        private async void AttemptToMoveSquareByName(string itemName)
+        {
+            var vm = this.BindingContext as SquaresViewModel;
+
+            int itemIndex = GetItemCollectionIndexFromItemAccessibleName(itemName);
+            if (itemIndex != -1)
+            {
+                bool gameIsWon = vm.AttemptToMoveSquare(itemIndex);
+                if (gameIsWon)
+                {
+                    await OfferToRestartGame();
+                }
+            }
+        }
+
+        public async void ReactToKeyInputOnSelectedCard()
+        {
+            var item = SquaresCollectionView.SelectedItem as SquaresViewModel.Square;
+            if (item != null)
+            {
+                await ReactToInputOnCard(item);
+            }
+        }
+
+        private async Task ReactToInputOnCard(SquaresViewModel.Square item)
+        {
+            var vm = this.BindingContext as SquaresViewModel;
+            if (vm.FirstRunSquares || vm.GameIsLoading)
+            {
+                return;
+            }
+
+            int itemIndex = GetItemCollectionIndexFromItemAccessibleName(item.AccessibleName);
+            if (itemIndex != -1)
+            {
+                bool gameIsWon = vm.AttemptToMoveSquare(itemIndex);
+                if (gameIsWon)
+                {
+                    await OfferToRestartGame();
+                }
+            }
+        }
+
+        private void SquaresCollectionView_DescendantAdded(object sender, ElementEventArgs e)
+        {
+            // Manually setting the visibility of various elements after updating the 
+            // CollectionView is a temporary measure and will be removed once the full
+            // .NET 7.0 is available.
+            FixupSquares();
+        }
 
         private void ShowCustomPicture()
         {
@@ -281,45 +360,6 @@ namespace GridGames.Views
             }
         }
 
-        private async void FallthroughGrid_Tapped(object sender, EventArgs e)
-        {
-            await DisplayAlert(
-                AppResources.ResourceManager.GetString("GridGames"),
-                AppResources.ResourceManager.GetString("FallthroughTapMessage"),
-                AppResources.ResourceManager.GetString("OK"));
-        }
-
-        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
-        {
-            var vm = this.BindingContext as SquaresViewModel;
-            if (vm.FirstRunSquares || vm.GameIsLoading)
-            {
-                return;
-            }
-
-            var itemGrid = (Grid)sender;
-            var itemAccessibleName = SemanticProperties.GetDescription(itemGrid);
-
-            Debug.WriteLine("Grid Games: Tapped on Square " + itemAccessibleName);
-
-            AttemptToMoveSquareByName(itemAccessibleName);
-        }
-
-        private async void AttemptToMoveSquareByName(string itemName)
-        {
-            var vm = this.BindingContext as SquaresViewModel;
-
-            int itemIndex = GetItemCollectionIndexFromItemAccessibleName(itemName);
-            if (itemIndex != -1)
-            {
-                bool gameIsWon = vm.AttemptToMoveSquare(itemIndex);
-                if (gameIsWon)
-                {
-                    await OfferToRestartGame();
-                }
-            }
-        }
-
         private int GetItemCollectionIndexFromItemAccessibleName(string ItemAccessibleName)
         {
             var vm = this.BindingContext as SquaresViewModel;
@@ -382,34 +422,6 @@ namespace GridGames.Views
             {
                 var settingsPage = new SquaresSettingsPage();
                 await Navigation.PushModalAsync(settingsPage);
-            }
-        }
-
-        public async void ReactToKeyInputOnSelectedCard()
-        {
-            var item = SquaresCollectionView.SelectedItem as SquaresViewModel.Square;
-            if (item != null)
-            {
-                await ReactToInputOnCard(item);
-            }
-        }
-
-        private async Task ReactToInputOnCard(SquaresViewModel.Square item)
-        {
-            var vm = this.BindingContext as SquaresViewModel;
-            if (vm.FirstRunSquares || vm.GameIsLoading)
-            {
-                return;
-            }
-
-            int itemIndex = GetItemCollectionIndexFromItemAccessibleName(item.AccessibleName);
-            if (itemIndex != -1)
-            {
-                bool gameIsWon = vm.AttemptToMoveSquare(itemIndex);
-                if (gameIsWon)
-                {
-                    await OfferToRestartGame();
-                }
             }
         }
 
