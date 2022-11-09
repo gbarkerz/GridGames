@@ -10,6 +10,7 @@ public static class MauiProgram
 
     private static bool addedKeyEventHandler = false;
 
+#if WINDOWS
     static void MyKeyEventHandler(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
     {
         // Barker: Review old feedback from original Windows Grid Game player.
@@ -93,6 +94,7 @@ public static class MauiProgram
             timeOfMostRecentArrowKeyPress = DateTime.Now; 
         }
     }
+#endif 
 
     public static MauiApp CreateMauiApp()
     {

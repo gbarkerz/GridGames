@@ -82,9 +82,7 @@
                                     CommandParameter="{Binding Index}" />
                             </Border.GestureRecognizers>
 
-                            <Grid Padding="0" Margin="4"
-                                HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, 
-                                    Path=Height, Converter={StaticResource CollectionViewHeightToRowHeight}}">
+                            <Grid Padding="0" Margin="4">
 
                                 <!-- Barker: IMPORTANT. Read the comment at the top of SquaresPage.xaml.cs
                                     relating to not being able to find a reliable way of binding IsVisible
@@ -93,7 +91,8 @@
                                 <Image 
                                     AutomationProperties.IsInAccessibleTree="False"
                                     InputTransparent="True"
-                                    Aspect="Fill"
+                                    HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, 
+                                    Path=Height, Converter={StaticResource CollectionViewHeightToRowHeight}}"                                    Aspect="Fill"
                                     BackgroundColor="Transparent"
                                     Source="{Binding PictureImageSource}">
                                 </Image>
