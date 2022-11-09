@@ -61,9 +61,6 @@ namespace GridGames.Views
 
                 if (collectionView.SelectedItem != null)
                 {
-                    // Don't leave any square selected after this attempt to move.
-                    collectionView.SelectedItem = null;
-
                     var item = SquaresCollectionView.SelectedItem as WheresCard;
                     if (item != null)
                     {

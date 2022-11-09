@@ -69,11 +69,16 @@
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
-                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor"
+                                Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
+                        </VisualState.Setters>
+                    </VisualState>
                     <VisualState x:Name="Selected">
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor"
-                                    Value="{AppThemeBinding Light={StaticResource Primary}, Dark=Yellow}" />
+                                Value="{AppThemeBinding Light={StaticResource Primary}, Dark=Yellow}" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
