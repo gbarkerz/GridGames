@@ -120,7 +120,7 @@ namespace GridGames.Views
                 var vm = this.BindingContext as MatchingViewModel;
                 vm.RaiseDelayedNotificationEvent(
                     MatchingWelcomeTitleLabel.Text + ", " +
-                    MatchingWelcomeTitleInstructions.FormattedText);
+                    MatchingWelcomeTitleInstructions.Text);
 
                 SquaresCollectionView.IsVisible = false;
             }

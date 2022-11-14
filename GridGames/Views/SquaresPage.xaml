@@ -147,7 +147,7 @@
                 Stroke="{AppThemeBinding Light=Black, Dark=White}"
                 BackgroundColor="{DynamicResource PageBackgroundColor}"
                 SemanticProperties.Description="{x:Static resources:AppResources.SquaresWelcome}"
-                VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                VerticalOptions="Fill" HorizontalOptions="Fill">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -158,18 +158,13 @@
                         Text="{x:Static resources:AppResources.SquaresWelcome}"                        
                         FontSize="Large" FontAttributes="Bold" />
                     <ScrollView Grid.Row="1">
-                        <Label x:Name="SquaresWelcomeTitleInstructions" FontSize="Medium">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{x:Static resources:AppResources.WelcomeInstructions}" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
+                        <Editor x:Name="SquaresWelcomeTitleInstructions" IsReadOnly="True" FontSize="Medium"
+                            Text="{x:Static resources:AppResources.WelcomeInstructions}" />
                     </ScrollView>
-                    <Button Grid.Row="2" Margin="0"
-                            Text="{x:Static resources:AppResources.Close}" 
-                            Clicked="SquaresWelcomeOKButton_Clicked"
-                            HorizontalOptions="End" />
+                    <Button Grid.Row="2"
+                        Text="{x:Static resources:AppResources.Close}" 
+                        Clicked="SquaresWelcomeOKButton_Clicked"
+                        HorizontalOptions="End" Margin="0,4,4,4" Padding="8" />
                 </Grid>
             </Border>
 

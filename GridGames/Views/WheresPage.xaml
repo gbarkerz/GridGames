@@ -161,7 +161,7 @@
                 Margin="4" Padding="8"
                 IsVisible="{Binding FirstRunWheres}"
                 BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
-                VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                VerticalOptions="Fill" HorizontalOptions="Fill">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -173,19 +173,14 @@
                         SemanticProperties.HeadingLevel="Level1"
                         FontSize="Title" Margin="0,0,0,20" />
                     <ScrollView Grid.Row="1">
-                        <Label x:Name="WheresWelcomeTitleInstructions" FontSize="Medium">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{x:Static resources:AppResources.WelcomeInstructions}" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
+                        <Editor x:Name="WheresWelcomeTitleInstructions" IsReadOnly="True" FontSize="Medium"
+                            Text="{x:Static resources:AppResources.WelcomeInstructions}" />
                     </ScrollView>
                     <Button Grid.Row="2" x:Name="WelcomeCloseButton"
                         Text="Close welcome message" 
                         Clicked="WheresWelcomeOKButton_Clicked"
                         windows:VisualElement.AccessKey="C"
-                        HorizontalOptions="End" Margin="0,0,4,4" Padding="8" />
+                        HorizontalOptions="End" Margin="0,4,4,4" Padding="8" />
                 </Grid>
             </Border>
 

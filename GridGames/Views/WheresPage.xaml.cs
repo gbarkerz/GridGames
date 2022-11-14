@@ -192,7 +192,7 @@ namespace GridGames.Views
                 var vm = this.BindingContext as WheresViewModel;
                 vm.RaiseDelayedNotificationEvent(
                     WheresWelcomeTitleLabel.Text + ", " + 
-                    WheresWelcomeTitleInstructions.FormattedText);
+                    WheresWelcomeTitleInstructions.Text);
 
                 SquaresCollectionView.IsVisible = false;
             }
