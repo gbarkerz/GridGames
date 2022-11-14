@@ -73,6 +73,8 @@
                             propogated up to be the UIA Name on the containing list item. -->
                         <Border Margin="0" Padding="0"
                             AutomationProperties.IsInAccessibleTree="False"
+                            HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}},
+                                Path=Height, Converter={StaticResource CollectionViewHeightToRowHeight}}"
                             StrokeThickness="1"
                             Stroke="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
                             SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}"
@@ -91,8 +93,7 @@
                                 <Image 
                                     AutomationProperties.IsInAccessibleTree="False"
                                     InputTransparent="True"
-                                    HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, 
-                                    Path=Height, Converter={StaticResource CollectionViewHeightToRowHeight}}"                                    Aspect="Fill"
+                                    Aspect="Fill"
                                     BackgroundColor="Transparent"
                                     Source="{Binding PictureImageSource}">
                                 </Image>
