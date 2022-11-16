@@ -102,6 +102,13 @@ namespace GridGames.Views
             SquaresCollectionView.SelectionChanged += SquaresCollectionView_SelectionChanged;
 
             SquaresCollectionView.DescendantAdded += SquaresCollectionView_DescendantAdded;
+
+#if IOS
+            // At this time, VoiceOver won't navigate to the items in a CollectionView
+            // if the CollectionView has a SemanticProperties.Description. So for now,
+            // remove the Description on iOS.
+            SemanticProperties.SetDescription(SquaresCollectionView, null);
+#endif
         }
 
         private async void SquaresCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
