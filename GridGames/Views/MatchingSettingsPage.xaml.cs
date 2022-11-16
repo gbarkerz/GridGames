@@ -1,5 +1,4 @@
 ﻿using GridGames.ResX;
-using GridGames.Services;
 using GridGames.ViewModels;
 using System;
 using System.Diagnostics;
@@ -10,6 +9,8 @@ using System.Threading.Tasks;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Xaml;
+
+using InvokePlatformCode.Services.PartialMethods;
 
 namespace GridGames
 {
@@ -184,21 +185,17 @@ namespace GridGames
 
                 string pathToPictures = "";
 
-                //if (Device.RuntimePlatform == Device.iOS)
-                //{
-                //    var service = DependencyService.Get<IGridGamesPlatformAction>();
-                //    pathToPictures = await service.GetPairsPictureFolder();
-                //}
-                //else if (Device.RuntimePlatform == Device.Android)
-                //else
-                {
-                    var result = await FilePicker.PickAsync(options);
+#if IOS
+                var platformAction = new GridGamesPlatformAction();
+                pathToPictures = await platformAction.GetPairsPictureFolder();
+#else
+                var result = await FilePicker.PickAsync(options);
                     if (result != null)
                     {
                         pathToPictures = result.FullPath;
                     }
                 }
-
+#endif
                 if (!String.IsNullOrWhiteSpace(pathToPictures))
                 {
                     // The selected folder must contain exactly the required number of pictures in it.

@@ -5,12 +5,10 @@ using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Xaml;
 
-namespace GridGames.Services
+namespace InvokePlatformCode.Services.PartialMethods
 {
-    public interface IGridGamesPlatformAction
+    public partial class GridGamesPlatformAction
     {
-        void ScreenReaderAnnouncement(string notification);
-
-        Task<string> GetPairsPictureFolder();
+        public partial Task<string> GetPairsPictureFolder();
     }
 }

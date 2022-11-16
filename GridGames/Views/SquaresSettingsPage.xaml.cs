@@ -1,5 +1,4 @@
 ﻿using GridGames.ResX;
-using GridGames.Services;
 using GridGames.ViewModels;
 using System;
 using System.Diagnostics;
