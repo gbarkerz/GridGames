@@ -40,7 +40,8 @@
                     <Border Margin="10"
                         Stroke="{AppThemeBinding Light=Black, Dark=White}"
                         BackgroundColor="{DynamicResource PageBackgroundColor}">
-                        <Grid Margin="10" SemanticProperties.Description="Numbers">
+                        <Grid x:Name="ShowNumbersGrid"
+                            Margin="10" SemanticProperties.Description="Numbers">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
@@ -77,7 +78,7 @@
                         Stroke="{AppThemeBinding Light=Black, Dark=White}"
                         BackgroundColor="{DynamicResource PageBackgroundColor}">
 
-                        <Grid Margin="10" SemanticProperties.Description="Picture">
+                        <Grid x:Name="ShowPictureGrid" Margin="10" SemanticProperties.Description="Picture">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />

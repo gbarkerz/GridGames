@@ -19,6 +19,13 @@ namespace GridGames
         {
             InitializeComponent();
 
+#if IOS
+            // VoiceOver doesn't navigate to controls contained in a Grid
+            // that has an accessible name.
+            SemanticProperties.SetDescription(ShowNumbersGrid, null);
+            SemanticProperties.SetDescription(ShowPictureGrid, null);
+#endif
+
             // Adding localized strings to a Picker in XAML seems complicated, so do it in code.
             SquaresNumberSizePicker.Items.Add(AppResources.ResourceManager.GetString("Small"));
             SquaresNumberSizePicker.Items.Add(AppResources.ResourceManager.GetString("Medium"));

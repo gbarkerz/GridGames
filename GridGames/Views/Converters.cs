@@ -375,10 +375,18 @@ namespace GridGames.Views
                     gridRowHeightMultiplier = 0.2;
                     break;
                 case 2:
+#if IOS
+                    gridRowHeightMultiplier = 0.3;
+#else
                     gridRowHeightMultiplier = 0.4;
+#endif
                     break;
                 case 3:
+#if IOS
+                    gridRowHeightMultiplier = 0.4;
+#else
                     gridRowHeightMultiplier = 0.5;
+#endif
                     break;
                 default:
                     break;

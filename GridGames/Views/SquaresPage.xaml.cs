@@ -218,11 +218,15 @@ namespace GridGames.Views
 
         private void ShowCustomPicture()
         {
+            Debug.WriteLine("ShowCustomPicture Start.");
+
             var vm = this.BindingContext as SquaresViewModel;
 
             if (vm.ShowPicture && !String.IsNullOrWhiteSpace(vm.PicturePathSquares))
             {
+#if !IOS
                 vm.GameIsLoading = true;
+#endif
 
                 // If the CollectionView isn't sized yet, wait a while and try again.
                 if ((SquaresCollectionView.Width <= 0) || (SquaresCollectionView.Height <= 0))
@@ -250,6 +254,8 @@ namespace GridGames.Views
                     ShowCustomPictureInSquares();
                 }
             }
+
+            Debug.WriteLine("ShowCustomPicture Done.");
         }
 
         private void ShowCustomPictureIfReady()
@@ -282,11 +288,11 @@ namespace GridGames.Views
         // and also when closing the Squares Settings page.
         protected override void OnAppearing()
         {
-            Debug.Write("Squares Game: OnAppearing called.");
+            Debug.WriteLine("Squares Game: OnAppearing called.");
 
             base.OnAppearing();
 
-            Debug.Write("Squares Game: Done base OnAppearing.");
+            Debug.WriteLine("Squares Game: Done base OnAppearing.");
 
             Preferences.Set("InitialGame", "Squares");
 
@@ -294,6 +300,11 @@ namespace GridGames.Views
             var vm = this.BindingContext as SquaresViewModel;
 
             vm.FirstRunSquares = Preferences.Get("FirstRunSquares", true);
+
+#if IOS
+            var isFirstRun = vm.FirstRunSquares;
+#endif
+
             if (vm.FirstRunSquares)
             {
                 vm.RaiseNotificationEvent(
@@ -315,6 +326,8 @@ namespace GridGames.Views
             vm.PictureName = Preferences.Get("PictureName", "");
 
             bool loadedCustomPicture = false;
+
+            Debug.WriteLine("Squares Game: vm.PicturePathSquares: " + vm.PicturePathSquares);
 
             // Has the state of the picture being shown changed since we were last changed?
             if (vm.ShowPicture && (vm.PicturePathSquares != null) &&
@@ -357,6 +370,17 @@ namespace GridGames.Views
                     }
                 }
             }
+#if IOS
+            else
+            {
+                if (isFirstRun)
+                {
+                    vm.ResetGrid();
+                }
+
+                vm.GameIsLoading = false;
+            }
+#endif
 
             if (!loadedCustomPicture)
             {
@@ -459,7 +483,7 @@ namespace GridGames.Views
             }
         }
 
-        private void ShowCustomPictureInSquares()
+        private async void ShowCustomPictureInSquares()
         {
             var vm = this.BindingContext as SquaresViewModel;
 
@@ -467,54 +491,64 @@ namespace GridGames.Views
 
             vm.RaiseNotificationEvent(PleaseWaitLabel.Text);
 
-            destGridPortionWidth = (int)(SquaresCollectionView.Width / 4);
-            destGridPortionHeight = (int)(SquaresCollectionView.Height / 4);
+            // Load the image on a background thread to give a chance for the
+            // "Please wait" message to show up on the UI thread.
 
-            string picturePathSquares = vm.PicturePathSquares;
-            if (String.IsNullOrWhiteSpace(picturePathSquares))
+            // Barker: Make all this more robust
+#if IOS
+            await Task.Run(async () =>
             {
-                return;
-            }
+                Thread.Sleep(1000);
+#endif
+                destGridPortionWidth = (int)(SquaresCollectionView.Width / 4);
+                destGridPortionHeight = (int)(SquaresCollectionView.Height / 4);
 
-            Debug.WriteLine("ShowCustomPictureInSquares: Loading pictures into squares now.");
-
-            try
-            {
-                if (originalCustomPictureBitmap == null)
+                string picturePathSquares = vm.PicturePathSquares;
+                if (!String.IsNullOrWhiteSpace(picturePathSquares))
                 {
-                    using (Stream fileStream = File.OpenRead(picturePathSquares))
-                    {
-                        using (SKManagedStream originalStream = new SKManagedStream(fileStream))
-                        {
-                            originalCustomPictureBitmap = SKBitmap.Decode(originalStream);
+                    Debug.WriteLine("ShowCustomPictureInSquares: Loading pictures into squares now.");
 
-                            originalStream.Dispose();
+                    try
+                    {
+                        if (originalCustomPictureBitmap == null)
+                        {
+                            using (Stream fileStream = File.OpenRead(picturePathSquares))
+                            {
+                                using (SKManagedStream originalStream = new SKManagedStream(fileStream))
+                                {
+                                    originalCustomPictureBitmap = SKBitmap.Decode(originalStream);
+
+                                    originalStream.Dispose();
+                                }
+
+                                fileStream.Close();
+                            }
                         }
 
-                        fileStream.Close();
+                        // Leave the 16th square empty.
+                        for (int i = 0; i < 15; ++i)
+                        {
+                            vm.SquareListCollection[i].PictureImageSource = GetImageSourceForSquare(
+                                                                                vm.SquareListCollection[i].TargetIndex);
+                        }
+
+                        vm.SquareListCollection[15].PictureImageSource = ImageSource.FromFile("emptysquare.jpg");
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Load custom picture: " + ex.Message);
                     }
                 }
 
-                // Leave the 16th square empty.
-                for (int i = 0; i < 15; ++i)
-                {
-                    vm.SquareListCollection[i].PictureImageSource = GetImageSourceForSquare(
-                                                                        vm.SquareListCollection[i].TargetIndex);
-                }
+                // Now jumble the squares.
+                vm.ResetGrid();
 
-                vm.SquareListCollection[15].PictureImageSource = ImageSource.FromFile("emptysquare.jpg");
-            }
-            catch (Exception ex) 
-            {
-                Debug.WriteLine("Load custom picture: " + ex.Message);
-            }
+                Debug.WriteLine("ShowCustomPictureInSquares: Done loading pictures into squares.");
 
-            // Now jumble the squares.
-            vm.ResetGrid();
-
-            Debug.WriteLine("ShowCustomPictureInSquares: Done loading pictures into squares.");
-
-            vm.GameIsLoading = false;
+                vm.GameIsLoading = false;
+#if IOS
+            });
+#endif
         }
 
         private ImageSource GetImageSourceForSquare(int index)

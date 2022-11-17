@@ -102,6 +102,11 @@ namespace GridGames.ViewModels
 
         public SquaresViewModel()
         {
+#if IOS
+            // Show the "Please wait" message until we know it's not needed.
+            GameIsLoading = true;
+#endif
+
             Title = AppResources.ResourceManager.GetString("Squares");
 
             squareList = new ObservableCollection<Square>();
