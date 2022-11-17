@@ -190,10 +190,9 @@ namespace GridGames
                 pathToPictures = await platformAction.GetPairsPictureFolder();
 #else
                 var result = await FilePicker.PickAsync(options);
-                    if (result != null)
-                    {
-                        pathToPictures = result.FullPath;
-                    }
+                if (result != null)
+                {
+                    pathToPictures = result.FullPath;
                 }
 #endif
                 if (!String.IsNullOrWhiteSpace(pathToPictures))

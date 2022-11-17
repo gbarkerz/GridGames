@@ -108,7 +108,6 @@
     <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="white" />
 
     <!-- Splash Screen -->
-    <MauiSplashScreen Include="Resources\Splash\splashscreen.png" BaseSize="1040,912" />
 
     <!-- Images -->
     <MauiImage Include="Resources\Images\*" />
@@ -150,6 +149,7 @@
 	  <None Remove="Resources\DefaultMatchingBackgrounds\Card7.jpg" />
 	  <None Remove="Resources\DefaultMatchingBackgrounds\Card8.jpg" />
 	  <None Remove="Resources\Images\card1.jpg" />
+	  <None Remove="Resources\Splash\splashscreen.svg" />
 	  <None Remove="squaresgameicon.png" />
 	  <None Remove="wheresgameicon.png" />
 	</ItemGroup>
@@ -194,6 +194,10 @@
 	  <Folder Include="Properties\PublishProfiles\" />
 	  <Folder Include="Resources\DefaultMatchingBackgrounds\" />
 	  <Folder Include="Resources\Samples\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiSplashScreen Include="Resources\Splash\splashscreen.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
