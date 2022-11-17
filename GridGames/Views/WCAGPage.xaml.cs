@@ -18,15 +18,10 @@ public partial class WCAGPage : ContentPage
 	{
 		InitializeComponent();
 
-        WCAG1.IsVisible = false;
-        WCAG2.IsVisible = false;
-        WCAG3.IsVisible = false;
-        WCAG4.IsVisible = false;
-    }
-
-    private void WCAGPage_Loaded(object sender, EventArgs e)
-    {
-        WCAGScrollView.IsVisible = true;
+        WCAGScrollView1.IsVisible = false;
+        WCAGScrollView2.IsVisible = false;
+        WCAGScrollView3.IsVisible = false;
+        WCAGScrollView4.IsVisible = false;
     }
 
     public void PrepareToAskQuestion(WheresPage wheresPage, bool gameIsWon, QAPair qaPair)
@@ -161,22 +156,23 @@ public partial class WCAGPage : ContentPage
 	{
         var picker = (Picker)sender;
 
-        WCAG1.IsVisible = false;
-        WCAG2.IsVisible = false;
-        WCAG3.IsVisible = false;
-        WCAG4.IsVisible = false;
+        WCAGScrollView1.IsVisible = false;
+        WCAGScrollView2.IsVisible = false;
+        WCAGScrollView3.IsVisible = false;
+        WCAGScrollView4.IsVisible = false;
 
         int selectedIndex = picker.SelectedIndex;
 
         if (selectedIndex != -1)
         {
+            ScrollView targetScrollView = null;
             CheckBox targetCheckBox = null;
 
             switch (picker.ClassId)
 			{
 				case "Perceivable":
 
-                    WCAG1.IsVisible = true;
+                    targetScrollView = WCAGScrollView1;
 
                     CheckBox[] boxesPerceivable = {
                         Perceivable11CheckBox,
@@ -191,7 +187,7 @@ public partial class WCAGPage : ContentPage
 
 				case "Operable":
 
-                    WCAG2.IsVisible = true;
+                    targetScrollView = WCAGScrollView2;
 
                     CheckBox[] boxesOperable = {
 						Operable21CheckBox,
@@ -207,7 +203,7 @@ public partial class WCAGPage : ContentPage
 
 				case "Understandable":
 
-                    WCAG3.IsVisible = true;
+                    targetScrollView = WCAGScrollView3;
 
                     CheckBox[] boxesUnderstandable = {
                         Understandable31CheckBox,
@@ -221,7 +217,7 @@ public partial class WCAGPage : ContentPage
 
 				case "Robust":
 
-                    WCAG4.IsVisible = true;
+                    targetScrollView = WCAGScrollView4;
 
                     CheckBox[] boxesRobust = {
                         Robust41CheckBox,
@@ -236,21 +232,26 @@ public partial class WCAGPage : ContentPage
 					break;
 			}
 
-			if (targetCheckBox != null)
-			{
-                targetCheckBox.Focus();
+            if (targetScrollView != null)
+            {
+                targetScrollView.IsVisible = true;
 
-                timer = new Timer(new TimerCallback((s) => ScrollToWCAGCheckBox(targetCheckBox)),
-                                   null, 
-                                   TimeSpan.FromMilliseconds(500), 
-                                   TimeSpan.FromMilliseconds(Timeout.Infinite));
+                if (targetCheckBox != null)
+			    {
+                    targetCheckBox.Focus();
+
+                    timer = new Timer(new TimerCallback((s) => ScrollToWCAGCheckBox(targetScrollView, targetCheckBox)),
+                                       null, 
+                                       TimeSpan.FromMilliseconds(500), 
+                                       TimeSpan.FromMilliseconds(Timeout.Infinite));
+                }
             }
         }
     }
 
     private Timer timer;
 
-    private void ScrollToWCAGCheckBox(CheckBox targetCheckBox)
+    private void ScrollToWCAGCheckBox(ScrollView targetScrollView, CheckBox targetCheckBox)
     {
         timer.Dispose();
 
@@ -260,7 +261,7 @@ public partial class WCAGPage : ContentPage
             {
                 Debug.WriteLine("Perform delayed scroll to WCAG CheckBox.");
 
-                WCAGScrollView.ScrollToAsync(targetCheckBox, ScrollToPosition.Center, true);
+                targetScrollView.ScrollToAsync(targetCheckBox, ScrollToPosition.Center, true);
             });
         });
         newThread.Start();

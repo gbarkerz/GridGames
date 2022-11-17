@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GridGames.Views.WCAGPage"
@@ -8,8 +8,6 @@
 
     <Grid Margin="0" Padding="0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -32,8 +30,17 @@
                 HorizontalOptions="Start" />
         </Grid>
 
-        <Label Grid.Row="2" Margin="10,14,10,0"
-            Text="Select the WCAG groups containing the answer, and then check all WCAG that apply." />
+        <ScrollView Grid.Row="2">
+
+        <Grid HeightRequest="800">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Margin="10,14,10,0"
+            Text="Select the WCAG groups containing the answer, and then all WCAG that apply." />
 
         <!-- Barker Todo: Originally this FlexLayout had no HeightRequest set, because it would grow to 
             accomodate the size of its contents. However, after upgrading to VS 17.4.0 Preview 1.0
@@ -41,12 +48,12 @@
             StackOverflow others also hit issues with the FlexLayout after upgrading VS to 17.4.0. 
             So for now, set an explicit height on the FlexHeight, but remove this when possible. -->
         
-        <FlexLayout Grid.Row="3" Wrap="Wrap" Margin="4,0,4,0" Padding="0" 
+        <FlexLayout Grid.Row="1" Wrap="Wrap" Margin="4,0,4,0" Padding="0" 
             SemanticProperties.Description="WCAG Groups" MinimumHeightRequest="110">
 
             <Picker x:Name="PerceivablePicker" ClassId="Perceivable" windows:VisualElement.AccessKey="P" 
                 Title="Perceivable groups"
-                Margin="8"
+                Margin="8" MinimumHeightRequest="25"
                 SelectedIndexChanged="JumpToPicker_SelectedIndexChanged">
                 <Picker.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
@@ -59,7 +66,7 @@
             </Picker>
             <Picker x:Name="OperablePicker" ClassId="Operable" windows:VisualElement.AccessKey="O" 
                 Title="Operable groups"
-                Margin="8"
+                Margin="8" MinimumHeightRequest="25"
                 SelectedIndexChanged="JumpToPicker_SelectedIndexChanged">
                 <Picker.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
@@ -73,7 +80,7 @@
             </Picker>
             <Picker x:Name="UnderstandablePicker" ClassId="Understandable" windows:VisualElement.AccessKey="U" 
                 Title="Understandable groups"
-                Margin="8"
+                Margin="8" MinimumHeightRequest="25"
                 SelectedIndexChanged="JumpToPicker_SelectedIndexChanged">
                 <Picker.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
@@ -85,7 +92,7 @@
             </Picker>
             <Picker x:Name="RobustPicker" ClassId="Robust" windows:VisualElement.AccessKey="R" 
                 Title="Robust groups"
-                Margin="8"
+                Margin="8" MinimumHeightRequest="25"
                 SelectedIndexChanged="JumpToPicker_SelectedIndexChanged">
                 <Picker.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
@@ -95,10 +102,13 @@
             </Picker>
         </FlexLayout>
 
-        <Border Grid.Row="4" Margin="4,10,4,4" Padding="2" 
+        <Border Grid.Row="2" Margin="4,10,4,4" Padding="2"
+            VerticalOptions="Fill" MaximumHeightRequest="400"
             Stroke="{AppThemeBinding Light=Black, Dark=White}">
-            <ScrollView x:Name="WCAGScrollView">
-                <StackLayout Margin="40,0,40,0">
+
+            <Grid VerticalOptions="Fill">
+
+            <ScrollView x:Name="WCAGScrollView1" IsVisible="False">
 
                     <!-- Barker: on 2nd July 2022, AutomationProperties.LabeledBy doesn't seem to work. -->
 
@@ -275,6 +285,9 @@
                             </StackLayout>
 
                     </StackLayout>
+            </ScrollView>
+
+            <ScrollView x:Name="WCAGScrollView2" IsVisible="False">
 
                     <StackLayout x:Name="WCAG2" Margin="0,20,0,0"
                         SemanticProperties.Description="{x:Static resources:AppResources.WCAG2Label}">
@@ -472,6 +485,9 @@
                             </StackLayout>
                         </StackLayout>
                     </StackLayout>
+            </ScrollView>
+
+            <ScrollView x:Name="WCAGScrollView3" IsVisible="False">
 
                     <StackLayout x:Name="WCAG3" Margin="0,20,0,0"
                         SemanticProperties.Description="{x:Static resources:AppResources.WCAG3Label}">
@@ -596,6 +612,9 @@
                             </StackLayout>
                         </StackLayout>
                     </StackLayout>
+            </ScrollView>
+
+            <ScrollView x:Name="WCAGScrollView4" IsVisible="False">
 
                     <StackLayout x:Name="WCAG4" Margin="0,20,0,0"
                         SemanticProperties.Description="{x:Static resources:AppResources.WCAG4Label}">
@@ -622,12 +641,14 @@
                             </StackLayout>
                         </StackLayout>
                     </StackLayout>
-
-                </StackLayout>
-            </ScrollView>
+                    </ScrollView>
+                </Grid>
         </Border>
-        
-        <StackLayout Grid.Row="5" Orientation="Horizontal"
+
+        </Grid>
+        </ScrollView>
+
+        <StackLayout Grid.Row="3" Orientation="Horizontal"
             HorizontalOptions="End">
 
             <Button Text="Submit Answer"
