@@ -43,6 +43,23 @@ namespace GridGames.ViewModels
             set
             {
                 SetProperty(ref currentAccessibleDescription, value);
+
+#if IOS
+                OnPropertyChanged("CurrentAccessibleMobileSquareHint");
+#endif
+            }
+        }
+
+        private string currentAccessibleMobileSquareHint;
+        public string CurrentAccessibleMobileSquareHint
+        {
+            get
+            {
+#if IOS
+                return currentAccessibleDescription;
+#else
+                return null;
+#endif
             }
         }
 
@@ -60,6 +77,10 @@ namespace GridGames.ViewModels
                 // Other properties may change as a result of this.
                 OnPropertyChanged("CurrentAccessibleName");
                 OnPropertyChanged("CurrentAccessibleDescription");
+
+#if IOS
+                OnPropertyChanged("CurrentAccessibleMobileSquareHint");
+#endif
             }
         }
 
@@ -77,6 +98,10 @@ namespace GridGames.ViewModels
                 // Other properties may change as a result of this.
                 OnPropertyChanged("CurrentAccessibleName");
                 OnPropertyChanged("CurrentAccessibleDescription");
+
+#if IOS
+                OnPropertyChanged("CurrentAccessibleMobileSquareHint");
+#endif
             }
         }
 
