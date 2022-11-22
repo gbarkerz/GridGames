@@ -224,10 +224,6 @@ namespace GridGames.Views
 
             if (vm.ShowPicture && !String.IsNullOrWhiteSpace(vm.PicturePathSquares))
             {
-#if !IOS
-                vm.GameIsLoading = true;
-#endif
-
                 // If the CollectionView isn't sized yet, wait a while and try again.
                 if ((SquaresCollectionView.Width <= 0) || (SquaresCollectionView.Height <= 0))
                 {
