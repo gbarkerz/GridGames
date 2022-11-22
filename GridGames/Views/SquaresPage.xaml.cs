@@ -301,9 +301,7 @@ namespace GridGames.Views
 
             vm.FirstRunSquares = Preferences.Get("FirstRunSquares", true);
 
-#if IOS
             var isFirstRun = vm.FirstRunSquares;
-#endif
 
             if (vm.FirstRunSquares)
             {
@@ -370,7 +368,6 @@ namespace GridGames.Views
                     }
                 }
             }
-#if IOS
             else
             {
                 if (isFirstRun)
@@ -380,7 +377,6 @@ namespace GridGames.Views
 
                 vm.GameIsLoading = false;
             }
-#endif
 
             if (!loadedCustomPicture)
             {
@@ -495,11 +491,10 @@ namespace GridGames.Views
             // "Please wait" message to show up on the UI thread.
 
             // Barker: Make all this more robust
-#if IOS
             await Task.Run(async () =>
             {
                 Thread.Sleep(1000);
-#endif
+
                 destGridPortionWidth = (int)(SquaresCollectionView.Width / 4);
                 destGridPortionHeight = (int)(SquaresCollectionView.Height / 4);
 
@@ -546,9 +541,7 @@ namespace GridGames.Views
                 Debug.WriteLine("ShowCustomPictureInSquares: Done loading pictures into squares.");
 
                 vm.GameIsLoading = false;
-#if IOS
             });
-#endif
         }
 
         private ImageSource GetImageSourceForSquare(int index)
