@@ -8,9 +8,9 @@ public static class MauiProgram
 {
     public static DateTime timeOfMostRecentArrowKeyPress = DateTime.Now;
 
+#if WINDOWS
     private static bool addedKeyEventHandler = false;
 
-#if WINDOWS
     static void MyKeyEventHandler(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
     {
         // Barker: Review old feedback from original Windows Grid Game player.

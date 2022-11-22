@@ -36,12 +36,6 @@ namespace GridGames.ViewModels
             }
         }
 
-        private int numberHeightAdjust;
-        public int NumberHeightAdjust
-        {
-            get { return numberHeight + 1; }
-        }
-
         private bool showNumbers;
         public bool ShowNumbers
         {
