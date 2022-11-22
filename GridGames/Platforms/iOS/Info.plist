@@ -4,7 +4,6 @@
 <dict>
 	<key>UIDeviceFamily</key>
 	<array>
-		<integer>2</integer>
 		<integer>1</integer>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -36,5 +35,7 @@
 	<string>6.0</string>
 	<key>CFBundleIdentifier</key>
 	<string>ios.guybarker.gridgames</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.1</string>
 </dict>
 </plist>
