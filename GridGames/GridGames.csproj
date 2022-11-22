@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-    <TargetFrameworks>net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
+    <TargetFrameworks>net7.0-ios;net7.0-maccatalyst;net7.0-android</TargetFrameworks>
 
     <OutputType>Exe</OutputType>
 		<RootNamespace>GridGames</RootNamespace>
@@ -13,15 +13,20 @@
 		<ApplicationTitle>Grid Games</ApplicationTitle>
 
 		<!-- App Identifier -->
-<!--
+		
+    <!-- This is for Windows and Android. -->
 		<ApplicationId>com.guybarker.gridgames</ApplicationId>
--->
+
+    <!-- This is for iOS. -->
+    <!--
 		<ApplicationId>ios.guybarker.gridgames</ApplicationId>
+    -->
+    
 		<ApplicationIdGuid>26A7C75E-4B2E-45ED-B943-F3E16203F985</ApplicationIdGuid>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>2.1</ApplicationDisplayVersion>
-		<ApplicationVersion>2.1</ApplicationVersion>
+		<ApplicationVersion>3</ApplicationVersion>
 
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.4</SupportedOSPlatformVersion>
     <DefaultLanguage>en</DefaultLanguage>
@@ -32,6 +37,8 @@
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <Configurations>Release;Debug</Configurations>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</SupportedOSPlatformVersion>
+    <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</TargetPlatformMinVersion>
   </PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-iOS15.4|AnyCPU'">
@@ -71,6 +78,9 @@
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-ios15.0|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
+	</PropertyGroup>
+	<PropertyGroup>
+	  <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.22621.0</TargetFrameworks>
 	</PropertyGroup>
   <ItemGroup>
 		<!-- App Icon -->
