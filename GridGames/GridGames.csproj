@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-    <TargetFrameworks>net7.0-android;net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
-    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
+    <TargetFrameworks>net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
 
     <OutputType>Exe</OutputType>
 		<RootNamespace>GridGames</RootNamespace>
@@ -11,22 +10,20 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 
 		<!-- Display name -->
-		<ApplicationTitle>GridGames</ApplicationTitle>
+		<ApplicationTitle>Grid Games</ApplicationTitle>
 
 		<!-- App Identifier -->
+<!--
 		<ApplicationId>com.guybarker.gridgames</ApplicationId>
+-->
+		<ApplicationId>ios.guybarker.gridgames</ApplicationId>
 		<ApplicationIdGuid>26A7C75E-4B2E-45ED-B943-F3E16203F985</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
-		<ApplicationVersion>1</ApplicationVersion>
+		<ApplicationDisplayVersion>2.1</ApplicationDisplayVersion>
+		<ApplicationVersion>2.1</ApplicationVersion>
 
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">28.0</SupportedOSPlatformVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
-    <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.4</SupportedOSPlatformVersion>
     <DefaultLanguage>en</DefaultLanguage>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
@@ -34,86 +31,56 @@
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-    <Platforms>AnyCPU;ARM64;x64</Platforms>
+    <Configurations>Release;Debug</Configurations>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-maccatalyst|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-iOS15.4|AnyCPU'">
 	  <ApplicationTitle>Grid Games</ApplicationTitle>
-	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
-	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
-	  <ApplicationVersion>1</ApplicationVersion>
+	  <ApplicationId>ios.guybarker.gridgames</ApplicationId>
+	  <ApplicationDisplayVersion>2.1</ApplicationDisplayVersion>
+	  <ApplicationVersion>2.1</ApplicationVersion>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-maccatalyst|AnyCPU'">
-	  <ApplicationTitle>Grid Games</ApplicationTitle>
-	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
-	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
-	  <ApplicationVersion>1</ApplicationVersion>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios15.4|AnyCPU'">
+	  <CreatePackage>false</CreatePackage>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios15.4|AnyCPU'">
+	  <CreatePackage>false</CreatePackage>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
+	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-maccatalyst|ARM64'">
-	  <ApplicationTitle>Grid Games</ApplicationTitle>
-	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
-	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
-	  <ApplicationVersion>1</ApplicationVersion>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
+	  <CreatePackage>false</CreatePackage>
+	  <CodesignProvision>Guy Barker Distribution Grid Games</CodesignProvision>
+	  <CodesignKey>iPhone Distribution: Guy Barker (9HC5XH2RVN)</CodesignKey>
 	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-maccatalyst|ARM64'">
-	  <ApplicationTitle>Grid Games</ApplicationTitle>
-	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
-	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
-	  <ApplicationVersion>1</ApplicationVersion>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	  <DebugSymbols>true</DebugSymbols>
+	  <WarningLevel>4</WarningLevel>
 	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android33.0|AnyCPU'">
-	  <ApplicationTitle>Grid Games</ApplicationTitle>
-	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
-	  <ApplicationDisplayVersion>1.0.2</ApplicationDisplayVersion>
-	  <ApplicationVersion>2</ApplicationVersion>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios15.0|AnyCPU'">
+	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android33.0|AnyCPU'">
-	  <ApplicationTitle>Grid Games</ApplicationTitle>
-	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
-	  <ApplicationDisplayVersion>1.0.2</ApplicationDisplayVersion>
-	  <ApplicationVersion>2</ApplicationVersion>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios15.0|AnyCPU'">
+	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android33.0|ARM64'">
-	  <ApplicationTitle>Grid Games</ApplicationTitle>
-	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
-	  <ApplicationDisplayVersion>1.0.2</ApplicationDisplayVersion>
-	  <ApplicationVersion>2</ApplicationVersion>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-ios15.0|AnyCPU'">
+	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android33.0|ARM64'">
-	  <ApplicationTitle>Grid Games</ApplicationTitle>
-	  <ApplicationId>com.guybarker.gridgames</ApplicationId>
-	  <ApplicationDisplayVersion>1.0.2</ApplicationDisplayVersion>
-	  <ApplicationVersion>2</ApplicationVersion>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-ios15.0|AnyCPU'">
+	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android33.0|x64'">
-	  <ApplicationDisplayVersion>1.0.2</ApplicationDisplayVersion>
-	  <ApplicationVersion>2</ApplicationVersion>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android33.0|x64'">
-	  <ApplicationDisplayVersion>1.0.2</ApplicationDisplayVersion>
-	  <ApplicationVersion>2</ApplicationVersion>
-	</PropertyGroup>
-
   <ItemGroup>
 		<!-- App Icon -->
     <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="white" />
 
     <!-- Splash Screen -->
+	<MauiSplashScreen Include="Resources\Splash\splashscreen.svg" />
 
     <!-- Images -->
     <MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
-
-		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
