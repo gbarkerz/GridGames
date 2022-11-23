@@ -9,8 +9,9 @@ namespace InvokePlatformCode.Services.PartialMethods
 {
     public partial class GridGamesPlatformAction
     {
-#if IOS
+#if !ANDROID
         public partial Task<string> GetPairsPictureFolder();
+        public partial bool IsHighContrastActive(out Color highContrastBackgroundColor);
 #endif
     }
 }

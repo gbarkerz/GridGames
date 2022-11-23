@@ -130,4 +130,11 @@ public partial class GridGamesPlatformAction
 
         return viewController;
     }
+
+    public partial bool IsHighContrastActive(out Color highContrastBackgroundColor)
+    {
+        highContrastBackgroundColor = Colors.Black;
+
+        return false;
+    }
 }

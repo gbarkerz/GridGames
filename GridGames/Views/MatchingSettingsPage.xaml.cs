@@ -24,6 +24,19 @@ namespace GridGames
         {
             InitializeComponent();
 
+#if WINDOWS
+            // This is an experiment into setting the background of a page based on the 
+            // currently active Windows high contrast theme.
+            var platformAction = new GridGamesPlatformAction();
+
+            Color highContrastBackgroundColor;
+            var highContrastIsActive = platformAction.IsHighContrastActive(out highContrastBackgroundColor);
+            if (highContrastIsActive)
+            {
+                this.BackgroundColor = highContrastBackgroundColor;
+            }
+#endif
+
             // Adding localized strings to a Picker in XAML seems complicated, so do it in code.
             MatchingPictureAspectPicker.Items.Add(AppResources.ResourceManager.GetString("ShowFullPicture"));
             MatchingPictureAspectPicker.Items.Add(AppResources.ResourceManager.GetString("FillCardAndClip"));
