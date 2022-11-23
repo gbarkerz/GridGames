@@ -19,8 +19,12 @@ public partial class GridGamesPlatformAction
         bool highContrastIsActive = accessibilitySettings.HighContrast;
         if (highContrastIsActive)
         {
-            // If the currently active high contrast gheme is "High Contrast White"
+            // If the currently active high contrast theme is "High Contrast White"
             // return a background colour of white. Otherwise return color black.
+            // Windows has had four high contrast themes for a long time, and despite
+            // what their friendly names might be, the scheme names returned here 
+            // are High Contrast Black, High Contrast White, High Contrast #1, and 
+            // High Contrast #2.
             var currentScheme = accessibilitySettings.HighContrastScheme;
             if (currentScheme.ToLower().Contains("white"))
             {
