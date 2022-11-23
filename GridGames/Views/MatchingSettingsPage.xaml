@@ -46,24 +46,25 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                        <Label Grid.Row="0"
                             FontSize="Subtitle" SemanticProperties.HeadingLevel="Level2"
-                            Text="Pictures" Margin="0,10,0,10" />
-                        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                            Text="Select how you would like the pictures to be shown in the cards." Margin="0,4,0,10" />
-                        <Label Grid.Row="2" Grid.Column="0" x:Name="PictureAspectLabel" 
-                            Text="{x:Static resources:AppResources.PictureAspectLabel}"
-                            VerticalOptions="Center" />
-                        <Picker Grid.Row="2" Grid.Column="1" x:Name="MatchingPictureAspectPicker"
-                            windows:VisualElement.AccessKey="T"    
-                            VerticalOptions="Center" Margin="8,0,0,0"
-                            SemanticProperties.Description="{x:Static resources:AppResources.PictureAspectLabel}"
-                            SelectedIndex="{Binding PictureAspect, Mode=TwoWay,
-                                Converter={StaticResource PictureAspectToInt}}" />
+                            Text="Pictures" Margin="0,10,0,0" />
+                        <Label Grid.Row="1"
+                            LineBreakMode="WordWrap"
+                            Text="Select how you would like the pictures to be shown in the cards." 
+                            Margin="0,4,0,0" />
+                        <StackLayout Grid.Row="2" Orientation="Horizontal" 
+                            Margin="0" Padding="0">
+                            <Label x:Name="PictureAspectLabel" 
+                                Text="{x:Static resources:AppResources.PictureAspectLabel}"
+                                VerticalOptions="Center" />
+                            <Picker x:Name="MatchingPictureAspectPicker"
+                                windows:VisualElement.AccessKey="T"    
+                                VerticalOptions="Center" Margin="8,0,0,0"
+                                SemanticProperties.Description="{x:Static resources:AppResources.PictureAspectLabel}"
+                                SelectedIndex="{Binding PictureAspect, Mode=TwoWay,
+                                    Converter={StaticResource PictureAspectToInt}}" />
+                        </StackLayout>
                     </Grid>
 
                     <StackLayout Grid.Row="1" Margin="0,30,0,10">
