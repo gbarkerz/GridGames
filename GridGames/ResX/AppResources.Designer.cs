@@ -2255,7 +2255,7 @@ namespace GridGames.ResX {
         /// <summary>
         ///   Looks up a localized string similar to After closing this message, please review the help content for details on how to play this game.
         ///
-        ///The help content can be reached via the Open Navigation button at the top left corner of the app. When the Open Navigation button is clicked, a menu of items is shown beneath it. When moving to one of those items, a screen reader might not announce the text shown on the item. If that&apos;s the case when you move to an item, navigate your screen reader to the item content to reach the text shown on the item..
+        ///The help content can be reached via the menu button at the top left corner of the app. Screen readers may announce this button as the &quot;Open Navigation&quot; button or &quot;Menu&quot; button. When the menu button is clicked, a menu of items is shown beneath it. The items can be used to switch between the games, or to restart a game, or to have the help content shown..
         /// </summary>
         internal static string WelcomeInstructions {
             get {
