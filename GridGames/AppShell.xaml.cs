@@ -37,6 +37,12 @@ public partial class AppShell : Shell
     private void AppShell_Loaded(object sender, EventArgs e)
     {
         AppWCAGPage = new WCAGPage();
+
+#if !WINDOWS
+        // Currently keyboard support is only available on Windows.
+        HelpMenuItem.Text = HelpMenuItem.Text.Replace(" (F1)", "");
+        RestartGameMenuItem.Text = RestartGameMenuItem.Text.Replace(" (F5)", "");
+#endif
     }
 
     private async void OnHelpMenuItemClicked(object sender, EventArgs e)

@@ -30,7 +30,7 @@
         </Tab>
     </FlyoutItem>
 
-    <MenuItem Text="Help (F1)" 
+    <MenuItem x:Name="HelpMenuItem" Text="Help (F1)" 
         StyleClass="MenuItemLayoutStyle" Clicked="OnHelpMenuItemClicked">
         <MenuItem.IconImageSource>
             <FontImageSource
@@ -40,7 +40,7 @@
         </MenuItem.IconImageSource>
     </MenuItem>
 
-    <MenuItem Text="Restart Game (F5)" 
+    <MenuItem x:Name="RestartGameMenuItem" Text="Restart Game (F5)" 
         StyleClass="MenuItemLayoutStyle" Clicked="OnRestartMenuItemClicked">
         <MenuItem.IconImageSource>
             <FontImageSource
