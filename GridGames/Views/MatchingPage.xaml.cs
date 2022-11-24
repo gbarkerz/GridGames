@@ -11,6 +11,7 @@ namespace GridGames.Views
         private bool previousShowCustomPictures;
         private string previousPicturePathMatching;
         private bool firstRunThisInstance = true;
+        private bool hasSettingsWindowAppeared = false;
 
         public static DateTime timeOfMostRecentSelectionChanged = DateTime.Now;
 
@@ -147,6 +148,8 @@ namespace GridGames.Views
             var vm = this.BindingContext as MatchingViewModel;
             if (!vm.FirstRunMatching)
             {
+                hasSettingsWindowAppeared = true;
+
                 var settingsPage = new MatchingGameSettingsPage();
                 await Navigation.PushModalAsync(settingsPage);
             }
@@ -197,7 +200,7 @@ namespace GridGames.Views
             }
         }
 
-        public void SetUpCards()
+        public async void SetUpCards()
         {
             var vm = this.BindingContext as MatchingViewModel;
 
@@ -260,6 +263,19 @@ namespace GridGames.Views
                             Debug.WriteLine("Pairs: Accessible name missing.");
 
                             resetToUseDefaultPictures = true;
+
+                            // If we're not here on startup when the app UI hasn't been fully created 
+                            // yet, pop up a message to let the customer know what the problem is.
+                            if (hasSettingsWindowAppeared)
+                            {
+                                var info = new FileInfo(cardPath);
+
+                                await DisplayAlert(
+                                    "Problem loading custom pictures",
+                                    "The accessible name for the file \"" + info.Name + 
+                                        "\" wasn't found in the PairsGamePictureDetails.txt file.",
+                                    "Ok");
+                            }
 
                             break;
                         }
