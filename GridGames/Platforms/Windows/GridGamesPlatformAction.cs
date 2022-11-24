@@ -5,11 +5,7 @@ namespace InvokePlatformCode.Services.PartialMethods;
 
 public partial class GridGamesPlatformAction
 {
-    public partial Task<string> GetPairsPictureFolder()
-    {
-        return null;
-    }
-
+#if WINDOWS
     // Returns the state of Windows high contrast theme.
     public partial bool IsHighContrastActive(out Color highContrastBackgroundColor)
     {
@@ -37,4 +33,5 @@ public partial class GridGamesPlatformAction
 
         return highContrastIsActive;
     }
+#endif
 }
