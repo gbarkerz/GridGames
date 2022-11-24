@@ -157,7 +157,7 @@ namespace GridGames.Views
 
         // This gets called when switching from the Squares Game to the Matching Game,
         // and also when closing the Matching Settings page.
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             Debug.Write("Matching Game: OnAppearing called.");
 
@@ -193,15 +193,27 @@ namespace GridGames.Views
             {
                 firstRunThisInstance = false;
 
-                SetUpCards();
+                var customPictureLoadFailed = await SetUpCards();
 
-                previousShowCustomPictures = showCustomPictures;
-                previousPicturePathMatching = picturePathMatching;
+                // If an attempt to load custom pictures failed, don't cache details
+                // which suggest that we are showing custom pictures.
+                if (!customPictureLoadFailed)
+                {
+                    previousShowCustomPictures = showCustomPictures;
+                    previousPicturePathMatching = picturePathMatching;
+                }
+                else
+                {
+                    previousShowCustomPictures = false;
+                    previousPicturePathMatching = "";
+                }
             }
         }
 
-        public async void SetUpCards()
+        public async Task<bool> SetUpCards()
         {
+            bool customPictureLoadFailed = false;
+
             var vm = this.BindingContext as MatchingViewModel;
 
             vm.ResetGameStatus();
@@ -303,7 +315,11 @@ namespace GridGames.Views
                 {
                     vm.SetupDefaultMatchingCardList();
                 }
+
+                customPictureLoadFailed = resetToUseDefaultPictures;
             }
+
+            return customPictureLoadFailed;
         }
 
         public async void ShowHelp()
