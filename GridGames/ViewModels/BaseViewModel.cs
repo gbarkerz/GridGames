@@ -76,9 +76,12 @@ namespace GridGames.ViewModels
             {
                 try
                 {
-                    reader.Announce(notification);
+                    // Always delay the announcement, just in case the screen reader wants to
+                    // immediately announce the focused item around the time of this announcement.
+                    // (Otherwise on iOS the custom announcements don't get announced.)s
+                    RaiseDelayedNotificationEvent(notification, 200);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Debug.WriteLine("GridGames: ALERT! " + ex.Message);
                 }
@@ -89,32 +92,36 @@ namespace GridGames.ViewModels
             }
         }
 
-        public void RaiseDelayedNotificationEvent(string notification)
+        private Timer timedDelayedAnnouncement;
+        private string mostRecentDelayedAnnouncement;
+
+        public void RaiseDelayedNotificationEvent(string notification, int msDelay)
         {
-            timer = new Timer(new TimerCallback((s) => NowAnnounce(notification)),
-                               null, 
-                               TimeSpan.FromMilliseconds(2000),
-                               TimeSpan.FromMilliseconds(Timeout.Infinite));
+            Debug.WriteLine("Delay notification: \"" +
+                notification + "\"");
+
+            // If multiple custom announcements are attempted in sucession,
+            // only announce the most recent.
+            mostRecentDelayedAnnouncement = notification;
+
+            if (timedDelayedAnnouncement == null)
+            {
+                timedDelayedAnnouncement = new Timer(new TimerCallback((s) => NowAnnounce()),
+                                   null,
+                                   TimeSpan.FromMilliseconds(msDelay),
+                                   TimeSpan.FromMilliseconds(Timeout.Infinite));
+            }
         }
 
-        private Timer timer;
-
-        private void NowAnnounce(string notification)
+        private void NowAnnounce()
         {
-            timer.Dispose();
+            timedDelayedAnnouncement.Dispose();
+            timedDelayedAnnouncement = null;
 
-            var newThread = new System.Threading.Thread(() =>
-            {
-                Application.Current.Dispatcher.Dispatch(() =>
-                {
-                    Debug.WriteLine("Perform delayed announcement. \"" + 
-                        notification + "\"");
+            Debug.WriteLine("Now announce: \"" +
+                mostRecentDelayedAnnouncement + "\"");
 
-                    SemanticScreenReader.Default.Announce(notification);
-                });
-            });
-
-            newThread.Start();
+            SemanticScreenReader.Default.Announce(mostRecentDelayedAnnouncement);
         }
     }
 }

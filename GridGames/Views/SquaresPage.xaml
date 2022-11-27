@@ -143,7 +143,7 @@
                     FontSize="Large" />
             </Border>
 
-            <Border Margin="4" Padding="8"
+            <Border Margin="4" Padding="8" x:Name="WelcomeBorder"
                 IsVisible="{Binding FirstRunSquares}"
                 Stroke="{AppThemeBinding Light=Black, Dark=White}"
                 BackgroundColor="{DynamicResource PageBackgroundColor}"
@@ -162,9 +162,9 @@
                         <Editor x:Name="SquaresWelcomeTitleInstructions" IsReadOnly="True" FontSize="Medium"
                             Text="{x:Static resources:AppResources.WelcomeInstructions}" />
                     </ScrollView>
-                    <Button Grid.Row="2"
+                    <Button Grid.Row="2" x:Name="WelcomeMessageCloseButton"
                         Text="{x:Static resources:AppResources.Close}" 
-                        Clicked="SquaresWelcomeOKButton_Clicked"
+                        Clicked="WelcomeMessageCloseButton_Clicked"
                         HorizontalOptions="End" Margin="0,4,4,4" Padding="8" />
                 </Grid>
             </Border>

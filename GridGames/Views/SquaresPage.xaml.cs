@@ -83,6 +83,12 @@ namespace GridGames.Views
         {
             InitializeComponent();
 
+#if IOS
+            SemanticProperties.SetDescription(WelcomeBorder, null);
+#endif
+
+            WelcomeBorder.Loaded += WelcomeBorder_Loaded;
+
             Application.Current.RequestedThemeChanged += (s, a) =>
             {
                 var currentTheme = a.RequestedTheme;
@@ -109,6 +115,25 @@ namespace GridGames.Views
             // remove the Description on iOS.
             SemanticProperties.SetDescription(SquaresCollectionView, null);
 #endif
+        }
+
+        private void WelcomeBorder_Loaded(object sender, EventArgs e)
+        {
+            if ((sender as Border).IsVisible)
+            {
+                /*
+                var vm = this.BindingContext as MatchingViewModel;
+
+                vm.RaiseDelayedNotificationEvent(
+                    SquaresWelcomeTitleLabel.Text + ", " +
+                    SquaresWelcomeTitleInstructions.Text,
+                    4000);
+                */
+
+                SquaresCollectionView.IsVisible = false;
+
+                WelcomeMessageCloseButton.Focus();
+            }
         }
 
         private async void SquaresCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -429,10 +454,12 @@ namespace GridGames.Views
             }
         }
 
-        private void SquaresWelcomeOKButton_Clicked(object sender, EventArgs e)
+        private void WelcomeMessageCloseButton_Clicked(object sender, EventArgs e)
         {
             var vm = this.BindingContext as SquaresViewModel;
             vm.FirstRunSquares = false;
+
+            SquaresCollectionView.IsVisible = true;
         }
 
         private async void SquaresGameSettingsButton_Clicked(object sender, EventArgs e)

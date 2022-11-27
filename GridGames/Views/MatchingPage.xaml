@@ -140,9 +140,9 @@
                         <Editor x:Name="MatchingWelcomeTitleInstructions" IsReadOnly="True" FontSize="Medium"
                             Text="{x:Static resources:AppResources.WelcomeInstructions}" />
                     </ScrollView>
-                    <Button Grid.Row="2"
+                    <Button Grid.Row="2" x:Name="WelcomeMessageCloseButton"
                         Text="Close welcome message" 
-                        Clicked="MatchingWelcomeOKButton_Clicked"
+                        Clicked="WelcomeMessageCloseButton_Clicked"
                         windows:VisualElement.AccessKey="C"
                         HorizontalOptions="End" Margin="0,4,4,4" Padding="8" />
                 </Grid>

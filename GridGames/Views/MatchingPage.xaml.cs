@@ -19,6 +19,10 @@ namespace GridGames.Views
         {
             InitializeComponent();
 
+#if IOS
+            SemanticProperties.SetDescription(WelcomeBorder, null);
+#endif
+
             WelcomeBorder.Loaded += WelcomeBorder_Loaded;
 
             SquaresCollectionView.SizeChanged += SquaresCollectionView_SizeChanged;
@@ -123,14 +127,18 @@ namespace GridGames.Views
         {
             if ((sender as Border).IsVisible)
             {
-                PairsSettingsButton.Focus();
-
+                /*
                 var vm = this.BindingContext as MatchingViewModel;
+
                 vm.RaiseDelayedNotificationEvent(
                     MatchingWelcomeTitleLabel.Text + ", " +
-                    MatchingWelcomeTitleInstructions.Text);
+                    MatchingWelcomeTitleInstructions.Text,
+                    4000);
+                */
 
                 SquaresCollectionView.IsVisible = false;
+
+                WelcomeMessageCloseButton.Focus();
             }
         }
 
@@ -377,7 +385,7 @@ namespace GridGames.Views
             return itemCollectionIndex;
         }
 
-        private void MatchingWelcomeOKButton_Clicked(object sender, EventArgs e)
+        private void WelcomeMessageCloseButton_Clicked(object sender, EventArgs e)
         {
             var vm = this.BindingContext as MatchingViewModel;
             vm.FirstRunMatching = false;
