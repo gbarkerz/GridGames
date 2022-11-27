@@ -121,7 +121,14 @@ namespace GridGames.ViewModels
             Debug.WriteLine("Now announce: \"" +
                 mostRecentDelayedAnnouncement + "\"");
 
-            SemanticScreenReader.Default.Announce(mostRecentDelayedAnnouncement);
+            // Always run this on the UI thread. (On Windows an exception is thrown otherwise.)
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                Debug.WriteLine("Now announce on UI thread: \"" +
+                    mostRecentDelayedAnnouncement + "\"");
+
+                SemanticScreenReader.Default.Announce(mostRecentDelayedAnnouncement);
+            });
         }
     }
 }
