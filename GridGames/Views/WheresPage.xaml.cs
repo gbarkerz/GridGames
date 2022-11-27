@@ -15,6 +15,8 @@ namespace GridGames.Views
         public static DateTime timeOfMostRecentSelectionChanged = DateTime.Now;
         public static object mostRecentSelectedItem;
 
+        private bool bonusWCAGQuestionIsShown = false;
+
         public WheresPage()
         {
             InitializeComponent();
@@ -83,6 +85,15 @@ namespace GridGames.Views
 
         private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
+            Debug.WriteLine("TapGestureRecognizer_Tapped");
+
+            if (bonusWCAGQuestionIsShown)
+            {
+                Debug.WriteLine("TapGestureRecognizer_Tapped: Bonus question is currently being shown.");
+
+                return;
+            }
+
             var timeSinceMostRecentSelectionChanged = DateTime.Now - timeOfMostRecentSelectionChanged;
             if (timeSinceMostRecentSelectionChanged.TotalMilliseconds < 100)
             {
@@ -159,6 +170,8 @@ namespace GridGames.Views
 
                     try
                     {
+                        bonusWCAGQuestionIsShown = true;
+
                         await Navigation.PushModalAsync(AppShell.AppWCAGPage);
                     }
                     catch (Exception ex)
@@ -229,6 +242,8 @@ namespace GridGames.Views
             Debug.Write("Wheres Game: OnAppearing called.");
 
             base.OnAppearing();
+
+            bonusWCAGQuestionIsShown = false;
 
             Preferences.Set("InitialGame", "Wheres");
 
