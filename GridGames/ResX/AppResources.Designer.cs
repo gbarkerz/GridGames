@@ -937,29 +937,29 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to To select the picture folder, browse to the folder of interest and select any file in that folder..
+        /// </summary>
+        internal static string SelectPictureFolderInstructionsFileInFolder {
+            get {
+                return ResourceManager.GetString("SelectPictureFolderInstructionsFileInFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To select the pictures and their descriptions, browse to the folder of interest and select the eight picture files and the PairsGamePictureDetails.txt file..
         /// </summary>
-        internal static string SelectPictureFolderInstructionsAndroid {
+        internal static string SelectPictureFolderInstructionsFiles {
             get {
-                return ResourceManager.GetString("SelectPictureFolderInstructionsAndroid", resourceCulture);
+                return ResourceManager.GetString("SelectPictureFolderInstructionsFiles", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to To select the picture folder, browse to the folder of interest and select it..
         /// </summary>
-        internal static string SelectPictureFolderInstructionsiOS {
+        internal static string SelectPictureFolderInstructionsFolder {
             get {
-                return ResourceManager.GetString("SelectPictureFolderInstructionsiOS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to To select the picture folder, browse to the folder of interest and select any file in that folder..
-        /// </summary>
-        internal static string SelectPictureFolderInstructionsWindows {
-            get {
-                return ResourceManager.GetString("SelectPictureFolderInstructionsWindows", resourceCulture);
+                return ResourceManager.GetString("SelectPictureFolderInstructionsFolder", resourceCulture);
             }
         }
         

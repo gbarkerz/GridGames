@@ -3,6 +3,9 @@ using GridGames.ViewModels;
 using System.Diagnostics;
 using System.Globalization;
 
+#if ANDROID
+#endif
+
 using InvokePlatformCode.Services.PartialMethods;
 
 namespace GridGames
@@ -18,15 +21,18 @@ namespace GridGames
             InitializeComponent();
 
 #if WINDOWS
-            SelectPictureFolderInstructions.Text = AppResources.ResourceManager.GetString("SelectPictureFolderInstructionsWindows");
+            SelectPictureFolderInstructions.Text = AppResources.ResourceManager.GetString(
+                                                        "SelectPictureFolderInstructionsFileInFolder");
 #endif
 
 #if IOS
-            SelectPictureFolderInstructions.Text = AppResources.ResourceManager.GetString("SelectPictureFolderInstructionsiOS");
+            SelectPictureFolderInstructions.Text = AppResources.ResourceManager.GetString(
+                                                        "SelectPictureFolderInstructionsFolder");
 #endif
 
 #if ANDROID
-            SelectPictureFolderInstructions.Text = AppResources.ResourceManager.GetString("SelectPictureFolderInstructionsAndroid");
+            SelectPictureFolderInstructions.Text = AppResources.ResourceManager.GetString(
+                                                        "SelectPictureFolderInstructionsFiles");
 #endif
 
 #if WINDOWS
@@ -193,7 +199,7 @@ namespace GridGames
 
             var options = new PickOptions
             {
-                PickerTitle = "Please select a picture from a folder containing only 8 pictures."
+                PickerTitle = "Please select the Pairs game pictures."
             };
 
             try
@@ -203,16 +209,17 @@ namespace GridGames
 
                 string pathToPictures = "";
 
-#if !WINDOWS
-                var platformAction = new GridGamesPlatformAction();
-                pathToPictures = await platformAction.GetPairsPictureFolder();
-#else
+#if WINDOWS
                 var result = await FilePicker.PickAsync(options);
                 if (result != null)
                 {
                     pathToPictures = result.FullPath;
                 }
+#else
+                var platformAction = new GridGamesPlatformAction();
+                pathToPictures = await platformAction.GetPairsPictureFolder();
 #endif
+
                 if (!String.IsNullOrWhiteSpace(pathToPictures))
                 {
                     // The selected folder must contain exactly the required number of pictures in it.

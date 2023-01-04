@@ -3,6 +3,7 @@ using Android.Content;
 using Android.Content.PM;
 using Android.Database;
 using Android.Provider;
+using Microsoft.Maui.Controls.PlatformConfiguration;
 
 namespace GridGames;
 
@@ -20,10 +21,10 @@ public class MainActivity : MauiAppCompatActivity
         try
         {
             // Has the player successfully made some selection when picking custom files for the Pairs game?
-            if ((requestCode == 1234) && (resultCode == Result.Ok))
+            if (((data != null)) && (requestCode == 1234) && (resultCode == Result.Ok))
             {
                 // Check that the nine files were selected, (that is, 8 images and the description text file).
-                if ((data != null) && (data.ClipData.ItemCount == 9))
+                if ((data.ClipData != null) && (data.ClipData.ItemCount == 9))
                 {
                     // Copy all the files of interest to a dedicated folder beneath the app's temp folder.
                     var destinationFolder = Path.Combine(Path.GetTempPath(), "PairsGameCurrentPictures");

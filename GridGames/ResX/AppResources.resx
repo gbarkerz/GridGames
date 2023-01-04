@@ -443,14 +443,14 @@ Would you like to play another game?</value>
   <data name="SelectPicture" xml:space="preserve">
     <value>Select picture folder</value>
   </data>
-  <data name="SelectPictureFolderInstructionsAndroid" xml:space="preserve">
+  <data name="SelectPictureFolderInstructionsFileInFolder" xml:space="preserve">
+    <value>To select the picture folder, browse to the folder of interest and select any file in that folder.</value>
+  </data>
+  <data name="SelectPictureFolderInstructionsFiles" xml:space="preserve">
     <value>To select the pictures and their descriptions, browse to the folder of interest and select the eight picture files and the PairsGamePictureDetails.txt file.</value>
   </data>
-  <data name="SelectPictureFolderInstructionsiOS" xml:space="preserve">
+  <data name="SelectPictureFolderInstructionsFolder" xml:space="preserve">
     <value>To select the picture folder, browse to the folder of interest and select it.</value>
-  </data>
-  <data name="SelectPictureFolderInstructionsWindows" xml:space="preserve">
-    <value>To select the picture folder, browse to the folder of interest and select any file in that folder.</value>
   </data>
   <data name="Seven" xml:space="preserve">
     <value>seven</value>
