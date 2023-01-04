@@ -309,7 +309,7 @@ Review the Help content for details on how to play the game using only the keybo
 
 When the game is run, a 4 by 4 grid of blank squares appears, each square representing a face-down card. When one of the cards is turned up, it reveals an image on the face-up card. When another card is turned up, an image is also shown on that second face-up card. If the two images are the same, then the cards are considered to be matched, and will not change again for the rest of the game. If the images do not match, then the cards are considered to be unmatched, and cards must be then turned back down. These steps are then repeated until all matching images have been found, and a "Congratulations" window appears.
 
-The Pairs game can only be played using the keyboard, and cards cannot be turned up using a mouse, touch, or speech. To use the keyboard to play the game, first use the Tab key to move keyboard focus into the grid of cards. Once keyboard focus in on the grid, use the arrow keys to move to a card of interest. Once at a card of interest, press either the Space key or Enter key to turn the card up. To turn two unmatched face-up cards back down, press Space or Enter at any card.
+The Pairs game can be played using touch, mouse, speech or keyboard. To use the keyboard to play the game, first use the Tab key to move keyboard focus into the grid of cards. Once keyboard focus in on the grid, use the arrow keys to move to a card of interest. Once at a card of interest, press either the Space key or Enter key to turn the card up. To turn two unmatched face-up cards back down, press Space or Enter at any card.
 
 Press the F1 key to show this Help content, or the F5 key to restart a game. 
 
@@ -442,6 +442,15 @@ Would you like to play another game?</value>
   </data>
   <data name="SelectPicture" xml:space="preserve">
     <value>Select picture folder</value>
+  </data>
+  <data name="SelectPictureFolderInstructionsAndroid" xml:space="preserve">
+    <value>To select the pictures and their descriptions, browse to the folder of interest and select the eight picture files and the PairsGamePictureDetails.txt file.</value>
+  </data>
+  <data name="SelectPictureFolderInstructionsiOS" xml:space="preserve">
+    <value>To select the picture folder, browse to the folder of interest and select it.</value>
+  </data>
+  <data name="SelectPictureFolderInstructionsWindows" xml:space="preserve">
+    <value>To select the picture folder, browse to the folder of interest and select any file in that folder.</value>
   </data>
   <data name="Seven" xml:space="preserve">
     <value>seven</value>

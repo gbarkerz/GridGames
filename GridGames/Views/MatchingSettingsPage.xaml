@@ -94,7 +94,7 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <Label Grid.Row="0" Text="{x:Static resources:AppResources.WheresBonusQuestionsViewSample}"
+                            <Label Grid.Row="0" Text="{x:Static resources:AppResources.PairsCustomPicturesViewSample}"
                                Margin="0,4,0,10" />
 
                             <Button Grid.Row="1"
@@ -106,8 +106,7 @@
 
                         </Grid>
 
-                        <Label Grid.Row="0" Margin="0,0,0,10"
-                            Text="To select the picture folder, browse to the folder of interest and select any file in that folder." />
+                        <Label x:Name="SelectPictureFolderInstructions" Grid.Row="0" Margin="0,0,0,10" />
 
                         <Grid>
                             <Grid.RowDefinitions>

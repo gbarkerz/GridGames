@@ -25,6 +25,18 @@ namespace GridGames
             InitializeComponent();
 
 #if WINDOWS
+            SelectPictureFolderInstructions.Text = AppResources.ResourceManager.GetString("SelectPictureFolderInstructionsWindows");
+#endif
+
+#if IOS
+            SelectPictureFolderInstructions.Text = AppResources.ResourceManager.GetString("SelectPictureFolderInstructionsiOS");
+#endif
+
+#if ANDROID
+            SelectPictureFolderInstructions.Text = AppResources.ResourceManager.GetString("SelectPictureFolderInstructionsAndroid");
+#endif
+
+#if WINDOWS
             // This is an experiment into setting the background of a page based on the 
             // currently active Windows high contrast theme.
             var platformAction = new GridGamesPlatformAction();

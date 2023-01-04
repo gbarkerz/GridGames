@@ -937,6 +937,33 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to To select the pictures and their descriptions, browse to the folder of interest and select the eight picture files and the PairsGamePictureDetails.txt file..
+        /// </summary>
+        internal static string SelectPictureFolderInstructionsAndroid {
+            get {
+                return ResourceManager.GetString("SelectPictureFolderInstructionsAndroid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To select the picture folder, browse to the folder of interest and select it..
+        /// </summary>
+        internal static string SelectPictureFolderInstructionsiOS {
+            get {
+                return ResourceManager.GetString("SelectPictureFolderInstructionsiOS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To select the picture folder, browse to the folder of interest and select any file in that folder..
+        /// </summary>
+        internal static string SelectPictureFolderInstructionsWindows {
+            get {
+                return ResourceManager.GetString("SelectPictureFolderInstructionsWindows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to seven.
         /// </summary>
         internal static string Seven {
