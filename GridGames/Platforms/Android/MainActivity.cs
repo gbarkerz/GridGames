@@ -79,7 +79,7 @@ public class MainActivity : MauiAppCompatActivity
 
             using (var writer = File.Create(destinationFilePath))
             {
-                var buffer = new byte[0x1000];
+                var buffer = new byte[0x4000];
 
                 int b = buffer.Length;
                 int length;

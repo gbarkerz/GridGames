@@ -1,14 +1,7 @@
 ﻿using GridGames.ResX;
 using GridGames.ViewModels;
-using System;
 using System.Diagnostics;
 using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Xaml;
 
 using InvokePlatformCode.Services.PartialMethods;
 
