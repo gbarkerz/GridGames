@@ -3,7 +3,7 @@ namespace InvokePlatformCode.Services.PartialMethods
 {
     public partial class GridGamesPlatformAction
     {
-#if IOS
+#if !WINDOWS
         public partial Task<string> GetPairsPictureFolder();
 #endif
 

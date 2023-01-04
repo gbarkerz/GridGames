@@ -198,7 +198,7 @@ namespace GridGames
 
                 string pathToPictures = "";
 
-#if IOS
+#if !WINDOWS
                 var platformAction = new GridGamesPlatformAction();
                 pathToPictures = await platformAction.GetPairsPictureFolder();
 #else
