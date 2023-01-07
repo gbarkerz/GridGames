@@ -3,9 +3,9 @@ namespace InvokePlatformCode.Services.PartialMethods
 {
     public partial class GridGamesPlatformAction
     {
-#if !WINDOWS
+//#if WINDOWS
         public partial Task<string> GetPairsPictureFolder();
-#endif
+//#endif
 
 #if WINDOWS
         public partial bool IsHighContrastActive(out Color highContrastBackgroundColor);

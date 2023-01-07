@@ -20,19 +20,12 @@ namespace GridGames
         {
             InitializeComponent();
 
-#if WINDOWS
-            SelectPictureFolderInstructions.Text = AppResources.ResourceManager.GetString(
-                                                        "SelectPictureFolderInstructionsFileInFolder");
-#endif
-
-#if IOS
-            SelectPictureFolderInstructions.Text = AppResources.ResourceManager.GetString(
-                                                        "SelectPictureFolderInstructionsFolder");
-#endif
-
 #if ANDROID
             SelectPictureFolderInstructions.Text = AppResources.ResourceManager.GetString(
                                                         "SelectPictureFolderInstructionsFiles");
+#else
+            SelectPictureFolderInstructions.Text = AppResources.ResourceManager.GetString(
+                                                        "SelectPictureFolderInstructionsFolder");
 #endif
 
 #if WINDOWS
@@ -209,16 +202,10 @@ namespace GridGames
 
                 string pathToPictures = "";
 
-#if WINDOWS
-                var result = await FilePicker.PickAsync(options);
-                if (result != null)
-                {
-                    pathToPictures = result.FullPath;
-                }
-#else
+//#if WINDOWS
                 var platformAction = new GridGamesPlatformAction();
                 pathToPictures = await platformAction.GetPairsPictureFolder();
-#endif
+//#endif
 
                 if (!String.IsNullOrWhiteSpace(pathToPictures))
                 {

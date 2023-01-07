@@ -1,4 +1,6 @@
 ﻿
+using System.Diagnostics;
+using Windows.Storage;
 using Windows.UI.ViewManagement;
 
 namespace InvokePlatformCode.Services.PartialMethods;
@@ -6,6 +8,34 @@ namespace InvokePlatformCode.Services.PartialMethods;
 public partial class GridGamesPlatformAction
 {
 #if WINDOWS
+    public partial async Task<string> GetPairsPictureFolder()
+    {
+        string result = "";
+
+        try
+        {
+            var picker = new Windows.Storage.Pickers.FolderPicker();
+
+            // Get the current window's HWND by passing in the Window object
+            var hwnd = ((MauiWinUIWindow)Application.Current.Windows[0].Handler.PlatformView).WindowHandle;
+
+            // Associate the HWND with the file picker
+            WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
+
+            StorageFolder pickedFolder = await picker.PickSingleFolderAsync();
+            if (pickedFolder != null)
+            {
+                result = pickedFolder.Path + "\\PairsGamePictureDetails.txt";
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine("GetPairsPictureFolder: " + ex.Message);
+        }
+
+        return result;
+    }
+
     // Returns the state of Windows high contrast theme.
     public partial bool IsHighContrastActive(out Color highContrastBackgroundColor)
     {
