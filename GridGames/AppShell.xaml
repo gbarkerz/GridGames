@@ -30,6 +30,13 @@
         </Tab>
     </FlyoutItem>
 
+    <FlyoutItem Title="Sweeper"
+                Icon="squaresgameicon.png">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate views:SweeperPage}" />
+        </Tab>
+    </FlyoutItem>
+
     <MenuItem x:Name="HelpMenuItem" Text="Help (F1)" 
         StyleClass="MenuItemLayoutStyle" Clicked="OnHelpMenuItemClicked">
         <MenuItem.IconImageSource>

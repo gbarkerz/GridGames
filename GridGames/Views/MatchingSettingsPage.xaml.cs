@@ -202,10 +202,10 @@ namespace GridGames
 
                 string pathToPictures = "";
 
-//#if WINDOWS
+#if WINDOWS
                 var platformAction = new GridGamesPlatformAction();
                 pathToPictures = await platformAction.GetPairsPictureFolder();
-//#endif
+#endif
 
                 if (!String.IsNullOrWhiteSpace(pathToPictures))
                 {

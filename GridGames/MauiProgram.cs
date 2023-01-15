@@ -1,6 +1,7 @@
 ﻿using Microsoft.Maui.LifecycleEvents;
 using GridGames.Views;
 using SkiaSharp.Views.Maui.Controls.Hosting;
+using CommunityToolkit.Maui;
 
 namespace GridGames;
 
@@ -31,6 +32,12 @@ public static class MauiProgram
                 else if (currentPage is SquaresPage)
                 {
                     var page = currentPage as SquaresPage;
+                    page.ReactToKeyInputOnSelectedCard();
+                    e.Handled = true;
+                }
+                else if (currentPage is SweeperPage)
+                {
+                    var page = currentPage as SweeperPage;
                     page.ReactToKeyInputOnSelectedCard();
                     e.Handled = true;
                 }
@@ -67,7 +74,8 @@ public static class MauiProgram
         else if (e.Key == Windows.System.VirtualKey.F5)
         {
             var currentPage = (Application.Current.MainPage as Microsoft.Maui.Controls.Shell).CurrentPage;
-            if ((currentPage is MatchingPage) || (currentPage is SquaresPage) || (currentPage is WheresPage))
+            if ((currentPage is MatchingPage) || (currentPage is SquaresPage) ||
+                (currentPage is WheresPage) || (currentPage is SweeperPage))
             {
                 var page = currentPage as MatchingPage;
                 if (page != null)
@@ -78,10 +86,35 @@ public static class MauiProgram
                 {
                     (currentPage as SquaresPage).RestartGame();
                 }
+                else if (currentPage is SweeperPage)
+                {
+                    (currentPage as SweeperPage).RestartGame();
+                }
                 else
                 {
                     (currentPage as WheresPage).RestartGame();
                 }
+
+                e.Handled = true;
+            }
+        }
+        else if ((e.Key == Windows.System.VirtualKey.Number1) ||
+                 (e.Key == Windows.System.VirtualKey.NumberPad1))
+        {
+            var currentPage = (Application.Current.MainPage as Microsoft.Maui.Controls.Shell).CurrentPage;
+            if (currentPage is SweeperPage)
+            {
+                (currentPage as SweeperPage).PlantFlag();
+
+                e.Handled = true;
+            }
+        }
+        else if (e.Key == Windows.System.VirtualKey.Application)
+        {
+            var currentPage = (Application.Current.MainPage as Microsoft.Maui.Controls.Shell).CurrentPage;
+            if (currentPage is SweeperPage)
+            {
+                (currentPage as SweeperPage).ShowContextMenu();
 
                 e.Handled = true;
             }
@@ -102,6 +135,7 @@ public static class MauiProgram
 
         builder
             .UseMauiApp<App>()
+            .UseMauiCommunityToolkit()
             .UseSkiaSharp(true)
             .ConfigureFonts(fonts =>
             {

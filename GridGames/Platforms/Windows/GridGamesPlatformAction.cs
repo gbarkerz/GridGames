@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System.Diagnostics;
 using Windows.Storage;
 using Windows.UI.ViewManagement;
@@ -8,6 +10,18 @@ namespace InvokePlatformCode.Services.PartialMethods;
 public partial class GridGamesPlatformAction
 {
 #if WINDOWS
+    public partial void ShowFlyout(FlyoutBase contextFlyout, Microsoft.Maui.Controls.Border border)
+    {
+        var flyout = contextFlyout.Handler.PlatformView as Microsoft.UI.Xaml.Controls.MenuFlyout;
+
+        if (flyout != null)
+        {
+            var element = border.Handler.PlatformView;
+
+            flyout.ShowAt(element as FrameworkElement);
+        }
+    }
+
     public partial async Task<string> GetPairsPictureFolder()
     {
         string result = "";
@@ -17,7 +31,7 @@ public partial class GridGamesPlatformAction
             var picker = new Windows.Storage.Pickers.FolderPicker();
 
             // Get the current window's HWND by passing in the Window object
-            var hwnd = ((MauiWinUIWindow)Application.Current.Windows[0].Handler.PlatformView).WindowHandle;
+            var hwnd = ((MauiWinUIWindow)Microsoft.Maui.Controls.Application.Current.Windows[0].Handler.PlatformView).WindowHandle;
 
             // Associate the HWND with the file picker
             WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);

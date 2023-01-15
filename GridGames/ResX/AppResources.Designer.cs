@@ -674,6 +674,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Leaf.
+        /// </summary>
+        internal static string Leaf {
+            get {
+                return ResourceManager.GetString("Leaf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to left.
         /// </summary>
         internal static string Left {
@@ -897,6 +906,15 @@ namespace GridGames.ResX {
         internal static string PicturePath {
             get {
                 return ResourceManager.GetString("PicturePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Query frog.
+        /// </summary>
+        internal static string QueryFrog {
+            get {
+                return ResourceManager.GetString("QueryFrog", resourceCulture);
             }
         }
         
@@ -1245,6 +1263,24 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Leaf Sweeper.
+        /// </summary>
+        internal static string Sweeper {
+            get {
+                return ResourceManager.GetString("Sweeper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sweeper Squares.
+        /// </summary>
+        internal static string SweeperSquares {
+            get {
+                return ResourceManager.GetString("SweeperSquares", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ten.
         /// </summary>
         internal static string Ten {
@@ -1322,6 +1358,15 @@ namespace GridGames.ResX {
         internal static string UnexpectedDataInFile {
             get {
                 return ResourceManager.GetString("UnexpectedDataInFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown.
+        /// </summary>
+        internal static string Unknown {
+            get {
+                return ResourceManager.GetString("Unknown", resourceCulture);
             }
         }
         

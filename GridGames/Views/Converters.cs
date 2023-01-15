@@ -5,6 +5,102 @@ using System.Diagnostics;
 
 namespace GridGames.Views
 {
+    public class NearbyLeafCountToLabel : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values == null || (values.Length < 2))
+            {
+                return "";
+            }
+
+            if ((values[0] == null) || (values[1] == null))
+            {
+                return "";
+            }
+
+            bool turnedUp = (bool)values[0];
+            int nearbyLeafCount = (int)values[1];
+
+            if (!turnedUp || (nearbyLeafCount <= 0))
+            {
+                return "";
+            }
+
+            return nearbyLeafCount.ToString();
+        }
+
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class TurnedUpToBackgroundColour : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values == null || (values.Length < 3))
+            {
+                return "";
+            }
+
+            if ((values[0] == null) || (values[1] == null) || (values[2] == null))
+            {
+                return "";
+            }
+
+            var turnedUp = (bool)values[0];
+            var showsFlag = (bool)values[1];
+            bool showDarkTheme = (bool)values[2];
+
+            Color col = showDarkTheme ? Colors.Green : Colors.LightGreen;
+
+            if (showsFlag)
+            {
+                col = Colors.LightGoldenrodYellow;
+            }
+            else if (turnedUp)
+            {
+                col = showDarkTheme ? Colors.Black : Colors.White;
+            }
+
+            return col;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class LeafToVisible : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values == null || (values.Length < 2))
+            {
+                return "";
+            }
+
+            if ((values[0] == null) || (values[1] == null))
+            {
+                return "";
+            }
+
+            var turnedUp = (bool)values[0];
+            var showsFlag = (bool)values[1];
+
+            return (!turnedUp && !showsFlag);
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class CustomPictureToItemName : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -51,7 +147,7 @@ namespace GridGames.Views
             throw new NotImplementedException();
         }
     }
-        
+
     public class DarkThemeToSquareLabelColor : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -143,6 +239,26 @@ namespace GridGames.Views
             var aspect = (Aspect)value;
 
             return (int)aspect;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var intValue = (int)value;
+
+            return (Aspect)intValue;
+        }
+    }
+
+    public class SweeperLabelContainerHeightToFontSize : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var containerHeightPixels = (double)value;
+
+            int scaler = int.Parse(parameter as string);
+
+            //return (containerHeightPixels * 0.25) / scaler;
+            return 0.67 * (containerHeightPixels * 0.25) / scaler;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

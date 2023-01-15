@@ -354,6 +354,9 @@ At the top left corner of the game is the Open Navigation button, which can be u
   <data name="Largest" xml:space="preserve">
     <value>Largest</value>
   </data>
+  <data name="Leaf" xml:space="preserve">
+    <value>Leaf</value>
+  </data>
   <data name="Left" xml:space="preserve">
     <value>left</value>
   </data>
@@ -430,6 +433,9 @@ Would you like to play another game?</value>
   </data>
   <data name="PicturePath" xml:space="preserve">
     <value>Selected picture folder:</value>
+  </data>
+  <data name="QueryFrog" xml:space="preserve">
+    <value>Query frog</value>
   </data>
   <data name="RestartGame" xml:space="preserve">
     <value>Restart Game</value>
@@ -547,6 +553,12 @@ Would you like to play another game?</value>
   <data name="String9" xml:space="preserve">
     <value>Tip: Practice moving numbered squares around before changing the setting to have a picture shown on the squares.</value>
   </data>
+  <data name="Sweeper" xml:space="preserve">
+    <value>Leaf Sweeper</value>
+  </data>
+  <data name="SweeperSquares" xml:space="preserve">
+    <value>Sweeper Squares</value>
+  </data>
   <data name="Ten" xml:space="preserve">
     <value>ten</value>
   </data>
@@ -573,6 +585,9 @@ Would you like to play another game?</value>
   </data>
   <data name="UnexpectedDataInFile" xml:space="preserve">
     <value>The PairsGamePictureDetails file does not contain the expected data. Please review the Pairs Help for more details.</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Unknown</value>
   </data>
   <data name="UnmatchedTurnedBack" xml:space="preserve">
     <value>Unmatched cards turned back.</value>

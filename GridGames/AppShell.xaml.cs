@@ -27,6 +27,10 @@ public partial class AppShell : Shell
             {
                 this.CurrentItem = this.Items[2];
             }
+            else if (initialGame == "Sweeper")
+            {
+                this.CurrentItem = this.Items[3];
+            }
         }
 
         this.Loaded += AppShell_Loaded;
@@ -97,6 +101,16 @@ public partial class AppShell : Shell
                 var squaresPage = (CurrentPage as SquaresPage);
 
                 squaresPage.RestartGame();
+            }
+        }
+        else if (currentPage is SweeperPage)
+        {
+            var vm = (CurrentPage as SweeperPage).BindingContext as SweeperViewModel;
+            if (!vm.FirstRunSweeper)
+            {
+                var sweeperPage = (CurrentPage as SweeperPage);
+
+                sweeperPage.RestartGame();
             }
         }
         else if (currentPage is WheresPage)
