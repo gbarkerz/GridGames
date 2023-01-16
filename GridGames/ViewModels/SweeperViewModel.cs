@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using GridGames.ResX;
+using Windows.ApplicationModel.Chat;
 
 namespace GridGames.ViewModels
 {
@@ -32,19 +33,47 @@ namespace GridGames.ViewModels
             }
         }
 
-        private bool gameOver = false;
+        private bool gameWon = false;
+        public bool GameWon
+        {
+            get
+            {
+                return gameWon;
+            }
+            set
+            {
+                if (gameWon != value)
+                {
+                    SetProperty(ref gameWon, value);
+
+                    OnPropertyChanged("GameOver");
+                }
+            }
+        }
+
+        private bool gameLost = false;
+        public bool GameLost
+        {
+            get
+            {
+                return gameLost;
+            }
+            set
+            {
+                if (gameLost != value)
+                {
+                    SetProperty(ref gameLost, value);
+
+                    OnPropertyChanged("GameOver");
+                }
+            }
+        }
+
         public bool GameOver
         {
             get
             {
-                return gameOver;
-            }
-            set
-            {
-                if (gameOver != value)
-                {
-                    SetProperty(ref gameOver, value);
-                }
+                return (gameWon || gameLost);
             }
         }
 
@@ -99,6 +128,11 @@ namespace GridGames.ViewModels
             else
             {
                 TurnUpNearbyCards(SquareIndex);
+
+                RaiseNotificationEvent("Swept stone " + 
+                    (SquareIndex + 1).ToString() + 
+                    ", " +
+                    square.AccessibleName);
             }
 
             return gameIsOver;
@@ -331,8 +365,16 @@ namespace GridGames.ViewModels
                     }
                     else
                     {
-                        accessibleName = "Leaf " + (TargetIndex + 1).ToString();
+                        accessibleName = "Leaf";
                     }
+
+                    // Important: At the time of writing this, .NET MAUI does not expose CollectionView
+                    // items supporting the UIA GridItem pattern. As such, include an index in the
+                    // accessible name. Once the GridItem pattern is supported, and screen readers 
+                    // can announce the item's row and column, remove the use of an index here.
+                    accessibleName += " " + 
+                        (accessibleName.Contains("nearby") ? "for" : "on") +
+                        " stone " + (TargetIndex + 1).ToString();
 
                     return accessibleName; 
                 }

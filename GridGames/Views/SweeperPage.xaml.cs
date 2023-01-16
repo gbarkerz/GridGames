@@ -5,6 +5,8 @@ using System.Diagnostics;
 
 namespace GridGames.Views
 {
+    // Barker Todo: Fix context menu when invoked through mouse or touch.
+
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SweeperPage : ContentPage
     {
@@ -126,7 +128,7 @@ namespace GridGames.Views
 
             if (turnedUpCount == 14)
             {
-                vm.GameOver = true;
+                vm.GameWon = true;
 
                 await OfferToRestartWonGame();
             }
@@ -167,7 +169,7 @@ namespace GridGames.Views
                     vm.SweeperListCollection[i].TurnedUp = true;
                 }
 
-                vm.GameOver = true;
+                vm.GameLost = true;
 
                 await OfferToRestartLostGame();
             }
@@ -343,7 +345,8 @@ namespace GridGames.Views
             var vm = this.BindingContext as SweeperViewModel;
             if (!vm.FirstRunSweeper)
             {
-                vm.GameOver = false;
+                vm.GameWon = false;
+                vm.GameLost = false;
 
                 vm.ResetGrid();
             }

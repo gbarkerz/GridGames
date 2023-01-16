@@ -98,7 +98,9 @@
                                         <Binding Path="HasFrog" />
                                         <Binding Path="ShowsQueryFrog" />
                                         <Binding Source="{x:Reference SweeperPageInstance}" 
-                                                    Path="BindingContext.GameOver" />
+                                                    Path="BindingContext.GameWon" />
+                                        <Binding Source="{x:Reference SweeperPageInstance}" 
+                                                    Path="BindingContext.GameLost" />
                                         <Binding Source="{x:Reference SweeperPageInstance}" 
                                                     Path="BindingContext.ShowDarkTheme" />
                                     </MultiBinding>
@@ -114,6 +116,7 @@
                                             <Binding Path="TurnedUp" />
                                             <Binding Path="NearbyFrogCount" />
                                             <Binding Path="ShowsQueryFrog" />
+                                            <Binding Path="HasFrog" />
                                         </MultiBinding>
                                     </Label.Text>
                                     <Label.FontSize>

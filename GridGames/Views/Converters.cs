@@ -9,13 +9,13 @@ namespace GridGames.Views
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values == null || (values.Length < 3))
+            if (values == null || (values.Length < 4))
             {
                 return "";
             }
 
             if ((values[0] == null) || (values[1] == null) ||
-                (values[2] == null))
+                (values[2] == null) || (values[3] == null))
             {
                 return "";
             }
@@ -23,8 +23,9 @@ namespace GridGames.Views
             bool turnedUp = (bool)values[0];
             int nearbyFrogCount = (int)values[1];
             bool showsQueryFrog = (bool)values[2];
+            bool hasFrog = (bool)values[3];
 
-            if (!turnedUp || showsQueryFrog || (nearbyFrogCount <= 0))
+            if (!turnedUp || hasFrog || showsQueryFrog || (nearbyFrogCount <= 0))
             {
                 return "";
             }
@@ -43,13 +44,13 @@ namespace GridGames.Views
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values == null || (values.Length < 5))
+            if (values == null || (values.Length < 6))
             {
                 return "";
             }
 
             if ((values[0] == null) || (values[1] == null) || (values[2] == null) ||
-                (values[3] == null) || (values[4] == null))
+                (values[3] == null) || (values[4] == null) || (values[5] == null))
             {
                 return "";
             }
@@ -57,8 +58,9 @@ namespace GridGames.Views
             var turnedUp = (bool)values[0];
             var hasFrog = (bool)values[1];
             var showsQueryFrog = (bool)values[2];
-            bool gameOver = (bool)values[3];
-            bool showDarkTheme = (bool)values[4];
+            bool gameWon = (bool)values[3];
+            bool gameLost = (bool)values[4];
+            bool showDarkTheme = (bool)values[5];
 
             Color col = showDarkTheme ? Colors.Green : Colors.LightGreen;
 
@@ -66,7 +68,11 @@ namespace GridGames.Views
             {
                 col = Colors.LightGoldenrodYellow;
             }
-            else if (gameOver && hasFrog)
+            else if (gameWon && hasFrog)
+            {
+                col = Colors.LightGoldenrodYellow;
+            }
+            else if (gameLost && hasFrog)
             {
                 col = Colors.Pink;
             }
