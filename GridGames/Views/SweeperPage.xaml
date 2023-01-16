@@ -23,7 +23,7 @@
             <localviews:LabelContainerHeightToFontSize x:Key="LabelContainerHeightToFontSize" />
             <localviews:DarkThemeToSquareLabelColor x:Key="DarkThemeToSquareLabelColor" />
             <localviews:TurnedUpToBackgroundColour x:Key="TurnedUpToBackgroundColour" />
-            <localviews:NearbyLeafCountToLabel x:Key="NearbyLeafCountToLabel" />
+            <localviews:NearbyFrogCountToLabel x:Key="NearbyFrogCountToLabel" />
             <localviews:SweeperLabelContainerHeightToFontSize x:Key="SweeperLabelContainerHeightToFontSize" />
             <localviews:LeafToVisible x:Key="LeafToVisible" />
             <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
@@ -121,9 +121,9 @@
                                     VerticalTextAlignment="Center" HorizontalTextAlignment="Center">
                                     <Label.Text>                                    
                                         <MultiBinding Mode="OneWay" 
-                                            Converter="{StaticResource NearbyLeafCountToLabel}">
+                                            Converter="{StaticResource NearbyFrogCountToLabel}">
                                             <Binding Path="TurnedUp" />
-                                            <Binding Path="NearbyLeafCount" />
+                                            <Binding Path="NearbyFrogCount" />
                                         </MultiBinding>
                                     </Label.Text>
                                     <Label.FontSize>

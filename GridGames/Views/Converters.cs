@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace GridGames.Views
 {
-    public class NearbyLeafCountToLabel : IMultiValueConverter
+    public class NearbyFrogCountToLabel : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
@@ -20,14 +20,14 @@ namespace GridGames.Views
             }
 
             bool turnedUp = (bool)values[0];
-            int nearbyLeafCount = (int)values[1];
+            int nearbyFrogCount = (int)values[1];
 
-            if (!turnedUp || (nearbyLeafCount <= 0))
+            if (!turnedUp || (nearbyFrogCount <= 0))
             {
                 return "";
             }
 
-            return nearbyLeafCount.ToString();
+            return nearbyFrogCount.ToString();
         }
 
 

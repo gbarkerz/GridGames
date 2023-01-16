@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.IO;
-using System.Reflection;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Xaml;
 using GridGames.ResX;
-using GridGames.Views;
-using System.Diagnostics;
 
 namespace GridGames.ViewModels
 {
@@ -33,46 +24,6 @@ namespace GridGames.ViewModels
             {
                 SetProperty(ref numberHeight, value);
                 OnPropertyChanged("numberHeightAdjust");
-            }
-        }
-
-        private bool showNumbers;
-        public bool ShowNumbers
-        {
-            get { return showNumbers; }
-            set
-            {
-                SetProperty(ref showNumbers, value);
-            }
-        }
-
-        private bool showPicture;
-        public bool ShowPicture
-        {
-            get { return showPicture; }
-            set
-            {
-                SetProperty(ref showPicture, value);
-            }
-        }
-
-        private string picturePathSquares;
-        public string PicturePathSquares
-        {
-            get { return picturePathSquares; }
-            set
-            {
-                SetProperty(ref picturePathSquares, value);
-            }
-        }
-
-        private string pictureName;
-        public string PictureName
-        {
-            get { return pictureName; }
-            set
-            {
-                SetProperty(ref pictureName, value);
             }
         }
 
@@ -103,44 +54,7 @@ namespace GridGames.ViewModels
 
             sweeperList = new ObservableCollection<Square>();
 
-            this.CreateDefaultSquares();
-
-            // If we won't be loading pictures into the squares, shuffle them now.
-            ShowPicture = Preferences.Get("ShowPicture", false);
-            PicturePathSquares = Preferences.Get("PicturePathSquares", "");
-            PictureName = Preferences.Get("PictureName", "");
-
-            if (!ShowPicture || !IsImageFilePathValid(PicturePathSquares))
-            {
-                ResetGrid();
-            }
-        }
-
-        public bool IsImageFilePathValid(string imageFilePath)
-        {
-            bool ImageFilePathIsValid = false;
-
-            var fileExists = File.Exists(imageFilePath);
-            if (fileExists)
-            {
-                // The ImageEditor documentation states that only png, jpg and bmp formats
-                // are supported, so check the extension suggests that the file is supported.
-                var extension = Path.GetExtension(imageFilePath).ToLower();
-                if ((extension == ".jpg") || (extension == ".jpeg") ||
-                    (extension == ".png") || (extension == ".bmp"))
-                {
-                    ImageFilePathIsValid = true;
-                }
-            }
-
-            return ImageFilePathIsValid;
-        }
-
-        public void RestoreEmptyGrid()
-        {
-            sweeperList.Clear();
-
-            this.CreateDefaultSquares();
+            this.CreateGrid();
         }
 
         public bool AttemptMoveBySelection(object currentSelection)
@@ -175,7 +89,7 @@ namespace GridGames.ViewModels
             bool gameIsOver = false;
 
             var square = sweeperList[SquareIndex];
-            if (square.HasLeaf)
+            if (square.HasFrog)
             {
                 gameIsOver = true;
             }
@@ -193,17 +107,17 @@ namespace GridGames.ViewModels
         {
             var square = sweeperList[SquareIndex];
 
-            if (square.HasLeaf)
+            if (square.HasFrog)
             {
                 return;
             }
 
-            if (square.NearbyLeafCount > 0)
+            if (square.NearbyFrogCount > 0)
             {
                 square.TurnedUp = true;
 
-                square.AccessibleName = square.NearbyLeafCount + " nearby " + 
-                    (square.NearbyLeafCount == 1 ? "leaf" : "leaves");
+                square.AccessibleName = square.NearbyFrogCount + " nearby " + 
+                    (square.NearbyFrogCount == 1 ? "frog" : "frogs");
             }
 
             if (square.TurnedUp)
@@ -213,7 +127,7 @@ namespace GridGames.ViewModels
 
             square.TurnedUp = true;
 
-            if (square.NearbyLeafCount == 0)
+            if (square.NearbyFrogCount == 0)
             {
                 square.AccessibleName = "No nearby leaves";
             }
@@ -262,7 +176,7 @@ namespace GridGames.ViewModels
             }
         }
 
-        private void SetSquareNearbyLeafCount(int SquareIndex)
+        private void SetSquareNearbyFrogCount(int SquareIndex)
         {
             int count = 0;
 
@@ -273,20 +187,20 @@ namespace GridGames.ViewModels
             {
                 if (!leftEdgeSquare)
                 {
-                    if (sweeperList[SquareIndex - 5].HasLeaf)
+                    if (sweeperList[SquareIndex - 5].HasFrog)
                     {
                         ++count;
                     }
                 }
 
-                if (sweeperList[SquareIndex - 4].HasLeaf)
+                if (sweeperList[SquareIndex - 4].HasFrog)
                 {
                     ++count;
                 }
 
                 if (!rightEdgeSquare)
                 {
-                    if (sweeperList[SquareIndex - 3].HasLeaf)
+                    if (sweeperList[SquareIndex - 3].HasFrog)
                     {
                         ++count;
                     }
@@ -295,7 +209,7 @@ namespace GridGames.ViewModels
 
             if (SquareIndex % 4 > 0)
             {
-                if (sweeperList[SquareIndex - 1].HasLeaf)
+                if (sweeperList[SquareIndex - 1].HasFrog)
                 {
                     ++count;
                 }
@@ -303,7 +217,7 @@ namespace GridGames.ViewModels
 
             if (SquareIndex % 4 < 3)
             {
-                if (sweeperList[SquareIndex + 1].HasLeaf)
+                if (sweeperList[SquareIndex + 1].HasFrog)
                 {
                     ++count;
                 }
@@ -313,38 +227,30 @@ namespace GridGames.ViewModels
             {
                 if (!leftEdgeSquare)
                 {
-                    if (sweeperList[SquareIndex + 3].HasLeaf)
+                    if (sweeperList[SquareIndex + 3].HasFrog)
                     {
                         ++count;
                     }
                 }
 
-                if (sweeperList[SquareIndex + 4].HasLeaf)
+                if (sweeperList[SquareIndex + 4].HasFrog)
                 {
                     ++count;
                 }
 
                 if (!rightEdgeSquare)
                 {
-                    if (sweeperList[SquareIndex + 5].HasLeaf)
+                    if (sweeperList[SquareIndex + 5].HasFrog)
                     {
                         ++count;
                     }
                 }
             }
 
-            sweeperList[SquareIndex].NearbyLeafCount = count;
+            sweeperList[SquareIndex].NearbyFrogCount = count;
         }
 
-        // Reset the grid to an initial game state.
-        public void ResetGrid()
-        {
-            MoveCount = 0;
-
-            //GBTEST Shuffle(sweeperList);
-        }
-
-        private void CreateDefaultSquares()
+        private void CreateGrid()
         {
             var resManager = AppResources.ResourceManager;
 
@@ -360,31 +266,45 @@ namespace GridGames.ViewModels
                     new Square
                     {
                         TargetIndex = cardIndex,
-                        AccessibleName = resManager.GetString("Leaf") + " " + resourceIndex, 
+                        AccessibleName = resManager.GetString("Frog") + " " + resourceIndex, 
                     });
             }
+        }
 
+        public void InitialiseGrid(int indexNoFrog)
+        {
             var random = new Random();
-            int leafCount = 0;
+
+            int frogCount = 0;
+
             do
             {
                 int r = random.Next(15);
-                if (!sweeperList[r].HasLeaf)
+
+                if (!sweeperList[r].HasFrog && (sweeperList[r].targetIndex != indexNoFrog))
                 {
-                    sweeperList[r].HasLeaf = true;
-                    ++leafCount;
+                    sweeperList[r].HasFrog = true;
+
+                    ++frogCount;
                 }
             }
-            while (leafCount < 2);
+            while (frogCount < 2);
 
             for (int cardIndex = 0; cardIndex < 16; ++cardIndex)
             {
-                if (!sweeperList[cardIndex].HasLeaf)
+                if (!sweeperList[cardIndex].HasFrog)
                 {
-                    SetSquareNearbyLeafCount(cardIndex);
+                    SetSquareNearbyFrogCount(cardIndex);
                 }
             }
+        }
 
+        public void ResetGrid()
+        {
+            for (int i = 0; i < 16; ++i)
+            {
+                sweeperList[i].TurnedUp = false;
+            }
         }
 
         private bool GameIsWon(ObservableCollection<Square> collection)
@@ -406,23 +326,23 @@ namespace GridGames.ViewModels
 
         public class Square : INotifyPropertyChanged
         {
-            private int nearbyLeafCount = -1;
-            public int NearbyLeafCount
+            private int nearbyFrogCount = -1;
+            public int NearbyFrogCount
             {
-                get { return nearbyLeafCount; }
+                get { return nearbyFrogCount; }
                 set
                 {
-                    SetProperty(ref nearbyLeafCount, value);
+                    SetProperty(ref nearbyFrogCount, value);
                 }
             }
 
-            private bool hasLeaf;
-            public bool HasLeaf
+            private bool hasFrog;
+            public bool HasFrog
             {
-                get { return hasLeaf; }
+                get { return hasFrog; }
                 set
                 {
-                    SetProperty(ref hasLeaf, value);
+                    SetProperty(ref hasFrog, value);
                 }
             }
 
@@ -517,84 +437,6 @@ namespace GridGames.ViewModels
                     return;
 
                 changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        public void Shuffle(ObservableCollection<Square> collection)
-        {
-            var shuffler = new Shuffler();
-
-            // Keep shuffling until the arrangement of squares can be solved.
-            bool gameCanBeSolved;
-
-            do
-            {
-                shuffler.Shuffle(collection);
-
-                gameCanBeSolved = CanGameBeSolved(collection);
-            }
-            while (!gameCanBeSolved);
-        }
-
-        private bool CanGameBeSolved(ObservableCollection<Square> collection)
-        {
-            int parity = 0;
-            int emptySquareRow = 0;
-
-            for (int i = 0; i < collection.Count; i++)
-            {
-                if (collection[i].TargetIndex == 15)
-                {
-                    // The empty square row is one-based.
-                    emptySquareRow = (i / 4) + 1;
-
-                    continue;
-                }
-
-                for (int j = i + 1; j < collection.Count; j++)
-                {
-                    if ((collection[j].TargetIndex != 15) &&
-                        (collection[i].TargetIndex > collection[j].TargetIndex))
-                    {
-                        parity++;
-                    }
-                }
-            }
-
-            // The following only applies to an grid with an even number of rows and columns.
-            bool gridCanBeSolved;
-
-            if (emptySquareRow % 2 == 0)
-            {
-                gridCanBeSolved = (parity % 2 == 0);
-            }
-            else
-            {
-                gridCanBeSolved = (parity % 2 != 0);
-            }
-
-            return gridCanBeSolved;
-        }
-
-        public class Shuffler
-        {
-            private readonly Random random;
-
-            public Shuffler()
-            {
-                this.random = new Random();
-            }
-
-            public void Shuffle(ObservableCollection<Square> collection)
-            {
-                for (int i = collection.Count; i > 1;)
-                {
-                    int j = this.random.Next(i);
-
-                    --i;
-
-                    (collection[j], collection[i]) = (collection[i], collection[j]);
-                }
             }
         }
     }

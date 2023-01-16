@@ -578,6 +578,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Frog.
+        /// </summary>
+        internal static string Frog {
+            get {
+                return ResourceManager.GetString("Frog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Game is ready to play..
         /// </summary>
         internal static string GameReady {

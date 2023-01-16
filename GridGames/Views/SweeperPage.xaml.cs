@@ -14,74 +14,6 @@ namespace GridGames.Views
     {
         public static DateTime timeOfMostRecentSelectionChanged = DateTime.Now;
 
-        // Barker: IMPORTANT.
-        // While most of the binding of CollectionView item properties works great,
-        // in tests, binding of IsVisible was not 100% robust. That is, most times
-        // when two items were swapped in the collection while the Squares game is 
-        // played, the binding worked as expected, sometimes the binding on one or
-        // other items did not take effect. Presumably this is because my code was
-        // not in complience with binding requirements (eg related to threading),
-        // but so far I've not been able to pinpoint the cause of the issue. So for 
-        // now, add this temporary "Fixup" code to manually set the visibility on 
-        // all the items. This unblocks me while working on the game experience,
-        // and I'll revisit this once the full .NET 7.0 is released.
-
-        private void FixupSquaresWithDelay(int delay)
-        {
-            //// Add a small delay after items have been updated, before setting
-            //// the various item elements' visibility.
-            //var timer = new Timer(
-            //    new TimerCallback((s) => FixupSquares()),
-            //               null,
-            //               TimeSpan.FromMilliseconds(delay),
-            //               TimeSpan.FromMilliseconds(Timeout.Infinite));
-        }
-
-        //private void FixupSquares()
-        //{
-        //    try
-        //    {
-        //        // Always run this on the UI thread.
-        //        MainThread.BeginInvokeOnMainThread(() =>
-        //        {
-        //            var vm = this.BindingContext as SweeperViewModel;
-
-        //            // Set the visibility of the items' images and labels as appropriate.
-        //            var descendants = SweeperCollectionView.GetVisualTreeDescendants();
-        //            for (int i = 0; i < descendants.Count; ++i)
-        //            {
-        //                var descendant = descendants[i];
-        //                if (descendant is Label)
-        //                {
-        //                    var label = descendant as Label;
-
-        //                    // The empty square nevers has its Label visible.
-        //                    label.IsVisible = vm.ShowNumbers && (label.Text != "");
-        //                }
-        //                else if (descendant is Image)
-        //                {
-        //                    var image = descendant as Image;
-        //                    image.IsVisible = vm.ShowPicture;
-        //                }
-        //            }
-        //        });
-        //    }
-        //    catch (Exception ex) 
-        //    {
-        //        Debug.WriteLine("Error trying to fix up squares: " + ex.Message);
-        //    }
-        //}
-
-        // Path to most recently fully loaded picture.
-        private string previousLoadedPicture = "";
-        private SKBitmap originalCustomPictureBitmap = null;
-
-        private Timer timerSetCustomPicture;
-        private bool inShowCustomPictureIfReady = false;
-
-        private int destGridPortionWidth = 0;
-        private int destGridPortionHeight = 0;
-
         public SweeperPage()
         {
             InitializeComponent();
@@ -110,38 +42,14 @@ namespace GridGames.Views
 
             SweeperCollectionView.SelectionChanged += SweeperCollectionView_SelectionChanged;
 
-            SweeperCollectionView.DescendantAdded += SweeperCollectionView_DescendantAdded;
-
 #if IOS
             // At this time, VoiceOver won't navigate to the items in a CollectionView
             // if the CollectionView has a SemanticProperties.Description. So for now,
             // remove the Description on iOS.
             SemanticProperties.SetDescription(SweeperCollectionView, null);
 #endif
-
-#if ANDROID
-            //Microsoft.Maui.Handlers.LabelHandler.Mapper.AppendToMapping("MyCustomization", (handler, view) =>
-            //{
-            //    handler.PlatformView.LongClick += PlatformView_LongClick;
-            //});
-#endif
         }
 
-#if ANDROID
-        private void PlatformView_LongClick(object sender, Android.Views.View.LongClickEventArgs e)
-        {
-
-            var textView = sender as Microsoft.Maui.Platform.MauiTextView;
-
-            var text = textView.Text;
-
-            //var itemAccessibleName = SemanticProperties.GetDescription(itemBorder);
-
-            //int itemIndex = GetItemCollectionIndexFromItemAccessibleName(itemAccessibleName);
-
-            //PlantFlagInItem(itemIndex);
-        }
-#endif
         private void WelcomeBorder_Loaded(object sender, EventArgs e)
         {
             if ((sender as Border).IsVisible)
@@ -220,6 +128,11 @@ namespace GridGames.Views
             int itemIndex = GetItemCollectionIndexFromItemAccessibleName(itemName);
             if (itemIndex != -1)
             {
+                if (IsFirstTurnUp())
+                {
+                    vm.InitialiseGrid(itemIndex);
+                }
+
                 bool gameIsOver = vm.ActOnInputOnSquare(itemIndex);
                 if (gameIsOver)
                 {
@@ -233,6 +146,25 @@ namespace GridGames.Views
                     await IsGameWon();
                 }
             }
+        }
+
+        private bool IsFirstTurnUp()
+        {
+            var vm = this.BindingContext as SweeperViewModel;
+
+            bool isFirstTurnUp = true;
+
+            for (int i = 0; i < 16; ++i)
+            {
+                if (vm.SweeperListCollection[i].TurnedUp)
+                {
+                    isFirstTurnUp = false;
+
+                    break;
+                }
+            }
+
+            return isFirstTurnUp;
         }
 
         private async Task IsGameWon()
@@ -253,9 +185,9 @@ namespace GridGames.Views
             {
                 for (int i = 0; i < 16; ++i)
                 {
-                    if (vm.SweeperListCollection[i].HasLeaf)
+                    if (vm.SweeperListCollection[i].HasFrog)
                     {
-                        vm.SweeperListCollection[i].AccessibleName = "Leaf";
+                        vm.SweeperListCollection[i].AccessibleName = "Frog";
                     }
                 }
 
@@ -286,6 +218,11 @@ namespace GridGames.Views
             int itemIndex = GetItemCollectionIndexFromItemAccessibleName(item.AccessibleName);
             if (itemIndex != -1)
             {
+                if (IsFirstTurnUp())
+                {
+                    vm.InitialiseGrid(itemIndex);
+                }
+
                 bool gameIsOver = vm.ActOnInputOnSquare(itemIndex);
                 if (gameIsOver)
                 {
@@ -299,78 +236,6 @@ namespace GridGames.Views
                     await IsGameWon();
                 }
             }
-        }
-
-        private void SweeperCollectionView_DescendantAdded(object sender, ElementEventArgs e)
-        {
-            //// Manually setting the visibility of various elements after updating the 
-            //// CollectionView is a temporary measure and will be removed once the full
-            //// .NET 7.0 is available.
-            //FixupSquares();
-        }
-
-        private void ShowCustomPicture()
-        {
-            Debug.WriteLine("ShowCustomPicture Start.");
-
-            var vm = this.BindingContext as SweeperViewModel;
-
-            if (vm.ShowPicture && !String.IsNullOrWhiteSpace(vm.PicturePathSquares))
-            {
-                // If the CollectionView isn't sized yet, wait a while and try again.
-                if ((SweeperCollectionView.Width <= 0) || (SweeperCollectionView.Height <= 0))
-                {
-                    if (timerSetCustomPicture == null)
-                    {
-                        Debug.WriteLine("ShowCustomPicture: Start timer while CollectionView dimensions not set.");
-
-                        timerSetCustomPicture = new Timer(
-                            new TimerCallback((s) => ShowCustomPictureIfReady()),
-                                       null,
-                                       TimeSpan.FromMilliseconds(2000),
-                                       TimeSpan.FromMilliseconds(2000));
-                    }
-                }
-                else
-                {
-                    // The CollectionView is reader for the pictures.
-                    if (timerSetCustomPicture != null)
-                    {
-                        timerSetCustomPicture.Dispose();
-                        timerSetCustomPicture = null;
-                    }
-
-                    ShowCustomPictureInSquares();
-                }
-            }
-
-            Debug.WriteLine("ShowCustomPicture Done.");
-        }
-
-        private void ShowCustomPictureIfReady()
-        {
-            if (inShowCustomPictureIfReady)
-            {
-                return;
-            }
-
-            inShowCustomPictureIfReady = true;
-
-            Debug.WriteLine("ShowCustomPictureIfReady: CollectionView dimensions: " +
-                SweeperCollectionView.Width + ", " + SweeperCollectionView.Height);
-
-            if ((SweeperCollectionView.Width > 0) && (SweeperCollectionView.Height > 0))
-            {
-                if (timerSetCustomPicture != null)
-                {
-                    timerSetCustomPicture.Dispose();
-                    timerSetCustomPicture = null;
-                }
-
-                ShowCustomPictureInSquares();
-            }
-
-            inShowCustomPictureIfReady = false;
         }
 
         // This gets called when switching to the Squares Game from other games,
@@ -406,73 +271,8 @@ namespace GridGames.Views
             }
 
             vm.ShowDarkTheme = (currentTheme == AppTheme.Dark);
-/*
-            vm.ShowNumbers = Preferences.Get("ShowNumbers", true);
-            vm.NumberHeight = Preferences.Get("NumberSizeIndex", 1);
-            vm.ShowPicture = Preferences.Get("ShowPicture", false);
-            vm.PicturePathSquares = Preferences.Get("PicturePathSquares", "");
-            vm.PictureName = Preferences.Get("PictureName", "");
 
-            bool loadedCustomPicture = false;
-
-            Debug.WriteLine("Squares Game: vm.PicturePathSquares: " + vm.PicturePathSquares);
-
-            // Has the state of the picture being shown changed since we were last changed?
-            if (vm.ShowPicture && (vm.PicturePathSquares != null) &&
-                (vm.PicturePathSquares != previousLoadedPicture))
-            {
-                if (vm.PicturePathSquares != previousLoadedPicture)
-                {
-                    originalCustomPictureBitmap = null;
-                }
-
-                // Restore the order of the squares in the grid.
-                vm.RestoreEmptyGrid();
-
-                // Check whether the image file exists before trying to load it into the ImageEditor.
-                if (vm.IsImageFilePathValid(vm.PicturePathSquares))
-                {
-                    loadedCustomPicture = true;
-
-                    // Set the images shown on the squares.
-                    ShowCustomPicture();
-
-                    // Now that a picture has been fully loaded, cache the path to the loaded picture.
-                    // We'll not load another picture until the picture being loaded is different from
-                    // this successfully loaded picture.
-                    previousLoadedPicture = vm.PicturePathSquares;
-                }
-                else
-                {
-                    Debug.WriteLine("Grid Games: Valid image file not found. " + vm.PicturePathSquares);
-
-                    // We'll not attempt to load this picture again.
-                    Preferences.Set("PicturePathSquares", "");
-                    vm.PicturePathSquares = "";
-
-                    originalCustomPictureBitmap = null;
-
-                    if (Shell.Current != null)
-                    {
-                        Shell.Current.FlyoutBehavior = FlyoutBehavior.Flyout;
-                    }
-                }
-            }
-            else
-            {
-                if (isFirstRun)
-                {
-                    vm.ResetGrid();
-                }
-
-                //GBTEST vm.GameIsLoading = false;
-            }
-
-            if (!loadedCustomPicture)
-            {
-                FixupSquaresWithDelay(500);
-            }
-*/
+            //GBTEST vm.GameIsLoading = false;
         }
 
         private int GetItemCollectionIndexFromItemAccessibleName(string ItemAccessibleName)
@@ -573,18 +373,8 @@ namespace GridGames.Views
             {
                 var message = "";
 
-                if (String.IsNullOrWhiteSpace(vm.PictureName))
-                {
-                    message = String.Format(
-                        AppResources.ResourceManager.GetString("SquaresWonInGoes"), 8 + vm.MoveCount);
-                }
-                else
-                {
-                    message = String.Format(
-                        AppResources.ResourceManager.GetString("CompletedSquaresPictureInMoves"),
-                            vm.PictureName,
-                            8 + vm.MoveCount);
-                }
+                message = String.Format(
+                    AppResources.ResourceManager.GetString("SquaresWonInGoes"), 8 + vm.MoveCount);
 
                 var answer = await DisplayAlert(
                     AppResources.ResourceManager.GetString("Congratulations"),
@@ -632,116 +422,8 @@ namespace GridGames.Views
             var vm = this.BindingContext as SweeperViewModel;
             if (!vm.FirstRunSweeper)
             {
-                // Restore the order of the squares in the grid.
-                vm.RestoreEmptyGrid();
-
-                if (vm.ShowPicture && !String.IsNullOrWhiteSpace(vm.PicturePathSquares))
-                {
-                    ShowCustomPicture();
-                }
-                else
-                {
-                    vm.ResetGrid();
-                }
-            }
-        }
-
-        private async void ShowCustomPictureInSquares()
-        {
-            var vm = this.BindingContext as SweeperViewModel;
-
-            // GBTEST vm.GameIsLoading = true;
-
-            // GBTEST vm.RaiseNotificationEvent(PleaseWaitLabel.Text);
-
-            // Load the image on a background thread to give a chance for the
-            // "Please wait" message to show up on the UI thread.
-
-            // Barker: Make all this more robust
-            await Task.Run(async () =>
-            {
-                Thread.Sleep(1000);
-
-                destGridPortionWidth = (int)(SweeperCollectionView.Width / 4);
-                destGridPortionHeight = (int)(SweeperCollectionView.Height / 4);
-
-                string picturePathSquares = vm.PicturePathSquares;
-                if (!String.IsNullOrWhiteSpace(picturePathSquares))
-                {
-                    Debug.WriteLine("ShowCustomPictureInSquares: Loading pictures into squares now.");
-
-                    try
-                    {
-                        if (originalCustomPictureBitmap == null)
-                        {
-                            using (Stream fileStream = File.OpenRead(picturePathSquares))
-                            {
-                                using (SKManagedStream originalStream = new SKManagedStream(fileStream))
-                                {
-                                    originalCustomPictureBitmap = SKBitmap.Decode(originalStream);
-
-                                    originalStream.Dispose();
-                                }
-
-                                fileStream.Close();
-                            }
-                        }
-
-                        // Leave the 16th square empty.
-                        for (int i = 0; i < 15; ++i)
-                        {
-                            vm.SweeperListCollection[i].PictureImageSource = GetImageSourceForSquare(
-                                                                                vm.SweeperListCollection[i].TargetIndex);
-                        }
-
-                        vm.SweeperListCollection[15].PictureImageSource = ImageSource.FromFile("emptysquare.jpg");
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine("Load custom picture: " + ex.Message);
-                    }
-                }
-
-                // Now jumble the squares.
                 vm.ResetGrid();
-
-                Debug.WriteLine("ShowCustomPictureInSquares: Done loading pictures into squares.");
-
-                //GBTEST vm.GameIsLoading = false;
-            });
-        }
-
-        private ImageSource GetImageSourceForSquare(int index)
-        {
-            var image = ImageSource.FromResource("matchinggameicon.png");
-            return image;
-
-            //var sourceImagePortionWidth = (int)(originalCustomPictureBitmap.Width / 4);
-            //var sourceImagePortionHeight = (int)(originalCustomPictureBitmap.Height / 4);
-
-            //Debug.WriteLine("Picture portioning: Source " +
-            //    sourceImagePortionWidth + ", " + sourceImagePortionHeight + ", Dest " +
-            //    destGridPortionWidth + ", " + destGridPortionHeight);
-
-            //SKRect destRect = new SKRect(0, 0, destGridPortionWidth, destGridPortionHeight);
-
-            //int col = index % 4;
-            //int row = index / 4;
-
-            //SKRect sourceRect = new SKRect(
-            //    col * sourceImagePortionWidth, 
-            //    row * sourceImagePortionHeight, 
-            //    (col + 1) * sourceImagePortionWidth, 
-            //    (row + 1) * sourceImagePortionHeight);
-
-            //SKBitmap destBitmap = new SKBitmap(destGridPortionWidth, destGridPortionHeight);
-
-            //using (SKCanvas canvas = new SKCanvas(destBitmap))
-            //{
-            //    canvas.DrawBitmap(originalCustomPictureBitmap, sourceRect, destRect);
-            //}
-
-            //return (SKBitmapImageSource)destBitmap;
+            }
         }
 
         private void MenuFlyoutItem_Clicked(object sender, EventArgs e)
