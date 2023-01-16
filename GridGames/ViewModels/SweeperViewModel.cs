@@ -7,24 +7,11 @@ namespace GridGames.ViewModels
 {
     public class SweeperViewModel : BaseViewModel
     {
-        public int MoveCount { get; set; }
-
         private ObservableCollection<Square> sweeperList;
         public ObservableCollection<Square> SweeperListCollection
         {
             get { return sweeperList; }
             set { this.sweeperList = value; }
-        }
-
-        private int numberHeight;
-        public int NumberHeight
-        {
-            get { return numberHeight; }
-            set
-            {
-                SetProperty(ref numberHeight, value);
-                OnPropertyChanged("numberHeightAdjust");
-            }
         }
 
         private bool firstRunSweeper = true;
@@ -41,6 +28,22 @@ namespace GridGames.ViewModels
                     SetProperty(ref firstRunSweeper, value);
 
                     Preferences.Set("FirstRunSweeper", firstRunSweeper);
+                }
+            }
+        }
+
+        private bool gameOver = false;
+        public bool GameOver
+        {
+            get
+            {
+                return gameOver;
+            }
+            set
+            {
+                if (gameOver != value)
+                {
+                    SetProperty(ref gameOver, value);
                 }
             }
         }
@@ -95,8 +98,6 @@ namespace GridGames.ViewModels
             }
             else
             {
-                //square.TurnedUp = true;
-
                 TurnUpNearbyCards(SquareIndex);
             }
 
@@ -115,9 +116,6 @@ namespace GridGames.ViewModels
             if (square.NearbyFrogCount > 0)
             {
                 square.TurnedUp = true;
-
-                square.AccessibleName = square.NearbyFrogCount + " nearby " + 
-                    (square.NearbyFrogCount == 1 ? "frog" : "frogs");
             }
 
             if (square.TurnedUp)
@@ -126,11 +124,6 @@ namespace GridGames.ViewModels
             }
 
             square.TurnedUp = true;
-
-            if (square.NearbyFrogCount == 0)
-            {
-                square.AccessibleName = "No nearby leaves";
-            }
 
             bool leftEdgeSquare = (SquareIndex % 4 == 0);
             bool rightEdgeSquare = (SquareIndex % 4 == 3);
@@ -265,8 +258,7 @@ namespace GridGames.ViewModels
                 sweeperList.Add(
                     new Square
                     {
-                        TargetIndex = cardIndex,
-                        AccessibleName = resManager.GetString("Frog") + " " + resourceIndex, 
+                        TargetIndex = cardIndex
                     });
             }
         }
@@ -304,75 +296,45 @@ namespace GridGames.ViewModels
             for (int i = 0; i < 16; ++i)
             {
                 sweeperList[i].TurnedUp = false;
+                sweeperList[i].HasFrog = false;
+                sweeperList[i].ShowsQueryFrog = false;
             }
-        }
-
-        private bool GameIsWon(ObservableCollection<Square> collection)
-        {
-            bool gameIsWon = true;
-
-            for (int i = 0; i < collection.Count; i++)
-            {
-                if (collection[i].TargetIndex != i)
-                {
-                    gameIsWon = false;
-
-                    break;
-                }
-            }
-
-            return gameIsWon;
         }
 
         public class Square : INotifyPropertyChanged
         {
-            private int nearbyFrogCount = -1;
-            public int NearbyFrogCount
-            {
-                get { return nearbyFrogCount; }
-                set
-                {
-                    SetProperty(ref nearbyFrogCount, value);
-                }
-            }
-
-            private bool hasFrog;
-            public bool HasFrog
-            {
-                get { return hasFrog; }
-                set
-                {
-                    SetProperty(ref hasFrog, value);
-                }
-            }
-
-            private bool showsFlag = false;
-            public bool ShowsFlag
-            {
-                get { return showsFlag; }
-                set
-                {
-                    SetProperty(ref showsFlag, value);
-                }
-            }
-
-            private bool turnedUp = false;
-            public bool TurnedUp
-            {
-                get { return turnedUp; }
-                set
-                {
-                    SetProperty(ref turnedUp, value);
-                }
-            }
-
-            private string accessibleName;
             public string AccessibleName
             {
-                get { return accessibleName; }
-                set
+                get 
                 {
-                    SetProperty(ref accessibleName, value);
+                    string accessibleName = "";
+
+                    if (ShowsQueryFrog)
+                    {
+                        accessibleName = "Query Frog";
+                    }
+                    else if (TurnedUp)
+                    {
+                        if (HasFrog)
+                        {
+                            accessibleName = "Frog";
+                        }
+                        else if (NearbyFrogCount > 0)
+                        {
+                            accessibleName = NearbyFrogCount.ToString() + " nearby frog" +
+                                (NearbyFrogCount > 1 ? "s" : "");
+                        }
+                        else
+                        {
+                            accessibleName = "No nearby frogs";
+                        }
+                    }
+                    else
+                    {
+                        accessibleName = "Leaf " + (TargetIndex + 1).ToString();
+                    }
+
+                    return accessibleName; 
                 }
             }
 
@@ -386,16 +348,6 @@ namespace GridGames.ViewModels
                 }
             }
 
-            private string visualLabel;
-            public string VisualLabel
-            {
-                get { return visualLabel; }
-                set
-                {
-                    SetProperty(ref visualLabel, value);
-                }
-            }
-
             public int targetIndex;
             public int TargetIndex
             {
@@ -406,13 +358,49 @@ namespace GridGames.ViewModels
                 }
             }
 
-            private ImageSource pictureImageSource;
-            public ImageSource PictureImageSource
+            private bool turnedUp = false;
+            public bool TurnedUp
             {
-                get { return pictureImageSource; }
+                get { return turnedUp; }
                 set
                 {
-                    SetProperty(ref pictureImageSource, value);
+                    SetProperty(ref turnedUp, value);
+
+                    OnPropertyChanged("AccessibleName");
+                }
+            }
+
+            private bool hasFrog;
+            public bool HasFrog
+            {
+                get { return hasFrog; }
+                set
+                {
+                    SetProperty(ref hasFrog, value);
+                }
+            }
+
+            private int nearbyFrogCount = -1;
+            public int NearbyFrogCount
+            {
+                get { return nearbyFrogCount; }
+                set
+                {
+                    SetProperty(ref nearbyFrogCount, value);
+
+                    OnPropertyChanged("AccessibleName");
+                }
+            }
+
+            private bool showsQueryFrog = false;
+            public bool ShowsQueryFrog
+            {
+                get { return showsQueryFrog; }
+                set
+                {
+                    SetProperty(ref showsQueryFrog, value);
+
+                    OnPropertyChanged("AccessibleName");
                 }
             }
 

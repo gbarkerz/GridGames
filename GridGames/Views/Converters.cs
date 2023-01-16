@@ -9,20 +9,22 @@ namespace GridGames.Views
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values == null || (values.Length < 2))
+            if (values == null || (values.Length < 3))
             {
                 return "";
             }
 
-            if ((values[0] == null) || (values[1] == null))
+            if ((values[0] == null) || (values[1] == null) ||
+                (values[2] == null))
             {
                 return "";
             }
 
             bool turnedUp = (bool)values[0];
             int nearbyFrogCount = (int)values[1];
+            bool showsQueryFrog = (bool)values[2];
 
-            if (!turnedUp || (nearbyFrogCount <= 0))
+            if (!turnedUp || showsQueryFrog || (nearbyFrogCount <= 0))
             {
                 return "";
             }
@@ -41,25 +43,32 @@ namespace GridGames.Views
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values == null || (values.Length < 3))
+            if (values == null || (values.Length < 5))
             {
                 return "";
             }
 
-            if ((values[0] == null) || (values[1] == null) || (values[2] == null))
+            if ((values[0] == null) || (values[1] == null) || (values[2] == null) ||
+                (values[3] == null) || (values[4] == null))
             {
                 return "";
             }
 
             var turnedUp = (bool)values[0];
-            var showsFlag = (bool)values[1];
-            bool showDarkTheme = (bool)values[2];
+            var hasFrog = (bool)values[1];
+            var showsQueryFrog = (bool)values[2];
+            bool gameOver = (bool)values[3];
+            bool showDarkTheme = (bool)values[4];
 
             Color col = showDarkTheme ? Colors.Green : Colors.LightGreen;
 
-            if (showsFlag)
+            if (showsQueryFrog)
             {
                 col = Colors.LightGoldenrodYellow;
+            }
+            else if (gameOver && hasFrog)
+            {
+                col = Colors.Pink;
             }
             else if (turnedUp)
             {
@@ -79,20 +88,63 @@ namespace GridGames.Views
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values == null || (values.Length < 2))
+            if (values == null || (values.Length < 4))
+            {
+                return false;
+            }
+
+            if ((values[0] == null) || (values[1] == null) ||
+                (values[2] == null) || (values[3] == null))
+            {
+                return false;
+            }
+
+            var turnedUp = (bool)values[0];
+            var hasFrog = (bool)values[1];
+            var showsQueryFrog = (bool)values[2];
+            var gameOver = (bool)values[3];
+
+            return (!turnedUp || showsQueryFrog || (hasFrog && gameOver));
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class LeafToLabel : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values == null || (values.Length < 4))
             {
                 return "";
             }
 
-            if ((values[0] == null) || (values[1] == null))
+            if ((values[0] == null) || (values[1] == null) ||
+                (values[2] == null) || (values[3] == null))
             {
                 return "";
             }
 
             var turnedUp = (bool)values[0];
-            var showsFlag = (bool)values[1];
+            var hasFrog = (bool)values[1];
+            var showsQueryFrog = (bool)values[2];
+            var gameOver = (bool)values[3];
 
-            return (!turnedUp && !showsFlag);
+            string text = "\uf06C";
+
+            if (showsQueryFrog)
+            {
+                text = "\uf52e" + "?";
+            }
+            else if (gameOver && hasFrog)
+            {
+                text = "\uf52e";
+            }
+
+            return text;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

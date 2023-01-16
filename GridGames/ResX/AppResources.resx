@@ -149,6 +149,11 @@
 
 Would you like to play another game?</value>
   </data>
+  <data name="CompletedSweeper" xml:space="preserve">
+    <value>You helped all the frogs!
+
+Would you like to play another game?</value>
+  </data>
   <data name="Congratulations" xml:space="preserve">
     <value>Congratulations!</value>
   </data>
@@ -268,6 +273,11 @@ Would you like to play another game?</value>
   </data>
   <data name="FaceDown" xml:space="preserve">
     <value>Face down</value>
+  </data>
+  <data name="FailedSweeper" xml:space="preserve">
+    <value>Nice try, but a resting frog got swept up with the leaves!
+
+Would you like to play another game?</value>
   </data>
   <data name="FallthroughTapMessage" xml:space="preserve">
     <value>Please use the keyboard to play the game.
@@ -409,6 +419,9 @@ Would you like to play another game?</value>
   </data>
   <data name="One" xml:space="preserve">
     <value>one</value>
+  </data>
+  <data name="Oops" xml:space="preserve">
+    <value>Oops!</value>
   </data>
   <data name="Pairs" xml:space="preserve">
     <value>Pairs</value>
@@ -561,6 +574,9 @@ Would you like to play another game?</value>
   </data>
   <data name="SweeperSquares" xml:space="preserve">
     <value>Sweeper Squares</value>
+  </data>
+  <data name="SweeperWelcome" xml:space="preserve">
+    <value>Welcome to the Leaf Sweeper Game!</value>
   </data>
   <data name="Ten" xml:space="preserve">
     <value>ten</value>

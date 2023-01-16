@@ -153,6 +153,17 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You helped all the frogs!
+        ///
+        ///Would you like to play another game?.
+        /// </summary>
+        internal static string CompletedSweeper {
+            get {
+                return ResourceManager.GetString("CompletedSweeper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Congratulations!.
         /// </summary>
         internal static string Congratulations {
@@ -513,6 +524,17 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nice try, but a resting frog got swept up with the leaves!
+        ///
+        ///Would you like to play another game?.
+        /// </summary>
+        internal static string FailedSweeper {
+            get {
+                return ResourceManager.GetString("FailedSweeper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please use the keyboard to play the game.
         ///
         ///Review the Help content for details on how to play the game using only the keyboard..
@@ -834,6 +856,15 @@ namespace GridGames.ResX {
         internal static string One {
             get {
                 return ResourceManager.GetString("One", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oops!.
+        /// </summary>
+        internal static string Oops {
+            get {
+                return ResourceManager.GetString("Oops", resourceCulture);
             }
         }
         
@@ -1286,6 +1317,15 @@ namespace GridGames.ResX {
         internal static string SweeperSquares {
             get {
                 return ResourceManager.GetString("SweeperSquares", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome to the Leaf Sweeper Game!.
+        /// </summary>
+        internal static string SweeperWelcome {
+            get {
+                return ResourceManager.GetString("SweeperWelcome", resourceCulture);
             }
         }
         

@@ -7,7 +7,7 @@ namespace InvokePlatformCode.Services.PartialMethods
     public partial class GridGamesPlatformAction
     {
 #if WINDOWS
-        public partial void ShowFlyout(FlyoutBase contextFlyout, Border border);
+        public partial void ShowFlyout(FlyoutBase contextFlyout, Border border, bool showQueryFrog);
 
         public partial Task<string> GetPairsPictureFolder();
 #endif

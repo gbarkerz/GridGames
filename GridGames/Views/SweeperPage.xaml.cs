@@ -1,11 +1,7 @@
 ﻿using GridGames.ResX;
 using GridGames.ViewModels;
 using InvokePlatformCode.Services.PartialMethods;
-using Microsoft.Maui.Controls;
-using SkiaSharp;
-using SkiaSharp.Views.Maui.Controls;
 using System.Diagnostics;
-using Border = Microsoft.Maui.Controls.Border;
 
 namespace GridGames.Views
 {
@@ -22,7 +18,7 @@ namespace GridGames.Views
             SemanticProperties.SetDescription(WelcomeBorder, null);
 #endif
 
-            //GBTEST WelcomeBorder.Loaded += WelcomeBorder_Loaded;
+            WelcomeBorder.Loaded += WelcomeBorder_Loaded;
 
             Application.Current.RequestedThemeChanged += (s, a) =>
             {
@@ -35,10 +31,6 @@ namespace GridGames.Views
                 var vm = this.BindingContext as SweeperViewModel;
                 vm.ShowDarkTheme = (currentTheme == AppTheme.Dark);
             };
-
-            // IMPORTANT! TalkBack usage with a tapped handler is unreliable on Android, so don't use it.
-            //https://github.com/xamarin/Xamarin.Forms/issues/9991
-            //[Bug] Tap gesture recognizer doesn't fire in android with screen reader enabled #9991
 
             SweeperCollectionView.SelectionChanged += SweeperCollectionView_SelectionChanged;
 
@@ -58,14 +50,14 @@ namespace GridGames.Views
                 var vm = this.BindingContext as MatchingViewModel;
 
                 vm.RaiseDelayedNotificationEvent(
-                    SquaresWelcomeTitleLabel.Text + ", " +
-                    SquaresWelcomeTitleInstructions.Text,
+                    SweeperWelcomeTitleLabel.Text + ", " +
+                    SweeperWelcomeTitleInstructions.Text,
                     4000);
                 */
 
                 SweeperCollectionView.IsVisible = false;
 
-                //GBTEST WelcomeMessageCloseButton.Focus();
+                WelcomeMessageCloseButton.Focus();
             }
         }
 
@@ -93,57 +85,8 @@ namespace GridGames.Views
                     var item = collectionView.SelectedItem as SweeperViewModel.Square;
                     if (item != null)
                     {
-                        ActOnInput(item.AccessibleName);
+                        await ReactToInputOnCard(item);
                     }
-                }
-            }
-        }
-
-        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
-        {
-            var timeSinceMostRecentSelectionChanged = DateTime.Now - timeOfMostRecentSelectionChanged;
-            if (timeSinceMostRecentSelectionChanged.TotalMilliseconds < 100)
-            {
-                return;
-            }
-
-            var vm = this.BindingContext as SweeperViewModel;
-            if (vm.FirstRunSweeper) //GBTEST  || vm.GameIsLoading)
-            {
-                return;
-            }
-
-            var itemBorder = (Border)sender;
-            var itemAccessibleName = SemanticProperties.GetDescription(itemBorder);
-
-            Debug.WriteLine("Grid Games: Tapped on Square " + itemAccessibleName);
-
-            ActOnInput(itemAccessibleName);
-        }
-
-        private async void ActOnInput(string itemName)
-        {
-            var vm = this.BindingContext as SweeperViewModel;
-
-            int itemIndex = GetItemCollectionIndexFromItemAccessibleName(itemName);
-            if (itemIndex != -1)
-            {
-                if (IsFirstTurnUp())
-                {
-                    vm.InitialiseGrid(itemIndex);
-                }
-
-                bool gameIsOver = vm.ActOnInputOnSquare(itemIndex);
-                if (gameIsOver)
-                {
-                    await DisplayAlert(
-                                    "Leaf Sweeper",
-                                    "Sorry, game over!",
-                                    "OK");
-                }
-                else
-                {
-                    await IsGameWon();
                 }
             }
         }
@@ -183,18 +126,9 @@ namespace GridGames.Views
 
             if (turnedUpCount == 14)
             {
-                for (int i = 0; i < 16; ++i)
-                {
-                    if (vm.SweeperListCollection[i].HasFrog)
-                    {
-                        vm.SweeperListCollection[i].AccessibleName = "Frog";
-                    }
-                }
+                vm.GameOver = true;
 
-                await DisplayAlert(
-                                "Leaf Sweeper",
-                                "Congratulations, you won!",
-                                "OK");
+                await OfferToRestartWonGame();
             }
         }
 
@@ -210,36 +144,40 @@ namespace GridGames.Views
         private async Task ReactToInputOnCard(SweeperViewModel.Square item)
         {
             var vm = this.BindingContext as SweeperViewModel;
-            if (vm.FirstRunSweeper) //GBTEST  || vm.GameIsLoading)
+            if (vm.FirstRunSweeper)
             {
                 return;
             }
 
-            int itemIndex = GetItemCollectionIndexFromItemAccessibleName(item.AccessibleName);
-            if (itemIndex != -1)
+            if (vm.GameOver)
             {
-                if (IsFirstTurnUp())
+                return;
+            }
+
+            if (IsFirstTurnUp())
+            {
+                vm.InitialiseGrid(item.targetIndex);
+            }
+
+            bool gameIsOver = vm.ActOnInputOnSquare(item.targetIndex);
+            if (gameIsOver)
+            {
+                for (int i = 0; i < 16; ++i)
                 {
-                    vm.InitialiseGrid(itemIndex);
+                    vm.SweeperListCollection[i].TurnedUp = true;
                 }
 
-                bool gameIsOver = vm.ActOnInputOnSquare(itemIndex);
-                if (gameIsOver)
-                {
-                    await DisplayAlert(
-                                    "Leaf Sweeper",
-                                    "Sorry, game over!",
-                                    "OK");
-                }
-                else
-                {
-                    await IsGameWon();
-                }
+                vm.GameOver = true;
+
+                await OfferToRestartLostGame();
+            }
+            else
+            {
+                await IsGameWon();
             }
         }
 
-        // This gets called when switching to the Squares Game from other games,
-        // and also when closing the Squares Settings page.
+        // This gets called when switching to the Sweeper Game from other games.
         protected override void OnAppearing()
         {
             Debug.WriteLine("Sweeper Game: OnAppearing called.");
@@ -250,18 +188,14 @@ namespace GridGames.Views
 
             Preferences.Set("InitialGame", "Sweeper");
 
-            // Account for the app settings changing since the page was last shown.
             var vm = this.BindingContext as SweeperViewModel;
 
-            vm.FirstRunSweeper = false; // Preferences.Get("FirstRunSweeper", true);
-
-            var isFirstRun = vm.FirstRunSweeper;
+            vm.FirstRunSweeper = Preferences.Get("FirstRunSweeper", true);
 
             if (vm.FirstRunSweeper)
             {
-                //GBTEST 
-                //vm.RaiseNotificationEvent(
-                //    SquaresWelcomeTitleLabel.Text + ", " + SquaresWelcomeTitleInstructions.Text);
+                vm.RaiseNotificationEvent(
+                    SweeperWelcomeTitleLabel.Text + ", " + SweeperWelcomeTitleInstructions.Text);
             }
 
             var currentTheme = Application.Current.UserAppTheme;
@@ -271,29 +205,17 @@ namespace GridGames.Views
             }
 
             vm.ShowDarkTheme = (currentTheme == AppTheme.Dark);
-
-            //GBTEST vm.GameIsLoading = false;
-        }
-
-        private int GetItemCollectionIndexFromItemAccessibleName(string ItemAccessibleName)
-        {
-            var vm = this.BindingContext as SweeperViewModel;
-
-            int itemIndex = -1;
-            for (int i = 0; i < 16; ++i)
-            {
-                if (vm.SweeperListCollection[i].AccessibleName == ItemAccessibleName)
-                {
-                    itemIndex = i;
-                    break;
-                }
-            }
-
-            return itemIndex;
         }
 
         public void ShowContextMenu()
         {
+            var vm = this.BindingContext as SweeperViewModel;
+
+            if (vm.GameOver)
+            {
+                return;
+            }
+
 #if WINDOWS
             var square = SweeperCollectionView.SelectedItem as SweeperViewModel.Square;
             if (square != null)
@@ -323,7 +245,7 @@ namespace GridGames.Views
 
                                     // Now show the context menu next to the square of interest.
                                     var platformAction = new GridGamesPlatformAction();
-                                    platformAction.ShowFlyout(contextFlyout, borderWithContextMenu);
+                                    platformAction.ShowFlyout(contextFlyout, borderWithContextMenu, !square.ShowsQueryFrog);
 
                                     break;
                                 }
@@ -337,48 +259,57 @@ namespace GridGames.Views
 #endif
         }
 
-        public void PlantFlag()
+        public void SetShowsQueryFrog()
         {
+            var vm = this.BindingContext as SweeperViewModel;
+
+            if (vm.GameOver)
+            {
+                return;
+            }
+
             var item = SweeperCollectionView.SelectedItem as SweeperViewModel.Square;
             if (item != null)
             {
-                PlantFlagInItem(item.TargetIndex);
+                SetShowsQueryFrogInSquare(item.TargetIndex, !item.ShowsQueryFrog);
             }
         }
 
-        public void PlantFlagInItem(int itemIndex)
+        public void SetShowsQueryFrogInSquare(int itemIndex, bool showQueryFrog)
         {
             var vm = this.BindingContext as SweeperViewModel;
 
             if (itemIndex != -1)
             {
-                if (vm.SweeperListCollection[itemIndex].ShowsFlag)
-                {
-                    vm.SweeperListCollection[itemIndex].ShowsFlag = false;
-                }
-                else
-                {
-                    vm.SweeperListCollection[itemIndex].ShowsFlag = true;
-
-                    vm.SweeperListCollection[itemIndex].AccessibleName = "Query frog";
-                }
+                vm.SweeperListCollection[itemIndex].ShowsQueryFrog = showQueryFrog;
             }
         }
 
-
-        private async Task OfferToRestartGame()
+        private async Task OfferToRestartWonGame()
         {
             var vm = this.BindingContext as SweeperViewModel;
             if (!vm.FirstRunSweeper)
             {
-                var message = "";
-
-                message = String.Format(
-                    AppResources.ResourceManager.GetString("SquaresWonInGoes"), 8 + vm.MoveCount);
-
                 var answer = await DisplayAlert(
                     AppResources.ResourceManager.GetString("Congratulations"),
-                    message,
+                    AppResources.ResourceManager.GetString("CompletedSweeper"),
+                    AppResources.ResourceManager.GetString("Yes"),
+                    AppResources.ResourceManager.GetString("No"));
+                if (answer)
+                {
+                    RestartGame();
+                }
+            }
+        }
+
+        private async Task OfferToRestartLostGame()
+        {
+            var vm = this.BindingContext as SweeperViewModel;
+            if (!vm.FirstRunSweeper)
+            {
+                var answer = await DisplayAlert(
+                    AppResources.ResourceManager.GetString("Oops"),
+                    AppResources.ResourceManager.GetString("FailedSweeper"),
                     AppResources.ResourceManager.GetString("Yes"),
                     AppResources.ResourceManager.GetString("No"));
                 if (answer)
@@ -394,16 +325,6 @@ namespace GridGames.Views
             vm.FirstRunSweeper = false;
 
             SweeperCollectionView.IsVisible = true;
-        }
-
-        private async void SquaresGameSettingsButton_Clicked(object sender, EventArgs e)
-        {
-            var vm = this.BindingContext as SweeperViewModel;
-            if (!vm.FirstRunSweeper)
-            {
-                var settingsPage = new SquaresSettingsPage();
-                await Navigation.PushModalAsync(settingsPage);
-            }
         }
 
         public async void ShowHelp()
@@ -422,6 +343,8 @@ namespace GridGames.Views
             var vm = this.BindingContext as SweeperViewModel;
             if (!vm.FirstRunSweeper)
             {
+                vm.GameOver = false;
+
                 vm.ResetGrid();
             }
         }
@@ -432,7 +355,7 @@ namespace GridGames.Views
 
             var square = menuItem.BindingContext as SweeperViewModel.Square;
 
-            PlantFlagInItem(square.TargetIndex);
+            SetShowsQueryFrogInSquare(square.TargetIndex, !square.ShowsQueryFrog);
         }
     }
 }

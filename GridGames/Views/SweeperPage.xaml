@@ -18,14 +18,13 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <localviews:FirstRunLoadingSquaresToGridOpacity x:Key="FirstRunLoadingSquaresToGridOpacity" />
+            <localviews:FirstRunToGridOpacity x:Key="FirstRunToGridOpacity" />
             <localviews:CollectionViewHeightToRowHeight x:Key="CollectionViewHeightToRowHeight" />
-            <localviews:LabelContainerHeightToFontSize x:Key="LabelContainerHeightToFontSize" />
-            <localviews:DarkThemeToSquareLabelColor x:Key="DarkThemeToSquareLabelColor" />
+            <localviews:SweeperLabelContainerHeightToFontSize x:Key="SweeperLabelContainerHeightToFontSize" />
             <localviews:TurnedUpToBackgroundColour x:Key="TurnedUpToBackgroundColour" />
             <localviews:NearbyFrogCountToLabel x:Key="NearbyFrogCountToLabel" />
-            <localviews:SweeperLabelContainerHeightToFontSize x:Key="SweeperLabelContainerHeightToFontSize" />
             <localviews:LeafToVisible x:Key="LeafToVisible" />
+            <localviews:LeafToLabel x:Key="LeafToLabel" />
             <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -42,12 +41,6 @@
                 SemanticProperties.HeadingLevel="Level1" FontSize="Title"
                 TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}"
                 HorizontalOptions="Center" VerticalOptions="Center" />
-            <Button Grid.Column="1" Text="&#xf013;" x:Name="SquaresSettingsButton"
-                Clicked="SquaresGameSettingsButton_Clicked"
-                BorderWidth="0"
-                windows:VisualElement.AccessKey="S"
-                FontFamily="FA" FontSize="Title" HorizontalOptions="End"
-                SemanticProperties.Description="{x:Static resources:AppResources.SquaresSettings}" />
         </Grid>
     </Shell.TitleView>
 
@@ -58,17 +51,12 @@
             <CollectionView
                 x:Name="SweeperCollectionView"
                 SemanticProperties.Description="{x:Static resources:AppResources.SweeperSquares}"               
+                Opacity="{Binding FirstRunSweeper, Mode=OneWay,
+                    Converter={StaticResource FirstRunToGridOpacity}}"
                 VerticalScrollBarVisibility="Never"
                 SelectionMode="Single"
                 ItemsSource="{Binding SweeperListCollection}">
-<!--
-                <CollectionView.Opacity>
-                    <MultiBinding Mode="OneWay" Converter="{StaticResource FirstRunLoadingSquaresToGridOpacity}">
-                        <Binding Source="{x:Reference SweeperPageInstance}" Path="BindingContext.FirstRunSquares" />
-                        <Binding Source="{x:Reference SweeperPageInstance}" Path="BindingContext.GameIsLoading" />
-                    </MultiBinding>
-                </CollectionView.Opacity>
--->
+
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" Span="4" />
                 </CollectionView.ItemsLayout>
@@ -81,9 +69,9 @@
                                 </SwipeItems>
                             </SwipeView.LeftItems>-->
                             
-                            <!-- Remove the Border from the UIA tree, otherwise it gets exposed unnecessarily as
-                            a group element. Still set a SemanticProperties.Description, as this will get
-                            propogated up to be the UIA Name on the containing list item. -->
+                        <!-- Remove the Border from the UIA tree, otherwise it gets exposed unnecessarily as
+                        a group element. Still set a SemanticProperties.Description, as this will get
+                        propogated up to be the UIA Name on the containing list item. -->
                         <Border Margin="0" Padding="0"
                             AutomationProperties.IsInAccessibleTree="False"
                             HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}},
@@ -92,30 +80,31 @@
                             Stroke="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
                             SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}"
                             SemanticProperties.Hint="{Binding AccessibleDescription, Mode=OneWay}">
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"
-                                    CommandParameter="{Binding Index}" />
-                            </Border.GestureRecognizers>
 
-                                <FlyoutBase.ContextFlyout>
-                                    <MenuFlyout>
-                                        <MenuFlyoutItem Text="Mark square as Query Frog"
-                                            Clicked="MenuFlyoutItem_Clicked" />
-                                    </MenuFlyout>
-                                </FlyoutBase.ContextFlyout>
+                            <FlyoutBase.ContextFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem Text="Mark square as Query Frog"
+                                        Clicked="MenuFlyoutItem_Clicked" />
+                                    <MenuFlyoutItem Text="Remove Query Frog"
+                                        Clicked="MenuFlyoutItem_Clicked" />
+                                </MenuFlyout>
+                            </FlyoutBase.ContextFlyout>
                             
-                                <Grid Padding="0" Margin="8">
+                            <Grid Padding="0" Margin="8">
                                 <Grid.BackgroundColor>
                                     <MultiBinding Mode="OneWay" 
                                             Converter="{StaticResource TurnedUpToBackgroundColour}">
                                         <Binding Path="TurnedUp" />
-                                        <Binding Path="ShowsFlag" />
+                                        <Binding Path="HasFrog" />
+                                        <Binding Path="ShowsQueryFrog" />
+                                        <Binding Source="{x:Reference SweeperPageInstance}" 
+                                                    Path="BindingContext.GameOver" />
                                         <Binding Source="{x:Reference SweeperPageInstance}" 
                                                     Path="BindingContext.ShowDarkTheme" />
                                     </MultiBinding>
                                 </Grid.BackgroundColor>
                                 
-                                    <!-- Nearby leaf count. -->
+                                <!-- Nearby leaf count. -->
                                 <Label Margin="2,2,0,0" Padding="2,0,2,0" 
                                     AutomationProperties.IsInAccessibleTree="False"
                                     VerticalTextAlignment="Center" HorizontalTextAlignment="Center">
@@ -124,6 +113,7 @@
                                             Converter="{StaticResource NearbyFrogCountToLabel}">
                                             <Binding Path="TurnedUp" />
                                             <Binding Path="NearbyFrogCount" />
+                                            <Binding Path="ShowsQueryFrog" />
                                         </MultiBinding>
                                     </Label.Text>
                                     <Label.FontSize>
@@ -133,24 +123,9 @@
                                     </Label.FontSize>
                                 </Label>
 
-                                <!-- Flag. -->
+                                <!-- Leaf, Frog, or Query Frog. -->
                                 <Label Margin="2,2,0,0" Padding="2,0,2,0" 
                                     AutomationProperties.IsInAccessibleTree="False"
-                                    Text="&#xf52e;?"
-                                    FontFamily="FA"
-                                    VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
-                                    IsVisible="{Binding ShowsFlag, Mode=OneWay}">
-                                    <Label.FontSize>
-                                        <Binding Source="{RelativeSource AncestorType={x:Type CollectionView}}" 
-                                            Path="Height" Mode="OneWay" ConverterParameter="2"
-                                            Converter="{StaticResource SweeperLabelContainerHeightToFontSize}" />
-                                    </Label.FontSize>
-                                </Label>
-
-                                <!-- Leaf. -->
-                                <Label Margin="2,2,0,0" Padding="2,0,2,0" 
-                                    AutomationProperties.IsInAccessibleTree="False"
-                                    Text="&#xf06C;"
                                     FontFamily="FA"
                                     TextColor="DarkGreen"
                                     VerticalTextAlignment="Center" HorizontalTextAlignment="Center">
@@ -158,9 +133,22 @@
                                         <MultiBinding Mode="OneWay" 
                                             Converter="{StaticResource LeafToVisible}">
                                             <Binding Path="TurnedUp" />
-                                            <Binding Path="ShowsFlag" />
+                                            <Binding Path="HasFrog" />
+                                            <Binding Path="ShowsQueryFrog" />
+                                            <Binding Source="{x:Reference SweeperPageInstance}" 
+                                                    Path="BindingContext.GameOver" />
                                         </MultiBinding>
                                     </Label.IsVisible>
+                                    <Label.Text>
+                                        <MultiBinding Mode="OneWay" 
+                                            Converter="{StaticResource LeafToLabel}">
+                                            <Binding Path="TurnedUp" />
+                                            <Binding Path="HasFrog" />
+                                            <Binding Path="ShowsQueryFrog" />
+                                            <Binding Source="{x:Reference SweeperPageInstance}" 
+                                                    Path="BindingContext.GameOver" />
+                                        </MultiBinding>
+                                    </Label.Text>
                                     <Label.FontSize>
                                         <Binding Source="{RelativeSource AncestorType={x:Type CollectionView}}" 
                                             Path="Height" Mode="OneWay"  ConverterParameter="2"
@@ -174,12 +162,11 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-<!--
             <Border Margin="4" Padding="8" x:Name="WelcomeBorder"
-                IsVisible="{Binding FirstRunSquares}"
+                IsVisible="{Binding FirstRunSweeper}"
                 Stroke="{AppThemeBinding Light=Black, Dark=White}"
                 BackgroundColor="{DynamicResource PageBackgroundColor}"
-                SemanticProperties.Description="{x:Static resources:AppResources.SquaresWelcome}"
+                SemanticProperties.Description="{x:Static resources:AppResources.SweeperWelcome}"
                 VerticalOptions="Fill" HorizontalOptions="Fill">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -187,11 +174,11 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="0" x:Name="SquaresWelcomeTitleLabel"
-                        Text="{x:Static resources:AppResources.SquaresWelcome}"                        
+                    <Label Grid.Row="0" x:Name="SweeperWelcomeTitleLabel"
+                        Text="{x:Static resources:AppResources.SweeperWelcome}"                        
                         FontSize="Large" FontAttributes="Bold" />
                     <ScrollView Grid.Row="1">
-                        <Editor x:Name="SquaresWelcomeTitleInstructions" IsReadOnly="True" FontSize="Medium"
+                        <Editor x:Name="SweeperWelcomeTitleInstructions" IsReadOnly="True" FontSize="Medium"
                             Text="{x:Static resources:AppResources.WelcomeInstructions}" />
                     </ScrollView>
                     <Button Grid.Row="2" x:Name="WelcomeMessageCloseButton"
@@ -200,8 +187,8 @@
                         HorizontalOptions="End" Margin="0,4,4,4" Padding="8" />
                 </Grid>
             </Border>
--->
-        </Grid>
+
+            </Grid>
     </ContentPage.Content>
     
 </ContentPage>

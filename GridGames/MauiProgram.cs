@@ -104,7 +104,7 @@ public static class MauiProgram
             var currentPage = (Application.Current.MainPage as Microsoft.Maui.Controls.Shell).CurrentPage;
             if (currentPage is SweeperPage)
             {
-                (currentPage as SweeperPage).PlantFlag();
+                (currentPage as SweeperPage).SetShowsQueryFrog();
 
                 e.Handled = true;
             }
