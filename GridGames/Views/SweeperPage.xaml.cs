@@ -138,6 +138,12 @@ namespace GridGames.Views
             {
                 vm.GameWon = true;
 
+                for (int i = 0; i < 16; ++i)
+                {
+                    // We know where all the frogs are now.
+                    vm.SweeperListCollection[i].ShowsQueryFrog = false;
+                }
+
                 await OfferToRestartWonGame();
             }
         }
