@@ -8,19 +8,6 @@ namespace InvokePlatformCode.Services.PartialMethods;
 public partial class GridGamesPlatformAction
 {
 #if WINDOWS
-    public partial void ShowFlyout(FlyoutBase contextFlyout, 
-        Microsoft.Maui.Controls.Border border)
-    {
-        var flyout = contextFlyout.Handler.PlatformView as Microsoft.UI.Xaml.Controls.MenuFlyout;
-
-        if (flyout != null)
-        {
-            var element = border.Handler.PlatformView;
-
-            flyout.ShowAt(element as FrameworkElement);
-        }
-    }
-
     public partial async Task<string> GetPairsPictureFolder()
     {
         string result = "";

@@ -98,27 +98,6 @@ public static class MauiProgram
                 e.Handled = true;
             }
         }
-        else if ((e.Key == Windows.System.VirtualKey.Number1) ||
-                 (e.Key == Windows.System.VirtualKey.NumberPad1))
-        {
-            var currentPage = (Application.Current.MainPage as Microsoft.Maui.Controls.Shell).CurrentPage;
-            if (currentPage is SweeperPage)
-            {
-                (currentPage as SweeperPage).SetShowsQueryFrog();
-
-                e.Handled = true;
-            }
-        }
-        else if (e.Key == Windows.System.VirtualKey.Application)
-        {
-            var currentPage = (Application.Current.MainPage as Microsoft.Maui.Controls.Shell).CurrentPage;
-            if (currentPage is SweeperPage)
-            {
-                (currentPage as SweeperPage).ShowContextMenu();
-
-                e.Handled = true;
-            }
-        }
         else if ((e.Key == Windows.System.VirtualKey.Right) ||
                  (e.Key == Windows.System.VirtualKey.Left) ||
                  (e.Key == Windows.System.VirtualKey.Up) ||

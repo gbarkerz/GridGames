@@ -5,9 +5,6 @@ namespace InvokePlatformCode.Services.PartialMethods
     {
 #if WINDOWS
         public partial Task<string> GetPairsPictureFolder();
-
-        public partial void ShowFlyout(FlyoutBase contextFlyout,
-            Border border);
 #endif
 
 #if WINDOWS

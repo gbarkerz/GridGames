@@ -65,28 +65,36 @@ namespace GridGames.Views
 
         private async void SweeperCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            timeOfMostRecentSelectionChanged = DateTime.Now;
+            Debug.WriteLine("Sweeper: SweeperCollectionView_SelectionChanged");
 
-            // If this selection change is very likely due to a use of an Arrow key to move
-            // between squares, do nothing here. If instead the selection change is more
-            // likely due to programmatic selection via a screen reader, attempt to move 
-            // the square.
-            var timeSinceMostRecentArrowKeyPress = DateTime.Now - MauiProgram.timeOfMostRecentArrowKeyPress;
-            if (timeSinceMostRecentArrowKeyPress.TotalMilliseconds < 100)
-            {
-                return;
-            }
+            timeOfMostRecentSelectionChanged = DateTime.Now;
 
             var collectionView = sender as CollectionView;
             if (collectionView != null)
             {
                 if (collectionView.SelectedItem != null)
                 {
+                    Debug.WriteLine("Sweeper: Have selected item.");
+
                     var vm = this.BindingContext as SweeperViewModel;
 
                     var item = collectionView.SelectedItem as SweeperViewModel.Square;
                     if (item != null)
                     {
+                        Debug.WriteLine("Sweeper: Selected item item.ShowsQueryFrog " + item.ShowsQueryFrog);
+
+                        SetQueryFrogCheckBox.IsChecked = item.ShowsQueryFrog;
+
+                        // If this selection change is very likely due to a use of an Arrow key to move
+                        // between squares, do nothing here. If instead the selection change is more
+                        // likely due to programmatic selection via a screen reader, attempt to move 
+                        // the square.
+                        var timeSinceMostRecentArrowKeyPress = DateTime.Now - MauiProgram.timeOfMostRecentArrowKeyPress;
+                        if (timeSinceMostRecentArrowKeyPress.TotalMilliseconds < 100)
+                        {
+                            return;
+                        }
+
                         await ReactToInputOnCard(item);
                     }
                 }
@@ -209,59 +217,7 @@ namespace GridGames.Views
             vm.ShowDarkTheme = (currentTheme == AppTheme.Dark);
         }
 
-        public void ShowContextMenu()
-        {
-            var vm = this.BindingContext as SweeperViewModel;
-
-            if (vm.GameOver)
-            {
-                return;
-            }
-
-#if WINDOWS
-            var square = SweeperCollectionView.SelectedItem as SweeperViewModel.Square;
-            if (square != null)
-            {
-                int borderCount = 0;
-
-                // First find the main container Border associated with the selected square.
-                var gridDescendants = SweeperCollectionView.GetVisualTreeDescendants();
-                for (int i = 0; i < gridDescendants.Count; ++i)
-                {
-                    var gridDescendant = gridDescendants[i];
-                    if (gridDescendant is Border)
-                    {
-                        if (borderCount == square.targetIndex)
-                        {
-                            // Ok, we've found the Border for the square of interest.
-                            var gridItemDescendants = gridDescendant.GetVisualTreeDescendants();
-
-                            // Now find the border in the square with which the context menu is associated.
-                            for (int j = 0; j < gridItemDescendants.Count; ++j)
-                            {
-                                if (gridItemDescendants[j] is Border)
-                                {
-                                    var borderWithContextMenu = gridItemDescendants[j] as Border;
-
-                                    var contextFlyout = FlyoutBase.GetContextFlyout(borderWithContextMenu);
-
-                                    // Now show the context menu next to the square of interest.
-                                    var platformAction = new GridGamesPlatformAction();
-                                    platformAction.ShowFlyout(contextFlyout, borderWithContextMenu);
-
-                                    break;
-                                }
-                            }
-                        }
-
-                        ++borderCount;
-                    }
-                }
-            }
-#endif
-        }
-
-        public void SetShowsQueryFrog()
+        private void SetQueryFrogCheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
             var vm = this.BindingContext as SweeperViewModel;
 
@@ -273,7 +229,7 @@ namespace GridGames.Views
             var item = SweeperCollectionView.SelectedItem as SweeperViewModel.Square;
             if (item != null)
             {
-                SetShowsQueryFrogInSquare(item.TargetIndex, !item.ShowsQueryFrog);
+                SetShowsQueryFrogInSquare(item.TargetIndex, e.Value);
             }
         }
 
@@ -283,6 +239,11 @@ namespace GridGames.Views
 
             if (itemIndex != -1)
             {
+                if (SetQueryFrogCheckBox.IsChecked != showQueryFrog)
+                {
+                    SetQueryFrogCheckBox.IsChecked = showQueryFrog;
+                }
+
                 vm.SweeperListCollection[itemIndex].ShowsQueryFrog = showQueryFrog;
             }
         }
@@ -350,28 +311,6 @@ namespace GridGames.Views
 
                 vm.ResetGrid();
             }
-        }
-
-        private void MenuFlyoutItem_Clicked(object sender, EventArgs e)
-        {
-            var menuItem = (sender as MenuFlyoutItem).Parent;
-
-            var square = menuItem.BindingContext as SweeperViewModel.Square;
-
-            SetShowsQueryFrogInSquare(square.TargetIndex, !square.ShowsQueryFrog);
-        }
-
-        private void MenuFlyout_PropertyChanging(object sender, PropertyChangingEventArgs e)
-        {
-            if (e.PropertyName == "Visibility")
-            {
-
-            }
-        }
-
-        private void MenuFlyout_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-
         }
     }
 }
