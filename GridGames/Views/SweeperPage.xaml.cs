@@ -5,12 +5,12 @@ using System.Diagnostics;
 
 namespace GridGames.Views
 {
-    // Barker Todo: Fix context menu when invoked through mouse or touch.
-
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SweeperPage : ContentPage
     {
         public static DateTime timeOfMostRecentSelectionChanged = DateTime.Now;
+
+        private int squareCount = 16;
 
         public SweeperPage()
         {
@@ -69,6 +69,16 @@ namespace GridGames.Views
 
             timeOfMostRecentSelectionChanged = DateTime.Now;
 
+            // If this selection change is very likely due to a use of an Arrow key to move
+            // between squares, do nothing here. If instead the selection change is more
+            // likely due to programmatic selection via a screen reader, attempt to move 
+            // the square.
+            var timeSinceMostRecentArrowKeyPress = DateTime.Now - MauiProgram.timeOfMostRecentArrowKeyPress;
+            if (timeSinceMostRecentArrowKeyPress.TotalMilliseconds < 100)
+            {
+                return;
+            }
+
             var collectionView = sender as CollectionView;
             if (collectionView != null)
             {
@@ -76,24 +86,10 @@ namespace GridGames.Views
                 {
                     Debug.WriteLine("Sweeper: Have selected item.");
 
-                    var vm = this.BindingContext as SweeperViewModel;
-
                     var item = collectionView.SelectedItem as SweeperViewModel.Square;
                     if (item != null)
                     {
                         Debug.WriteLine("Sweeper: Selected item item.ShowsQueryFrog " + item.ShowsQueryFrog);
-
-                        SetQueryFrogCheckBox.IsChecked = item.ShowsQueryFrog;
-
-                        // If this selection change is very likely due to a use of an Arrow key to move
-                        // between squares, do nothing here. If instead the selection change is more
-                        // likely due to programmatic selection via a screen reader, attempt to move 
-                        // the square.
-                        var timeSinceMostRecentArrowKeyPress = DateTime.Now - MauiProgram.timeOfMostRecentArrowKeyPress;
-                        if (timeSinceMostRecentArrowKeyPress.TotalMilliseconds < 100)
-                        {
-                            return;
-                        }
 
                         await ReactToInputOnCard(item);
                     }
@@ -107,7 +103,7 @@ namespace GridGames.Views
 
             bool isFirstTurnUp = true;
 
-            for (int i = 0; i < 16; ++i)
+            for (int i = 0; i < squareCount; ++i)
             {
                 if (vm.SweeperListCollection[i].TurnedUp)
                 {
@@ -126,7 +122,7 @@ namespace GridGames.Views
 
             int turnedUpCount = 0;
 
-            for (int i = 0; i < 16; ++i)
+            for (int i = 0; i < squareCount; ++i)
             {
                 if (vm.SweeperListCollection[i].TurnedUp)
                 {
@@ -134,11 +130,12 @@ namespace GridGames.Views
                 }
             }
 
-            if (turnedUpCount == 14)
+            // For now, there are only 2 frogs in the game.
+            if (turnedUpCount == squareCount - 2)
             {
                 vm.GameWon = true;
 
-                for (int i = 0; i < 16; ++i)
+                for (int i = 0; i < squareCount; ++i)
                 {
                     // We know where all the frogs are now.
                     vm.SweeperListCollection[i].ShowsQueryFrog = false;
@@ -175,10 +172,10 @@ namespace GridGames.Views
                 vm.InitialiseGrid(item.targetIndex);
             }
 
-            bool gameIsOver = vm.ActOnInputOnSquare(item.targetIndex);
-            if (gameIsOver)
+            bool gameIsLost = vm.ActOnInputOnSquare(item.targetIndex);
+            if (gameIsLost)
             {
-                for (int i = 0; i < 16; ++i)
+                for (int i = 0; i < squareCount; ++i)
                 {
                     vm.SweeperListCollection[i].TurnedUp = true;
                 }
@@ -223,7 +220,8 @@ namespace GridGames.Views
             vm.ShowDarkTheme = (currentTheme == AppTheme.Dark);
         }
 
-        private void SetQueryFrogCheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
+
+        public void ShowContextMenu()
         {
             var vm = this.BindingContext as SweeperViewModel;
 
@@ -232,24 +230,68 @@ namespace GridGames.Views
                 return;
             }
 
-            var item = SweeperCollectionView.SelectedItem as SweeperViewModel.Square;
-            if (item != null)
+#if WINDOWS
+            // Force a square's context menu to appear.
+            var square = SweeperCollectionView.SelectedItem as SweeperViewModel.Square;
+            if (square != null)
             {
-                SetShowsQueryFrogInSquare(item.TargetIndex, e.Value);
+                int borderCount = 0;
+
+                bool shownContextMenu = false;
+
+                // First find the main container Border associated with the selected square.
+                var gridDescendants = SweeperCollectionView.GetVisualTreeDescendants();
+                for (int i = 0; i < gridDescendants.Count; ++i)
+                {
+                    var gridDescendant = gridDescendants[i];
+                    if (gridDescendant is Border)
+                    {
+                        if (borderCount == square.targetIndex)
+                        {
+                            // Ok, we've found the Border for the square of interest.
+                            var gridItemDescendants = gridDescendant.GetVisualTreeDescendants();
+
+                            // Now find the border in the square with which the context menu is associated.
+                            for (int j = 0; j < gridItemDescendants.Count; ++j)
+                            {
+                                if (gridItemDescendants[j] is Border)
+                                {
+                                    var borderWithContextMenu = gridItemDescendants[j] as Border;
+
+                                    var contextFlyout = FlyoutBase.GetContextFlyout(borderWithContextMenu);
+
+                                    // Now show the context menu next to the square of interest.
+                                    var platformAction = new GridGamesPlatformAction();
+                                    platformAction.ShowFlyout(contextFlyout, borderWithContextMenu);
+
+                                    shownContextMenu = true;
+
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (shownContextMenu)
+                        {
+                            break;
+                        }
+
+                        ++borderCount;
+                    }
+                }
             }
+#endif
         }
 
         public void SetShowsQueryFrogInSquare(int itemIndex, bool showQueryFrog)
         {
+            Debug.WriteLine("SetShowsQueryFrogInSquare: itemIndex, showQueryFrog " + 
+                itemIndex + ", " + showQueryFrog);
+
             var vm = this.BindingContext as SweeperViewModel;
 
-            if (itemIndex != -1)
+            if (itemIndex >= 0)
             {
-                if (SetQueryFrogCheckBox.IsChecked != showQueryFrog)
-                {
-                    SetQueryFrogCheckBox.IsChecked = showQueryFrog;
-                }
-
                 vm.SweeperListCollection[itemIndex].ShowsQueryFrog = showQueryFrog;
             }
         }
@@ -317,6 +359,23 @@ namespace GridGames.Views
 
                 vm.ResetGrid();
             }
+        }
+
+        private void MenuFlyoutItem_Clicked(object sender, EventArgs e)
+        {
+            var menuItem = (sender as MenuFlyoutItem).Parent;
+
+            var square = menuItem.BindingContext as SweeperViewModel.Square;
+
+            SetShowsQueryFrogInSquare(square.TargetIndex, !square.ShowsQueryFrog);
+        }
+
+        private void ToggleQueryFrogButton_Clicked(object sender, EventArgs e)
+        {
+            var button = sender as Button;
+            var square = button.BindingContext as SweeperViewModel.Square;
+
+            SetShowsQueryFrogInSquare(square.TargetIndex, !square.ShowsQueryFrog);
         }
     }
 }

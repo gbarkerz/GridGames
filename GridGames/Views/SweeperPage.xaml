@@ -41,17 +41,6 @@
                 SemanticProperties.HeadingLevel="Level1" FontSize="Title"
                 TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}"
                 HorizontalOptions="Center" VerticalOptions="Center" />
-            <StackLayout Grid.Column="1" Orientation="Horizontal">
-                <CheckBox Grid.Column="1" x:Name="SetQueryFrogCheckBox"
-                    windows:VisualElement.AccessKey="Q" 
-                    CheckedChanged="SetQueryFrogCheckBox_CheckedChanged"
-                    Color="Black"
-                    VerticalOptions="Center" />
-                <Label Text="Selected stone is Query Frog" 
-                    Margin="0,0,10,0"
-                    VerticalOptions="Center"
-                    TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}" />
-            </StackLayout>
         </Grid>
     </Shell.TitleView>
 
@@ -92,6 +81,13 @@
                             SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}"
                             SemanticProperties.Hint="{Binding AccessibleDescription, Mode=OneWay}">
 
+                            <FlyoutBase.ContextFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem Text="Change Query Frog state"
+                                        Clicked="MenuFlyoutItem_Clicked" />
+                                </MenuFlyout>
+                            </FlyoutBase.ContextFlyout>
+
                             <Grid Padding="0" Margin="8">
                                 <Grid.BackgroundColor>
                                     <MultiBinding Mode="OneWay" 
@@ -107,8 +103,13 @@
                                                     Path="BindingContext.ShowDarkTheme" />
                                     </MultiBinding>
                                 </Grid.BackgroundColor>
-                                
-                                <!-- Nearby leaf count. -->
+
+                                <!-- This invisible button is for programmatic invoking by a screen reader. -->
+                                <Button Text="Change Query Frog state"
+                                    Clicked="ToggleQueryFrogButton_Clicked"
+                                    Opacity="0" InputTransparent="True" />
+
+                                <!-- Label showing count of nearby leaves. -->
                                 <Label Margin="2,2,0,0" Padding="2,0,2,0" 
                                     AutomationProperties.IsInAccessibleTree="False"
                                     VerticalTextAlignment="Center" HorizontalTextAlignment="Center">
@@ -128,7 +129,7 @@
                                     </Label.FontSize>
                                 </Label>
 
-                                <!-- Leaf, Frog, or Query Frog. -->
+                                <!-- Label showing the glyphs for a Leaf, Frog, or Query Frog. -->
                                 <Label Margin="2,2,0,0" Padding="2,0,2,0" 
                                     AutomationProperties.IsInAccessibleTree="False"
                                     FontFamily="FA"

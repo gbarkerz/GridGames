@@ -89,116 +89,46 @@ namespace GridGames.ViewModels
             this.CreateGrid();
         }
 
-        public bool AttemptMoveBySelection(object currentSelection)
+        private void CreateGrid()
         {
-            if (currentSelection == null)
+            // Future: If feedback suggests that exposing accessible HelpText for each
+            // item would be helpful when playing the game, set that here through the
+            // AccessibleDescription property.
+
+            for (int cardIndex = 0; cardIndex < 16; ++cardIndex)
             {
-                return false;
+                sweeperList.Add(
+                    new Square
+                    {
+                        TargetIndex = cardIndex
+                    });
             }
-
-            Square selectedSquare = currentSelection as Square;
-
-            int currentSelectionIndex = -1;
-            for (int i = 0; i < 16; ++i)
-            {
-                if (sweeperList[i] == selectedSquare)
-                {
-                    currentSelectionIndex = i;
-                    break;
-                }
-            }
-
-            if (currentSelectionIndex < 0)
-            {
-                return false;
-            }
-
-            return ActOnInputOnSquare(currentSelectionIndex);
         }
 
-        public bool ActOnInputOnSquare(int SquareIndex)
+        public void InitialiseGrid(int indexNoFrog)
         {
-            bool gameIsOver = false;
+            var random = new Random();
 
-            var square = sweeperList[SquareIndex];
-            if (square.HasFrog)
+            int frogCount = 0;
+
+            do
             {
-                gameIsOver = true;
-            }
-            else
-            {
-                TurnUpNearbyCards(SquareIndex);
+                int r = random.Next(15);
 
-                RaiseNotificationEvent("Swept stone " + 
-                    (SquareIndex + 1).ToString() + 
-                    ", " +
-                    square.AccessibleName);
-            }
-
-            return gameIsOver;
-        }
-
-        private void TurnUpNearbyCards(int SquareIndex)
-        {
-            var square = sweeperList[SquareIndex];
-
-            if (square.HasFrog)
-            {
-                return;
-            }
-
-            if (square.NearbyFrogCount > 0)
-            {
-                square.TurnedUp = true;
-            }
-
-            if (square.TurnedUp)
-            {
-                return;
-            }
-
-            square.TurnedUp = true;
-
-            bool leftEdgeSquare = (SquareIndex % 4 == 0);
-            bool rightEdgeSquare = (SquareIndex % 4 == 3);
-
-            if (SquareIndex > 3)
-            {
-                if (!leftEdgeSquare)
+                if (!sweeperList[r].HasFrog && (sweeperList[r].targetIndex != indexNoFrog))
                 {
-                    TurnUpNearbyCards(SquareIndex - 5);
-                }
+                    sweeperList[r].HasFrog = true;
 
-                TurnUpNearbyCards(SquareIndex - 4);
-
-                if (!rightEdgeSquare)
-                {
-                    TurnUpNearbyCards(SquareIndex - 3);
+                    ++frogCount;
                 }
             }
+            while (frogCount < 2);
 
-            if (SquareIndex % 4 > 0)
+            for (int cardIndex = 0; cardIndex < 16; ++cardIndex)
             {
-                TurnUpNearbyCards(SquareIndex - 1);
-            }
-
-            if (SquareIndex % 4 < 3)
-            {
-                TurnUpNearbyCards(SquareIndex + 1);
-            }
-
-            if (SquareIndex < 12)
-            {
-                if (!leftEdgeSquare)
+                if (!sweeperList[cardIndex].HasFrog)
                 {
-                    TurnUpNearbyCards(SquareIndex + 3);
-                }
-
-                TurnUpNearbyCards(SquareIndex + 4);
-
-                if (!rightEdgeSquare)
-                {
-                    TurnUpNearbyCards(SquareIndex + 5);
+                    SetSquareNearbyFrogCount(cardIndex);
                 }
             }
         }
@@ -277,54 +207,6 @@ namespace GridGames.ViewModels
             sweeperList[SquareIndex].NearbyFrogCount = count;
         }
 
-        private void CreateGrid()
-        {
-            var resManager = AppResources.ResourceManager;
-
-            // Future: If feedback suggests that exposing accessible HelpText for each
-            // item would be helpful when playing the game, set that here through the
-            // AccessibleDescription property.
-
-            for (int cardIndex = 0; cardIndex < 16; ++cardIndex)
-            {
-                var resourceIndex = cardIndex + 1;
-
-                sweeperList.Add(
-                    new Square
-                    {
-                        TargetIndex = cardIndex
-                    });
-            }
-        }
-
-        public void InitialiseGrid(int indexNoFrog)
-        {
-            var random = new Random();
-
-            int frogCount = 0;
-
-            do
-            {
-                int r = random.Next(15);
-
-                if (!sweeperList[r].HasFrog && (sweeperList[r].targetIndex != indexNoFrog))
-                {
-                    sweeperList[r].HasFrog = true;
-
-                    ++frogCount;
-                }
-            }
-            while (frogCount < 2);
-
-            for (int cardIndex = 0; cardIndex < 16; ++cardIndex)
-            {
-                if (!sweeperList[cardIndex].HasFrog)
-                {
-                    SetSquareNearbyFrogCount(cardIndex);
-                }
-            }
-        }
-
         public void ResetGrid()
         {
             for (int i = 0; i < 16; ++i)
@@ -332,6 +214,93 @@ namespace GridGames.ViewModels
                 sweeperList[i].TurnedUp = false;
                 sweeperList[i].HasFrog = false;
                 sweeperList[i].ShowsQueryFrog = false;
+            }
+        }
+
+        public bool ActOnInputOnSquare(int SquareIndex)
+        {
+            bool gameIsLost = false;
+
+            var square = sweeperList[SquareIndex];
+            if (square.HasFrog)
+            {
+                gameIsLost = true;
+            }
+            else
+            {
+                TurnUpNearbyCards(SquareIndex);
+
+                RaiseNotificationEvent("Swept stone " + 
+                    (SquareIndex + 1).ToString() + 
+                    ", " +
+                    square.AccessibleName);
+            }
+
+            return gameIsLost;
+        }
+
+        private void TurnUpNearbyCards(int SquareIndex)
+        {
+            var square = sweeperList[SquareIndex];
+
+            if (square.HasFrog)
+            {
+                return;
+            }
+
+            if (square.NearbyFrogCount > 0)
+            {
+                square.TurnedUp = true;
+            }
+
+            if (square.TurnedUp)
+            {
+                return;
+            }
+
+            square.TurnedUp = true;
+
+            bool leftEdgeSquare = (SquareIndex % 4 == 0);
+            bool rightEdgeSquare = (SquareIndex % 4 == 3);
+
+            if (SquareIndex > 3)
+            {
+                if (!leftEdgeSquare)
+                {
+                    TurnUpNearbyCards(SquareIndex - 5);
+                }
+
+                TurnUpNearbyCards(SquareIndex - 4);
+
+                if (!rightEdgeSquare)
+                {
+                    TurnUpNearbyCards(SquareIndex - 3);
+                }
+            }
+
+            if (SquareIndex % 4 > 0)
+            {
+                TurnUpNearbyCards(SquareIndex - 1);
+            }
+
+            if (SquareIndex % 4 < 3)
+            {
+                TurnUpNearbyCards(SquareIndex + 1);
+            }
+
+            if (SquareIndex < 12)
+            {
+                if (!leftEdgeSquare)
+                {
+                    TurnUpNearbyCards(SquareIndex + 3);
+                }
+
+                TurnUpNearbyCards(SquareIndex + 4);
+
+                if (!rightEdgeSquare)
+                {
+                    TurnUpNearbyCards(SquareIndex + 5);
+                }
             }
         }
 
