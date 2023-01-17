@@ -36,6 +36,8 @@ namespace GridGames.Views
 
             SweeperCollectionView.SelectionChanged += SweeperCollectionView_SelectionChanged;
 
+            SweeperCollectionView.SelectedItem = null;
+
 #if IOS
             // At this time, VoiceOver won't navigate to the items in a CollectionView
             // if the CollectionView has a SemanticProperties.Description. So for now,
@@ -358,6 +360,8 @@ namespace GridGames.Views
                 vm.GameLost = false;
 
                 vm.ResetGrid();
+
+                SweeperCollectionView.SelectedItem = null;
             }
         }
 

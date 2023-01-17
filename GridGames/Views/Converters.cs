@@ -62,19 +62,23 @@ namespace GridGames.Views
             bool gameLost = (bool)values[4];
             bool showDarkTheme = (bool)values[5];
 
-            Color col = showDarkTheme ? Colors.Green : Colors.LightGreen;
+            Color veryDarkGrey = Color.FromArgb("FF404040");
+            Color veryDarkRed = Color.FromArgb("FF400000");
+            Color veryDarkGreen = Color.FromArgb("FF004000");
+
+            Color col = showDarkTheme ? veryDarkGreen : Colors.LightGreen;
 
             if (showsQueryFrog || (gameWon && hasFrog))
             {
-                col = showDarkTheme ? Color.FromArgb("FF404040") : Colors.LightGray;
+                col = showDarkTheme ? veryDarkGreen : Colors.LightGreen;
             }
             else if (gameLost && hasFrog)
             {
-                col = showDarkTheme ? Colors.DarkRed : Colors.Pink;
+                col = showDarkTheme ? veryDarkRed : Colors.Pink;
             }
             else if (turnedUp)
             {
-                col = showDarkTheme ? Colors.Black : Colors.LightGray;
+                col = showDarkTheme ? veryDarkGrey : Colors.LightGray;
             }
 
             return col;

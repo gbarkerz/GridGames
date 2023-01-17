@@ -70,6 +70,14 @@ public partial class AppShell : Shell
                 await Navigation.PushModalAsync(new HelpPage(currentPage));
             }
         }
+        else if (currentPage is SweeperPage)
+        {
+            var vm = (CurrentPage as SweeperPage).BindingContext as SweeperViewModel;
+            if (!vm.FirstRunSweeper)
+            {
+                await Navigation.PushModalAsync(new HelpPage(currentPage));
+            }
+        }
         else if (currentPage is WheresPage)
         {
             var vm = (CurrentPage as WheresPage).BindingContext as WheresViewModel;

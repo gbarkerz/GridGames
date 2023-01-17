@@ -667,6 +667,17 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Leaf Sweeper Game is based on the traditional Minesweeper game, but the aim of this game is to sweep the leaves off a group of paving stones without disturbing two frogs resting under the leaves on two of the stones.
+        ///
+        ///When the game is run, a 4-by-4 grid of squares appears, with each square showing a leaf symbol. The squares represent a group of paving stones covered with leaves. First clear the leaves off one of the stones by clicking on the stone. When using a keyboard, move focus to the grid of squa [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string HelpContentSweeper {
+            get {
+                return ResourceManager.GetString("HelpContentSweeper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;WCAG&quot; is the Web Content Accessibility Guidelines (WCAG) international standard, which helps web content authors create content that&apos;s more accessible. The WCAG standard has been used as the base for European accessibility standards which apply to both web content and software.
         ///
         ///The Where&apos;s WCAG? game presents a question asking the player to find a particular WCAG group. For example, &quot;Where&apos;s Enough Time?&quot;. Below the question in the app is a 4 by 4 grid of squares showing fifteen WCAG group numbers. For  [rest of string was truncated]&quot;;.

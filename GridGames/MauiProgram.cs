@@ -52,7 +52,8 @@ public static class MauiProgram
         else if (e.Key == Windows.System.VirtualKey.F1)
         {
             var currentPage = (Application.Current.MainPage as Microsoft.Maui.Controls.Shell).CurrentPage;
-            if ((currentPage is MatchingPage) || (currentPage is SquaresPage) || (currentPage is WheresPage))
+            if ((currentPage is MatchingPage) || (currentPage is SquaresPage) || 
+                (currentPage is SweeperPage) || (currentPage is WheresPage))
             {
                 var page = currentPage as MatchingPage;
                 if (page != null)
@@ -63,9 +64,13 @@ public static class MauiProgram
                 {
                     (currentPage as SquaresPage).ShowHelp();
                 }
-                else
+                else if (currentPage is WheresPage)
                 {
                     (currentPage as WheresPage).ShowHelp();
+                }
+                else if (currentPage is SweeperPage)
+                {
+                    (currentPage as SweeperPage).ShowHelp();
                 }
 
                 e.Handled = true;

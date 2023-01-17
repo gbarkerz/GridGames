@@ -42,6 +42,14 @@ namespace GridGames
 
                 WheresHelpEditor.Focus();
             }
+            else if (currentPage is SweeperPage)
+            {
+                HelpPageTitle.Text = "Leaf Sweeper Help";
+
+                SweeperGameHelpContent.IsVisible = true;
+
+                SweeperHelpEditor.Focus();
+            }
 
             SemanticProperties.SetDescription(WheresHelpEditor, HelpPageTitle.Text); 
         }

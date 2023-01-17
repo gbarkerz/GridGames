@@ -343,6 +343,17 @@ Press and release the Alt key to have any available access keys shown. For examp
 
 At the top left corner of the game is the Open Navigation button, which can be used to move to another game. Please note when a screen reader moves to the drop-down menu available from the Open Navigation button, it may announce a meaningless name for all the items in the menu. If so, please use the screen reader's navigation commands to move into the menu item, and the screen reader can then announce the text shown on the menu item.</value>
   </data>
+  <data name="HelpContentSweeper" xml:space="preserve">
+    <value>The Leaf Sweeper Game is based on the traditional Minesweeper game, but the aim of this game is to sweep the leaves off a group of paving stones without disturbing two frogs resting under the leaves on two of the stones.
+
+When the game is run, a 4-by-4 grid of squares appears, with each square showing a leaf symbol. The squares represent a group of paving stones covered with leaves. First clear the leaves off one of the stones by clicking on the stone. When using a keyboard, move focus to the grid of squares and arrow around to move to the stone of interest, and then press Space or Enter to clear the leaves off the stone. When the leaves are cleared, the number of frogs in the stones adjacent to that stone will be shown on the stone. If no frogs are on adjacent stones, then the clicked stone shows nothing. In addition, all adjacent stones with no frogs will also be cleared until blocked by stones with one or more stones showing nearby frog counts.
+
+When you feel you know that a stone must have a frog resting beneath its leaves, mark it as "Query Frog" by showing the stones context menu and select "Change Query Frog state". To change the Query Frog state when using a screen reader, use the navigate the screen reader to a non-visual button on the stone, and click the button. 
+
+Once all paving stones in the grid which don't have resting frogs on them have been cleared, you've won the game. If while playing the game you click on a stone which does have a resting frog on it, the game is lost. If the game is lost, both resting frogs will be revealed.
+
+Press the F1 key to show this Help content, or the F5 key to restart a game.</value>
+  </data>
   <data name="HelpContentWheres" xml:space="preserve">
     <value>"WCAG" is the Web Content Accessibility Guidelines (WCAG) international standard, which helps web content authors create content that's more accessible. The WCAG standard has been used as the base for European accessibility standards which apply to both web content and software.
 

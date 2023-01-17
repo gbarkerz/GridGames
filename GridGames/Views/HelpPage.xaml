@@ -50,6 +50,13 @@
                     Text="{x:Static resources:AppResources.HelpContentSquares}" />
             </ScrollView>
 
+            <ScrollView x:Name="SweeperGameHelpContent" Grid.Row="1" 
+                IsVisible="False"
+                Margin="4,4,4,2">
+                <Editor x:Name="SweeperHelpEditor" IsReadOnly="True" FontSize="Medium" 
+                    Text="{x:Static resources:AppResources.HelpContentSweeper}" />
+            </ScrollView>
+
             <Button Grid.Row="2" x:Name="CloseButton" 
                 windows:VisualElement.AccessKey="C"                                    
                 HorizontalOptions="End" Margin="0,8,4,4" Padding="8"

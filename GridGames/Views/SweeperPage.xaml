@@ -133,7 +133,7 @@
                                 <Label Margin="2,2,0,0" Padding="2,0,2,0" 
                                     AutomationProperties.IsInAccessibleTree="False"
                                     FontFamily="FA"
-                                    TextColor="{AppThemeBinding Light=DarkGreen, Dark=LightGreen}"
+                                    TextColor="{AppThemeBinding Light=#004000, Dark=#C0FFC0}"
                                     VerticalTextAlignment="Center" HorizontalTextAlignment="Center">
                                     <Label.IsVisible>
                                         <MultiBinding Mode="OneWay" 
