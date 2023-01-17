@@ -83,9 +83,7 @@
 
                             <FlyoutBase.ContextFlyout>
                                 <MenuFlyout>
-                                    <MenuFlyoutItem Text="Mark square as Query Frog"
-                                        Clicked="MenuFlyoutItem_Clicked" />
-                                    <MenuFlyoutItem Text="Remove Query Frog"
+                                    <MenuFlyoutItem Text="Change Query Frog state"
                                         Clicked="MenuFlyoutItem_Clicked" />
                                 </MenuFlyout>
                             </FlyoutBase.ContextFlyout>

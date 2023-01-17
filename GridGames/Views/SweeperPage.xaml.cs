@@ -247,7 +247,7 @@ namespace GridGames.Views
 
                                     // Now show the context menu next to the square of interest.
                                     var platformAction = new GridGamesPlatformAction();
-                                    platformAction.ShowFlyout(contextFlyout, borderWithContextMenu, !square.ShowsQueryFrog);
+                                    platformAction.ShowFlyout(contextFlyout, borderWithContextMenu);
 
                                     break;
                                 }
@@ -359,6 +359,19 @@ namespace GridGames.Views
             var square = menuItem.BindingContext as SweeperViewModel.Square;
 
             SetShowsQueryFrogInSquare(square.TargetIndex, !square.ShowsQueryFrog);
+        }
+
+        private void MenuFlyout_PropertyChanging(object sender, PropertyChangingEventArgs e)
+        {
+            if (e.PropertyName == "Visibility")
+            {
+
+            }
+        }
+
+        private void MenuFlyout_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+
         }
     }
 }

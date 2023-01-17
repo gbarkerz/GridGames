@@ -1,6 +1,4 @@
-﻿
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
+﻿using Microsoft.UI.Xaml;
 using System.Diagnostics;
 using Windows.Storage;
 using Windows.UI.ViewManagement;
@@ -11,25 +9,13 @@ public partial class GridGamesPlatformAction
 {
 #if WINDOWS
     public partial void ShowFlyout(FlyoutBase contextFlyout, 
-        Microsoft.Maui.Controls.Border border,
-        bool showQueryFrog)
+        Microsoft.Maui.Controls.Border border)
     {
         var flyout = contextFlyout.Handler.PlatformView as Microsoft.UI.Xaml.Controls.MenuFlyout;
 
         if (flyout != null)
         {
             var element = border.Handler.PlatformView;
-
-            if (showQueryFrog)
-            {
-                flyout.Items[0].Visibility = Microsoft.UI.Xaml.Visibility.Visible;
-                flyout.Items[1].Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
-            }
-            else
-            {
-                flyout.Items[0].Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
-                flyout.Items[1].Visibility = Microsoft.UI.Xaml.Visibility.Visible;
-            }
 
             flyout.ShowAt(element as FrameworkElement);
         }
