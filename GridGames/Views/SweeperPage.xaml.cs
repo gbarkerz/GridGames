@@ -362,6 +362,8 @@ namespace GridGames.Views
                 vm.ResetGrid();
 
                 SweeperCollectionView.SelectedItem = null;
+
+                vm.RaiseNotificationEvent("Leaf Sweeper game restarted.");
             }
         }
 
