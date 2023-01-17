@@ -64,21 +64,17 @@ namespace GridGames.Views
 
             Color col = showDarkTheme ? Colors.Green : Colors.LightGreen;
 
-            if (showsQueryFrog)
+            if (showsQueryFrog || (gameWon && hasFrog))
             {
-                col = Colors.LightGoldenrodYellow;
-            }
-            else if (gameWon && hasFrog)
-            {
-                col = Colors.LightGoldenrodYellow;
+                col = showDarkTheme ? Color.FromArgb("FF404040") : Colors.LightGray;
             }
             else if (gameLost && hasFrog)
             {
-                col = Colors.Pink;
+                col = showDarkTheme ? Colors.DarkRed : Colors.Pink;
             }
             else if (turnedUp)
             {
-                col = showDarkTheme ? Colors.Black : Colors.White;
+                col = showDarkTheme ? Colors.Black : Colors.LightGray;
             }
 
             return col;

@@ -47,7 +47,7 @@
                     CheckedChanged="SetQueryFrogCheckBox_CheckedChanged"
                     Color="Black"
                     VerticalOptions="Center" />
-                <Label Text="Change Query Frog state" 
+                <Label Text="Selected stone is Query Frog" 
                     Margin="0,0,10,0"
                     VerticalOptions="Center"
                     TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}" />
@@ -132,7 +132,7 @@
                                 <Label Margin="2,2,0,0" Padding="2,0,2,0" 
                                     AutomationProperties.IsInAccessibleTree="False"
                                     FontFamily="FA"
-                                    TextColor="DarkGreen"
+                                    TextColor="{AppThemeBinding Light=DarkGreen, Dark=LightGreen}"
                                     VerticalTextAlignment="Center" HorizontalTextAlignment="Center">
                                     <Label.IsVisible>
                                         <MultiBinding Mode="OneWay" 
