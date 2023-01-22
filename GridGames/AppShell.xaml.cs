@@ -118,7 +118,7 @@ public partial class AppShell : Shell
             {
                 var sweeperPage = (CurrentPage as SweeperPage);
 
-                sweeperPage.RestartGame();
+                sweeperPage.RestartGame(false);
             }
         }
         else if (currentPage is WheresPage)

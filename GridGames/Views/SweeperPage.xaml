@@ -19,7 +19,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <localviews:FirstRunToGridOpacity x:Key="FirstRunToGridOpacity" />
-            <localviews:CollectionViewHeightToRowHeight x:Key="CollectionViewHeightToRowHeight" />
+            <localviews:SweeperCollectionViewHeightToRowHeight x:Key="SweeperCollectionViewHeightToRowHeight" />
             <localviews:SweeperLabelContainerHeightToFontSize x:Key="SweeperLabelContainerHeightToFontSize" />
             <localviews:TurnedUpToBackgroundColour x:Key="TurnedUpToBackgroundColour" />
             <localviews:NearbyFrogCountToLabel x:Key="NearbyFrogCountToLabel" />
@@ -41,6 +41,13 @@
                 SemanticProperties.HeadingLevel="Level1" FontSize="Title"
                 TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}"
                 HorizontalOptions="Center" VerticalOptions="Center" />
+            <Button Grid.Column="1" x:Name="SweeperSettingsButton"
+                Text="&#xf013;" 
+                Clicked="SweeperGameSettingsButton_Clicked"
+                BorderWidth="0"
+                windows:VisualElement.AccessKey="S"
+                FontFamily="FA" FontSize="Title" HorizontalOptions="End"
+                SemanticProperties.Description="{x:Static resources:AppResources.SweeperSettings}" />
         </Grid>
     </Shell.TitleView>
 
@@ -57,10 +64,6 @@
                 SelectionMode="Single"
                 ItemsSource="{Binding SweeperListCollection}">
 
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="4" />
-                </CollectionView.ItemsLayout>
-
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                             <!--<SwipeView.LeftItems>
@@ -74,13 +77,21 @@
                         propogated up to be the UIA Name on the containing list item. -->
                         <Border Margin="0" Padding="0"
                             AutomationProperties.IsInAccessibleTree="False"
-                            HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}},
-                                Path=Height, Converter={StaticResource CollectionViewHeightToRowHeight}}"
                             StrokeThickness="1"
                             Stroke="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
                             SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}"
                             SemanticProperties.Hint="{Binding AccessibleDescription, Mode=OneWay}">
 
+                            <Border.HeightRequest>
+                                <MultiBinding Mode="OneWay" 
+                                    Converter="{StaticResource SweeperCollectionViewHeightToRowHeight}">
+                                    <Binding Source="{RelativeSource AncestorType={x:Type CollectionView}}"
+                                        Path="Height" />
+                                    <Binding Source="{x:Reference SweeperPageInstance}" 
+                                        Path="BindingContext.SideLength" />
+                                </MultiBinding>
+                            </Border.HeightRequest>
+                            
                             <FlyoutBase.ContextFlyout>
                                 <MenuFlyout>
                                     <MenuFlyoutItem Text="Change Query Frog state"
@@ -112,6 +123,7 @@
                                 <!-- Label showing count of nearby leaves. -->
                                 <Label Margin="2,2,0,0" Padding="2,0,2,0" 
                                     AutomationProperties.IsInAccessibleTree="False"
+                                    LineBreakMode="NoWrap"
                                     VerticalTextAlignment="Center" HorizontalTextAlignment="Center">
                                     <Label.Text>                                    
                                         <MultiBinding Mode="OneWay" 
@@ -124,13 +136,14 @@
                                     </Label.Text>
                                     <Label.FontSize>
                                         <Binding Source="{RelativeSource AncestorType={x:Type CollectionView}}" 
-                                            Path="Height" Mode="OneWay"  ConverterParameter="1"
+                                            Path="Height" Mode="OneWay"  ConverterParameter="2"
                                             Converter="{StaticResource SweeperLabelContainerHeightToFontSize}" />
                                     </Label.FontSize>
                                 </Label>
 
                                 <!-- Label showing the glyphs for a Leaf, Frog, or Query Frog. -->
                                 <Label Margin="2,2,0,0" Padding="2,0,2,0" 
+                                    LineBreakMode="NoWrap"
                                     AutomationProperties.IsInAccessibleTree="False"
                                     FontFamily="FA"
                                     TextColor="{AppThemeBinding Light=#004000, Dark=#C0FFC0}"
@@ -152,7 +165,9 @@
                                             <Binding Path="HasFrog" />
                                             <Binding Path="ShowsQueryFrog" />
                                             <Binding Source="{x:Reference SweeperPageInstance}" 
-                                                    Path="BindingContext.GameOver" />
+                                                    Path="BindingContext.GameWon" />
+                                            <Binding Source="{x:Reference SweeperPageInstance}" 
+                                                    Path="BindingContext.GameLost" />
                                         </MultiBinding>
                                     </Label.Text>
                                     <Label.FontSize>

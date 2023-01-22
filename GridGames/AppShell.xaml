@@ -30,8 +30,8 @@
         </Tab>
     </FlyoutItem>
 
-    <FlyoutItem Title="Sweeper"
-                Icon="squaresgameicon.png">
+    <FlyoutItem Title="Leaf Sweeper"
+                Icon="sweepergameicon.png">
         <Tab>
             <ShellContent ContentTemplate="{DataTemplate views:SweeperPage}" />
         </Tab>

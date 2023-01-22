@@ -583,6 +583,9 @@ Would you like to play another game?</value>
   <data name="Sweeper" xml:space="preserve">
     <value>Leaf Sweeper</value>
   </data>
+  <data name="SweeperSettings" xml:space="preserve">
+    <value>Sweeper Settings</value>
+  </data>
   <data name="SweeperSquares" xml:space="preserve">
     <value>Sweeper Squares</value>
   </data>

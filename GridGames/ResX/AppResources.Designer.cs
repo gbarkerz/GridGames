@@ -1323,6 +1323,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sweeper Settings.
+        /// </summary>
+        internal static string SweeperSettings {
+            get {
+                return ResourceManager.GetString("SweeperSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sweeper Squares.
         /// </summary>
         internal static string SweeperSquares {

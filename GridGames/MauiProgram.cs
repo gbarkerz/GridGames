@@ -93,7 +93,7 @@ public static class MauiProgram
                 }
                 else if (currentPage is SweeperPage)
                 {
-                    (currentPage as SweeperPage).RestartGame();
+                    (currentPage as SweeperPage).RestartGame(false);
                 }
                 else
                 {

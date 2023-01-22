@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using GridGames.ResX;
-using Windows.ApplicationModel.Chat;
 
 namespace GridGames.ViewModels
 {
@@ -13,6 +12,34 @@ namespace GridGames.ViewModels
         {
             get { return sweeperList; }
             set { this.sweeperList = value; }
+        }
+
+        private SweeperSettingsViewModel sweeperSettingsVM;
+        public SweeperSettingsViewModel SweeperSettingsVM
+        {
+            get { return sweeperSettingsVM; }
+            set
+            {
+                SetProperty(ref sweeperSettingsVM, value);
+            }
+        }
+
+        private int sideLength;
+        public int SideLength
+        {
+            get
+            {
+                return sideLength;
+            }
+            set
+            {
+                if (sideLength != value)
+                {
+                    SetProperty(ref sideLength, value);
+
+                    Preferences.Set("SideLength", sideLength);
+                }
+            }
         }
 
         private bool firstRunSweeper = true;
@@ -84,6 +111,10 @@ namespace GridGames.ViewModels
 
             Title = AppResources.ResourceManager.GetString("Squares");
 
+            sweeperSettingsVM = new SweeperSettingsViewModel();
+
+            this.SideLength = sweeperSettingsVM.SideLength;
+
             sweeperList = new ObservableCollection<Square>();
 
             this.CreateGrid();
@@ -95,7 +126,7 @@ namespace GridGames.ViewModels
             // item would be helpful when playing the game, set that here through the
             // AccessibleDescription property.
 
-            for (int cardIndex = 0; cardIndex < 16; ++cardIndex)
+            for (int cardIndex = 0; cardIndex < (sweeperSettingsVM.SideLength * sweeperSettingsVM.SideLength); ++cardIndex)
             {
                 sweeperList.Add(
                     new Square
@@ -109,22 +140,22 @@ namespace GridGames.ViewModels
         {
             var random = new Random();
 
-            int frogCount = 0;
+            int frogsFound = 0;
 
             do
             {
-                int r = random.Next(15);
+                int r = random.Next((sweeperSettingsVM.SideLength * sweeperSettingsVM.SideLength) - 1);
 
                 if (!sweeperList[r].HasFrog && (sweeperList[r].targetIndex != indexNoFrog))
                 {
                     sweeperList[r].HasFrog = true;
 
-                    ++frogCount;
+                    ++frogsFound;
                 }
             }
-            while (frogCount < 2);
+            while (frogsFound < sweeperSettingsVM.FrogCount);
 
-            for (int cardIndex = 0; cardIndex < 16; ++cardIndex)
+            for (int cardIndex = 0; cardIndex < (sweeperSettingsVM.SideLength * sweeperSettingsVM.SideLength); ++cardIndex)
             {
                 if (!sweeperList[cardIndex].HasFrog)
                 {
@@ -137,34 +168,34 @@ namespace GridGames.ViewModels
         {
             int count = 0;
 
-            bool leftEdgeSquare = (SquareIndex % 4 == 0);
-            bool rightEdgeSquare = (SquareIndex % 4 == 3);
+            bool leftEdgeSquare = (SquareIndex % sweeperSettingsVM.SideLength == 0);
+            bool rightEdgeSquare = (SquareIndex % sweeperSettingsVM.SideLength == (sweeperSettingsVM.SideLength - 1));
 
-            if (SquareIndex > 3)
+            if (SquareIndex > (sweeperSettingsVM.SideLength - 1))
             {
                 if (!leftEdgeSquare)
                 {
-                    if (sweeperList[SquareIndex - 5].HasFrog)
+                    if (sweeperList[SquareIndex - (sweeperSettingsVM.SideLength + 1)].HasFrog)
                     {
                         ++count;
                     }
                 }
 
-                if (sweeperList[SquareIndex - 4].HasFrog)
+                if (sweeperList[SquareIndex - sweeperSettingsVM.SideLength].HasFrog)
                 {
                     ++count;
                 }
 
                 if (!rightEdgeSquare)
                 {
-                    if (sweeperList[SquareIndex - 3].HasFrog)
+                    if (sweeperList[SquareIndex - (sweeperSettingsVM.SideLength - 1)].HasFrog)
                     {
                         ++count;
                     }
                 }
             }
 
-            if (SquareIndex % 4 > 0)
+            if (SquareIndex % sweeperSettingsVM.SideLength > 0)
             {
                 if (sweeperList[SquareIndex - 1].HasFrog)
                 {
@@ -172,7 +203,7 @@ namespace GridGames.ViewModels
                 }
             }
 
-            if (SquareIndex % 4 < 3)
+            if (SquareIndex % sweeperSettingsVM.SideLength < (sweeperSettingsVM.SideLength - 1))
             {
                 if (sweeperList[SquareIndex + 1].HasFrog)
                 {
@@ -180,24 +211,24 @@ namespace GridGames.ViewModels
                 }
             }
 
-            if (SquareIndex < 12)
+            if (SquareIndex < ((sweeperSettingsVM.SideLength * sweeperSettingsVM.SideLength) - sweeperSettingsVM.SideLength))
             {
                 if (!leftEdgeSquare)
                 {
-                    if (sweeperList[SquareIndex + 3].HasFrog)
+                    if (sweeperList[SquareIndex + (sweeperSettingsVM.SideLength - 1)].HasFrog)
                     {
                         ++count;
                     }
                 }
 
-                if (sweeperList[SquareIndex + 4].HasFrog)
+                if (sweeperList[SquareIndex + sweeperSettingsVM.SideLength].HasFrog)
                 {
                     ++count;
                 }
 
                 if (!rightEdgeSquare)
                 {
-                    if (sweeperList[SquareIndex + 5].HasFrog)
+                    if (sweeperList[SquareIndex + (sweeperSettingsVM.SideLength + 1)].HasFrog)
                     {
                         ++count;
                     }
@@ -209,11 +240,16 @@ namespace GridGames.ViewModels
 
         public void ResetGrid()
         {
-            for (int i = 0; i < 16; ++i)
+            sweeperList.Clear();
+
+            CreateGrid();    
+
+            for (int i = 0; i < (sweeperSettingsVM.SideLength * sweeperSettingsVM.SideLength); ++i)
             {
                 sweeperList[i].TurnedUp = false;
                 sweeperList[i].HasFrog = false;
                 sweeperList[i].ShowsQueryFrog = false;
+                sweeperList[i].NearbyFrogCount = 0;
             }
         }
 
@@ -260,46 +296,46 @@ namespace GridGames.ViewModels
 
             square.TurnedUp = true;
 
-            bool leftEdgeSquare = (SquareIndex % 4 == 0);
-            bool rightEdgeSquare = (SquareIndex % 4 == 3);
+            bool leftEdgeSquare = (SquareIndex % sweeperSettingsVM.SideLength == 0);
+            bool rightEdgeSquare = (SquareIndex % sweeperSettingsVM.SideLength == (sweeperSettingsVM.SideLength - 1));
 
-            if (SquareIndex > 3)
+            if (SquareIndex > (sweeperSettingsVM.SideLength - 1))
             {
                 if (!leftEdgeSquare)
                 {
-                    TurnUpNearbyCards(SquareIndex - 5);
+                    TurnUpNearbyCards(SquareIndex - (sweeperSettingsVM.SideLength + 1));
                 }
 
-                TurnUpNearbyCards(SquareIndex - 4);
+                TurnUpNearbyCards(SquareIndex - sweeperSettingsVM.SideLength);
 
                 if (!rightEdgeSquare)
                 {
-                    TurnUpNearbyCards(SquareIndex - 3);
+                    TurnUpNearbyCards(SquareIndex - (sweeperSettingsVM.SideLength - 1));
                 }
             }
 
-            if (SquareIndex % 4 > 0)
+            if (SquareIndex % sweeperSettingsVM.SideLength > 0)
             {
                 TurnUpNearbyCards(SquareIndex - 1);
             }
 
-            if (SquareIndex % 4 < 3)
+            if (SquareIndex % sweeperSettingsVM.SideLength < (sweeperSettingsVM.SideLength - 1))
             {
                 TurnUpNearbyCards(SquareIndex + 1);
             }
 
-            if (SquareIndex < 12)
+            if (SquareIndex < ((sweeperSettingsVM.SideLength * sweeperSettingsVM.SideLength) - sweeperSettingsVM.SideLength))
             {
                 if (!leftEdgeSquare)
                 {
-                    TurnUpNearbyCards(SquareIndex + 3);
+                    TurnUpNearbyCards(SquareIndex + (sweeperSettingsVM.SideLength - 1));
                 }
 
-                TurnUpNearbyCards(SquareIndex + 4);
+                TurnUpNearbyCards(SquareIndex + sweeperSettingsVM.SideLength);
 
                 if (!rightEdgeSquare)
                 {
-                    TurnUpNearbyCards(SquareIndex + 5);
+                    TurnUpNearbyCards(SquareIndex + (sweeperSettingsVM.SideLength + 1));
                 }
             }
         }

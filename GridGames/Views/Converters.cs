@@ -123,13 +123,14 @@ namespace GridGames.Views
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values == null || (values.Length < 4))
+            if (values == null || (values.Length < 5))
             {
                 return "";
             }
 
             if ((values[0] == null) || (values[1] == null) ||
-                (values[2] == null) || (values[3] == null))
+                (values[2] == null) || (values[3] == null) ||
+                (values[4] == null))
             {
                 return "";
             }
@@ -137,7 +138,8 @@ namespace GridGames.Views
             var turnedUp = (bool)values[0];
             var hasFrog = (bool)values[1];
             var showsQueryFrog = (bool)values[2];
-            var gameOver = (bool)values[3];
+            var gameWon = (bool)values[3];
+            var gameLost = (bool)values[4];
 
             string text = "\uf06C";
 
@@ -145,9 +147,13 @@ namespace GridGames.Views
             {
                 text = "\uf52e" + "?";
             }
-            else if (gameOver && hasFrog)
+            else if (gameWon && hasFrog)
             {
-                text = "\uf52e";
+                text = "\uf52e" + " " + "\uf118";
+            }
+            else if (gameLost && hasFrog)
+            {
+                text = "\uf52e" + " " + "\uf119";
             }
 
             return text;
@@ -287,6 +293,40 @@ namespace GridGames.Views
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
+        }
+    }
+
+    public class SideLengthToInt : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var sideLength = (int)value;
+
+            return sideLength - 4;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var intValue = (int)value;
+
+            return intValue + 4;
+        }
+    }
+
+    public class FrogCountToInt : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var frogCount = (int)value;
+
+            return frogCount - 2;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var intValue = (int)value;
+
+            return intValue + 2;
         }
     }
 
@@ -502,6 +542,32 @@ namespace GridGames.Views
             }
 
             return opacity;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class SweeperCollectionViewHeightToRowHeight : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if ((values == null) || (values.Length < 2) || (values[0] == null) || (values[1] == null))
+            {
+                return 0;
+            }
+
+            var gridHeight = (double)values[0];
+            var sideLength = (int)values[1];
+
+            if ((gridHeight <= 0) || (sideLength == 0))
+            {
+                return 0;
+            }
+
+            return ((double)gridHeight / sideLength) - 2;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

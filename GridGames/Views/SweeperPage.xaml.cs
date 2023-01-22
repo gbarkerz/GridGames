@@ -10,7 +10,9 @@ namespace GridGames.Views
     {
         public static DateTime timeOfMostRecentSelectionChanged = DateTime.Now;
 
-        private int squareCount = 16;
+        private int previousSideLength;
+        private int previousFrogCount;
+        private bool firstRunThisInstance = true;
 
         public SweeperPage()
         {
@@ -22,6 +24,11 @@ namespace GridGames.Views
 
             WelcomeBorder.Loaded += WelcomeBorder_Loaded;
 
+            var vm = this.BindingContext as SweeperViewModel;
+
+            SweeperCollectionView.ItemsLayout = new GridItemsLayout(
+                vm.SweeperSettingsVM.SideLength, ItemsLayoutOrientation.Vertical);
+
             Application.Current.RequestedThemeChanged += (s, a) =>
             {
                 var currentTheme = a.RequestedTheme;
@@ -30,7 +37,6 @@ namespace GridGames.Views
                     currentTheme = Application.Current.PlatformAppTheme;
                 }
 
-                var vm = this.BindingContext as SweeperViewModel;
                 vm.ShowDarkTheme = (currentTheme == AppTheme.Dark);
             };
 
@@ -105,7 +111,7 @@ namespace GridGames.Views
 
             bool isFirstTurnUp = true;
 
-            for (int i = 0; i < squareCount; ++i)
+            for (int i = 0; i < (vm.SweeperSettingsVM.SideLength * vm.SweeperSettingsVM.SideLength); ++i)
             {
                 if (vm.SweeperListCollection[i].TurnedUp)
                 {
@@ -124,7 +130,7 @@ namespace GridGames.Views
 
             int turnedUpCount = 0;
 
-            for (int i = 0; i < squareCount; ++i)
+            for (int i = 0; i < (vm.SweeperSettingsVM.SideLength * vm.SweeperSettingsVM.SideLength); ++i)
             {
                 if (vm.SweeperListCollection[i].TurnedUp)
                 {
@@ -132,12 +138,11 @@ namespace GridGames.Views
                 }
             }
 
-            // For now, there are only 2 frogs in the game.
-            if (turnedUpCount == squareCount - 2)
+            if (turnedUpCount == (vm.SweeperSettingsVM.SideLength * vm.SweeperSettingsVM.SideLength) - vm.SweeperSettingsVM.FrogCount)
             {
                 vm.GameWon = true;
 
-                for (int i = 0; i < squareCount; ++i)
+                for (int i = 0; i < (vm.SweeperSettingsVM.SideLength * vm.SweeperSettingsVM.SideLength); ++i)
                 {
                     // We know where all the frogs are now.
                     vm.SweeperListCollection[i].ShowsQueryFrog = false;
@@ -177,7 +182,7 @@ namespace GridGames.Views
             bool gameIsLost = vm.ActOnInputOnSquare(item.targetIndex);
             if (gameIsLost)
             {
-                for (int i = 0; i < squareCount; ++i)
+                for (int i = 0; i < (vm.SweeperSettingsVM.SideLength * vm.SweeperSettingsVM.SideLength); ++i)
                 {
                     vm.SweeperListCollection[i].TurnedUp = true;
                 }
@@ -220,8 +225,22 @@ namespace GridGames.Views
             }
 
             vm.ShowDarkTheme = (currentTheme == AppTheme.Dark);
-        }
 
+            var sideLength = (int)Preferences.Get("SideLength", 4);
+            var frogCount = (int)Preferences.Get("FrogCount", 2);
+
+            if (firstRunThisInstance ||
+                (sideLength != previousSideLength) ||
+                (frogCount != previousFrogCount))
+            {
+                RestartGame(firstRunThisInstance);
+
+                firstRunThisInstance = false;
+
+                previousSideLength = sideLength;
+                previousFrogCount = frogCount;
+            }
+        }
 
         public void ShowContextMenu()
         {
@@ -310,7 +329,7 @@ namespace GridGames.Views
                     AppResources.ResourceManager.GetString("No"));
                 if (answer)
                 {
-                    RestartGame();
+                    RestartGame(false);
                 }
             }
         }
@@ -327,7 +346,7 @@ namespace GridGames.Views
                     AppResources.ResourceManager.GetString("No"));
                 if (answer)
                 {
-                    RestartGame();
+                    RestartGame(false);
                 }
             }
         }
@@ -351,7 +370,7 @@ namespace GridGames.Views
             }
         }
 
-        public void RestartGame()
+        public void RestartGame(bool suppressAnnouncement)
         {
             var vm = this.BindingContext as SweeperViewModel;
             if (!vm.FirstRunSweeper)
@@ -363,7 +382,10 @@ namespace GridGames.Views
 
                 SweeperCollectionView.SelectedItem = null;
 
-                vm.RaiseNotificationEvent("Leaf Sweeper game restarted.");
+                if (!suppressAnnouncement)
+                {
+                    vm.RaiseNotificationEvent("Leaf Sweeper game restarted.");
+                }
             }
         }
 
@@ -382,6 +404,16 @@ namespace GridGames.Views
             var square = button.BindingContext as SweeperViewModel.Square;
 
             SetShowsQueryFrogInSquare(square.TargetIndex, !square.ShowsQueryFrog);
+        }
+
+        private async void SweeperGameSettingsButton_Clicked(object sender, EventArgs e)
+        {
+            var vm = this.BindingContext as SweeperViewModel;
+            if (!vm.FirstRunSweeper)
+            {
+                var settingsPage = new SweeperGameSettingsPage(vm.SweeperSettingsVM);
+                await Navigation.PushModalAsync(settingsPage);
+            }
         }
     }
 }
