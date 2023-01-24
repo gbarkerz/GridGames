@@ -66,12 +66,7 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                            <!--<SwipeView.LeftItems>
-                                <SwipeItems>
-                                    <SwipeItem Text="Mark as Query Frog" />
-                                </SwipeItems>
-                            </SwipeView.LeftItems>-->
-                            
+
                         <!-- Remove the Border from the UIA tree, otherwise it gets exposed unnecessarily as
                         a group element. Still set a SemanticProperties.Description, as this will get
                         propogated up to be the UIA Name on the containing list item. -->

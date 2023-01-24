@@ -1,8 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-    <TargetFrameworks>net7.0-ios;net7.0-maccatalyst;net7.0-android33.0</TargetFrameworks>
-
+    <TargetFrameworks>net7.0-windows10.0.22621.0</TargetFrameworks>
+    <!--<TargetFrameworks>net7.0-android33.0</TargetFrameworks>-->
+    
     <OutputType>Exe</OutputType>
 		<RootNamespace>GridGames</RootNamespace>
 		<UseMaui>true</UseMaui>
@@ -15,7 +16,7 @@
 		<!-- App Identifier -->
 		
     <!-- This ApplicationId is for Windows and Android, and later there's an entry for iOS. -->
-		<ApplicationId>com.guybarker.gridgames</ApplicationId>
+		<ApplicationId>a11y.guybarker.gridgames</ApplicationId>
 
 		<ApplicationIdGuid>26A7C75E-4B2E-45ED-B943-F3E16203F985</ApplicationIdGuid>
 
@@ -28,12 +29,12 @@
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+    <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <Configurations>Release;Debug</Configurations>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</SupportedOSPlatformVersion>
-    <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</TargetPlatformMinVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</TargetPlatformMinVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">28.0</SupportedOSPlatformVersion>
   </PropertyGroup>
 
@@ -84,10 +85,10 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-ios15.0|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
-	<PropertyGroup>
-	  <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.22621.0</TargetFrameworks>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android33.0|AnyCPU'">
+  <PropertyGroup>
+    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.22621.0</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android33.0|AnyCPU'">
 	  <PublishTrimmed>False</PublishTrimmed>
 	  <RunAOTCompilation>False</RunAOTCompilation>
 	</PropertyGroup>
@@ -135,7 +136,6 @@
 	  <None Remove="Resources\DefaultMatchingBackgrounds\Card7.jpg" />
 	  <None Remove="Resources\DefaultMatchingBackgrounds\Card8.jpg" />
 	  <None Remove="Resources\Images\card1.jpg" />
-	  <None Remove="Resources\Splash\splashscreen.svg" />
 	  <None Remove="squaresgameicon.png" />
 	  <None Remove="wheresgameicon.png" />
 	</ItemGroup>
@@ -146,11 +146,17 @@
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>AppResources.resx</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\SweeperPage.xaml.cs">
+	    <DependentUpon>SweeperPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\SquaresSettingsPage.xaml.cs">
 	    <DependentUpon>SquaresSettingsPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\SquaresPage.xaml.cs">
 	    <DependentUpon>SquaresPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\SweeperSettingsPage.xaml.cs">
+	    <DependentUpon>SweeperSettingsPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
@@ -162,6 +168,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\SweeperPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\SquaresSettingsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -172,6 +181,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\WCAGPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\SweeperSettingsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
@@ -187,6 +199,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="CommunityToolkit.Maui" Version="3.1.0" />
 	  <PackageReference Include="SkiaSharp" Version="2.88.3" />
 	  <PackageReference Include="SkiaSharp.Views" Version="2.88.3" />
 	  <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.3" />
