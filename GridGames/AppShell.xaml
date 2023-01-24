@@ -7,12 +7,10 @@
     FlyoutBackdrop="#80000000"
     FlyoutBehavior="Flyout">
     
-    <!--The Squares game is currently unavailable in MAUI due to an unavailable 3rd party dependency.-->
-
-    <FlyoutItem Title="Where's WCAG?"
-                Icon="wheresgameicon.png">
+    <FlyoutItem Title="Leaf Sweeper"
+                Icon="sweepergameicon.png">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate views:WheresPage}" />
+            <ShellContent ContentTemplate="{DataTemplate views:SweeperPage}" />
         </Tab>
     </FlyoutItem>
 
@@ -30,10 +28,10 @@
         </Tab>
     </FlyoutItem>
 
-    <FlyoutItem Title="Leaf Sweeper"
-                Icon="sweepergameicon.png">
+    <FlyoutItem Title="Where's WCAG?"
+                Icon="wheresgameicon.png">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate views:SweeperPage}" />
+            <ShellContent ContentTemplate="{DataTemplate views:WheresPage}" />
         </Tab>
     </FlyoutItem>
 

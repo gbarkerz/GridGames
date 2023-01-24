@@ -124,6 +124,7 @@
 
             <Border Grid.Row="0" Margin="4" Padding="8" x:Name="WelcomeBorder" 
                 IsVisible="{Binding FirstRunMatching}"
+                SemanticProperties.Description="{x:Static resources:AppResources.PairsWelcome}"
                 BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
                 VerticalOptions="Fill" HorizontalOptions="Fill">
                 <Grid>
@@ -138,6 +139,7 @@
                         FontSize="Title" Margin="0,0,0,20" />
                     <ScrollView Grid.Row="1">
                         <Editor x:Name="MatchingWelcomeTitleInstructions" IsReadOnly="True" FontSize="Medium"
+                            SemanticProperties.Description="{x:Static resources:AppResources.PairsWelcome}"
                             Text="{x:Static resources:AppResources.WelcomeInstructions}" />
                     </ScrollView>
                     <Button Grid.Row="2" x:Name="WelcomeMessageCloseButton"

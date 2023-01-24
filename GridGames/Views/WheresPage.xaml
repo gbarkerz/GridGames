@@ -159,6 +159,7 @@
 
             <Border Grid.Row="0" Grid.RowSpan="2" x:Name="WelcomeBorder" 
                 Margin="4" Padding="8"
+                SemanticProperties.Description="{x:Static resources:AppResources.WheresWelcome}"
                 IsVisible="{Binding FirstRunWheres}"
                 BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
                 VerticalOptions="Fill" HorizontalOptions="Fill">
@@ -174,6 +175,7 @@
                         FontSize="Title" Margin="0,0,0,20" />
                     <ScrollView Grid.Row="1">
                         <Editor x:Name="WheresWelcomeTitleInstructions" IsReadOnly="True" FontSize="Medium"
+                            SemanticProperties.Description="{x:Static resources:AppResources.WheresWelcome}"
                             Text="{x:Static resources:AppResources.WelcomeInstructions}" />
                     </ScrollView>
                     <Button Grid.Row="2" x:Name="WelcomeMessageCloseButton"

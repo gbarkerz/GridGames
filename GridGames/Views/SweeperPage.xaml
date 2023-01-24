@@ -195,6 +195,7 @@
                         FontSize="Large" FontAttributes="Bold" />
                     <ScrollView Grid.Row="1">
                         <Editor x:Name="SweeperWelcomeTitleInstructions" IsReadOnly="True" FontSize="Medium"
+                            SemanticProperties.Description="{x:Static resources:AppResources.SweeperWelcome}"
                             Text="{x:Static resources:AppResources.WelcomeInstructions}" />
                     </ScrollView>
                     <Button Grid.Row="2" x:Name="WelcomeMessageCloseButton"

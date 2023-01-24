@@ -15,7 +15,7 @@ public partial class AppShell : Shell
         // Assume we know the order of the items in the app flyout.
         if (this.Items.Count > 0)
         {
-            if (initialGame == "Wheres")
+            if (initialGame == "Sweeper")
             {
                 this.CurrentItem = this.Items[0];
             }
@@ -27,7 +27,7 @@ public partial class AppShell : Shell
             {
                 this.CurrentItem = this.Items[2];
             }
-            else if (initialGame == "Sweeper")
+            else if (initialGame == "Wheres")
             {
                 this.CurrentItem = this.Items[3];
             }
