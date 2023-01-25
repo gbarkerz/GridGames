@@ -2,9 +2,51 @@
 using System.Globalization;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using Microsoft.UI.Composition.Interactions;
 
 namespace GridGames.Views
 {
+    public class SweeperItemGameOverToAccessibleName : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values == null || (values.Length < 4))
+            {
+                return "";
+            }
+
+            if ((values[0] == null) || (values[1] == null) ||
+                (values[2] == null) || (values[3] == null))
+            {
+                return "";
+            }
+
+            var accessibleName = (string)values[0];
+            var hasFrog = (bool)values[1];
+            var gameWon = (bool)values[2];
+            var gameLost = (bool)values[3];
+
+            var fullAccessibleName = "";
+
+            if (hasFrog && (gameWon || gameLost))
+            {
+                fullAccessibleName = (gameWon ? "Peaceful resting frog" : "Disturbed frog");
+            }
+            else
+            {
+                fullAccessibleName = accessibleName;
+            }
+
+            return fullAccessibleName;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
     public class NearbyFrogCountToLabel : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)

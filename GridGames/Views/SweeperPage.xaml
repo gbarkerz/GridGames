@@ -25,6 +25,7 @@
             <localviews:NearbyFrogCountToLabel x:Key="NearbyFrogCountToLabel" />
             <localviews:LeafToVisible x:Key="LeafToVisible" />
             <localviews:LeafToLabel x:Key="LeafToLabel" />
+            <localviews:SweeperItemGameOverToAccessibleName x:Key="SweeperItemGameOverToAccessibleName" />
             <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -74,8 +75,21 @@
                             AutomationProperties.IsInAccessibleTree="False"
                             StrokeThickness="1"
                             Stroke="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
-                            SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}"
                             SemanticProperties.Hint="{Binding AccessibleDescription, Mode=OneWay}">
+
+                            <!--SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}"-->
+
+                            <SemanticProperties.Description>
+                                <MultiBinding Mode="OneWay" 
+                                    Converter="{StaticResource SweeperItemGameOverToAccessibleName}">
+                                    <Binding Path="AccessibleName" />
+                                    <Binding Path="HasFrog" />
+                                    <Binding Source="{x:Reference SweeperPageInstance}" 
+                                                    Path="BindingContext.GameWon" />
+                                    <Binding Source="{x:Reference SweeperPageInstance}" 
+                                                    Path="BindingContext.GameLost" />
+                                </MultiBinding>
+                            </SemanticProperties.Description>
 
                             <Border.HeightRequest>
                                 <MultiBinding Mode="OneWay" 
