@@ -185,6 +185,7 @@ namespace GridGames.Views
                 for (int i = 0; i < (vm.SweeperSettingsVM.SideLength * vm.SweeperSettingsVM.SideLength); ++i)
                 {
                     vm.SweeperListCollection[i].TurnedUp = true;
+                    vm.SweeperListCollection[i].ShowsQueryFrog = false;
                 }
 
                 vm.GameLost = true;

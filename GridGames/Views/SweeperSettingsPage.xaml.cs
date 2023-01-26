@@ -43,9 +43,22 @@ namespace GridGames
 
         private async void CloseButton_Clicked(object sender, EventArgs e)
         {
+            var sideCount = RowColumnCountPicker.SelectedIndex + 4;
+            var frogCount = FrogCountPicker.SelectedIndex + 2;
+
+            if (frogCount > (sideCount * sideCount) / 2)
+            {
+                await DisplayAlert(
+                    "Leaf Sweeper",
+                    "Please don't have frogs on more than half the stones.",
+                    "OK");
+
+                return;
+            }
+
             if (RowColumnCountPicker.SelectedIndex != (previousRowCount - 4))
             {
-                previousRowCount = RowColumnCountPicker.SelectedIndex + 4;
+                previousRowCount = sideCount;
 
                 await DisplayAlert(
                     "Leaf Sweeper",

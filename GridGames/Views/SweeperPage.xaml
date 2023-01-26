@@ -44,11 +44,12 @@
                 HorizontalOptions="Center" VerticalOptions="Center" />
             <Button Grid.Column="1" x:Name="SweeperSettingsButton"
                 Text="&#xf013;" 
+                SemanticProperties.Description="{x:Static resources:AppResources.SweeperSettings}"
+                AutomationId="SweeperSettingsButton"
                 Clicked="SweeperGameSettingsButton_Clicked"
                 BorderWidth="0"
                 windows:VisualElement.AccessKey="S"
-                FontFamily="FA" FontSize="Title" HorizontalOptions="End"
-                SemanticProperties.Description="{x:Static resources:AppResources.SweeperSettings}" />
+                FontFamily="FA" FontSize="Title" HorizontalOptions="End" />
         </Grid>
     </Shell.TitleView>
 
@@ -76,8 +77,6 @@
                             StrokeThickness="1"
                             Stroke="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
                             SemanticProperties.Hint="{Binding AccessibleDescription, Mode=OneWay}">
-
-                            <!--SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}"-->
 
                             <SemanticProperties.Description>
                                 <MultiBinding Mode="OneWay" 

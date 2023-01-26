@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using Microsoft.UI.Composition.Interactions;
 
 namespace GridGames.Views
 {
