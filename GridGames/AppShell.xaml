@@ -28,6 +28,13 @@
         </Tab>
     </FlyoutItem>
 
+    <FlyoutItem Title="Sudoku"
+                Icon="sudokugameicon.png">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate views:SudokuPage}" />
+        </Tab>
+    </FlyoutItem>
+
     <FlyoutItem Title="Where's WCAG?"
                 Icon="wheresgameicon.png">
         <Tab>

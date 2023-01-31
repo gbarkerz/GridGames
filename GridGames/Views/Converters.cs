@@ -5,6 +5,38 @@ using System.Diagnostics;
 
 namespace GridGames.Views
 {
+    public class SudokuCollectionViewHeightToRowHeight : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            // The full set of rows fills the containing grid.
+            return ((double)value / 9) - 2;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class SudokuLabelContainerHeightToFontSize : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var containerHeightPixels = (double)value;
+
+            // Todo: Consider being a little more precise here...
+            return 0.67 * (containerHeightPixels / 9.0);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var intValue = (int)value;
+
+            return (Aspect)intValue;
+        }
+    }
+
     public class SweeperItemGameOverToAccessibleName : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)

@@ -580,6 +580,21 @@ Would you like to play another game?</value>
   <data name="String9" xml:space="preserve">
     <value>Tip: Practice moving numbered squares around before changing the setting to have a picture shown on the squares.</value>
   </data>
+  <data name="Sudoku" xml:space="preserve">
+    <value>Sudoku</value>
+  </data>
+  <data name="SudokuReadyToPlay" xml:space="preserve">
+    <value>The Sudoku game is ready to play!</value>
+  </data>
+  <data name="SudokuSettings" xml:space="preserve">
+    <value>Sudoku Settings</value>
+  </data>
+  <data name="SudokuSquares" xml:space="preserve">
+    <value>Sudoku Squares</value>
+  </data>
+  <data name="SudokuWelcome" xml:space="preserve">
+    <value>Welcome to the Sudoku Game!</value>
+  </data>
   <data name="Sweeper" xml:space="preserve">
     <value>Leaf Sweeper</value>
   </data>

@@ -41,6 +41,12 @@ public static class MauiProgram
                     page.ReactToKeyInputOnSelectedCard();
                     e.Handled = true;
                 }
+                else if (currentPage is SudokuPage)
+                {
+                    var page = currentPage as SweeperPage;
+                    page.ReactToKeyInputOnSelectedCard();
+                    e.Handled = true;
+                }
                 else if (currentPage is WheresPage)
                 {
                     var page = currentPage as WheresPage;
@@ -72,6 +78,10 @@ public static class MauiProgram
                 {
                     (currentPage as SweeperPage).ShowHelp();
                 }
+                else if (currentPage is SudokuPage)
+                {
+                    (currentPage as SudokuPage).ShowHelp();
+                }
 
                 e.Handled = true;
             }
@@ -94,6 +104,10 @@ public static class MauiProgram
                 else if (currentPage is SweeperPage)
                 {
                     (currentPage as SweeperPage).RestartGame(false);
+                }
+                else if (currentPage is SudokuPage)
+                {
+                    (currentPage as SudokuPage).RestartGame();
                 }
                 else
                 {

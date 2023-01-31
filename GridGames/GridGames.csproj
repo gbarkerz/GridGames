@@ -155,6 +155,9 @@
 	  <Compile Update="Views\SquaresPage.xaml.cs">
 	    <DependentUpon>SquaresPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\SudokuSettingsPage.xaml.cs">
+	    <DependentUpon>SudokuSettingsPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\SweeperSettingsPage.xaml.cs">
 	    <DependentUpon>SweeperSettingsPage.xaml</DependentUpon>
 	  </Compile>
@@ -168,6 +171,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\SudokuPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\SweeperPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -178,6 +184,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\MatchingSettingsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\SudokuSettingsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\WCAGPage.xaml">

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:localviews="clr-namespace:GridGames.Views"
+             xmlns:resources="clr-namespace:GridGames.ResX"
+             xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
+             x:Class="GridGames.SudokuSettingsPage">
+
+    <ContentPage.Content>
+        <Grid Margin="0" Padding="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Padding="10" Margin="0"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}">
+                <Label x:Name="SudokuSettingsTitle"
+                    Text="{x:Static resources:AppResources.SudokuSettings}"
+                    SemanticProperties.HeadingLevel="Level1" FontSize="Title"
+                    TextColor="{AppThemeBinding Light=White, Dark=White}"
+                    HorizontalOptions="Center" VerticalOptions="Center" />
+            </Grid>
+
+            <ScrollView Grid.Row="1" Margin="14,4,14,2">
+                <!-- Todo: Add settings context here. -->
+            </ScrollView>
+            
+            <Button Grid.Row="2" x:Name="CloseButton" 
+                windows:VisualElement.AccessKey="C"                                    
+                HorizontalOptions="End" Margin="0,0,4,4" Padding="8"
+                Text="{x:Static resources:AppResources.Close}" Clicked="CloseButton_Clicked" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

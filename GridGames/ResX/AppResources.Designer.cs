@@ -1314,6 +1314,51 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sudoku.
+        /// </summary>
+        internal static string Sudoku {
+            get {
+                return ResourceManager.GetString("Sudoku", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Sudoku game is ready to play!.
+        /// </summary>
+        internal static string SudokuReadyToPlay {
+            get {
+                return ResourceManager.GetString("SudokuReadyToPlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sudoku Settings.
+        /// </summary>
+        internal static string SudokuSettings {
+            get {
+                return ResourceManager.GetString("SudokuSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sudoku Squares.
+        /// </summary>
+        internal static string SudokuSquares {
+            get {
+                return ResourceManager.GetString("SudokuSquares", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome to the Sudoku Game!.
+        /// </summary>
+        internal static string SudokuWelcome {
+            get {
+                return ResourceManager.GetString("SudokuWelcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Leaf Sweeper.
         /// </summary>
         internal static string Sweeper {
