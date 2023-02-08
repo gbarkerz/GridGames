@@ -1,5 +1,7 @@
 ﻿using GridGames.ResX;
 using GridGames.ViewModels;
+using InvokePlatformCode.Services.PartialMethods;
+using Microsoft.Maui.Controls;
 using SkiaSharp;
 using SkiaSharp.Views.Maui.Controls;
 using System.Diagnostics;
@@ -17,7 +19,7 @@ namespace GridGames.Views
         // when two items were swapped in the collection while the Squares game is 
         // played, the binding worked as expected, sometimes the binding on one or
         // other items did not take effect. Presumably this is because my code was
-        // not in complience with binding requirements (eg related to threading),
+        // not in compliance with binding requirements (eg related to threading),
         // but so far I've not been able to pinpoint the cause of the issue. So for 
         // now, add this temporary "Fixup" code to manually set the visibility on 
         // all the items. This unblocks me while working on the game experience,
@@ -52,7 +54,7 @@ namespace GridGames.Views
                         {
                             var label = descendant as Label;
 
-                            // The empty square nevers has its Label visible.
+                            // The empty square never has its Label visible.
                             label.IsVisible = vm.ShowNumbers && (label.Text != "");
                         }
                         else if (descendant is Image)
@@ -155,8 +157,7 @@ namespace GridGames.Views
             {
                 if (collectionView.SelectedItem != null)
                 {
-                    var vm = this.BindingContext as SquaresViewModel;
-                    bool gameIsWon = vm.AttemptMoveBySelection(collectionView.SelectedItem);
+                    bool gameIsWon = AttemptMoveBySelection(collectionView);
 
                     FixupSquaresWithDelay(200);
 
@@ -197,7 +198,7 @@ namespace GridGames.Views
             int itemIndex = GetItemCollectionIndexFromItemAccessibleName(itemName);
             if (itemIndex != -1)
             {
-                bool gameIsWon = vm.AttemptToMoveSquare(itemIndex);
+                bool gameIsWon = AttemptToMoveSquare(itemIndex);
                 if (gameIsWon)
                 {
                     await OfferToRestartGame();
@@ -225,12 +226,79 @@ namespace GridGames.Views
             int itemIndex = GetItemCollectionIndexFromItemAccessibleName(item.AccessibleName);
             if (itemIndex != -1)
             {
-                bool gameIsWon = vm.AttemptToMoveSquare(itemIndex);
+                bool gameIsWon = AttemptToMoveSquare(itemIndex);
                 if (gameIsWon)
                 {
                     await OfferToRestartGame();
                 }
             }
+        }
+
+        private bool AttemptToMoveSquare(int itemIndex)
+        {
+            var vm = this.BindingContext as SquaresViewModel;
+
+            bool squareSwapped;
+            int emptySquareIndex;
+
+            bool gameIsWon = vm.AttemptToMoveSquare(itemIndex, 
+                                                    out squareSwapped,
+                                                    out emptySquareIndex);
+
+            SetHelpTextData(squareSwapped, itemIndex, emptySquareIndex);
+
+            return gameIsWon;
+        }
+
+        private bool AttemptMoveBySelection(CollectionView collectionView)
+        {
+            var vm = this.BindingContext as SquaresViewModel;
+
+            bool squareSwapped;
+            int itemIndex;
+            int emptySquareIndex;
+
+            bool gameIsWon = vm.AttemptMoveBySelection(collectionView.SelectedItem,
+                                                       out squareSwapped,
+                                                       out itemIndex,
+                                                       out emptySquareIndex);
+
+            SetHelpTextData(squareSwapped, itemIndex, emptySquareIndex);
+
+            return gameIsWon;
+        }
+
+        private void SetHelpTextData(bool squareSwapped, int itemIndex, int emptySquareIndex)
+        {
+#if WINDOWS
+            if (!squareSwapped)
+            {
+                return;
+            }
+
+            var vm = this.BindingContext as SquaresViewModel;
+
+            var countItemsTotal = vm.SquareListCollection.Count;
+            var countItemsInRow = (int)Math.Sqrt(countItemsTotal);
+
+            var platformAction = new GridGamesPlatformAction();
+
+            int row = (itemIndex / countItemsInRow) + 1;
+            int column = (itemIndex % countItemsInRow) + 1;
+
+            platformAction.SetGridItemCollectionViewAccessibleData(SquaresCollectionView, 
+                                                                   itemIndex,
+                                                                   row,
+                                                                   column);
+
+            row = (emptySquareIndex / countItemsInRow) + 1;
+            column = (emptySquareIndex % countItemsInRow) + 1;
+
+            platformAction.SetGridItemCollectionViewAccessibleData(SquaresCollectionView,
+                                                                   emptySquareIndex,
+                                                                   row,
+                                                                   column);
+#endif
         }
 
         private void SquaresCollectionView_DescendantAdded(object sender, ElementEventArgs e)
@@ -564,6 +632,11 @@ namespace GridGames.Views
                 Debug.WriteLine("ShowCustomPictureInSquares: Done loading pictures into squares.");
 
                 vm.GameIsLoading = false;
+
+#if WINDOWS
+                var platformAction = new GridGamesPlatformAction();
+                platformAction.SetGridCollectionViewAccessibleData(SquaresCollectionView);
+#endif
             });
         }
 

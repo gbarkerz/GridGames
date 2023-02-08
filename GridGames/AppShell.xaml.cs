@@ -27,14 +27,14 @@ public partial class AppShell : Shell
             {
                 this.CurrentItem = this.Items[2];
             }
-            else if (initialGame == "Sudoku")
+            else if (initialGame == "Wheres")
             {
                 this.CurrentItem = this.Items[3];
             }
-            else if (initialGame == "Wheres")
-            {
-                this.CurrentItem = this.Items[4];
-            }
+            //else if (initialGame == "Sudoku")
+            //{
+            //    this.CurrentItem = this.Items[4];
+            //}
         }
 
         this.Loaded += AppShell_Loaded;

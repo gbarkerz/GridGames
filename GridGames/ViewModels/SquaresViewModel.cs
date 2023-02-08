@@ -11,6 +11,7 @@ using Microsoft.Maui.Controls.Xaml;
 using GridGames.ResX;
 using GridGames.Views;
 using System.Diagnostics;
+using InvokePlatformCode.Services.PartialMethods;
 
 namespace GridGames.ViewModels
 {
@@ -143,8 +144,16 @@ namespace GridGames.ViewModels
             this.CreateDefaultSquares();
         }
 
-        public bool AttemptMoveBySelection(object currentSelection)
+        public bool AttemptMoveBySelection(object currentSelection, 
+                                           out bool squareSwapped, 
+                                           out int itemIndex,
+                                           out int emptySquareIndex)
         {
+            squareSwapped = false;
+
+            itemIndex = -1;
+            emptySquareIndex = -1;
+
             if (currentSelection == null)
             {
                 return false;
@@ -167,15 +176,19 @@ namespace GridGames.ViewModels
                 return false;
             }
 
-            return AttemptToMoveSquare(currentSelectionIndex);
+            itemIndex = currentSelectionIndex;
+
+            return AttemptToMoveSquare(currentSelectionIndex, out squareSwapped, out emptySquareIndex);
         }
 
-        public bool AttemptToMoveSquare(int SquareIndex)
+        public bool AttemptToMoveSquare(int SquareIndex, out bool squareSwapped, out int emptySquareIndex)
         {
+            squareSwapped = false;
+            emptySquareIndex = -1;
+
             bool gameIsWon = false;
 
             Square adjacentSquare;
-            int emptySquareIndex = -1;
             string direction = "";
 
             var resManager = AppResources.ResourceManager;
@@ -242,6 +255,8 @@ namespace GridGames.ViewModels
                 // Now swap the item.
                 (squareList[emptySquareIndex], squareList[SquareIndex]) =
                     (squareList[SquareIndex], squareList[emptySquareIndex]);
+
+                squareSwapped = true;
 
                 // Has the game been won?
                 gameIsWon = GameIsWon(squareList);

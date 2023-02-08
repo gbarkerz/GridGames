@@ -1,13 +1,100 @@
-﻿using Microsoft.UI.Xaml;
+﻿using GridGames.ResX;
+using Microsoft.Maui.Controls;
+using Microsoft.UI.Composition.Interactions;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Automation.Peers;
+using Microsoft.UI.Xaml.Controls;
 using System.Diagnostics;
 using Windows.Storage;
 using Windows.UI.ViewManagement;
+using AutomationProperties = Microsoft.UI.Xaml.Automation.AutomationProperties;
 
 namespace InvokePlatformCode.Services.PartialMethods;
 
 public partial class GridGamesPlatformAction
 {
 #if WINDOWS
+
+    public partial void SetGridItemCollectionViewAccessibleData(CollectionView collectionView, int itemIndex, int row, int column)
+    {
+        // Always run this on the UI thread.
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            var resManager = AppResources.ResourceManager;
+
+            var grid = collectionView.Handler.PlatformView as GridView;
+
+            var item = grid.Items[itemIndex];
+            if (item != null)
+            {
+                var container = grid.ContainerFromItem(item) as UIElement;
+                if (container != null)
+                {
+                    // Assume it's ok from a localization perspective to have a fixed order for the elements of this HelpText.
+                    AutomationProperties.SetHelpText(container,
+                        resManager.GetString("Row") + " " + row + " " +
+                        resManager.GetString("Column") + " " + column);
+                }
+            }
+        });
+    }
+
+    // Set any platform-specific accessibility properties on the grid and its items.
+    public partial void SetGridCollectionViewAccessibleData(CollectionView collectionView)
+    {
+        try
+        {
+            // Always run this on the UI thread.
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                var handler = collectionView.Handler;
+                if (handler != null)
+                {
+                    var grid = collectionView.Handler.PlatformView as GridView;
+
+                    var resManager = AppResources.ResourceManager;
+
+                    // First set the properties on the grid itself.
+                    AutomationProperties.SetAutomationControlType(grid, AutomationControlType.Custom);
+                    AutomationProperties.SetLocalizedControlType(grid, resManager.GetString("GridLocalizedControlType"));
+
+                    // Now set the properties on the items in the grid.
+                    var cellLocalizedControlType = resManager.GetString("CellLocalizedControlType");
+
+                    // Assume the grid is square.
+                    var countItemsTotal = grid.Items.Count;
+                    var countItemsInRow = (int)Math.Sqrt(countItemsTotal);
+
+                    var rowString = resManager.GetString("Row");
+                    var columnString = resManager.GetString("Column");
+
+                    for (int i = 0; i < countItemsTotal; ++i)
+                    {
+                        var item = grid.Items[i];
+                        if (item != null)
+                        {
+                            var container = grid.ContainerFromItem(item) as UIElement;
+                            if (container != null)
+                            {
+                                AutomationProperties.SetAutomationControlType(container, AutomationControlType.Custom);
+                                AutomationProperties.SetLocalizedControlType(container, cellLocalizedControlType);
+
+                                // Assume it's ok from a localization perspective to have a fixed order for the elements of this HelpText.
+                                AutomationProperties.SetHelpText(container,
+                                    rowString + " " + ((i / countItemsInRow) + 1) + " " +
+                                    columnString + " " + ((i % countItemsInRow) + 1));
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+
+        }
+    }
+
     public partial void ShowFlyout(FlyoutBase contextFlyout,
         Microsoft.Maui.Controls.Border border)
     {

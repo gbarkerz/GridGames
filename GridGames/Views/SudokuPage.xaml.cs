@@ -1,5 +1,6 @@
 using GridGames.ResX;
 using GridGames.ViewModels;
+using InvokePlatformCode.Services.PartialMethods;
 using System.Diagnostics;
 
 namespace GridGames.Views;
@@ -9,7 +10,17 @@ public partial class SudokuPage : ContentPage
 	public SudokuPage()
 	{
 		InitializeComponent();
-	}
+
+        SudokuCollectionView.Loaded += SquaresCollectionView_Loaded;
+    }
+
+    private void SquaresCollectionView_Loaded(object sender, EventArgs e)
+    {
+#if WINDOWS
+        var platformAction = new GridGamesPlatformAction();
+        platformAction.SetGridCollectionViewAccessibleData(SudokuCollectionView);
+#endif
+    }
 
     protected override void OnAppearing()
     {

@@ -135,6 +135,9 @@
   <data name="BrowsePicture" xml:space="preserve">
     <value>Browse for picture</value>
   </data>
+  <data name="CellLocalizedControlType" xml:space="preserve">
+    <value>Cell</value>
+  </data>
   <data name="ChooseEightPictures" xml:space="preserve">
     <value>Please choose a picture in a folder that contains exactly 8 pictures.</value>
   </data>
@@ -143,6 +146,9 @@
   </data>
   <data name="Close" xml:space="preserve">
     <value>Close</value>
+  </data>
+  <data name="Column" xml:space="preserve">
+    <value>Column</value>
   </data>
   <data name="CompletedSquaresPictureInMoves" xml:space="preserve">
     <value>You completed {0} in {1} goes.
@@ -314,6 +320,9 @@ Review the Help content for details on how to play the game using only the keybo
   <data name="GridGames" xml:space="preserve">
     <value>Grid Games</value>
   </data>
+  <data name="GridLocalizedControlType" xml:space="preserve">
+    <value>Grid</value>
+  </data>
   <data name="Help" xml:space="preserve">
     <value>Help</value>
   </data>
@@ -469,6 +478,9 @@ Would you like to play another game?</value>
   </data>
   <data name="Right" xml:space="preserve">
     <value>right</value>
+  </data>
+  <data name="Row" xml:space="preserve">
+    <value>Row</value>
   </data>
   <data name="Selected" xml:space="preserve">
     <value>Selected:</value>

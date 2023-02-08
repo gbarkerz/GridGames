@@ -4,6 +4,10 @@ namespace InvokePlatformCode.Services.PartialMethods
     public partial class GridGamesPlatformAction
     {
 #if WINDOWS
+
+        public partial void SetGridItemCollectionViewAccessibleData(CollectionView collectionView, int itemIndex, int row, int column);
+        public partial void SetGridCollectionViewAccessibleData(CollectionView collectionView);
+
         public partial Task<string> GetPairsPictureFolder();
 
         public partial void ShowFlyout(FlyoutBase contextFlyout,

@@ -44,11 +44,21 @@ namespace GridGames.Views
 
             SweeperCollectionView.SelectedItem = null;
 
+            SweeperCollectionView.Loaded += SweeperCollectionView_Loaded;
+
 #if IOS
             // At this time, VoiceOver won't navigate to the items in a CollectionView
             // if the CollectionView has a SemanticProperties.Description. So for now,
             // remove the Description on iOS.
             SemanticProperties.SetDescription(SweeperCollectionView, null);
+#endif
+        }
+
+        private void SweeperCollectionView_Loaded(object sender, EventArgs e)
+        {
+#if WINDOWS
+            var platformAction = new GridGamesPlatformAction();
+            platformAction.SetGridCollectionViewAccessibleData(SweeperCollectionView);
 #endif
         }
 
@@ -371,6 +381,8 @@ namespace GridGames.Views
             }
         }
 
+        private Timer timer;
+
         public void RestartGame(bool suppressAnnouncement)
         {
             var vm = this.BindingContext as SweeperViewModel;
@@ -381,6 +393,14 @@ namespace GridGames.Views
 
                 vm.ResetGrid();
 
+#if WINDOWS
+                timer = new Timer(
+                    new TimerCallback((s) => SetRowColumnData()),
+                               null,
+                               TimeSpan.FromMilliseconds(500),
+                               TimeSpan.FromMilliseconds(Timeout.Infinite));
+#endif
+
                 SweeperCollectionView.SelectedItem = null;
 
                 if (!suppressAnnouncement)
@@ -388,6 +408,16 @@ namespace GridGames.Views
                     vm.RaiseNotificationEvent("Leaf Sweeper game restarted.");
                 }
             }
+        }
+
+        private void SetRowColumnData()
+        {
+#if WINDOWS
+            timer.Dispose();
+
+            var platformAction = new GridGamesPlatformAction();
+            platformAction.SetGridCollectionViewAccessibleData(SweeperCollectionView);
+#endif
         }
 
         private void MenuFlyoutItem_Clicked(object sender, EventArgs e)

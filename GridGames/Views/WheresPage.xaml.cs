@@ -2,6 +2,7 @@
 
 using GridGames.ResX;
 using GridGames.ViewModels;
+using InvokePlatformCode.Services.PartialMethods;
 
 namespace GridGames.Views
 {
@@ -43,11 +44,21 @@ namespace GridGames.Views
 
             SquaresCollectionView.SelectionChanged += SquaresCollectionView_SelectionChanged;
 
+            SquaresCollectionView.Loaded += SquaresCollectionView_Loaded;
+
 #if IOS
             // At this time, VoiceOver won't navigate to the items in a CollectionView
             // if the CollectionView has a SemanticProperties.Description. So for now,
             // remove the Description on iOS.
             SemanticProperties.SetDescription(SquaresCollectionView, null);
+#endif
+        }
+
+        private void SquaresCollectionView_Loaded(object sender, EventArgs e)
+        {
+#if WINDOWS
+            var platformAction = new GridGamesPlatformAction();
+            platformAction.SetGridCollectionViewAccessibleData(SquaresCollectionView);
 #endif
         }
 

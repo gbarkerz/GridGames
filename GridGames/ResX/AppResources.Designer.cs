@@ -115,6 +115,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cell.
+        /// </summary>
+        internal static string CellLocalizedControlType {
+            get {
+                return ResourceManager.GetString("CellLocalizedControlType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please choose a picture in a folder that contains exactly 8 pictures..
         /// </summary>
         internal static string ChooseEightPictures {
@@ -138,6 +147,15 @@ namespace GridGames.ResX {
         internal static string Close {
             get {
                 return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Column.
+        /// </summary>
+        internal static string Column {
+            get {
+                return ResourceManager.GetString("Column", resourceCulture);
             }
         }
         
@@ -636,6 +654,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Grid.
+        /// </summary>
+        internal static string GridLocalizedControlType {
+            get {
+                return ResourceManager.GetString("GridLocalizedControlType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Help.
         /// </summary>
         internal static string Help {
@@ -984,6 +1011,15 @@ namespace GridGames.ResX {
         internal static string Right {
             get {
                 return ResourceManager.GetString("Right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Row.
+        /// </summary>
+        internal static string Row {
+            get {
+                return ResourceManager.GetString("Row", resourceCulture);
             }
         }
         
