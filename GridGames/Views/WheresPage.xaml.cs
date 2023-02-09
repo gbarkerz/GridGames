@@ -306,13 +306,33 @@ namespace GridGames.Views
             }
         }
 
+        private Timer timer;
+
         public void RestartGame()
         {
             var vm = this.BindingContext as WheresViewModel;
             if (!vm.FirstRunWheres)
             {
                 vm.ResetGrid(true);
+
+#if WINDOWS
+                timer = new Timer(
+                    new TimerCallback((s) => SetRowColumnData()),
+                               null,
+                               TimeSpan.FromMilliseconds(500),
+                               TimeSpan.FromMilliseconds(Timeout.Infinite));
+#endif
             }
+        }
+
+        private void SetRowColumnData()
+        {
+#if WINDOWS
+            timer.Dispose();
+
+            var platformAction = new GridGamesPlatformAction();
+            platformAction.SetGridCollectionViewAccessibleData(SquaresCollectionView);
+#endif
         }
 
         private async Task ShowTipPage()

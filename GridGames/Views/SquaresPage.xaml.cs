@@ -464,6 +464,14 @@ namespace GridGames.Views
                     vm.ResetGrid();
                 }
 
+#if WINDOWS
+                timer = new Timer(
+                    new TimerCallback((s) => SetRowColumnData()),
+                               null,
+                               TimeSpan.FromMilliseconds(2000),
+                               TimeSpan.FromMilliseconds(Timeout.Infinite));
+#endif
+
                 vm.GameIsLoading = false;
             }
 
@@ -472,6 +480,19 @@ namespace GridGames.Views
                 FixupSquaresWithDelay(500);
             }
         }
+
+        private Timer timer;
+
+        private void SetRowColumnData()
+        {
+#if WINDOWS
+            timer.Dispose();
+
+            var platformAction = new GridGamesPlatformAction();
+            platformAction.SetGridCollectionViewAccessibleData(SquaresCollectionView);
+#endif
+        }
+
 
         private int GetItemCollectionIndexFromItemAccessibleName(string ItemAccessibleName)
         {

@@ -15,30 +15,6 @@ public partial class GridGamesPlatformAction
 {
 #if WINDOWS
 
-    public partial void SetGridItemCollectionViewAccessibleData(CollectionView collectionView, int itemIndex, int row, int column)
-    {
-        // Always run this on the UI thread.
-        MainThread.BeginInvokeOnMainThread(() =>
-        {
-            var resManager = AppResources.ResourceManager;
-
-            var grid = collectionView.Handler.PlatformView as GridView;
-
-            var item = grid.Items[itemIndex];
-            if (item != null)
-            {
-                var container = grid.ContainerFromItem(item) as UIElement;
-                if (container != null)
-                {
-                    // Assume it's ok from a localization perspective to have a fixed order for the elements of this HelpText.
-                    AutomationProperties.SetHelpText(container,
-                        resManager.GetString("Row") + " " + row + " " +
-                        resManager.GetString("Column") + " " + column);
-                }
-            }
-        });
-    }
-
     // Set any platform-specific accessibility properties on the grid and its items.
     public partial void SetGridCollectionViewAccessibleData(CollectionView collectionView)
     {
@@ -91,8 +67,37 @@ public partial class GridGamesPlatformAction
         }
         catch (Exception ex)
         {
-
+            Debug.WriteLine("SetGridCollectionViewAccessibleData: " + ex.Message);
         }
+    }
+
+    public partial void SetGridItemCollectionViewAccessibleData(CollectionView collectionView, int itemIndex, int row, int column)
+    {
+        // Always run this on the UI thread.
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            var resManager = AppResources.ResourceManager;
+
+            var grid = collectionView.Handler.PlatformView as GridView;
+
+            var item = grid.Items[itemIndex];
+            if (item != null)
+            {
+                var container = grid.ContainerFromItem(item) as UIElement;
+                if (container != null)
+                {
+                    var cellLocalizedControlType = resManager.GetString("CellLocalizedControlType");
+
+                    AutomationProperties.SetAutomationControlType(container, AutomationControlType.Custom);
+                    AutomationProperties.SetLocalizedControlType(container, cellLocalizedControlType);
+
+                    // Assume it's ok from a localization perspective to have a fixed order for the elements of this HelpText.
+                    AutomationProperties.SetHelpText(container,
+                        resManager.GetString("Row") + " " + row + " " +
+                        resManager.GetString("Column") + " " + column);
+                }
+            }
+        });
     }
 
     public partial void ShowFlyout(FlyoutBase contextFlyout,
