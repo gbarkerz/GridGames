@@ -200,6 +200,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Count of blank squares:.
+        /// </summary>
+        internal static string CountOfBlankSquares {
+            get {
+                return ResourceManager.GetString("CountOfBlankSquares", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To prepare custom pictures for showing in the Pairs game, first create a new folder and copy in the eight pictures that you&apos;d like to have shown. Then create a text file in the same folder, called &quot;PairsGamePictureDetails.txt&quot;. Edit the text file so that each line in the file contains the accessible details for one of the pictures in the folder. A line starts with the filename of the picture, followed by a tab, and then the accessible name of the picture. If a description is also provided, the name is follo [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CustomPicturesInstructions {
@@ -502,6 +511,15 @@ namespace GridGames.ResX {
         internal static string Description {
             get {
                 return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Difficulty level.
+        /// </summary>
+        internal static string DifficultyLevel {
+            get {
+                return ResourceManager.GetString("DifficultyLevel", resourceCulture);
             }
         }
         
@@ -1355,6 +1373,15 @@ namespace GridGames.ResX {
         internal static string Sudoku {
             get {
                 return ResourceManager.GetString("Sudoku", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the number of blank squares in the grid when a new game is started..
+        /// </summary>
+        internal static string SudokuDifficultyLevelInstructions {
+            get {
+                return ResourceManager.GetString("SudokuDifficultyLevelInstructions", resourceCulture);
             }
         }
         

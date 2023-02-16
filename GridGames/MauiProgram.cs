@@ -43,7 +43,7 @@ public static class MauiProgram
                 }
                 else if (currentPage is SudokuPage)
                 {
-                    var page = currentPage as SweeperPage;
+                    var page = currentPage as SudokuPage;
                     page.ReactToKeyInputOnSelectedCard();
                     e.Handled = true;
                 }
@@ -59,7 +59,8 @@ public static class MauiProgram
         {
             var currentPage = (Application.Current.MainPage as Microsoft.Maui.Controls.Shell).CurrentPage;
             if ((currentPage is MatchingPage) || (currentPage is SquaresPage) || 
-                (currentPage is SweeperPage) || (currentPage is WheresPage))
+                (currentPage is SweeperPage) || (currentPage is WheresPage) ||
+                (currentPage is SudokuPage))
             {
                 var page = currentPage as MatchingPage;
                 if (page != null)
@@ -90,7 +91,8 @@ public static class MauiProgram
         {
             var currentPage = (Application.Current.MainPage as Microsoft.Maui.Controls.Shell).CurrentPage;
             if ((currentPage is MatchingPage) || (currentPage is SquaresPage) ||
-                (currentPage is WheresPage) || (currentPage is SweeperPage))
+                (currentPage is WheresPage) || (currentPage is SweeperPage) ||
+                (currentPage is SudokuPage))
             {
                 var page = currentPage as MatchingPage;
                 if (page != null)
@@ -113,6 +115,24 @@ public static class MauiProgram
                 {
                     (currentPage as WheresPage).RestartGame();
                 }
+
+                e.Handled = true;
+            }
+        }
+        else if ((e.Key == Windows.System.VirtualKey.Number1) || (e.Key == Windows.System.VirtualKey.NumberPad1) ||
+                 (e.Key == Windows.System.VirtualKey.Number2) || (e.Key == Windows.System.VirtualKey.NumberPad2) ||
+                 (e.Key == Windows.System.VirtualKey.Number3) || (e.Key == Windows.System.VirtualKey.NumberPad3) ||
+                 (e.Key == Windows.System.VirtualKey.Number4) || (e.Key == Windows.System.VirtualKey.NumberPad4) ||
+                 (e.Key == Windows.System.VirtualKey.Number5) || (e.Key == Windows.System.VirtualKey.NumberPad5) ||
+                 (e.Key == Windows.System.VirtualKey.Number6) || (e.Key == Windows.System.VirtualKey.NumberPad6) ||
+                 (e.Key == Windows.System.VirtualKey.Number7) || (e.Key == Windows.System.VirtualKey.NumberPad7) ||
+                 (e.Key == Windows.System.VirtualKey.Number8) || (e.Key == Windows.System.VirtualKey.NumberPad8) ||
+                 (e.Key == Windows.System.VirtualKey.Number9) || (e.Key == Windows.System.VirtualKey.NumberPad9))
+        {
+            var currentPage = (Application.Current.MainPage as Microsoft.Maui.Controls.Shell).CurrentPage;
+            if (currentPage is SudokuPage)
+            {
+                (currentPage as SudokuPage).HandleNumberInput(e.Key);
 
                 e.Handled = true;
             }

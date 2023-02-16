@@ -10,7 +10,7 @@ namespace GridGames.Views
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             // The full set of rows fills the containing grid.
-            return ((double)value / 9) - 2;
+            return ((double)value / 9) - 3;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -417,6 +417,23 @@ namespace GridGames.Views
             var intValue = (int)value;
 
             return (Aspect)intValue;
+        }
+    }
+
+    public class BlankSquareCountToInt : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var difficultLevel = (int)value;
+
+            return (difficultLevel / 5 ) - 1;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var intValue = (int)value;
+
+            return (intValue + 1) * 5;
         }
     }
 

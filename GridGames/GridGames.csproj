@@ -216,4 +216,10 @@
 	  <PackageReference Include="SkiaSharp.Views.Maui.Core" Version="2.88.3" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Reference Include="Sudoku">
+	    <HintPath>..\..\SudokuLibrary\Sudoku\bin\Debug\netstandard1.4\Sudoku.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
 </Project>

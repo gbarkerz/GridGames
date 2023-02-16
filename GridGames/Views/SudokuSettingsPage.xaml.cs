@@ -1,4 +1,5 @@
-﻿using GridGames.ViewModels;
+﻿using GridGames.ResX;
+using GridGames.ViewModels;
 
 namespace GridGames
 {
@@ -8,6 +9,13 @@ namespace GridGames
         public SudokuSettingsPage(SudokuSettingsViewModel sudokuSettingsVM)
         {
             InitializeComponent();
+
+            for (int i = 1; i <= 16; i++)
+            {
+                BlankSquareCountPicker.Items.Add((i * 5).ToString());
+            }
+
+            this.BindingContext = sudokuSettingsVM;
         }
 
         private async void CloseButton_Clicked(object sender, EventArgs e)

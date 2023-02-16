@@ -55,10 +55,17 @@ public partial class GridGamesPlatformAction
                                 AutomationProperties.SetAutomationControlType(container, AutomationControlType.Custom);
                                 AutomationProperties.SetLocalizedControlType(container, cellLocalizedControlType);
 
+                                int rowIndex = (i / countItemsInRow);
+                                int columnIndex = (i % countItemsInRow);
+
+                                int groupIndex = (3 * (int)(rowIndex / 3)) + (columnIndex / 3);
+
+                                var helpText = "Group " + (groupIndex + 1).ToString() + ", " + 
+                                    rowString + " " + (rowIndex + 1) + " " +
+                                        columnString + " " + (columnIndex + 1);
+
                                 // Assume it's ok from a localization perspective to have a fixed order for the elements of this HelpText.
-                                AutomationProperties.SetHelpText(container,
-                                    rowString + " " + ((i / countItemsInRow) + 1) + " " +
-                                    columnString + " " + ((i % countItemsInRow) + 1));
+                                AutomationProperties.SetHelpText(container, helpText);
                             }
                         }
                     }

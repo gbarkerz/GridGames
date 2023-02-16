@@ -31,10 +31,10 @@ public partial class AppShell : Shell
             {
                 this.CurrentItem = this.Items[3];
             }
-            //else if (initialGame == "Sudoku")
-            //{
-            //    this.CurrentItem = this.Items[4];
-            //}
+            else if (initialGame == "Sudoku")
+            {
+                this.CurrentItem = this.Items[4];
+            }
         }
 
         this.Loaded += AppShell_Loaded;
@@ -90,6 +90,14 @@ public partial class AppShell : Shell
                 await Navigation.PushModalAsync(new HelpPage(currentPage));
             }
         }
+        else if (currentPage is SudokuPage)
+        {
+            var vm = (CurrentPage as SudokuPage).BindingContext as SudokuViewModel;
+            if (!vm.FirstRunSudoku)
+            {
+                await Navigation.PushModalAsync(new HelpPage(currentPage));
+            }
+        }
     }
 
     private void OnRestartMenuItemClicked(object sender, EventArgs e)
@@ -131,6 +139,14 @@ public partial class AppShell : Shell
             if (!vm.FirstRunWheres)
             {
                 vm.ResetGrid(true);
+            }
+        }
+        else if (currentPage is SudokuPage)
+        {
+            var vm = (CurrentPage as SudokuPage).BindingContext as SudokuViewModel;
+            if (!vm.FirstRunSudoku)
+            {
+                vm.ResetGrid();
             }
         }
     }

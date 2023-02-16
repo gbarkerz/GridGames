@@ -166,6 +166,9 @@ Would you like to play another game?</value>
   <data name="CorrectWCAG" xml:space="preserve">
     <value>You found {0}. Now where's {1}?</value>
   </data>
+  <data name="CountOfBlankSquares" xml:space="preserve">
+    <value>Count of blank squares:</value>
+  </data>
   <data name="CustomPicturesInstructions" xml:space="preserve">
     <value>To prepare custom pictures for showing in the Pairs game, first create a new folder and copy in the eight pictures that you'd like to have shown. Then create a text file in the same folder, called "PairsGamePictureDetails.txt". Edit the text file so that each line in the file contains the accessible details for one of the pictures in the folder. A line starts with the filename of the picture, followed by a tab, and then the accessible name of the picture. If a description is also provided, the name is followed by a tab, and then the description.</value>
   </data>
@@ -267,6 +270,9 @@ Would you like to play another game?</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>Description:</value>
+  </data>
+  <data name="DifficultyLevel" xml:space="preserve">
+    <value>Difficulty level</value>
   </data>
   <data name="Down" xml:space="preserve">
     <value>down</value>
@@ -594,6 +600,9 @@ Would you like to play another game?</value>
   </data>
   <data name="Sudoku" xml:space="preserve">
     <value>Sudoku</value>
+  </data>
+  <data name="SudokuDifficultyLevelInstructions" xml:space="preserve">
+    <value>Select the number of blank squares in the grid when a new game is started.</value>
   </data>
   <data name="SudokuReadyToPlay" xml:space="preserve">
     <value>The Sudoku game is ready to play!</value>
