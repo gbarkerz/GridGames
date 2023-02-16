@@ -358,6 +358,22 @@ Press and release the Alt key to have any available access keys shown. For examp
 
 At the top left corner of the game is the Open Navigation button, which can be used to move to another game. Please note when a screen reader moves to the drop-down menu available from the Open Navigation button, it may announce a meaningless name for all the items in the menu. If so, please use the screen reader's navigation commands to move into the menu item, and the screen reader can then announce the text shown on the menu item.</value>
   </data>
+  <data name="HelpContentSudoku" xml:space="preserve">
+    <value>The Sudoku game shows a grid of 9-by-9 squares. Most of the squares are blank when the game starts, but some of the squares show a number from 1 to 9. The number of squares showing a number depends on the current game settings. To win the game, type a number from 1 to 9 in each of the blank squares, such that each row and each column in the game contains the numbers 1 to 9. No number can be duplicated on any row or any column. Use the arrow keys to move between squares in the grid.
+
+In addition, the grid is divided into nine 3-by-3 groups, with the group 1 containing the nine squares at the top left of the grid, and group 9 containing the nine squares at the bottom right of the grid. Each group must contain the numbers 1 to 9, with no number duplicated in the group. 
+
+The current number of blank squares in the grid is shown above the grid. When a number is added to the last remaining blank square, a message appears saying whether the game has been won or not.
+
+Acknowledgement: The game uses software kindly made available by Firat Eski, at https://github.com/firateski/SudokuLibrary. The associated license for the software is included below.
+ 
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</value>
+  </data>
   <data name="HelpContentSweeper" xml:space="preserve">
     <value>The Leaf Sweeper Game is based on the traditional Minesweeper game, but the aim of this game is to sweep the leaves off a group of paving stones without disturbing two frogs resting under the leaves on two of the stones.
 
@@ -573,6 +589,9 @@ Would you like to play another game?</value>
   </data>
   <data name="String15" xml:space="preserve">
     <value>Note that screen readers may announce the menu button as the "OK" button or only as "button".</value>
+  </data>
+  <data name="String16" xml:space="preserve">
+    <value />
   </data>
   <data name="String2" xml:space="preserve">
     <value>When using a screen reader with the game, move your finger around the screen to have the number of the card beneath your finger announced. Double tap to turn up a card. When a turned up card is matched, its name will be prefixed with "Matched".</value>

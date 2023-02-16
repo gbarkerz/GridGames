@@ -50,6 +50,14 @@ namespace GridGames
 
                 SweeperHelpEditor.Focus();
             }
+            else if (currentPage is SudokuPage)
+            {
+                HelpPageTitle.Text = "Sudoku Help";
+
+                SudokuGameHelpContent.IsVisible = true;
+
+                SudokuHelpEditor.Focus();
+            }
 
             SemanticProperties.SetDescription(WheresHelpEditor, HelpPageTitle.Text); 
         }

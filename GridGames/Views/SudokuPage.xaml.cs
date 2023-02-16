@@ -231,7 +231,7 @@ public partial class SudokuPage : ContentPage
         var vm = this.BindingContext as SudokuViewModel;
         if (!vm.FirstRunSudoku)
         {
-            // Todo: Show Sudoku help content here.
+            await Navigation.PushModalAsync(new HelpPage(this));
         }
     }
 

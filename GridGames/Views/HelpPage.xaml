@@ -57,6 +57,13 @@
                     Text="{x:Static resources:AppResources.HelpContentSweeper}" />
             </ScrollView>
 
+            <ScrollView x:Name="SudokuGameHelpContent" Grid.Row="1" 
+                IsVisible="False"
+                Margin="4,4,4,2">
+                <Editor x:Name="SudokuHelpEditor" IsReadOnly="True" FontSize="Medium" 
+                    Text="{x:Static resources:AppResources.HelpContentSudoku}" />
+            </ScrollView>
+
             <Button Grid.Row="2" x:Name="CloseButton" 
                 windows:VisualElement.AccessKey="C"                                    
                 HorizontalOptions="End" Margin="0,8,4,4" Padding="8"
