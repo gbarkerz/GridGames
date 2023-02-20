@@ -8,7 +8,14 @@
     Title="{x:Static res:AppResources.GridGames}"
     FlyoutBackdrop="#80000000"
     FlyoutBehavior="Flyout">
-    
+
+    <FlyoutItem Title="Sudoku"
+                Icon="sudokugameicon.png">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate views:SudokuPage}" />
+        </Tab>
+    </FlyoutItem>
+
     <FlyoutItem Title="Leaf Sweeper"
                 Icon="sweepergameicon.png">
         <Tab>
@@ -34,13 +41,6 @@
                 Icon="wheresgameicon.png">
         <Tab>
             <ShellContent ContentTemplate="{DataTemplate views:WheresPage}" />
-        </Tab>
-    </FlyoutItem>
-
-    <FlyoutItem Title="Sudoku"
-                Icon="sudokugameicon.png">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate views:SudokuPage}" />
         </Tab>
     </FlyoutItem>
 

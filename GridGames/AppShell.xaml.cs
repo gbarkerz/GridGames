@@ -10,28 +10,28 @@ public partial class AppShell : Shell
         InitializeComponent();
 
         // By default, we show the Where's WCAG? game.
-        var initialGame = Preferences.Get("InitialGame", "Pairs");
+        var initialGame = Preferences.Get("InitialGame", "Sudoku");
 
         // Assume we know the order of the items in the app flyout.
         if (this.Items.Count > 0)
         {
-            if (initialGame == "Sweeper")
+            if (initialGame == "Sudoku")
             {
                 this.CurrentItem = this.Items[0];
             }
-            else if (initialGame == "Pairs")
+            else if (initialGame == "Sweeper")
             {
                 this.CurrentItem = this.Items[1];
             }
-            else if (initialGame == "Squares")
+            else if (initialGame == "Pairs")
             {
                 this.CurrentItem = this.Items[2];
             }
-            else if (initialGame == "Wheres")
+            else if (initialGame == "Squares")
             {
                 this.CurrentItem = this.Items[3];
             }
-            else if (initialGame == "Sudoku")
+            else if (initialGame == "Wheres")
             {
                 this.CurrentItem = this.Items[4];
             }

@@ -712,9 +712,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Sudoku game shows a grid of 9-by-9 squares. Most of the squares are blank when the game starts, but some of the squares show a number from 1 to 9. The number of squares showing a number depends on the current game settings. To win the game, type a number from 1 to 9 in each of the blank squares, such that each row and each column in the game contains the numbers 1 to 9. No number can be duplicated on any row or any column. Use the arrow keys to move between squares in the grid.
-        ///
-        ///In addition, the grid  [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to The Sudoku game shows a grid of 9-by-9 squares. Most of the squares are blank when the game starts, but some of the squares show a number from 1 to 9. The number of squares showing a number depends on the current game settings. To win the game, type a number from 1 to 9 in each of the blank squares, such that each row and each column in the game contains the numbers 1 to 9. No number can be duplicated on any row or any column. Use the arrow keys to move between squares in the grid, and when you&apos;ve reached a [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string HelpContentSudoku {
             get {
@@ -963,6 +961,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pairs Help.
+        /// </summary>
+        internal static string PairsHelpEditor {
+            get {
+                return ResourceManager.GetString("PairsHelpEditor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pairs Settings.
         /// </summary>
         internal static string PairsSettings {
@@ -1197,6 +1204,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Squares Help.
+        /// </summary>
+        internal static string SquaresHelpEditor {
+            get {
+                return ResourceManager.GetString("SquaresHelpEditor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Squares Settings.
         /// </summary>
         internal static string SquaresSettings {
@@ -1406,6 +1422,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sudoku Help.
+        /// </summary>
+        internal static string SudokuHelpEditor {
+            get {
+                return ResourceManager.GetString("SudokuHelpEditor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The Sudoku game is ready to play!.
         /// </summary>
         internal static string SudokuReadyToPlay {
@@ -1447,6 +1472,15 @@ namespace GridGames.ResX {
         internal static string Sweeper {
             get {
                 return ResourceManager.GetString("Sweeper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leaf Sweeper Help.
+        /// </summary>
+        internal static string SweeperHelpEditor {
+            get {
+                return ResourceManager.GetString("SweeperHelpEditor", resourceCulture);
             }
         }
         
@@ -2583,6 +2617,15 @@ namespace GridGames.ResX {
         internal static string WheresGameHelp {
             get {
                 return ResourceManager.GetString("WheresGameHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Where&apos;s WCAG Help.
+        /// </summary>
+        internal static string WheresHelpEditor {
+            get {
+                return ResourceManager.GetString("WheresHelpEditor", resourceCulture);
             }
         }
         

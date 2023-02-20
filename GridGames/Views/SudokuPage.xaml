@@ -60,7 +60,17 @@
 
         <Grid>
 
-            <skia:SKCanvasView PaintSurface="SKCanvasView_PaintSurface" />
+            <!-- Note: When the Grid Games app was first built, binding a game's "FirstRun" property 
+                to the visibility of the CollectionView led to exceptions due to the dynamic height
+                calculations for the rows. So to avoid this, the Opacity was bound instead. This 
+                approach would typically be avoided because that can lead to the visual interface
+                being satisfactory, but the programmatic interface of the game being broken. In this
+                particular case, both interfaces seem ok, but this binding needs to be revisited to 
+                see if the visibility binding can work now. -->
+            
+            <skia:SKCanvasView PaintSurface="SKCanvasView_PaintSurface"
+                Opacity="{Binding FirstRunSudoku, Mode=OneWay,
+                        Converter={StaticResource FirstRunToGridOpacity}}" />
 
             <CollectionView Margin="0"
                 x:Name="SudokuCollectionView"

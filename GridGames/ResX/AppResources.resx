@@ -359,12 +359,18 @@ Press and release the Alt key to have any available access keys shown. For examp
 At the top left corner of the game is the Open Navigation button, which can be used to move to another game. Please note when a screen reader moves to the drop-down menu available from the Open Navigation button, it may announce a meaningless name for all the items in the menu. If so, please use the screen reader's navigation commands to move into the menu item, and the screen reader can then announce the text shown on the menu item.</value>
   </data>
   <data name="HelpContentSudoku" xml:space="preserve">
-    <value>The Sudoku game shows a grid of 9-by-9 squares. Most of the squares are blank when the game starts, but some of the squares show a number from 1 to 9. The number of squares showing a number depends on the current game settings. To win the game, type a number from 1 to 9 in each of the blank squares, such that each row and each column in the game contains the numbers 1 to 9. No number can be duplicated on any row or any column. Use the arrow keys to move between squares in the grid.
+    <value>The Sudoku game shows a grid of 9-by-9 squares. Most of the squares are blank when the game starts, but some of the squares show a number from 1 to 9. The number of squares showing a number depends on the current game settings. To win the game, type a number from 1 to 9 in each of the blank squares, such that each row and each column in the game contains the numbers 1 to 9. No number can be duplicated on any row or any column. Use the arrow keys to move between squares in the grid, and when you've reached a square of interest, type the number to be added to the square. To clear a number you added earlier, press the Space or Enter keys.
 
-In addition, the grid is divided into nine 3-by-3 groups, with the group 1 containing the nine squares at the top left of the grid, and group 9 containing the nine squares at the bottom right of the grid. Each group must contain the numbers 1 to 9, with no number duplicated in the group. 
+In addition, the grid is divided into nine 3-by-3 groups, with group 1 containing the nine squares at the top left of the grid, and group 9 containing the nine squares at the bottom right of the grid. Each group must contain the numbers 1 to 9, with no number duplicated in the group. 
 
 The current number of blank squares in the grid is shown above the grid. When a number is added to the last remaining blank square, a message appears saying whether the game has been won or not.
 
+Screen Reader Usage: When playing the game with a screen reader, the Sudoku grid of squares is announced as a Grid with a name of "Sudoku Games". The grid contains a collection of 81 Cells, and a Cell's name is the number shown on the Cell, followed by "Fixed", if the number cannot be changed, or "Guess", if the number has been added to the square by you. If no number is shown on the Cell, its name is "No number shown". The additional information associated with a Cell is the Cell's group, followed by its row and column information. For example, if when the game starts the square at the top left corner of the grid shows the number 3, then a screen reader will announce "3 Fixed, Cell" when navigating to the square. And depending on the screen reader's settings, may then go on to announce "Group 1, Row 1 Column 1". 
+
+When action is taken at a square, the game encourages a screen reader to announce the new state of the square. For example, if you add a number to a square, a screen reader may say "Now 8 Guess", or if you clear a number from a square, a screen reader may say "Now No number shown". 
+
+Tip: Pressing the right arrow when at the last square in a row, will move you to the start of the following row. Similarly pressing the left arrow when at the first square in a row, will move you to the end of the previous row. This means that it's easy to move between rows unintentionally, so please take care when considering what numbers are shown along a specific row that you don't move between rows.
+`
 Acknowledgement: The game uses software kindly made available by Firat Eski, at https://github.com/firateski/SudokuLibrary. The associated license for the software is included below.
  
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -474,6 +480,9 @@ Would you like to play another game?</value>
   <data name="PairsGameHelp" xml:space="preserve">
     <value>Pairs Help</value>
   </data>
+  <data name="PairsHelpEditor" xml:space="preserve">
+    <value>Pairs Help</value>
+  </data>
   <data name="PairsSettings" xml:space="preserve">
     <value>Pairs Settings</value>
   </data>
@@ -552,6 +561,9 @@ Would you like to play another game?</value>
   <data name="SquaresGameHelp" xml:space="preserve">
     <value>Squares Help</value>
   </data>
+  <data name="SquaresHelpEditor" xml:space="preserve">
+    <value>Squares Help</value>
+  </data>
   <data name="SquaresSettings" xml:space="preserve">
     <value>Squares Settings</value>
   </data>
@@ -623,6 +635,9 @@ Would you like to play another game?</value>
   <data name="SudokuDifficultyLevelInstructions" xml:space="preserve">
     <value>Select the number of blank squares in the grid when a new game is started.</value>
   </data>
+  <data name="SudokuHelpEditor" xml:space="preserve">
+    <value>Sudoku Help</value>
+  </data>
   <data name="SudokuReadyToPlay" xml:space="preserve">
     <value>The Sudoku game is ready to play!</value>
   </data>
@@ -637,6 +652,9 @@ Would you like to play another game?</value>
   </data>
   <data name="Sweeper" xml:space="preserve">
     <value>Leaf Sweeper</value>
+  </data>
+  <data name="SweeperHelpEditor" xml:space="preserve">
+    <value>Leaf Sweeper Help</value>
   </data>
   <data name="SweeperSettings" xml:space="preserve">
     <value>Sweeper Settings</value>
@@ -1017,6 +1035,9 @@ The help content can be reached via the menu button at the top left corner of th
   </data>
   <data name="WheresGameHelp" xml:space="preserve">
     <value>Where's WCAG? Help</value>
+  </data>
+  <data name="WheresHelpEditor" xml:space="preserve">
+    <value>Where's WCAG Help</value>
   </data>
   <data name="WheresSettings" xml:space="preserve">
     <value>Where's WCAG? Settings</value>

@@ -20,12 +20,13 @@
                     TextColor="{AppThemeBinding Light=White, Dark=White}"
                     HorizontalOptions="Center" VerticalOptions="Center" />
             </Grid>
-            
+
             <ScrollView x:Name="WheresGameHelpContent" Grid.Row="1"
                 IsVisible="False"
                 Margin="4,4,4,2">
                 <!-- Labels don't seem scrollable with the keyboard here, so use an Editor instead. -->
                 <Editor x:Name="WheresHelpEditor" IsReadOnly="True" FontSize="Medium" 
+                    SemanticProperties.Description="{x:Static resources:AppResources.WheresHelpEditor}"
                     Text="{x:Static resources:AppResources.HelpContentWheres}" />
                 <!--<Label FontSize="Medium">
                     <Label.FormattedText>
@@ -40,6 +41,7 @@
                 IsVisible="False"
                 Margin="4,4,4,2">
                 <Editor x:Name="PairsHelpEditor" IsReadOnly="True" FontSize="Medium" 
+                    SemanticProperties.Description="{x:Static resources:AppResources.PairsHelpEditor}"
                     Text="{x:Static resources:AppResources.HelpContentPairs}" />
             </ScrollView>
 
@@ -47,6 +49,7 @@
                 IsVisible="False"
                 Margin="4,4,4,2">
                 <Editor x:Name="SquaresHelpEditor" IsReadOnly="True" FontSize="Medium" 
+                    SemanticProperties.Description="{x:Static resources:AppResources.SquaresHelpEditor}"
                     Text="{x:Static resources:AppResources.HelpContentSquares}" />
             </ScrollView>
 
@@ -54,6 +57,7 @@
                 IsVisible="False"
                 Margin="4,4,4,2">
                 <Editor x:Name="SweeperHelpEditor" IsReadOnly="True" FontSize="Medium" 
+                    SemanticProperties.Description="{x:Static resources:AppResources.SweeperHelpEditor}"
                     Text="{x:Static resources:AppResources.HelpContentSweeper}" />
             </ScrollView>
 
@@ -61,6 +65,7 @@
                 IsVisible="False"
                 Margin="4,4,4,2">
                 <Editor x:Name="SudokuHelpEditor" IsReadOnly="True" FontSize="Medium" 
+                    SemanticProperties.Description="{x:Static resources:AppResources.SudokuHelpEditor}"
                     Text="{x:Static resources:AppResources.HelpContentSudoku}" />
             </ScrollView>
 
