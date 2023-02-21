@@ -18,6 +18,7 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
+            <localviews:FirstRunToGridIsEnabled x:Key="FirstRunToGridIsEnabled" />
             <localviews:FirstRunToGridOpacity x:Key="FirstRunToGridOpacity" />
             <localviews:SweeperCollectionViewHeightToRowHeight x:Key="SweeperCollectionViewHeightToRowHeight" />
             <localviews:SweeperLabelContainerHeightToFontSize x:Key="SweeperLabelContainerHeightToFontSize" />
@@ -60,6 +61,8 @@
             <CollectionView
                 x:Name="SweeperCollectionView"
                 SemanticProperties.Description="{x:Static resources:AppResources.SweeperSquares}"               
+                IsEnabled="{Binding FirstRunSweeper, Mode=OneWay,
+                    Converter={StaticResource FirstRunToGridIsEnabled}}"
                 Opacity="{Binding FirstRunSweeper, Mode=OneWay,
                     Converter={StaticResource FirstRunToGridOpacity}}"
                 VerticalScrollBarVisibility="Never"

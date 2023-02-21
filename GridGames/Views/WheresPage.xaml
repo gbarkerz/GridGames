@@ -15,6 +15,7 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
+            <localviews:FirstRunToGridIsEnabled x:Key="FirstRunToGridIsEnabled" />
             <localviews:FirstRunToGridOpacity x:Key="FirstRunToGridOpacity" />
             <localviews:WheresLabelContainerHeightToFontSize x:Key="WheresLabelContainerHeightToFontSize" />
             <localviews:WCAGTitleToQuestion x:Key="WCAGTitleToQuestion" />
@@ -74,6 +75,8 @@
             <CollectionView Grid.Row="1"
                 x:Name="SquaresCollectionView"
                 SemanticProperties.Description="WCAG Groups"
+                IsEnabled="{Binding FirstRunWheres, Mode=OneWay,
+                    Converter={StaticResource FirstRunToGridIsEnabled}}"
                 Opacity="{Binding FirstRunWheres, Mode=OneWay,
                     Converter={StaticResource FirstRunToGridOpacity}}"
                 SelectionMode="Single" 

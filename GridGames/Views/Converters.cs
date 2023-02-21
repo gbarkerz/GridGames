@@ -580,6 +580,21 @@ namespace GridGames.Views
         }
     }
 
+    public class FirstRunToGridIsEnabled : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var firstRun = (bool)value;
+
+            return !firstRun;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class FirstRunToGridOpacity : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -603,6 +618,29 @@ namespace GridGames.Views
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class FirstRunLoadingSquaresToGridIsEnabled : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if ((values == null) || (values.Length < 2) || (values[0] == null) || (values[1] == null))
+            {
+                return 0;
+            }
+
+            var firstRunSquares = (bool)values[0];
+            var gameIsLoading = (bool)values[1];
+
+            bool gridEnabled = !firstRunSquares && !gameIsLoading;
+
+            return gridEnabled;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

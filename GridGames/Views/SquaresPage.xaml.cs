@@ -654,6 +654,10 @@ namespace GridGames.Views
 
                 vm.GameIsLoading = false;
 
+                vm.RaiseDelayedNotificationEvent(
+                    AppResources.ResourceManager.GetString("GameReady"),
+                    1000);
+
 #if WINDOWS
                 var platformAction = new GridGamesPlatformAction();
                 platformAction.SetGridCollectionViewAccessibleData(SquaresCollectionView);

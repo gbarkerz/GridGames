@@ -18,6 +18,7 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
+            <localviews:FirstRunToGridIsEnabled x:Key="FirstRunToGridIsEnabled" />
             <localviews:FirstRunToGridOpacity x:Key="FirstRunToGridOpacity" />
             <localviews:SudokuCollectionViewHeightToRowHeight x:Key="SudokuCollectionViewHeightToRowHeight" />
             <localviews:SudokuLabelContainerHeightToFontSize x:Key="SudokuLabelContainerHeightToFontSize" />
@@ -61,12 +62,12 @@
         <Grid>
 
             <!-- Note: When the Grid Games app was first built, binding a game's "FirstRun" property 
-                to the visibility of the CollectionView led to exceptions due to the dynamic height
-                calculations for the rows. So to avoid this, the Opacity was bound instead. This 
-                approach would typically be avoided because that can lead to the visual interface
-                being satisfactory, but the programmatic interface of the game being broken. In this
-                particular case, both interfaces seem ok, but this binding needs to be revisited to 
-                see if the visibility binding can work now. -->
+                to the IsVisible property of the CollectionView led to incorrect sizing of the rows 
+                in the grid. So to avoid this, the Opacity and isEnabled were bound instead. This sort
+                of approach would typically be avoided because that can lead to the visual interface  
+                being satisfactory, but the programmatic interface of the game being broken. In this 
+                particular case, both interfaces do seem satisfactory, but this binding needs to be 
+                revisited at some point to see if the IsVisible binding can be made to work. -->
             
             <skia:SKCanvasView PaintSurface="SKCanvasView_PaintSurface"
                 Opacity="{Binding FirstRunSudoku, Mode=OneWay,
@@ -75,6 +76,8 @@
             <CollectionView Margin="0"
                 x:Name="SudokuCollectionView"
                 SemanticProperties.Description="{x:Static resources:AppResources.SudokuSquares}"               
+                IsEnabled="{Binding FirstRunSudoku, Mode=OneWay,
+                    Converter={StaticResource FirstRunToGridIsEnabled}}"
                 Opacity="{Binding FirstRunSudoku, Mode=OneWay,
                     Converter={StaticResource FirstRunToGridOpacity}}"
                 VerticalScrollBarVisibility="Never"

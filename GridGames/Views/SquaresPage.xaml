@@ -17,6 +17,7 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
+            <localviews:FirstRunLoadingSquaresToGridIsEnabled x:Key="FirstRunLoadingSquaresToGridIsEnabled" />
             <localviews:FirstRunLoadingSquaresToGridOpacity x:Key="FirstRunLoadingSquaresToGridOpacity" />
             <localviews:CollectionViewHeightToRowHeight x:Key="CollectionViewHeightToRowHeight" />
             <localviews:LabelContainerHeightToFontSize x:Key="LabelContainerHeightToFontSize" />
@@ -55,6 +56,12 @@
                 VerticalScrollBarVisibility="Never"
                 SelectionMode="Single"
                 ItemsSource="{Binding SquareListCollection}">
+                <CollectionView.IsEnabled>
+                    <MultiBinding Mode="OneWay" Converter="{StaticResource FirstRunLoadingSquaresToGridIsEnabled}">
+                        <Binding Source="{x:Reference SquaresPageInstance}" Path="BindingContext.FirstRunSquares" />
+                        <Binding Source="{x:Reference SquaresPageInstance}" Path="BindingContext.GameIsLoading" />
+                    </MultiBinding>
+                </CollectionView.IsEnabled>
                 <CollectionView.Opacity>
                     <MultiBinding Mode="OneWay" Converter="{StaticResource FirstRunLoadingSquaresToGridOpacity}">
                         <Binding Source="{x:Reference SquaresPageInstance}" Path="BindingContext.FirstRunSquares" />
