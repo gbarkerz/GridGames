@@ -58,7 +58,7 @@ namespace GridGames.Views
         {
 #if WINDOWS
             var platformAction = new GridGamesPlatformAction();
-            platformAction.SetGridCollectionViewAccessibleData(SweeperCollectionView);
+            platformAction.SetGridCollectionViewAccessibleData(SweeperCollectionView, false);
 #endif
         }
 
@@ -416,7 +416,7 @@ namespace GridGames.Views
             timer.Dispose();
 
             var platformAction = new GridGamesPlatformAction();
-            platformAction.SetGridCollectionViewAccessibleData(SweeperCollectionView);
+            platformAction.SetGridCollectionViewAccessibleData(SweeperCollectionView, false);
 #endif
         }
 

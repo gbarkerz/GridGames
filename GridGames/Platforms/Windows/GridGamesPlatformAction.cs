@@ -16,7 +16,7 @@ public partial class GridGamesPlatformAction
 #if WINDOWS
 
     // Set any platform-specific accessibility properties on the grid and its items.
-    public partial void SetGridCollectionViewAccessibleData(CollectionView collectionView)
+    public partial void SetGridCollectionViewAccessibleData(CollectionView collectionView, bool includeGroupData)
     {
         try
         {
@@ -60,7 +60,7 @@ public partial class GridGamesPlatformAction
 
                                 int groupIndex = (3 * (int)(rowIndex / 3)) + (columnIndex / 3);
 
-                                var helpText = "Group " + (groupIndex + 1).ToString() + ", " + 
+                                var helpText = (includeGroupData ? "Group " + (groupIndex + 1).ToString() + ", " : "") + 
                                     rowString + " " + (rowIndex + 1) + " " +
                                         columnString + " " + (columnIndex + 1);
 

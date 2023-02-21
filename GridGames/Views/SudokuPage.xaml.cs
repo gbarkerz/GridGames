@@ -25,7 +25,7 @@ public partial class SudokuPage : ContentPage
     {
 #if WINDOWS
         var platformAction = new GridGamesPlatformAction();
-        platformAction.SetGridCollectionViewAccessibleData(SudokuCollectionView);
+        platformAction.SetGridCollectionViewAccessibleData(SudokuCollectionView, true);
 #endif
     }
 
@@ -263,7 +263,7 @@ public partial class SudokuPage : ContentPage
         timer.Dispose();
 
         var platformAction = new GridGamesPlatformAction();
-        platformAction.SetGridCollectionViewAccessibleData(SudokuCollectionView);
+        platformAction.SetGridCollectionViewAccessibleData(SudokuCollectionView, true);
 #endif
     }
 

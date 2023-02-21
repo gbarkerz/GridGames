@@ -6,7 +6,7 @@ namespace InvokePlatformCode.Services.PartialMethods
 #if WINDOWS
 
         public partial void SetGridItemCollectionViewAccessibleData(CollectionView collectionView, int itemIndex, int row, int column);
-        public partial void SetGridCollectionViewAccessibleData(CollectionView collectionView);
+        public partial void SetGridCollectionViewAccessibleData(CollectionView collectionView, bool includeGroupData);
 
         public partial Task<string> GetPairsPictureFolder();
 
