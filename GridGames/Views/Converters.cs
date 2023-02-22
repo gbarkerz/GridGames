@@ -26,7 +26,13 @@ namespace GridGames.Views
             var containerHeightPixels = (double)value;
 
             // Todo: Consider being a little more precise here...
-            return 0.67 * (containerHeightPixels / 9.0);
+            double scale = 0.67;
+
+#if ANDROID
+            scale = 0.5;
+#endif
+
+            return scale * (containerHeightPixels / 9.0);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -227,6 +233,10 @@ namespace GridGames.Views
             else if (gameLost && hasFrog)
             {
                 text = "\uf52e" + " " + "\uf119";
+
+#if ANDROID
+                text = "\uf119";
+#endif
             }
 
             return text;

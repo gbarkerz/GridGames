@@ -174,6 +174,19 @@ namespace GridGames.ViewModels
                 }
             }
 
+            public string AccessibleDescription
+            {
+                get
+                {
+                    int rowIndex = (index / 9);
+                    int columnIndex = (index % 9);
+
+                    int groupIndex = (3 * (int)(rowIndex / 3)) + (columnIndex / 3);
+
+                    return "Group " + (groupIndex + 1).ToString();
+                }
+            }
+
             private int index;
             public int Index
             {

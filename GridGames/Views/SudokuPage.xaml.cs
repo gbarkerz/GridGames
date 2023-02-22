@@ -123,6 +123,7 @@ public partial class SudokuPage : ContentPage
         }
     }
 
+#if WINDOWS
     public async void HandleNumberInput(Windows.System.VirtualKey key)
     {
         var item = SudokuCollectionView.SelectedItem as SudokuViewModel.Square;
@@ -228,6 +229,7 @@ public partial class SudokuPage : ContentPage
             }
         }
     }
+#endif 
 
     public async void ShowHelp()
     {
@@ -281,7 +283,10 @@ public partial class SudokuPage : ContentPage
         var view = sender as SKCanvasView;
 
         SKPaint paint = new SKPaint();
-        paint.Color = SKColor.Parse("000000");
+
+        // Account for the current app theme being either light or dark.
+        paint.Color = (Application.Current.RequestedTheme == AppTheme.Dark ?
+                        SKColor.Parse("FFFF00") : SKColor.Parse("2B0B98"));
 
         float width = view.CanvasSize.Width;
         float height = view.CanvasSize.Height;
