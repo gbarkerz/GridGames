@@ -1,3 +1,4 @@
+using CommunityToolkit.Maui.Views;
 using GridGames.ResX;
 using GridGames.ViewModels;
 using InvokePlatformCode.Services.PartialMethods;
@@ -120,6 +121,48 @@ public partial class SudokuPage : ContentPage
                 var msg = "Now " + item.AccessibleName;
                 vm.RaiseNotificationEvent(msg);
             }
+#if ANDROID
+            else 
+            {
+                var popup = new SudokuInputPopup();
+
+                var result = await this.ShowPopupAsync(popup) as string;
+                if (result != "")
+                {
+                    var vm = this.BindingContext as SudokuViewModel;
+                    if (!item.NumberShown) 
+                    {
+                        --vm.CurrentBlankSquareCount;
+
+                        item.NumberShown = true;
+                    }
+
+                    item.Number = result.ToString();
+
+                    var msg = "Now " + item.AccessibleName;
+                    vm.RaiseNotificationEvent(msg);
+
+                    bool gameWon;
+
+                    if (vm.IsGridFilled(out gameWon)) {
+                        var answer = await DisplayAlert(
+                            "Sudoku",
+                            (gameWon ? "Congratulations, you won the game!" : "Sorry, the grid is not correct.") +
+                                " Would you like another game?",
+                            AppResources.ResourceManager.GetString("Yes"),
+                            AppResources.ResourceManager.GetString("No"));
+                        if (answer) {
+                            RestartGame();
+                        }
+                    }
+                }
+            }
+
+            // Unselect all items in order for the next tap to select an item and
+            // always trigger a reaction even if it's the same as the most recent 
+            // tapped item.
+            SudokuCollectionView.SelectedItem = null;
+#endif
         }
     }
 
@@ -229,6 +272,7 @@ public partial class SudokuPage : ContentPage
             }
         }
     }
+
 #endif 
 
     public async void ShowHelp()

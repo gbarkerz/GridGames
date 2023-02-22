@@ -26,7 +26,7 @@ namespace GridGames.ViewModels
                 {
                     SetProperty(ref sideLength, value);
 
-                    Preferences.Set("sideLength", value);
+                    Preferences.Set("SideLength", value);
                 }
             }
         }

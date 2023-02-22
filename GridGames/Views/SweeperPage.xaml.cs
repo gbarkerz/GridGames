@@ -1,4 +1,5 @@
-﻿using GridGames.ResX;
+﻿using CommunityToolkit.Maui.Views;
+using GridGames.ResX;
 using GridGames.ViewModels;
 using InvokePlatformCode.Services.PartialMethods;
 using System.Diagnostics;
@@ -186,8 +187,30 @@ namespace GridGames.Views
 
             if (IsFirstTurnUp())
             {
-                vm.InitialiseGrid(item.targetIndex);
+                vm.InitialiseGrid(item.TargetIndex);
             }
+
+#if ANDROID
+            var popup = new SweeperMarkFrogPopup();
+
+            // Unselect all items in order for the next tap to select an item and
+            // always trigger a reaction even if it's the same as the most recent 
+            // tapped item.
+            SweeperCollectionView.SelectedItem = null;
+
+            var result = await this.ShowPopupAsync(popup) as string;
+            if (String.IsNullOrEmpty(result)) 
+            {
+                return;
+            }
+
+            if (result == "MarkFrog") 
+            {
+                SetShowsQueryFrogInSquare(item.TargetIndex, !item.ShowsQueryFrog);
+
+                return;
+            }
+#endif
 
             bool gameIsLost = vm.ActOnInputOnSquare(item.targetIndex);
             if (gameIsLost)
@@ -326,6 +349,8 @@ namespace GridGames.Views
             {
                 vm.SweeperListCollection[itemIndex].ShowsQueryFrog = showQueryFrog;
             }
+
+            SweeperCollectionView.SelectedItem = null;
         }
 
         private async Task OfferToRestartWonGame()

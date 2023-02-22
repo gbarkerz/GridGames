@@ -455,8 +455,14 @@ namespace GridGames.Views
 
             int scaler = int.Parse(parameter as string);
 
-            //return (containerHeightPixels * 0.25) / scaler;
-            return 0.67 * (containerHeightPixels * 0.25) / scaler;
+            // Todo: Consider being a little more precise here...
+            double platformScaler = 0.67;
+
+#if ANDROID
+            platformScaler = 0.4;
+#endif
+
+            return platformScaler * (containerHeightPixels * 0.25) / scaler;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
