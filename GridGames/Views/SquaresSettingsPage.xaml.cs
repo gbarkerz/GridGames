@@ -74,7 +74,7 @@ namespace GridGames
                 // Barker: For now only load jpg images.
                 options.FileTypes = FilePickerFileType.Images;
 
-                var result = await FilePicker.PickAsync(options);
+                var result = await FilePicker.Default.PickAsync(options);
                 if (result != null)
                 {
                     var settingsViewModel = this.BindingContext as SquareSettingsViewModel;

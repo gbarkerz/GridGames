@@ -109,7 +109,10 @@
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>         
                                     
-                                <Button Grid.Row="0" x:Name="PictureBrowseButton" 
+                                <!-- IMPORTANT: Android throws an exception if the MAUI The FilePicker
+                                    is dismissed in the app, so until this is resolved, disable showing
+                                    custom pictures in the game. -->
+                                <Button IsEnabled="False" Grid.Row="0" x:Name="PictureBrowseButton" 
                                     windows:VisualElement.AccessKey="B"                                    
                                     Text="{x:Static resources:AppResources.BrowsePicture}"
                                     Clicked="PictureBrowseButton_Clicked" />
