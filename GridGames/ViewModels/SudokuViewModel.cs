@@ -183,7 +183,13 @@ namespace GridGames.ViewModels
 
                     int groupIndex = (3 * (int)(rowIndex / 3)) + (columnIndex / 3);
 
-                    return "Group " + (groupIndex + 1).ToString();
+                    string rowColumnData = "";
+
+#if IOS
+                    rowColumnData = ", Row " + (rowIndex + 1) + " Column " + (columnIndex + 1);
+#endif
+
+                    return "Group " + (groupIndex + 1).ToString() + rowColumnData;
                 }
             }
 

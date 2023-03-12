@@ -25,29 +25,29 @@
     </ContentPage.Resources>
 
     <Shell.TitleView>
-        <Grid Padding="0" 
-              BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}">
+        <Grid Margin="0,0,0,-50">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Grid.ColumnSpan="2" 
+            <Label Grid.Column="0"
                 Text="{x:Static resources:AppResources.Wheres}"
                 SemanticProperties.HeadingLevel="Level1" FontSize="Title"
-                TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}"
-                HorizontalOptions="Center" VerticalOptions="Center" />
+                TextColor="{StaticResource White}"
+                Margin="8,0,0,0" HorizontalOptions="Start" VerticalOptions="StartAndExpand" />
             <Button Grid.Column="1" x:Name="WheresSettingsButton"
                 Text="&#xf013;" 
                 Clicked="WheresGameSettingsButton_Clicked"
+                TextColor="{StaticResource White}"
                 BorderWidth="0"
                 windows:VisualElement.AccessKey="S"
-                FontFamily="FA" FontSize="Title" HorizontalOptions="End"
+                FontFamily="FA" FontSize="Title" HorizontalOptions="End" VerticalOptions="StartAndExpand"
                 SemanticProperties.Description="{x:Static resources:AppResources.WheresSettings}" />
         </Grid>
     </Shell.TitleView>
 
     <ContentPage.Content>
-        <Grid x:Name="PageGrid">
+        <Grid x:Name="PageGrid" Margin="0,0,0,-50">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />

@@ -28,7 +28,7 @@ namespace GridGames.Views
             // Todo: Consider being a little more precise here...
             double scale = 0.67;
 
-#if ANDROID
+#if !WINDOWS
             scale = 0.5;
 #endif
 
@@ -234,7 +234,7 @@ namespace GridGames.Views
             {
                 text = "\uf52e" + " " + "\uf119";
 
-#if ANDROID
+#if !WINDOWS
                 text = "\uf119";
 #endif
             }
@@ -458,7 +458,7 @@ namespace GridGames.Views
             // Todo: Consider being a little more precise here...
             double platformScaler = 0.67;
 
-#if ANDROID
+#if !WINDOWS
             platformScaler = 0.4;
 #endif
 

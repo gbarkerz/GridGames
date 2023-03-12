@@ -190,7 +190,7 @@ namespace GridGames.Views
                 vm.InitialiseGrid(item.TargetIndex);
             }
 
-#if ANDROID
+#if !WINDOWS
             var popup = new SweeperMarkFrogPopup();
 
             // Unselect all items in order for the next tap to select an item and

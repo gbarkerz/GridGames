@@ -22,22 +22,22 @@
     </ContentPage.Resources>
 
     <Shell.TitleView>
-        <Grid Padding="0"
-              BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}">
+        <Grid Margin="0,0,0,-50">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Grid.ColumnSpan="2"
+            <Label Grid.Column="0"
                 Text="{x:Static resources:AppResources.Pairs}"
                 SemanticProperties.HeadingLevel="Level1" FontSize="Title"
-                TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}"
-                HorizontalOptions="Center" VerticalOptions="Center" />
+                TextColor="{StaticResource White}"
+                Margin="8,0,0,0" HorizontalOptions="Start" VerticalOptions="StartAndExpand" />
             <Button Grid.Column="1" Text="&#xf013;" x:Name="PairsSettingsButton"
                 Clicked="MatchingGameSettingsButton_Clicked"
                 BorderWidth="0"
+                TextColor="{StaticResource White}"
                 windows:VisualElement.AccessKey="S"
-                FontFamily="FA" FontSize="Title" HorizontalOptions="End"
+                FontFamily="FA" FontSize="Title" HorizontalOptions="End" VerticalOptions="StartAndExpand"
                 SemanticProperties.Description="{x:Static resources:AppResources.PairsSettings}" />
         </Grid>
     </Shell.TitleView>

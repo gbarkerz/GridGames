@@ -17,9 +17,20 @@ public partial class SudokuPage : ContentPage
 	{
 		InitializeComponent();
 
+#if IOS
+        SemanticProperties.SetDescription(WelcomeBorder, null);
+#endif
+
         SudokuCollectionView.Loaded += SudokuCollectionView_Loaded;
 
         SudokuCollectionView.SelectionChanged += SudokuCollectionView_SelectionChanged;
+
+#if IOS
+        // At this time, VoiceOver won't navigate to the items in a CollectionView
+        // if the CollectionView has a SemanticProperties.Description. So for now,
+        // remove the Description on iOS.
+        SemanticProperties.SetDescription(SudokuCollectionView, null);
+#endif
     }
 
     private void SudokuCollectionView_Loaded(object sender, EventArgs e)
@@ -121,8 +132,8 @@ public partial class SudokuPage : ContentPage
                 var msg = "Now " + item.AccessibleName;
                 vm.RaiseNotificationEvent(msg);
             }
-#if ANDROID
-            else 
+#if !WINDOWS
+            else
             {
                 var popup = new SudokuInputPopup();
 

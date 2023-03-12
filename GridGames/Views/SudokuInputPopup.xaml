@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
@@ -20,7 +20,7 @@
 
         <Grid.Resources>
             <Style x:Key="buttonStyle" TargetType="Button" >
-                <Setter Property="Margin" Value="8,8,8,8" />
+                <Setter Property="Margin" Value="4,4,4,4" />
                 <Setter Property="Padding" Value="12,12,12,12" />
                 <Setter Property="FontSize" Value="Large" />
                 <Setter Property="SemanticProperties.Hint" Value="Set this number on the Sudoku square." />

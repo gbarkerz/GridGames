@@ -18,8 +18,8 @@
               BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}">
             <Label Text="Bonus WCAG Question!"
                 SemanticProperties.HeadingLevel="Level1" FontSize="Title"
-                TextColor="{AppThemeBinding Light=White, Dark=White}"
-                HorizontalOptions="Center" VerticalOptions="Center" />
+                TextColor="{StaticResource White}"
+                Margin="8,0,0,0" HorizontalOptions="Start" />
         </Grid>
 
         <Grid Grid.Row="1" Margin="0" Padding="0" 

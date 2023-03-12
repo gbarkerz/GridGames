@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              x:Name="SudokuPageInstance"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -10,6 +10,7 @@
              xmlns:drawable="clr-namespace:GridGames.Views"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
+             BackgroundColor="Blue"
              Title="{Binding Title}">
 
     <ContentPage.BindingContext>
@@ -27,31 +28,25 @@
     </ContentPage.Resources>
 
     <Shell.TitleView>
-        <Grid Padding="0"
-              BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}">
+        <Grid Margin="0,0,0,-50">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Label Grid.Column="0" Grid.ColumnSpan="2"
+            <Label Grid.Column="0"
                 Text="{x:Static resources:AppResources.Sudoku}"
                 SemanticProperties.HeadingLevel="Level1" FontSize="Title"
-                TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}"
-                HorizontalOptions="Center" VerticalOptions="Center" />
-            <Button Grid.Column="3" x:Name="SudokuSettingsButton"
-                Text="&#xf013;" 
+                TextColor="{StaticResource White}"
+                Margin="8,0,0,0" HorizontalOptions="Start" VerticalOptions="StartAndExpand" />
+            <Button x:Name="SudokuSettingsButton" Grid.Column="1"
+                Text="&#xf013;"
+                TextColor="{StaticResource White}"
                 SemanticProperties.Description="{x:Static resources:AppResources.SudokuSettings}"
                 AutomationId="SudokuSettingsButton"
                 Clicked="SudokuSettingsButton_Clicked"
                 BorderWidth="0"
                 windows:VisualElement.AccessKey="S"
-                FontFamily="FA" FontSize="Title" HorizontalOptions="End" />
+                FontFamily="FA" FontSize="Title" HorizontalOptions="End" VerticalOptions="StartAndExpand" />
         </Grid>
     </Shell.TitleView>
 

@@ -3,9 +3,6 @@ using GridGames.ViewModels;
 using System.Diagnostics;
 using System.Globalization;
 
-#if ANDROID
-#endif
-
 using InvokePlatformCode.Services.PartialMethods;
 
 namespace GridGames
@@ -202,11 +199,8 @@ namespace GridGames
 
                 string pathToPictures = "";
 
-#if WINDOWS
                 var platformAction = new GridGamesPlatformAction();
                 pathToPictures = await platformAction.GetPairsPictureFolder();
-#endif
-
                 if (!String.IsNullOrWhiteSpace(pathToPictures))
                 {
                     // The selected folder must contain exactly the required number of pictures in it.
