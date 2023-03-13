@@ -58,14 +58,14 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <Grid BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}">
+            <Grid BackgroundColor="{StaticResource Primary}">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand"
                     BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}">
                     <Label Text="Count of blank squares: "
-                        TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}"
+                        TextColor="{StaticResource White}"
                         HorizontalOptions="Center" VerticalOptions="Center" />
                     <Label Text="{Binding CurrentBlankSquareCount}" Margin="4,0,20,0"
-                        TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}"
+                        TextColor="{StaticResource White}"
                         HorizontalOptions="Center" VerticalOptions="Center" />
                 </StackLayout>
             </Grid>
