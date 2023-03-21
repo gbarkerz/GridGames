@@ -21,22 +21,6 @@
                     HorizontalOptions="Center" VerticalOptions="Center" />
             </Grid>
 
-            <ScrollView x:Name="WheresGameHelpContent" Grid.Row="1"
-                IsVisible="False"
-                Margin="4,4,4,2">
-                <!-- Labels don't seem scrollable with the keyboard here, so use an Editor instead. -->
-                <Editor x:Name="WheresHelpEditor" IsReadOnly="True" FontSize="Medium" 
-                    SemanticProperties.Description="{x:Static resources:AppResources.WheresHelpEditor}"
-                    Text="{x:Static resources:AppResources.HelpContentWheres}" />
-                <!--<Label FontSize="Medium">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Text="{x:Static resources:AppResources.HelpContentWheres}" />
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>-->
-            </ScrollView>
-
             <ScrollView x:Name="MatchingGameHelpContent" Grid.Row="1" 
                 IsVisible="False"
                 Margin="4,4,4,2">

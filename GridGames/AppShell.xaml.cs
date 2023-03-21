@@ -31,21 +31,13 @@ public partial class AppShell : Shell
             {
                 this.CurrentItem = this.Items[3];
             }
-            else if (initialGame == "Wheres")
-            {
-                this.CurrentItem = this.Items[4];
-            }
         }
 
         this.Loaded += AppShell_Loaded;
     }
 
-    public static WCAGPage AppWCAGPage;
-
     private void AppShell_Loaded(object sender, EventArgs e)
     {
-        AppWCAGPage = new WCAGPage();
-
 #if !WINDOWS
         // Currently keyboard support is only available on Windows.
         HelpMenuItem.Text = HelpMenuItem.Text.Replace(" (F1)", "");
@@ -78,14 +70,6 @@ public partial class AppShell : Shell
         {
             var vm = (CurrentPage as SweeperPage).BindingContext as SweeperViewModel;
             if (!vm.FirstRunSweeper)
-            {
-                await Navigation.PushModalAsync(new HelpPage(currentPage));
-            }
-        }
-        else if (currentPage is WheresPage)
-        {
-            var vm = (CurrentPage as WheresPage).BindingContext as WheresViewModel;
-            if (!vm.FirstRunWheres)
             {
                 await Navigation.PushModalAsync(new HelpPage(currentPage));
             }
@@ -131,14 +115,6 @@ public partial class AppShell : Shell
                 var sweeperPage = (CurrentPage as SweeperPage);
 
                 sweeperPage.RestartGame(false);
-            }
-        }
-        else if (currentPage is WheresPage)
-        {
-            var vm = (CurrentPage as WheresPage).BindingContext as WheresViewModel;
-            if (!vm.FirstRunWheres)
-            {
-                vm.ResetGrid(true);
             }
         }
         else if (currentPage is SudokuPage)

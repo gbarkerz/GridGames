@@ -34,14 +34,6 @@ namespace GridGames
 
                 SquaresHelpEditor.Focus();
             }
-            else if (currentPage is WheresPage)
-            {
-                HelpPageTitle.Text = "Where's WCAG? Help";
-
-                WheresGameHelpContent.IsVisible = true;
-
-                WheresHelpEditor.Focus();
-            }
             else if (currentPage is SweeperPage)
             {
                 HelpPageTitle.Text = "Leaf Sweeper Help";
@@ -58,8 +50,6 @@ namespace GridGames
 
                 SudokuHelpEditor.Focus();
             }
-
-            SemanticProperties.SetDescription(WheresHelpEditor, HelpPageTitle.Text); 
         }
 
         private async void CloseButton_Clicked(object sender, EventArgs e)

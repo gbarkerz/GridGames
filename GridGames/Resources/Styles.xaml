@@ -38,14 +38,6 @@
 
     <!-- Barker: Add these Where's WCAG-related colours. Investigate how all this and 
         the associated converters can be replaced with something less complicated. -->
-    <Color x:Key="WheresTextColor">Black</Color>
-    <Color x:Key="WheresBackgroundColor">White</Color>
-    <Color x:Key="WheresTextColorDark">White</Color>
-    <Color x:Key="WheresBackgroundColorDark">Black</Color>
-    <Color x:Key="WheresAnsweredTextColor">White</Color>
-    <Color x:Key="WheresAnsweredBackgroundColor">Green</Color>
-    <Color x:Key="WheresAnsweredTextColorDark">White</Color>
-    <Color x:Key="WheresAnsweredBackgroundColorDark">Green</Color>
     <Color x:Key="SquaresNumberBackgroundColor">White</Color>
      
     <Style TargetType="ActivityIndicator">

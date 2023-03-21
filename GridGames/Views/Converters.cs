@@ -473,27 +473,6 @@ namespace GridGames.Views
         }
     }
 
-    public class WheresLabelContainerHeightToFontSize : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var containerHeightPixels = (double)value;
-
-            // Future: Properly account for line height etc. For now, just shrink the value.
-            // Also this reduces the size to account for tall cells in portrait orientation.
-
-            // Note: The container here is the main CollectionView, and we have 4 rows.
-            return (containerHeightPixels * 0.3) * 0.25;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var intValue = (int)value;
-
-            return (Aspect)intValue;
-        }
-    }
-
     public class CardFaceUpToImageWidth : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -507,87 +486,6 @@ namespace GridGames.Views
             var containerWidthPixels = (double)values[1];
 
             return faceUp ? containerWidthPixels : 0;
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class WheresAnsweredToTextColor : IMultiValueConverter
-    {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (values == null || (values.Length < 2))
-            {
-                return "";
-            }
-
-            if ((values[0] == null) || (values[1] == null))
-            {
-                return "";
-            }
-
-            bool isFound = (bool)values[0];
-            bool showDarkTheme = (bool)values[1];
-
-            var colorName = "WheresTextColor";
-
-            if (showDarkTheme)
-            {
-                colorName = isFound ? "WheresAnsweredTextColorDark" : "WheresTextColorDark";
-            }
-            else
-            {
-                if (isFound)
-                {
-                    colorName = "WheresAnsweredTextColor";
-                }
-            }
-
-            return App.Current.Resources[colorName];
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class WheresAnsweredToBackgroundColor : IMultiValueConverter
-    {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (values == null || (values.Length < 2))
-            {
-                return "";
-            }
-
-            if ((values[0] == null) || (values[1] == null))
-            {
-                return "";
-            }
-
-            bool isFound = (bool)values[0];
-            bool showDarkTheme = (bool)values[1];
-
-            var colorName = "WheresBackgroundColor";
-
-            if (showDarkTheme)
-            {
-                colorName = isFound ? "WheresAnsweredBackgroundColorDark" : "WheresBackgroundColorDark";
-            }
-            else
-            {
-                if (isFound)
-                {
-                    colorName = "WheresAnsweredBackgroundColor";
-                }
-            }
-
-            return App.Current.Resources[colorName];
-
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
