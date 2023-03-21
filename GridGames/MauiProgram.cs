@@ -2,6 +2,7 @@
 using GridGames.Views;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using CommunityToolkit.Maui;
+using GridGames.ViewModels;
 
 namespace GridGames;
 
@@ -153,8 +154,26 @@ public static class MauiProgram
                  (e.Key == Windows.System.VirtualKey.Down))
         {
             timeOfMostRecentArrowKeyPress = DateTime.Now; 
+
+            if ((e.Key == Windows.System.VirtualKey.Right) ||
+                (e.Key == Windows.System.VirtualKey.Left))
+            {
+                HandleLeftRightArrowPress(e);
+            }
         }
     }
+
+    static private void HandleLeftRightArrowPress(Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+    {
+        var currentPage = (Application.Current.MainPage as Microsoft.Maui.Controls.Shell).CurrentPage;
+        if (currentPage is SudokuPage)
+        {
+            // If necessary, suppress the default action resulting from a press
+            // of a left or right arrow key.
+            (currentPage as SudokuPage).HandleLeftRightArrow(e);
+        }
+    }
+
 #endif 
 
     public static MauiApp CreateMauiApp()

@@ -178,6 +178,24 @@ public partial class SudokuPage : ContentPage
     }
 
 #if WINDOWS
+    // If keyboard focus is at the start or end of a row in the grid, don't move to 
+    // an adjacent row in response to a press of a left or right arrow key press.
+    public void HandleLeftRightArrow(Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+    {
+        var square = SudokuCollectionView.SelectedItem as SudokuViewModel.Square;
+        if (square != null)
+        {
+            bool isStartOfRow = (square.Index % 9) == 0;
+            bool isEndOfRow = (square.Index % 9) == 8;
+
+            if ((isStartOfRow && (e.Key == Windows.System.VirtualKey.Left)) ||
+                (isEndOfRow && (e.Key == Windows.System.VirtualKey.Right)))
+            {
+                e.Handled = true;
+            }
+        }
+    }
+
     public async void HandleNumberInput(Windows.System.VirtualKey key)
     {
         var item = SudokuCollectionView.SelectedItem as SudokuViewModel.Square;
