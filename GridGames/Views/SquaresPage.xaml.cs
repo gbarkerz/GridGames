@@ -85,6 +85,10 @@ namespace GridGames.Views
         {
             InitializeComponent();
 
+#if WINDOWS
+            GameTitleLabel.HorizontalOptions = LayoutOptions.Center;
+#endif
+
 #if IOS
             SemanticProperties.SetDescription(WelcomeBorder, null);
 #endif
@@ -571,6 +575,28 @@ namespace GridGames.Views
                 SquaresCollectionView.Focus();
             }
         }
+
+#if WINDOWS
+        // If keyboard focus is at the start or end of a row in the grid, don't move to 
+        // an adjacent row in response to a press of a left or right arrow key press.
+        public void HandleLeftRightArrow(Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            var square = SquaresCollectionView.SelectedItem as SquaresViewModel.Square;
+            if (square != null)
+            {
+                int itemCollectionIndex = GetItemCollectionIndexFromItemAccessibleName(square.AccessibleName);
+
+                bool isStartOfRow = (itemCollectionIndex % 4) == 0;
+                bool isEndOfRow = (itemCollectionIndex % 4) == 3;
+
+                if ((isStartOfRow && (e.Key == Windows.System.VirtualKey.Left)) ||
+                    (isEndOfRow && (e.Key == Windows.System.VirtualKey.Right)))
+                {
+                    e.Handled = true;
+                }
+            }
+        }
+#endif
 
         public void RestartGame()
         {

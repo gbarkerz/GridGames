@@ -19,6 +19,10 @@ namespace GridGames.Views
         {
             InitializeComponent();
 
+#if WINDOWS
+            GameTitleLabel.HorizontalOptions = LayoutOptions.Center;
+#endif
+
 #if IOS
             SemanticProperties.SetDescription(WelcomeBorder, null);
 #endif
@@ -405,6 +409,29 @@ namespace GridGames.Views
                 SweeperCollectionView.Focus();
             }
         }
+
+#if WINDOWS
+        // If keyboard focus is at the start or end of a row in the grid, don't move to 
+        // an adjacent row in response to a press of a left or right arrow key press.
+        public void HandleLeftRightArrow(Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            var square = SweeperCollectionView.SelectedItem as SweeperViewModel.Square;
+            if (square != null)
+            {
+                var vm = this.BindingContext as SweeperViewModel;
+
+                bool isStartOfRow = (square.TargetIndex % vm.SweeperSettingsVM.SideLength) == 0;
+                bool isEndOfRow = ((square.TargetIndex % vm.SweeperSettingsVM.SideLength) == 
+                                        vm.SweeperSettingsVM.SideLength - 1);
+
+                if ((isStartOfRow && (e.Key == Windows.System.VirtualKey.Left)) ||
+                    (isEndOfRow && (e.Key == Windows.System.VirtualKey.Right)))
+                {
+                    e.Handled = true;
+                }
+            }
+        }
+#endif
 
         private Timer timer;
 

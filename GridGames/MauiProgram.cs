@@ -150,10 +150,24 @@ public static class MauiProgram
     static private void HandleLeftRightArrowPress(Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
     {
         var currentPage = (Application.Current.MainPage as Microsoft.Maui.Controls.Shell).CurrentPage;
-        if (currentPage is SudokuPage)
+
+        // If necessary, suppress the default action resulting from a press
+        // of a left or right arrow key.
+        var page = currentPage as MatchingPage;
+        if (page != null)
         {
-            // If necessary, suppress the default action resulting from a press
-            // of a left or right arrow key.
+            page.HandleLeftRightArrow(e);
+        }
+        else if (currentPage is SquaresPage)
+        {
+            (currentPage as SquaresPage).HandleLeftRightArrow(e);
+        }
+        else if (currentPage is SweeperPage)
+        {
+            (currentPage as SweeperPage).HandleLeftRightArrow(e);
+        }
+        else if (currentPage is SudokuPage)
+        {
             (currentPage as SudokuPage).HandleLeftRightArrow(e);
         }
     }

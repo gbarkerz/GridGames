@@ -31,7 +31,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0"
+            <Label Grid.Column="0" x:Name="GameTitleLabel"
                 Text="{x:Static resources:AppResources.Squares}"
                 SemanticProperties.HeadingLevel="Level1" FontSize="Title"
                 TextColor="{StaticResource White}"

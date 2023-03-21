@@ -17,6 +17,10 @@ public partial class SudokuPage : ContentPage
 	{
 		InitializeComponent();
 
+#if WINDOWS
+        GameTitleLabel.HorizontalOptions = LayoutOptions.Center;
+#endif
+
 #if IOS
         SemanticProperties.SetDescription(WelcomeBorder, null);
 #endif
