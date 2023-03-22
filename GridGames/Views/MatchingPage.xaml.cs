@@ -338,6 +338,14 @@ namespace GridGames.Views
                     vm.SetupDefaultMatchingCardList();
                 }
 
+#if WINDOWS
+                timer = new Timer(
+                    new TimerCallback((s) => SetRowColumnData()),
+                               null,
+                               TimeSpan.FromMilliseconds(500),
+                               TimeSpan.FromMilliseconds(Timeout.Infinite));
+#endif
+
                 customPictureLoadFailed = resetToUseDefaultPictures;
             }
 
