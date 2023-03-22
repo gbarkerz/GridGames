@@ -91,10 +91,12 @@ public partial class AppShell : Shell
         var currentPage = this.CurrentPage;
         if (currentPage is MatchingPage)
         {
-            var vm = (CurrentPage as MatchingPage).BindingContext as MatchingViewModel;
-            if (!vm.FirstRunMatching)
+            var vm = (CurrentPage as SquaresPage).BindingContext as SquaresViewModel;
+            if (!vm.FirstRunSquares)
             {
-                vm.ResetGrid(true);
+                var pairsPage = (CurrentPage as MatchingPage);
+
+                pairsPage.RestartGame();
             }
         }
         else if (currentPage is SquaresPage)

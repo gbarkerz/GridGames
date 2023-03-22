@@ -605,6 +605,14 @@ namespace GridGames.Views
                 {
                     vm.ResetGrid();
                 }
+
+#if WINDOWS
+                timer = new Timer(
+                    new TimerCallback((s) => SetRowColumnData()),
+                               null,
+                               TimeSpan.FromMilliseconds(2000),
+                               TimeSpan.FromMilliseconds(Timeout.Infinite));
+#endif
             }
         }
 
