@@ -392,14 +392,19 @@ namespace GridGames.ViewModels
             {
                 // This must be the second card turned over in an attempt to find a match.
                 secondCardInMatchAttempt = card;
-                TurnUpCard(card);
 
                 // Has a match been found?
                 var cardNameFirst = firstCardInMatchAttempt.OriginalAccessibleName;
                 var cardNameSecond = secondCardInMatchAttempt.OriginalAccessibleName;
 
+                // For some reason custom notifications made around the time that the Congratulations
+                // dialog appears, prevent NVDA from announcing the dialog. So only make the "Turned up"
+                // and "That's a match" custom notifications here if the Congratulations dialog does
+                // not get presented.
                 if (cardNameFirst == cardNameSecond)
                 {
+                    card.FaceUp = true;
+
                     // We have a match!
                     firstCardInMatchAttempt.Matched = true;
 
@@ -415,13 +420,16 @@ namespace GridGames.ViewModels
 
                     SetAccessibleDetails(secondCardInMatchAttempt);
 
-                    RaiseNotificationEvent(AppResources.ResourceManager.GetString("ThatsMatch"));
-
                     firstCardInMatchAttempt = null;
                     secondCardInMatchAttempt = null;
 
                     // Has the game been won?
                     gameIsWon = GameIsWon();
+
+                    if (!gameIsWon)
+                    {
+                        RaiseNotificationEvent(AppResources.ResourceManager.GetString("ThatsMatch"));
+                    }
                 }
                 else
                 {
@@ -429,6 +437,8 @@ namespace GridGames.ViewModels
                     card.CurrentAccessibleDescription = card.OriginalAccessibleDescription;
 
                     SetAccessibleDetails(card);
+
+                    TurnUpCard(card);
                 }
             }
 

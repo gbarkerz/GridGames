@@ -95,7 +95,7 @@ namespace GridGames.ViewModels
             Debug.WriteLine("Delay notification: \"" +
                 notification + "\"");
 
-            // If multiple custom announcements are attempted in sucession,
+            // If multiple custom announcements are attempted in succession,
             // only announce the most recent.
             mostRecentDelayedAnnouncement = notification;
 

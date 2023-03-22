@@ -265,11 +265,6 @@ namespace GridGames.ViewModels
             else
             {
                 TurnUpNearbyCards(SquareIndex);
-
-                RaiseNotificationEvent("Swept stone " + 
-                    (SquareIndex + 1).ToString() + 
-                    ", " +
-                    square.AccessibleName);
             }
 
             return gameIsLost;

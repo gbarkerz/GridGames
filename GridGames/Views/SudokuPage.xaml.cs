@@ -286,9 +286,6 @@ public partial class SudokuPage : ContentPage
 
         item.Number = number.ToString();
 
-        var msg = "Now " + item.AccessibleName;
-        vm.RaiseNotificationEvent(msg);
-
         bool gameWon;
 
         if (vm.IsGridFilled(out gameWon))
@@ -303,6 +300,11 @@ public partial class SudokuPage : ContentPage
             {
                 RestartGame();
             }
+        }
+        else
+        {
+            var msg = "Now " + item.AccessibleName;
+            vm.RaiseNotificationEvent(msg);
         }
     }
 

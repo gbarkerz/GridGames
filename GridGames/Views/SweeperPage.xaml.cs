@@ -232,6 +232,14 @@ namespace GridGames.Views
             else
             {
                 await IsGameWon();
+
+                if (!vm.GameWon)
+                {
+                    vm.RaiseNotificationEvent("Swept stone " +
+                        (item.targetIndex + 1).ToString() +
+                        ", " +
+                        item.AccessibleName);
+                }
             }
         }
 

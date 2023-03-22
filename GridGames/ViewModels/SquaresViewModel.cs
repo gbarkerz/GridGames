@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.IO;
-using System.Reflection;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Xaml;
 using GridGames.ResX;
-using GridGames.Views;
-using System.Diagnostics;
-using InvokePlatformCode.Services.PartialMethods;
 
 namespace GridGames.ViewModels
 {
@@ -243,34 +233,38 @@ namespace GridGames.ViewModels
                 }
             }
 
-            // Make an announcement regardless of whether a square is moved.
-
-            // If we found an adjacent empty square, swap the clicked square with the empty square.
-            if ((emptySquareIndex != -1) && (emptySquareIndex != SquareIndex))
+            // Make an announcement regardless of whether a square is moved. But don't
+            // make an announcement if the game is won in case that might impact the 
+            // announcement of the Congratulations dialog.
+            if (!gameIsWon)
             {
-                ++MoveCount;
-
-                var clickedSquareName = squareList[SquareIndex].AccessibleName;
-
-                // Now swap the item.
-                (squareList[emptySquareIndex], squareList[SquareIndex]) =
-                    (squareList[SquareIndex], squareList[emptySquareIndex]);
-
-                squareSwapped = true;
-
-                // Has the game been won?
-                gameIsWon = GameIsWon(squareList);
-                if (!gameIsWon)
+                // If we found an adjacent empty square, swap the clicked square with the empty square.
+                if ((emptySquareIndex != -1) && (emptySquareIndex != SquareIndex))
                 {
-                    string announcement = resManager.GetString("Moved") +
-                        " " + clickedSquareName + " " + direction + ".";
+                    ++MoveCount;
+
+                    var clickedSquareName = squareList[SquareIndex].AccessibleName;
+
+                    // Now swap the item.
+                    (squareList[emptySquareIndex], squareList[SquareIndex]) =
+                        (squareList[SquareIndex], squareList[emptySquareIndex]);
+
+                    squareSwapped = true;
+
+                    // Has the game been won?
+                    gameIsWon = GameIsWon(squareList);
+                    if (!gameIsWon)
+                    {
+                        string announcement = resManager.GetString("Moved") +
+                            " " + clickedSquareName + " " + direction + ".";
+                        RaiseNotificationEvent(announcement);
+                    }
+                }
+                else
+                {
+                    string announcement = resManager.GetString("NoMovePossible");
                     RaiseNotificationEvent(announcement);
                 }
-            }
-            else
-            {
-                string announcement = resManager.GetString("NoMovePossible");
-                RaiseNotificationEvent(announcement);
             }
 
             return gameIsWon;

@@ -127,15 +127,6 @@ namespace GridGames.Views
         {
             if ((sender as Border).IsVisible)
             {
-                /*
-                var vm = this.BindingContext as MatchingViewModel;
-
-                vm.RaiseDelayedNotificationEvent(
-                    SquaresWelcomeTitleLabel.Text + ", " +
-                    SquaresWelcomeTitleInstructions.Text,
-                    4000);
-                */
-
                 SquaresCollectionView.IsVisible = false;
 
                 WelcomeMessageCloseButton.Focus();
