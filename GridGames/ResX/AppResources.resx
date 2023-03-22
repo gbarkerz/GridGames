@@ -343,7 +343,7 @@ Press the F1 key to show this Help content, or the F5 key to restart a game.
 
 Press and release the Alt key to have any available access keys shown. For example, press Alt+S to have the game's Settings page shown. To have your own pictures shown in the game, along with custom accessible names and descriptions, please follow the steps described in the Settings page.
 
-At the top left corner of the game is the Open Navigation button, which can be used to move to another game. Please note when a screen reader moves to the drop-down menu available from the Open Navigation button, it may announce a meaningless name for all the items in the menu. If so, please use the screen reader's navigation commands to move into the menu item, and the screen reader can then announce the text shown on the menu item.</value>
+At the top left corner of the game is the Open Navigation button, which can be used to restart this game or to move to another game.</value>
   </data>
   <data name="HelpContentSquares" xml:space="preserve">
     <value>The Squares Game is based on a square sliding puzzle, where squares in a grid of squares are rearranged by the player to form an ordered sequence of squares in the grid.
@@ -356,7 +356,7 @@ Press the F1 key to show this Help content, or the F5 key to restart a game.
 
 Press and release the Alt key to have any available access keys shown. For example, press Alt+S to have the game's Settings page shown. To have your own picture shown in the game, please follow the steps described in the Settings page.
 
-At the top left corner of the game is the Open Navigation button, which can be used to move to another game. Please note when a screen reader moves to the drop-down menu available from the Open Navigation button, it may announce a meaningless name for all the items in the menu. If so, please use the screen reader's navigation commands to move into the menu item, and the screen reader can then announce the text shown on the menu item.</value>
+At the top left corner of the game is the Open Navigation button, which can be used to restart this game or to move to another game.</value>
   </data>
   <data name="HelpContentSudoku" xml:space="preserve">
     <value>The Sudoku game shows a grid of 9-by-9 squares. Most of the squares are blank when the game starts, but some of the squares show a number from 1 to 9. The number of squares showing a number depends on the current game settings. To win the game, type a number from 1 to 9 in each of the blank squares, such that each row and each column in the game contains the numbers 1 to 9. No number can be duplicated on any row or any column. Use the arrow keys to move between squares in the grid, and when you've reached a square of interest, type the number to be added to the square. To clear a number you added earlier, press the Space or Enter keys.
@@ -369,8 +369,12 @@ Screen Reader Usage: When playing the game with a screen reader, the Sudoku grid
 
 When action is taken at a square, the game encourages a screen reader to announce the new state of the square. For example, if you add a number to a square, a screen reader may say "Now 8 Guess", or if you clear a number from a square, a screen reader may say "Now No number shown". 
 
-Tip: Pressing the right arrow when at the last square in a row, will move you to the start of the following row. Similarly pressing the left arrow when at the first square in a row, will move you to the end of the previous row. This means that it's easy to move between rows unintentionally, so please take care when considering what numbers are shown along a specific row that you don't move between rows.
-`
+Note that pressing the right arrow when at the last square in a row, or the left arrow when at the first square in a row, will not move you to another row. Instead you will stay on the current square.
+
+Press the F1 key to show this Help content, or the F5 key to restart a game. 
+
+At the top left corner of the game is the Open Navigation button, which can be used to restart this game or to move to another game.
+
 Acknowledgement: The game uses software kindly made available by Firat Eski, at https://github.com/firateski/SudokuLibrary. The associated license for the software is included below.
  
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -389,7 +393,9 @@ When you feel you know that a stone must have a frog resting beneath its leaves,
 
 Once all paving stones in the grid which don't have resting frogs on them have been cleared, you've won the game. If while playing the game you click on a stone which does have a resting frog on it, the game is lost. If the game is lost, both resting frogs will be revealed.
 
-Press the F1 key to show this Help content, or the F5 key to restart a game.</value>
+Press the F1 key to show this Help content, or the F5 key to restart a game.
+
+At the top left corner of the game is the Open Navigation button, which can be used to restart this game or to move to another game.</value>
   </data>
   <data name="IncorrectWCAG" xml:space="preserve">
     <value>{0} isn't {1}.</value>
