@@ -995,6 +995,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Optionally provide a name to be shown when the game is completed..
+        /// </summary>
+        internal static string PictureNameInstructions {
+            get {
+                return ResourceManager.GetString("PictureNameInstructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Picture Name:.
         /// </summary>
         internal static string PictureNameLabel {

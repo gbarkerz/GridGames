@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-    <TargetFrameworks>net7.0-windows10.0.22621.0</TargetFrameworks>
+    <TargetFrameworks></TargetFrameworks>
     <!--<TargetFrameworks>net7.0-android33.0</TargetFrameworks>-->
     
     <OutputType>Exe</OutputType>
@@ -136,8 +136,8 @@
 	  <None Remove="Resources\DefaultMatchingBackgrounds\Card7.jpg" />
 	  <None Remove="Resources\DefaultMatchingBackgrounds\Card8.jpg" />
 	  <None Remove="Resources\Images\card1.jpg" />
+	  <None Remove="Resources\Splash\splashscreen.png" />
 	  <None Remove="squaresgameicon.png" />
-	  <None Remove="wheresgameicon.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -189,9 +189,6 @@
 	  <MauiXaml Update="Views\SudokuSettingsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\WCAGPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="Views\SweeperSettingsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -204,11 +201,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiSplashScreen Include="Resources\Splash\splashscreen.svg" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <PackageReference Include="CommunityToolkit.Maui" Version="3.1.0" />
+	  <PackageReference Include="CommunityToolkit.Maui" Version="5.0.0" />
 	  <PackageReference Include="SkiaSharp" Version="2.88.3" />
 	  <PackageReference Include="SkiaSharp.Views" Version="2.88.3" />
 	  <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.3" />
@@ -220,6 +213,10 @@
 	  <Reference Include="Sudoku">
 	    <HintPath>..\..\SudokuLibrary\Sudoku\bin\Debug\netstandard1.4\Sudoku.dll</HintPath>
 	  </Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiSplashScreen Include="Resources\Splash\splashscreen.png" />
 	</ItemGroup>
 
 </Project>

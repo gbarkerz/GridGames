@@ -480,6 +480,9 @@ Would you like to play another game?</value>
   <data name="PictureAspectLabel" xml:space="preserve">
     <value>Scale type</value>
   </data>
+  <data name="PictureNameInstructions" xml:space="preserve">
+    <value>Optionally provide a name to be shown when the game is completed.</value>
+  </data>
   <data name="PictureNameLabel" xml:space="preserve">
     <value>Picture Name:</value>
   </data>

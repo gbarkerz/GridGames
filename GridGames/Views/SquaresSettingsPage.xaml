@@ -144,7 +144,7 @@
                             </Grid>
 
                             <StackLayout Grid.Row="3" Margin="10,20,0,0">
-                                <Label Text="Optionally provide a name to be shown when the game is completed." />
+                                <Label Text="{x:Static resources:AppResources.PictureNameInstructions}" />
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -158,7 +158,8 @@
                                         windows:VisualElement.AccessKey="M"
                                         VerticalTextAlignment="Center"
                                         Text="{Binding PictureName, Mode=TwoWay}" 
-                                        SemanticProperties.Description="{x:Static resources:AppResources.PictureNameLabel}" />
+                                        SemanticProperties.Description="{x:Static resources:AppResources.PictureNameLabel}"
+                                        SemanticProperties.Hint="{x:Static resources:AppResources.PictureNameInstructions}" />
                                 </Grid>
                             </StackLayout>
                                 

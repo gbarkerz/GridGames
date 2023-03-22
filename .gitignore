@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 /GridGames/Properties/PublishProfiles/MSIX-win10-x64.pubxml
 /GridGamesAndroid.keystore
+/GridGames/GridGamesAndroid.keystore
+/GridGamesAndroid.keystore_SAFE
