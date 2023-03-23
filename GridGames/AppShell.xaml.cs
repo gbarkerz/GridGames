@@ -124,7 +124,9 @@ public partial class AppShell : Shell
             var vm = (CurrentPage as SudokuPage).BindingContext as SudokuViewModel;
             if (!vm.FirstRunSudoku)
             {
-                vm.ResetGrid();
+                var sudokuPage = (CurrentPage as SudokuPage);
+
+                sudokuPage.RestartGame();
             }
         }
     }
