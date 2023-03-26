@@ -19,10 +19,6 @@ namespace GridGames
         {
             InitializeComponent();
 
-#if WINDOWS
-            PictureBrowseButton.IsEnabled = true;
-#endif
-
 #if IOS
             // VoiceOver doesn't navigate to controls contained in a Grid
             // that has an accessible name.

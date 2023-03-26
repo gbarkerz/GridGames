@@ -18,54 +18,59 @@ public class MainActivity : MauiAppCompatActivity
 
         base.OnActivityResult(requestCode, resultCode, data);
 
-        try
+        // Are we here due to the Pairs game showing the file picker?
+        if (requestCode == 11223344)
         {
-            // Has the player successfully made some selection when picking custom files for the Pairs game?
-            if (((data != null)) && (requestCode == 1234) && (resultCode == Result.Ok))
+            // Has the player successfully made some multi-selection?
+            if (((data != null)) && (resultCode == Result.Ok))
             {
                 // Check that the nine files were selected, (that is, 8 images and the description text file).
                 if ((data.ClipData != null) && (data.ClipData.ItemCount == 9))
                 {
-                    // Copy all the files of interest to a dedicated folder beneath the app's temp folder.
-                    var destinationFolder = Path.Combine(Path.GetTempPath(), "PairsGameCurrentPictures");
-
-                    // First delete any temporary folder we may have created earlier.
-                    if (Directory.Exists(destinationFolder))
+                    try
                     {
-                        Directory.Delete(destinationFolder, true);
-                    }
+                        // Copy all the files of interest to a dedicated folder beneath the app's temp folder.
+                        var destinationFolder = Path.Combine(Path.GetTempPath(), "PairsGameCurrentPictures");
 
-                    // Now create a new temporary folder to use.
-                    Directory.CreateDirectory(destinationFolder);
-
-                    // Process each file in the source folder in turn.
-                    for (int i = 0; i < 9; i++)
-                    {
-                        var file = data.ClipData.GetItemAt(i);
-
-                        // Take the following action to find the filename for each source file.
-                        Android.Net.Uri sourceUri = file.Uri;
-                        ICursor returnCursor = ContentResolver.Query(sourceUri, null, null, null, null);
-                        int nameIndex = returnCursor.GetColumnIndex(IOpenableColumns.DisplayName);
-                        returnCursor.MoveToFirst();
-                        var fileName = returnCursor.GetString(nameIndex);
-
-                        await CopyFile(sourceUri, destinationFolder, fileName);
-
-                        if (fileName == "PairsGamePictureDetails.txt")
+                        // First delete any temporary folder we may have created earlier.
+                        if (Directory.Exists(destinationFolder))
                         {
-                            result = Path.Combine(destinationFolder, fileName); ;
+                            Directory.Delete(destinationFolder, true);
                         }
+
+                        // Now create a new temporary folder to use.
+                        Directory.CreateDirectory(destinationFolder);
+
+                        // Process each file in the source folder in turn.
+                        for (int i = 0; i < 9; i++)
+                        {
+                            var file = data.ClipData.GetItemAt(i);
+
+                            // Take the following action to find the filename for each source file.
+                            Android.Net.Uri sourceUri = file.Uri;
+                            ICursor returnCursor = ContentResolver.Query(sourceUri, null, null, null, null);
+                            int nameIndex = returnCursor.GetColumnIndex(IOpenableColumns.DisplayName);
+                            returnCursor.MoveToFirst();
+                            var fileName = returnCursor.GetString(nameIndex);
+
+                            await CopyFile(sourceUri, destinationFolder, fileName);
+
+                            if (fileName == "PairsGamePictureDetails.txt")
+                            {
+                                result = Path.Combine(destinationFolder, fileName); ;
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Android OnActivityResult(): {0}", ex.Message);
                     }
                 }
             }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Android OnActivityResult(): {0}", ex.Message);
-        }
 
-        GetPairsPictureFolderCompletion.SetResult(result);
+            // The Pairs Setting page is waiting for this to be set.
+            GetPairsPictureFolderCompletion.SetResult(result);
+        }
 
         return;
     }

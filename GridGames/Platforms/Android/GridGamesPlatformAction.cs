@@ -21,7 +21,7 @@ public partial class GridGamesPlatformAction
             intent.PutExtra(Intent.ExtraAllowMultiple, true);
             intent.SetType("*/*");
 
-            Platform.CurrentActivity.StartActivityForResult(intent, 1234);
+            Platform.CurrentActivity.StartActivityForResult(intent, 11223344);
 
             // Now wait until the task is set to complete in OnActivityResult();
             result = await MainActivity.GetPairsPictureFolderCompletion.Task;

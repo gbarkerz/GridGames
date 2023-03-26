@@ -117,7 +117,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <Button Grid.Row="0" x:Name="PictureBrowseButton" 
+                            <Button Grid.Row="0"
                                 windows:VisualElement.AccessKey="P"
                                 Text="{x:Static resources:AppResources.SelectPicture}"
                                 Padding="10"
