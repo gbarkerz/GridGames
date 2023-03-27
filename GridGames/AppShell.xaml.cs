@@ -42,6 +42,10 @@ public partial class AppShell : Shell
         // Currently keyboard support is only available on Windows.
         HelpMenuItem.Text = HelpMenuItem.Text.Replace(" (F1)", "");
         RestartGameMenuItem.Text = RestartGameMenuItem.Text.Replace(" (F5)", "");
+#else
+        // Set minimum dimensions on the window on Windows.
+        Window.MinimumWidth = 600;
+        Window.MinimumHeight = 600;
 #endif
     }
 

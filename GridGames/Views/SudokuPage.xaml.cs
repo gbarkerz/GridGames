@@ -398,22 +398,20 @@ public partial class SudokuPage : ContentPage
 
         // Next draw the two vertical lines.
 
-        int thickness = 6;
-
-        var left = (width / 3) - (thickness / 2) + 1;
+        var left = (width / 3) - 3;
 
         height = itemHeight;
 
         rect = new SKRect(
-            left - 1,
+            left,
             0,
-            left + thickness,
+            left + 8,
             height);
 
         e.Surface.Canvas.DrawRect(rect, paint);
 
-        rect.Left = (2 * (width / 3)) - (thickness / 2) + 1;
-        rect.Right = rect.Left + thickness;
+        rect.Left = (2 * (width / 3)) - 3;
+        rect.Right = rect.Left + 8;
 
         e.Surface.Canvas.DrawRect(rect, paint);
     }
