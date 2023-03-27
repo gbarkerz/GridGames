@@ -70,7 +70,7 @@
                 </StackLayout>
             </Grid>
             
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" BackgroundColor="Transparent">
 
                 <!-- Note: When the Grid Games app was first built, binding a game's "FirstRun" property 
                     to the IsVisible property of the CollectionView led to incorrect sizing of the rows 
@@ -84,7 +84,7 @@
                     Opacity="{Binding FirstRunSudoku, Mode=OneWay,
                             Converter={StaticResource FirstRunToGridOpacity}}" />
 
-                <CollectionView Margin="0"
+                <CollectionView Margin="0" BackgroundColor="Transparent"
                     x:Name="SudokuCollectionView"
                     SemanticProperties.Description="{x:Static resources:AppResources.SudokuSquares}"
                     IsEnabled="{Binding FirstRunSudoku, Mode=OneWay,

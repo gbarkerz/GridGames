@@ -367,35 +367,48 @@ public partial class SudokuPage : ContentPage
         paint.Color = (Application.Current.RequestedTheme == AppTheme.Dark ?
                         SKColor.Parse("FFFF00") : SKColor.Parse("2B0B98"));
 
+        // Draw two horizonal bars and two vertical bars.
+
         float width = view.CanvasSize.Width;
         float height = view.CanvasSize.Height;
 
-        int thickness = 5;
+        var itemHeight = (float)(9 * ((int)(height) / 9)) - 9;
 
-        float itemHeight = (9 * ((int)height / 9)) / 9;
+        // First draw the two horizontal lines.
 
-        var top = ((itemHeight - 1) * 3) - 3;
+        var yLine = (float)(3.0 * itemHeight) / 9f;
 
         SKRect rect = new SKRect(
             0,
-            top, 
+            yLine - 2,
             width,
-            top + thickness);
+            yLine + 6);
 
         e.Surface.Canvas.DrawRect(rect, paint);
 
-        rect.Top = ((itemHeight - 1) * 6) - 3;
-        rect.Bottom = rect.Top + thickness;
+        yLine = (float)(6.0 * itemHeight) / 9f;
+
+        rect = new SKRect(
+            0,
+            yLine - 2,
+            width,
+            yLine + 6);
 
         e.Surface.Canvas.DrawRect(rect, paint);
+
+        // Next draw the two vertical lines.
+
+        int thickness = 6;
 
         var left = (width / 3) - (thickness / 2) + 1;
 
+        height = itemHeight;
+
         rect = new SKRect(
-            left,
+            left - 1,
             0,
             left + thickness,
-            height - 18);
+            height);
 
         e.Surface.Canvas.DrawRect(rect, paint);
 
