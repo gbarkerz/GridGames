@@ -99,6 +99,7 @@
                                     can navigate to the image from the list item. -->
                                 <Image
                                     SemanticProperties.Description="{Binding CurrentAccessibleDescription, Mode=OneWay}"
+                                    AutomationProperties.IsInAccessibleTree="{Binding FaceUp, Mode=OneWay}"
                                     InputTransparent="True"
                                     HeightRequest="{Binding 
                                         Source={x:Reference MatchingPageInstance},

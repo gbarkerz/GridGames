@@ -38,7 +38,7 @@ namespace GridGames.ViewModels
         {
             get
             {
-                return currentAccessibleDescription;
+                return (FaceUp ? currentAccessibleDescription : "");
             }
             set
             {
