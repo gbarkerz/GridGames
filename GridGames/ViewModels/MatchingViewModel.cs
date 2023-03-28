@@ -152,29 +152,6 @@ namespace GridGames.ViewModels
             TryAgainCount = 0;
         }
 
-        // Barker: TEMPORARY. It seems that https://github.com/dotnet/maui/issues/8722 is impacting
-        // the ability to update items' accessible names. Until this is resolved, this app takes
-        // a variety of steps which seems to get things working well enough for the player. The steps
-        // may seems excessive, but leave them here until issue 8722 is resolved, and this whole
-        // thing can be re-examined, (and hopefully all the temporary code removed).
-
-        // Take excessive action when setting the accessible name and description on an item.
-        // This seems to leave the item in a state that's usable for the player.
-        private void SetAccessibleDetails(Card card)
-        {
-            // Set the accessible name twice, which apparently leaves the bound UI in a usable state.
-            var temp = card.CurrentAccessibleName;
-            card.CurrentAccessibleName = card.CurrentAccessibleName + ".";
-            card.CurrentAccessibleName = temp;
-
-            // Set the accessible description twice, which apparently leaves the bound UI in a usable state.
-            temp = card.CurrentAccessibleDescription;
-            card.CurrentAccessibleDescription = card.CurrentAccessibleDescription + ".";
-            card.CurrentAccessibleDescription = temp;
-        }
-
-        // Barker: End of TEMPORARY code.
-
         private MatchingPage matchingPage;
 
         public void SetMatchingPage(MatchingPage matchingPage)
@@ -275,7 +252,6 @@ namespace GridGames.ViewModels
             for (int i = 0; i < this.squareList.Count; i++)
             {
                 SetFaceDownAccessibleDetails(this.squareList[i]);
-                SetAccessibleDetails(this.squareList[i]);
             }
         }
 
@@ -294,7 +270,6 @@ namespace GridGames.ViewModels
             for (int i = 0; i < this.squareList.Count; i++)
             {
                 SetFaceDownAccessibleDetails(this.squareList[i]);
-                SetAccessibleDetails(this.squareList[i]);
             }
         }
 
@@ -354,14 +329,12 @@ namespace GridGames.ViewModels
                 firstCardInMatchAttempt.FaceUp = false;
 
                 SetFaceDownAccessibleDetails(firstCardInMatchAttempt);
-                SetAccessibleDetails(firstCardInMatchAttempt);
 
                 firstCardInMatchAttempt = null;
 
                 secondCardInMatchAttempt.FaceUp = false;
 
                 SetFaceDownAccessibleDetails(secondCardInMatchAttempt);
-                SetAccessibleDetails(secondCardInMatchAttempt);
 
                 secondCardInMatchAttempt = null;
 
@@ -385,8 +358,6 @@ namespace GridGames.ViewModels
 
                 card.CurrentAccessibleName = card.OriginalAccessibleName;
                 card.CurrentAccessibleDescription = card.OriginalAccessibleDescription;
-
-                SetAccessibleDetails(card);
             }
             else
             {
@@ -411,14 +382,10 @@ namespace GridGames.ViewModels
                     firstCardInMatchAttempt.CurrentAccessibleName = "Matched " + firstCardInMatchAttempt.OriginalAccessibleName;
                     firstCardInMatchAttempt.CurrentAccessibleDescription = firstCardInMatchAttempt.OriginalAccessibleDescription;
 
-                    SetAccessibleDetails(firstCardInMatchAttempt);
-
                     secondCardInMatchAttempt.Matched = true;
 
                     secondCardInMatchAttempt.CurrentAccessibleName = "Matched " + secondCardInMatchAttempt.OriginalAccessibleName;
                     secondCardInMatchAttempt.CurrentAccessibleDescription = secondCardInMatchAttempt.OriginalAccessibleDescription;
-
-                    SetAccessibleDetails(secondCardInMatchAttempt);
 
                     firstCardInMatchAttempt = null;
                     secondCardInMatchAttempt = null;
@@ -435,8 +402,6 @@ namespace GridGames.ViewModels
                 {
                     card.CurrentAccessibleName = card.OriginalAccessibleName;
                     card.CurrentAccessibleDescription = card.OriginalAccessibleDescription;
-
-                    SetAccessibleDetails(card);
 
                     TurnUpCard(card);
                 }

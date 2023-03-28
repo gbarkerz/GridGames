@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-    <TargetFrameworks></TargetFrameworks>
-    <!--<TargetFrameworks>net7.0-android33.0</TargetFrameworks>-->
+    <!--<TargetFrameworks></TargetFrameworks>
+    <TargetFrameworks>net7.0-android33.0</TargetFrameworks>-->
     
     <OutputType>Exe</OutputType>
 		<RootNamespace>GridGames</RootNamespace>
@@ -21,8 +21,8 @@
 		<ApplicationIdGuid>26A7C75E-4B2E-45ED-B943-F3E16203F985</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>2.2</ApplicationDisplayVersion>
-		<ApplicationVersion>4</ApplicationVersion>
+		<ApplicationDisplayVersion>2.7</ApplicationDisplayVersion>
+		<ApplicationVersion>9</ApplicationVersion>
 
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.4</SupportedOSPlatformVersion>
     <DefaultLanguage>en</DefaultLanguage>
@@ -35,7 +35,7 @@
     <Configurations>Release;Debug</Configurations>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</TargetPlatformMinVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">28.0</SupportedOSPlatformVersion>
+    <!--<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">28.0</SupportedOSPlatformVersion>-->
   </PropertyGroup>
 
   <!-- This is the ApplicationId for iOS. -->
