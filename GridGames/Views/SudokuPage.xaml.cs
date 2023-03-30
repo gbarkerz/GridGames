@@ -2,9 +2,12 @@ using CommunityToolkit.Maui.Views;
 using GridGames.ResX;
 using GridGames.ViewModels;
 using InvokePlatformCode.Services.PartialMethods;
+using Microsoft.UI.Xaml.Controls;
 using SkiaSharp;
 using SkiaSharp.Views.Maui.Controls;
 using System.Diagnostics;
+using Windows.Media.Playback;
+using Windows.System;
 using Application = Microsoft.Maui.Controls.Application;
 
 namespace GridGames.Views;
@@ -87,7 +90,7 @@ public partial class SudokuPage : ContentPage
         }
     }
 
-    private void SudokuCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private void SudokuCollectionView_SelectionChanged(object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
     {
         timeOfMostRecentSelectionChanged = DateTime.Now;
 
@@ -356,6 +359,64 @@ public partial class SudokuPage : ContentPage
         var readyMessage = AppResources.ResourceManager.GetString("SudokuReadyToPlay");
         vm.RaiseNotificationEvent(readyMessage);
     }
+
+#if WINDOWS
+    public void RespondToArrowPress(VirtualKey key)
+    {
+        var square = SudokuCollectionView.SelectedItem as SudokuViewModel.Square;
+        if (square == null)
+        {
+            return;
+        }
+
+        var index = square.Index;
+
+        bool needsResponse = false;
+
+        if (((index % 9 == 0) && (key == VirtualKey.Left)) ||
+            ((index % 9 == 8) && (key == VirtualKey.Right)) ||
+            ((index < 9) && (key == VirtualKey.Up)) ||
+            ((index > 71) && (key == VirtualKey.Down)))
+        {
+            needsResponse = true;
+        }
+
+        if (needsResponse)
+        {
+            var vm = this.BindingContext as SudokuViewModel;
+
+            switch (vm.SudokuSettingsVM.SudokuNoMoveResponse)
+            {
+                case (int)SudokuNoMoveResponseChoices.PlaySound:
+                
+                    mediaElement.Stop();
+                    mediaElement.Play();
+
+                    break;
+                
+                case (int)SudokuNoMoveResponseChoices.Announcement:
+
+                    vm.RaiseNotificationEvent(AppResources.ResourceManager.GetString("EdgeOfBoard"));
+
+                    break;
+
+                case (int)SudokuNoMoveResponseChoices.PlaySoundAndAnnouncement:
+                
+                    mediaElement.Stop();
+                    mediaElement.Play();
+
+                    vm.RaiseNotificationEvent(AppResources.ResourceManager.GetString("EdgeOfBoard"));
+
+                    break;
+                
+                case (int)SudokuNoMoveResponseChoices.NoResponse:
+                default:
+
+                    break;
+            }
+        }
+    }
+#endif
 
     private void SKCanvasView_PaintSurface(object sender, SkiaSharp.Views.Maui.SKPaintSurfaceEventArgs e)
     {

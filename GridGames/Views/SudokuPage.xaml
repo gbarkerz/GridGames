@@ -58,6 +58,10 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
+            <toolkit:MediaElement x:Name="mediaElement" 
+                ShouldShowPlaybackControls="False"
+                Source = "embed://Resources/soundnomoveavailable.m4a" />
+
             <Grid BackgroundColor="{StaticResource Primary}">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand"
                     BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}">

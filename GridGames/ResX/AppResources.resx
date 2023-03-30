@@ -277,6 +277,9 @@ Would you like to play another game?</value>
   <data name="Down" xml:space="preserve">
     <value>down</value>
   </data>
+  <data name="EdgeOfBoard" xml:space="preserve">
+    <value>Edge of board</value>
+  </data>
   <data name="Eight" xml:space="preserve">
     <value>eight</value>
   </data>
@@ -450,6 +453,9 @@ Would you like to play another game?</value>
   <data name="NoMovePossible" xml:space="preserve">
     <value>A move is not possible from here.</value>
   </data>
+  <data name="NoResponse" xml:space="preserve">
+    <value>No response</value>
+  </data>
   <data name="NumberSize" xml:space="preserve">
     <value>Number size</value>
   </data>
@@ -495,8 +501,17 @@ Would you like to play another game?</value>
   <data name="PicturePath" xml:space="preserve">
     <value>Selected picture folder:</value>
   </data>
+  <data name="PlaySound" xml:space="preserve">
+    <value>Play a sound</value>
+  </data>
+  <data name="PlaySoundAndScreenReaderAnnouncement" xml:space="preserve">
+    <value>Play a sound and make a screen reader announcement</value>
+  </data>
   <data name="QueryFrog" xml:space="preserve">
     <value>Query frog</value>
+  </data>
+  <data name="Response" xml:space="preserve">
+    <value>Response:</value>
   </data>
   <data name="RestartGame" xml:space="preserve">
     <value>Restart Game</value>
@@ -506,6 +521,9 @@ Would you like to play another game?</value>
   </data>
   <data name="Row" xml:space="preserve">
     <value>Row</value>
+  </data>
+  <data name="ScreenReaderAnnouncement" xml:space="preserve">
+    <value>Make a screen reader announcement</value>
   </data>
   <data name="Selected" xml:space="preserve">
     <value>Selected:</value>
@@ -634,6 +652,12 @@ Would you like to play another game?</value>
   </data>
   <data name="SudokuReadyToPlay" xml:space="preserve">
     <value>The Sudoku game is ready to play!</value>
+  </data>
+  <data name="SudokuResponseWhenNoMoveAvailable" xml:space="preserve">
+    <value>Game response when an attempted move cannot be made</value>
+  </data>
+  <data name="SudokuResponseWhenNoMoveAvailableInstructions" xml:space="preserve">
+    <value>Select the response the game should make when an attempt to move to another square could not be made.</value>
   </data>
   <data name="SudokuSettings" xml:space="preserve">
     <value>Sudoku Settings</value>

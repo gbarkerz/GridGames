@@ -15,6 +15,21 @@ namespace GridGames
                 BlankSquareCountPicker.Items.Add((i * 5).ToString());
             }
 
+            var resMgr = AppResources.ResourceManager;
+
+            string[] responseOptions = new string[]
+            {
+                resMgr.GetString("NoResponse"),
+                resMgr.GetString("PlaySound"),
+                resMgr.GetString("ScreenReaderAnnouncement"),
+                resMgr.GetString("PlaySoundAndScreenReaderAnnouncement")
+            };
+
+            for (int i = 0; i < 4 ; i++)
+            {
+                SudokuResponseWhenNoMoveAvailablePicker.Items.Add(responseOptions[i]);
+            }
+
             this.BindingContext = sudokuSettingsVM;
         }
 

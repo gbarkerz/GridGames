@@ -4,6 +4,14 @@ using System.Runtime.CompilerServices;
 
 namespace GridGames.ViewModels
 {
+    public enum SudokuNoMoveResponseChoices
+    {
+        NoResponse,
+        PlaySound,
+        Announcement,
+        PlaySoundAndAnnouncement
+    };
+
     // View model for the Sudoku Settings page.
     public class SudokuSettingsViewModel : BaseViewModel
     {
@@ -12,6 +20,7 @@ namespace GridGames.ViewModels
             Title = AppResources.ResourceManager.GetString("SudokuSettings");
 
             BlankSquareCount = (int)Preferences.Get("BlankSquareCount", 10);
+            SudokuNoMoveResponse = Preferences.Get("SudokuNoMoveResponse", (int)SudokuNoMoveResponseChoices.Announcement);
         }
 
         private int blankSquareCount;
@@ -28,6 +37,24 @@ namespace GridGames.ViewModels
                     SetProperty(ref blankSquareCount, value);
 
                     Preferences.Set("BlankSquareCount", (int)value);
+                }
+            }
+        }
+
+        private int sudokuNoMoveResponse;
+        public int SudokuNoMoveResponse
+        {
+            get
+            {
+                return sudokuNoMoveResponse;
+            }
+            set
+            {
+                if (sudokuNoMoveResponse != value)
+                {
+                    SetProperty(ref sudokuNoMoveResponse, value);
+
+                    Preferences.Set("SudokuNoMoveResponse", (int)value);
                 }
             }
         }

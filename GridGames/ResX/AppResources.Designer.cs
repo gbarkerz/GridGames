@@ -533,6 +533,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edge of board.
+        /// </summary>
+        internal static string EdgeOfBoard {
+            get {
+                return ResourceManager.GetString("EdgeOfBoard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to eight.
         /// </summary>
         internal static string Eight {
@@ -887,6 +896,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No response.
+        /// </summary>
+        internal static string NoResponse {
+            get {
+                return ResourceManager.GetString("NoResponse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number size.
         /// </summary>
         internal static string NumberSize {
@@ -1022,11 +1040,38 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Play a sound.
+        /// </summary>
+        internal static string PlaySound {
+            get {
+                return ResourceManager.GetString("PlaySound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play a sound and make a screen reader announcement.
+        /// </summary>
+        internal static string PlaySoundAndScreenReaderAnnouncement {
+            get {
+                return ResourceManager.GetString("PlaySoundAndScreenReaderAnnouncement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Query frog.
         /// </summary>
         internal static string QueryFrog {
             get {
                 return ResourceManager.GetString("QueryFrog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Response:.
+        /// </summary>
+        internal static string Response {
+            get {
+                return ResourceManager.GetString("Response", resourceCulture);
             }
         }
         
@@ -1054,6 +1099,15 @@ namespace GridGames.ResX {
         internal static string Row {
             get {
                 return ResourceManager.GetString("Row", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Make a screen reader announcement.
+        /// </summary>
+        internal static string ScreenReaderAnnouncement {
+            get {
+                return ResourceManager.GetString("ScreenReaderAnnouncement", resourceCulture);
             }
         }
         
@@ -1434,6 +1488,24 @@ namespace GridGames.ResX {
         internal static string SudokuReadyToPlay {
             get {
                 return ResourceManager.GetString("SudokuReadyToPlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game response when an attempted move cannot be made.
+        /// </summary>
+        internal static string SudokuResponseWhenNoMoveAvailable {
+            get {
+                return ResourceManager.GetString("SudokuResponseWhenNoMoveAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the response the game should make when an attempt to move to another square could not be made..
+        /// </summary>
+        internal static string SudokuResponseWhenNoMoveAvailableInstructions {
+            get {
+                return ResourceManager.GetString("SudokuResponseWhenNoMoveAvailableInstructions", resourceCulture);
             }
         }
         

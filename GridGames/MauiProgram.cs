@@ -137,7 +137,13 @@ public static class MauiProgram
                  (e.Key == Windows.System.VirtualKey.Up) ||
                  (e.Key == Windows.System.VirtualKey.Down))
         {
-            timeOfMostRecentArrowKeyPress = DateTime.Now; 
+            timeOfMostRecentArrowKeyPress = DateTime.Now;
+
+            var currentPage = (Application.Current.MainPage as Microsoft.Maui.Controls.Shell).CurrentPage;
+            if (currentPage is SudokuPage)
+            {
+                (currentPage as SudokuPage).RespondToArrowPress(e.Key);
+            }
 
             if ((e.Key == Windows.System.VirtualKey.Right) ||
                 (e.Key == Windows.System.VirtualKey.Left))
@@ -181,6 +187,7 @@ public static class MauiProgram
         builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
+            .UseMauiCommunityToolkitMediaElement()
             .UseSkiaSharp(true)
             .ConfigureFonts(fonts =>
             {

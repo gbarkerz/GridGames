@@ -436,7 +436,7 @@ namespace GridGames.Views
         {
             var difficultLevel = (int)value;
 
-            return (difficultLevel / 5 ) - 1;
+            return (difficultLevel / 5) - 1;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
