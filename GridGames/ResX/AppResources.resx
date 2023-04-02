@@ -477,6 +477,12 @@ Would you like to play another game?</value>
   <data name="Numbered" xml:space="preserve">
     <value>numbered</value>
   </data>
+  <data name="NumberNotShownInRowColumnGroup" xml:space="preserve">
+    <value>{0} is not shown in this row, column, or group.</value>
+  </data>
+  <data name="NumberShownPrefix" xml:space="preserve">
+    <value>{0} is shown in this </value>
+  </data>
   <data name="NumberSize" xml:space="preserve">
     <value>Number size</value>
   </data>

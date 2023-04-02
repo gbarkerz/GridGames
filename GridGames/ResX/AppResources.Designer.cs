@@ -968,6 +968,24 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} is not shown in this row, column, or group..
+        /// </summary>
+        internal static string NumberNotShownInRowColumnGroup {
+            get {
+                return ResourceManager.GetString("NumberNotShownInRowColumnGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is shown in this .
+        /// </summary>
+        internal static string NumberShownPrefix {
+            get {
+                return ResourceManager.GetString("NumberShownPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number size.
         /// </summary>
         internal static string NumberSize {

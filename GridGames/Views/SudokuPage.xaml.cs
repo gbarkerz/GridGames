@@ -526,7 +526,6 @@ public partial class SudokuPage : ContentPage
         }
     }
 
-
     public void AnnounceRCGDetails(VirtualKey key)
     {
         Debug.WriteLine("AnnounceRCGDetails: key " + key);
@@ -637,6 +636,210 @@ public partial class SudokuPage : ContentPage
         vm.RaiseNotificationEvent(announcement);
     }
 
+    public void AnnounceNumberPresence(VirtualKey key)
+    {
+        Debug.WriteLine("AnnounceNumberPresence: key " + key);
+
+        var square = SudokuCollectionView.SelectedItem as SudokuViewModel.Square;
+        if (square == null)
+        {
+            return;
+        }
+
+        int number = 0;
+
+        switch (key)
+        {
+            case VirtualKey.Number1:
+            case VirtualKey.NumberPad1:
+                number = 1;
+                break;
+
+            case VirtualKey.Number2:
+            case VirtualKey.NumberPad2:
+                number = 2;
+                break;
+
+            case VirtualKey.Number3:
+            case VirtualKey.NumberPad3:
+                number = 3;
+                break;
+
+            case VirtualKey.Number4:
+            case VirtualKey.NumberPad4:
+                number = 4;
+                break;
+
+            case VirtualKey.Number5:
+            case VirtualKey.NumberPad5:
+                number = 5;
+                break;
+
+            case VirtualKey.Number6:
+            case VirtualKey.NumberPad6:
+                number = 6;
+                break;
+
+            case VirtualKey.Number7:
+            case VirtualKey.NumberPad7:
+                number = 7;
+                break;
+
+            case VirtualKey.Number8:
+            case VirtualKey.NumberPad8:
+                number = 8;
+                break;
+
+            case VirtualKey.Number9:
+            case VirtualKey.NumberPad9:
+                number = 9;
+                break;
+
+            default:
+                break;
+        }
+
+        if (number == 0)
+        {
+            return;
+        }
+
+        var vm = this.BindingContext as SudokuViewModel;
+
+        var index = square.Index;
+
+        int rowValue = index / 9;
+        int columnIndex = index % 9;
+
+        var resMgr = AppResources.ResourceManager;
+
+        // First check the current row.
+        int indexStartOfRow = 9 * rowValue;
+
+        bool rowShowsNumber = false;
+
+        for (int i = indexStartOfRow; i < indexStartOfRow + 9; ++i)
+        {
+            if (vm.SudokuListCollection[i].NumberShown &&
+                (Int32.Parse(vm.SudokuListCollection[i].Number) == number))
+            {
+                rowShowsNumber = true;
+
+                break;
+            }
+        }
+
+        // Next check the current column.
+        int indexStartOfColumn = columnIndex;
+
+        bool columnShowsNumber = false;
+
+        for (int i = indexStartOfColumn; i < 81; i += 9)
+        {
+            if (vm.SudokuListCollection[i].NumberShown &&
+                (Int32.Parse(vm.SudokuListCollection[i].Number) == number))
+            {
+                columnShowsNumber = true;
+
+                break;
+            }
+        }
+
+        // Last check the current group.
+
+        int indexFirstRowInGroup = 3 * (rowValue / 3);
+        int indexColumnRowInGroup = 3 * (columnIndex / 3);
+
+        int indexStartOfGroupSection = (indexFirstRowInGroup * 9) + indexColumnRowInGroup;
+
+        bool groupShowsNumber = false;
+
+        for (int j = 0; j < 3; ++j)
+        {
+            for (int i = indexStartOfGroupSection; i < indexStartOfGroupSection + 3; ++i)
+            {
+                if (vm.SudokuListCollection[i].NumberShown &&
+                    (Int32.Parse(vm.SudokuListCollection[i].Number) == number))
+                {
+                    groupShowsNumber = true;
+
+                    break;
+                }
+            }
+
+            if (groupShowsNumber)
+            {
+                break;
+            }
+
+            indexStartOfGroupSection += 9;
+        }
+
+        string announcement;
+
+        // Barker Todo: Tidy up all the announcement string building below.
+        if (rowShowsNumber || columnShowsNumber || groupShowsNumber)
+        {
+            announcement = String.Format(
+                resMgr.GetString("NumberShownPrefix"),
+                number);
+
+            if (rowShowsNumber)
+            {
+                announcement += "row";
+
+                if (columnShowsNumber)
+                {
+                    if (groupShowsNumber)
+                    {
+                        announcement += ", column, and group";
+                    }
+                    else
+                    {
+                        announcement += " and column";
+                    }
+                }
+                else
+                {
+                    if (groupShowsNumber)
+                    {
+                        announcement += " and group";
+                    }
+                }
+            }
+            else
+            {
+                if (columnShowsNumber)
+                {
+                    if (groupShowsNumber)
+                    {
+                        announcement += "column and group";
+                    }
+                    else
+                    {
+                        announcement += "column";
+                    }
+                }
+                else
+                {
+                    if (groupShowsNumber)
+                    {
+                        announcement += "group";
+                    }
+                }
+            }
+
+            announcement += ".";
+        }
+        else
+        {
+            announcement = String.Format(
+                resMgr.GetString("NumberNotShownInRowColumnGroup"),
+                number);
+        }
+
+        vm.RaiseNotificationEvent(announcement);
+    }
 #endif
 
     private void SKCanvasView_PaintSurface(object sender, SkiaSharp.Views.Maui.SKPaintSurfaceEventArgs e)

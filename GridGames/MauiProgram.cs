@@ -119,7 +119,14 @@ public static class MauiProgram
             var currentPage = (Application.Current.MainPage as Microsoft.Maui.Controls.Shell).CurrentPage;
             if (currentPage is SudokuPage)
             {
-                (currentPage as SudokuPage).HandleNumberInput(e.Key);
+                if (e.KeyStatus.IsMenuKeyDown)
+                {
+                    (currentPage as SudokuPage).AnnounceNumberPresence(e.Key);
+                }
+                else
+                {
+                    (currentPage as SudokuPage).HandleNumberInput(e.Key);
+                }
 
                 e.Handled = true;
             }
