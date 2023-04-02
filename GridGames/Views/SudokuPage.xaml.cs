@@ -8,6 +8,7 @@ using SkiaSharp.Views.Maui.Controls;
 using System.Diagnostics;
 using Windows.Media.Playback;
 using Windows.System;
+using Windows.UI.StartScreen;
 using Application = Microsoft.Maui.Controls.Application;
 
 namespace GridGames.Views;
@@ -361,29 +362,65 @@ public partial class SudokuPage : ContentPage
     }
 
 #if WINDOWS
-    public void RespondToArrowPress(VirtualKey key)
+    public void RespondToArrowPress(VirtualKey key, bool jumpToDifferentStateSquare)
     {
+        Debug.WriteLine("RespondToArrowPress: JumpToDifferentStateSquare " + jumpToDifferentStateSquare);
+
         var square = SudokuCollectionView.SelectedItem as SudokuViewModel.Square;
         if (square == null)
         {
             return;
         }
 
-        var index = square.Index;
-
         bool needsResponse = false;
 
-        if (((index % 9 == 0) && (key == VirtualKey.Left)) ||
-            ((index % 9 == 8) && (key == VirtualKey.Right)) ||
-            ((index < 9) && (key == VirtualKey.Up)) ||
-            ((index > 71) && (key == VirtualKey.Down)))
+        if (jumpToDifferentStateSquare)
         {
-            needsResponse = true;
+            bool doneMove;
+
+            JumpToDifferentStateSquare(key, square, out doneMove);
+            if (!doneMove)
+            {
+                needsResponse = true;
+            }
+        }
+        else
+        {
+            var index = square.Index;
+
+            // Are we trying to moving beyond the start or end of a row or column?
+            if (((index % 9 == 0) && (key == VirtualKey.Left)) ||
+                ((index % 9 == 8) && (key == VirtualKey.Right)) ||
+                ((index < 9) && (key == VirtualKey.Up)) ||
+                ((index > 71) && (key == VirtualKey.Down)))
+            {
+                needsResponse = true;
+            }
         }
 
         if (needsResponse)
         {
             var vm = this.BindingContext as SudokuViewModel;
+
+            string announcement = "";
+
+            if ((vm.SudokuSettingsVM.SudokuNoMoveResponse == (int)SudokuNoMoveResponseChoices.Announcement) ||
+                (vm.SudokuSettingsVM.SudokuNoMoveResponse == (int)SudokuNoMoveResponseChoices.PlaySoundAndAnnouncement))
+            {
+                var resMgr = AppResources.ResourceManager;
+
+                if (!jumpToDifferentStateSquare)
+                {
+                    announcement = resMgr.GetString("EdgeOfBoard");
+                }
+                else
+                {
+                    announcement = String.Format(
+                        resMgr.GetString("JumpToDifferentStateNotPossible"),
+                        resMgr.GetString(
+                            square.NumberShown ? "Empty" : "Numbered"));
+                }
+            }
 
             switch (vm.SudokuSettingsVM.SudokuNoMoveResponse)
             {
@@ -396,7 +433,7 @@ public partial class SudokuPage : ContentPage
                 
                 case (int)SudokuNoMoveResponseChoices.Announcement:
 
-                    vm.RaiseNotificationEvent(AppResources.ResourceManager.GetString("EdgeOfBoard"));
+                    vm.RaiseNotificationEvent(announcement);
 
                     break;
 
@@ -405,7 +442,7 @@ public partial class SudokuPage : ContentPage
                     mediaElement.Stop();
                     mediaElement.Play();
 
-                    vm.RaiseNotificationEvent(AppResources.ResourceManager.GetString("EdgeOfBoard"));
+                    vm.RaiseNotificationEvent(announcement);
 
                     break;
                 
@@ -416,6 +453,190 @@ public partial class SudokuPage : ContentPage
             }
         }
     }
+
+    private void JumpToDifferentStateSquare(VirtualKey key, SudokuViewModel.Square square, out bool doneMove)
+    {
+        doneMove = false;
+
+        var vm = this.BindingContext as SudokuViewModel;
+
+        var index = square.Index;
+
+        int rowValue = index / 9;
+
+        if (key == VirtualKey.Left)
+        {
+            int indexStartOfRow = 9 * rowValue;
+
+            for (int i = index - 1; i >= indexStartOfRow; --i)
+            {
+                if (square.NumberShown != vm.SudokuListCollection[i].NumberShown)
+                {
+                    SudokuCollectionView.SelectedItem = vm.SudokuListCollection[i];
+
+                    doneMove = true;
+
+                    break;
+                }
+            }
+        }
+        else if (key == VirtualKey.Right)
+        {
+            int indexEndOfRow = (9 * rowValue) + 8;
+
+            for (int i = index + 1; i <= indexEndOfRow; ++i)
+            {
+                if (square.NumberShown != vm.SudokuListCollection[i].NumberShown)
+                {
+                    SudokuCollectionView.SelectedItem = vm.SudokuListCollection[i];
+
+                    doneMove = true;
+
+                    break;
+                }
+            }
+        }
+        else if (key == VirtualKey.Up)
+        {
+            for (int i = index - 9; i >= 0; i -= 9)
+            {
+                if (square.NumberShown != vm.SudokuListCollection[i].NumberShown)
+                {
+                    SudokuCollectionView.SelectedItem = vm.SudokuListCollection[i];
+
+                    doneMove = true;
+
+                    break;
+                }
+            }
+        }
+        else if (key == VirtualKey.Down)
+        {
+            for (int i = index + 9; i < 81; i += 9)
+            {
+                if (square.NumberShown != vm.SudokuListCollection[i].NumberShown)
+                {
+                    SudokuCollectionView.SelectedItem = vm.SudokuListCollection[i];
+
+                    doneMove = true;
+
+                    break;
+                }
+            }
+        }
+    }
+
+
+    public void AnnounceRCGDetails(VirtualKey key)
+    {
+        Debug.WriteLine("AnnounceRCGDetails: key " + key);
+
+        var square = SudokuCollectionView.SelectedItem as SudokuViewModel.Square;
+        if (square == null)
+        {
+            return;
+        }
+
+        var vm = this.BindingContext as SudokuViewModel;
+
+        var index = square.Index;
+
+        int rowValue = index / 9;
+        int columnIndex = index % 9;
+
+        int[] missingNumberArray = new int[9];
+
+        var resMgr = AppResources.ResourceManager;
+
+        int countMissingNumbers = 0;
+
+        string announcement = "";
+
+        if (key == VirtualKey.R)
+        {
+            int indexStartOfRow = 9 * rowValue;
+
+            for (int i = indexStartOfRow; i < indexStartOfRow + 9; ++i)
+            {
+                if (!vm.SudokuListCollection[i].NumberShown)
+                {
+                    missingNumberArray[countMissingNumbers] =
+                        Int32.Parse(vm.SudokuListCollection[i].Number);
+
+                    ++countMissingNumbers;
+                }
+            }
+
+            announcement = resMgr.GetString(countMissingNumbers == 0 ? "Row" : "RowNeeds");
+        }
+        else if (key == VirtualKey.C)
+        {
+            int indexStartOfColumn = columnIndex;
+
+            for (int i = indexStartOfColumn; i < 81; i += 9)
+            {
+                if (!vm.SudokuListCollection[i].NumberShown)
+                {
+                    missingNumberArray[countMissingNumbers] =
+                        Int32.Parse(vm.SudokuListCollection[i].Number);
+
+                    ++countMissingNumbers;
+                }
+            }
+
+            announcement = resMgr.GetString(countMissingNumbers == 0 ? "Column" : "ColumnNeeds");
+        }
+        else if (key == VirtualKey.G)
+        {
+            int indexFirstRowInGroup = 3 * (rowValue / 3);
+            int indexColumnRowInGroup = 3 * (columnIndex / 3);
+
+            int indexStartOfGroupSection = (indexFirstRowInGroup * 9) + indexColumnRowInGroup;
+
+            for (int j = 0; j < 3; ++j)
+            {
+                for (int i = indexStartOfGroupSection; i < indexStartOfGroupSection + 3; ++i)
+                {
+                    if (!vm.SudokuListCollection[i].NumberShown)
+                    {
+                        missingNumberArray[countMissingNumbers] =
+                            Int32.Parse(vm.SudokuListCollection[i].Number);
+
+                        ++countMissingNumbers;
+                    }
+                }
+
+                indexStartOfGroupSection += 9;
+            }
+
+            announcement = resMgr.GetString(countMissingNumbers == 0 ? "Group" : "GroupNeeds");
+        }
+
+        if (countMissingNumbers == 0)
+        {
+            announcement += resMgr.GetString("NoneMissing");
+        }
+        else
+        {
+            Array.Sort(missingNumberArray);
+
+            for (int i = 0; i < 9; ++i)
+            {
+                if (missingNumberArray[i] != 0)
+                {
+                    announcement += missingNumberArray[i].ToString();
+
+                    if (i < 8)
+                    {
+                        announcement += ", ";
+                    }
+                }
+            }
+        }
+
+        vm.RaiseNotificationEvent(announcement);
+    }
+
 #endif
 
     private void SKCanvasView_PaintSurface(object sender, SkiaSharp.Views.Maui.SKPaintSurfaceEventArgs e)

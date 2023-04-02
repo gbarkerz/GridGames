@@ -160,6 +160,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Column needs .
+        /// </summary>
+        internal static string ColumnNeeds {
+            get {
+                return ResourceManager.GetString("ColumnNeeds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You completed {0} in {1} goes.
         ///
         ///Would you like to play another game?.
@@ -560,6 +569,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to empty.
+        /// </summary>
+        internal static string Empty {
+            get {
+                return ResourceManager.GetString("Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Face down.
         /// </summary>
         internal static string FaceDown {
@@ -690,6 +708,24 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Group.
+        /// </summary>
+        internal static string Group {
+            get {
+                return ResourceManager.GetString("Group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group needs .
+        /// </summary>
+        internal static string GroupNeeds {
+            get {
+                return ResourceManager.GetString("GroupNeeds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Help.
         /// </summary>
         internal static string Help {
@@ -746,6 +782,15 @@ namespace GridGames.ResX {
         internal static string IncorrectWCAG {
             get {
                 return ResourceManager.GetString("IncorrectWCAG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No more {0} squares..
+        /// </summary>
+        internal static string JumpToDifferentStateNotPossible {
+            get {
+                return ResourceManager.GetString("JumpToDifferentStateNotPossible", resourceCulture);
             }
         }
         
@@ -896,11 +941,29 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  has no empty squares..
+        /// </summary>
+        internal static string NoneMissing {
+            get {
+                return ResourceManager.GetString("NoneMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No response.
         /// </summary>
         internal static string NoResponse {
             get {
                 return ResourceManager.GetString("NoResponse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to numbered.
+        /// </summary>
+        internal static string Numbered {
+            get {
+                return ResourceManager.GetString("Numbered", resourceCulture);
             }
         }
         
@@ -1099,6 +1162,15 @@ namespace GridGames.ResX {
         internal static string Row {
             get {
                 return ResourceManager.GetString("Row", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Row needs .
+        /// </summary>
+        internal static string RowNeeds {
+            get {
+                return ResourceManager.GetString("RowNeeds", resourceCulture);
             }
         }
         

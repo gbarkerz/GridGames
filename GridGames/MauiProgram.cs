@@ -3,6 +3,8 @@ using GridGames.Views;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using CommunityToolkit.Maui;
 using GridGames.ViewModels;
+using InvokePlatformCode.Services.PartialMethods;
+using Microsoft.UI.Xaml.Controls;
 
 namespace GridGames;
 
@@ -13,7 +15,7 @@ public static class MauiProgram
 #if WINDOWS
     private static bool addedKeyEventHandler = false;
 
-    static void MyKeyEventHandler(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+    static void MyPreviewKeyDownEventHandler(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
     {
         // Barker: Review old feedback from original Windows Grid Game player.
         // Check that there was a request for Enter to activate an item.
@@ -142,13 +144,33 @@ public static class MauiProgram
             var currentPage = (Application.Current.MainPage as Microsoft.Maui.Controls.Shell).CurrentPage;
             if (currentPage is SudokuPage)
             {
-                (currentPage as SudokuPage).RespondToArrowPress(e.Key);
+                (currentPage as SudokuPage).RespondToArrowPress(e.Key, e.KeyStatus.IsMenuKeyDown);
+
+                if (e.KeyStatus.IsMenuKeyDown)
+                {
+                    e.Handled = true;
+                }
             }
 
             if ((e.Key == Windows.System.VirtualKey.Right) ||
                 (e.Key == Windows.System.VirtualKey.Left))
             {
                 HandleLeftRightArrowPress(e);
+            }
+        }
+        else if ((e.Key == Windows.System.VirtualKey.R) ||
+                 (e.Key == Windows.System.VirtualKey.C) ||
+                 (e.Key == Windows.System.VirtualKey.G))
+        {
+            if (e.KeyStatus.IsMenuKeyDown)
+            { 
+                var currentPage = (Application.Current.MainPage as Microsoft.Maui.Controls.Shell).CurrentPage;
+                if (currentPage is SudokuPage)
+                {
+                    (currentPage as SudokuPage).AnnounceRCGDetails(e.Key);
+
+                    e.Handled = true;
+                }
             }
         }
     }
@@ -207,7 +229,7 @@ public static class MauiProgram
                     {
                         addedKeyEventHandler = true;
 
-                        window.Content.PreviewKeyDown += MyKeyEventHandler;
+                        window.Content.PreviewKeyDown += MyPreviewKeyDownEventHandler;
                     }
                 }));
             });

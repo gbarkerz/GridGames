@@ -150,6 +150,9 @@
   <data name="Column" xml:space="preserve">
     <value>Column</value>
   </data>
+  <data name="ColumnNeeds" xml:space="preserve">
+    <value>Column needs </value>
+  </data>
   <data name="CompletedSquaresPictureInMoves" xml:space="preserve">
     <value>You completed {0} in {1} goes.
 
@@ -286,6 +289,9 @@ Would you like to play another game?</value>
   <data name="Eleven" xml:space="preserve">
     <value>eleven</value>
   </data>
+  <data name="Empty" xml:space="preserve">
+    <value>empty</value>
+  </data>
   <data name="FaceDown" xml:space="preserve">
     <value>Face down</value>
   </data>
@@ -331,6 +337,12 @@ Review the Help content for details on how to play the game using only the keybo
   </data>
   <data name="GridLocalizedControlType" xml:space="preserve">
     <value>Grid</value>
+  </data>
+  <data name="Group" xml:space="preserve">
+    <value>Group</value>
+  </data>
+  <data name="GroupNeeds" xml:space="preserve">
+    <value>Group needs </value>
   </data>
   <data name="Help" xml:space="preserve">
     <value>Help</value>
@@ -403,6 +415,9 @@ At the top left corner of the game is the Open Navigation button, which can be u
   <data name="IncorrectWCAG" xml:space="preserve">
     <value>{0} isn't {1}.</value>
   </data>
+  <data name="JumpToDifferentStateNotPossible" xml:space="preserve">
+    <value>No more {0} squares.</value>
+  </data>
   <data name="Large" xml:space="preserve">
     <value>Large</value>
   </data>
@@ -453,8 +468,14 @@ Would you like to play another game?</value>
   <data name="NoMovePossible" xml:space="preserve">
     <value>A move is not possible from here.</value>
   </data>
+  <data name="NoneMissing" xml:space="preserve">
+    <value> has no empty squares.</value>
+  </data>
   <data name="NoResponse" xml:space="preserve">
     <value>No response</value>
+  </data>
+  <data name="Numbered" xml:space="preserve">
+    <value>numbered</value>
   </data>
   <data name="NumberSize" xml:space="preserve">
     <value>Number size</value>
@@ -521,6 +542,9 @@ Would you like to play another game?</value>
   </data>
   <data name="Row" xml:space="preserve">
     <value>Row</value>
+  </data>
+  <data name="RowNeeds" xml:space="preserve">
+    <value>Row needs </value>
   </data>
   <data name="ScreenReaderAnnouncement" xml:space="preserve">
     <value>Make a screen reader announcement</value>
