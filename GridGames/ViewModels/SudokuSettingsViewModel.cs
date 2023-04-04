@@ -21,6 +21,7 @@ namespace GridGames.ViewModels
 
             BlankSquareCount = (int)Preferences.Get("BlankSquareCount", 10);
             SudokuNoMoveResponse = Preferences.Get("SudokuNoMoveResponse", (int)SudokuNoMoveResponseChoices.Announcement);
+            EmptySquareIndicatorIsX = Preferences.Get("EmptySquareIndicatorIsX", false);
         }
 
         private int blankSquareCount;
@@ -55,6 +56,24 @@ namespace GridGames.ViewModels
                     SetProperty(ref sudokuNoMoveResponse, value);
 
                     Preferences.Set("SudokuNoMoveResponse", (int)value);
+                }
+            }
+        }
+
+        private bool emptySquareIndicatorIsX;
+        public bool EmptySquareIndicatorIsX
+        {
+            get
+            {
+                return emptySquareIndicatorIsX;
+            }
+            set
+            {
+                if (emptySquareIndicatorIsX != value)
+                {
+                    SetProperty(ref emptySquareIndicatorIsX, value);
+
+                    Preferences.Set("EmptySquareIndicatorIsX", (bool)value);
                 }
             }
         }

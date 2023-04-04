@@ -757,7 +757,9 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Sudoku game shows a grid of 9-by-9 squares. Most of the squares are blank when the game starts, but some of the squares show a number from 1 to 9. The number of squares showing a number depends on the current game settings. To win the game, type a number from 1 to 9 in each of the blank squares, such that each row and each column in the game contains the numbers 1 to 9. No number can be duplicated on any row or any column. Use the arrow keys to move between squares in the grid, and when you&apos;ve reached a [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to The Sudoku game shows a grid of 9-by-9 squares. Most of the squares are blank when the game starts, but some of the squares show a number from 1 to 9. The number of squares showing a number depends on the current game settings. To win the game, type a number from 1 to 9 in each of the blank squares, such that each row and each column in the game contains the numbers 1 to 9. No number can be duplicated on any row or any column. 
+        ///
+        ///Use the arrow keys to move between squares in the grid, and when you&apos;ve reach [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string HelpContentSudoku {
             get {
@@ -1560,6 +1562,33 @@ namespace GridGames.ResX {
         internal static string SudokuDifficultyLevelInstructions {
             get {
                 return ResourceManager.GetString("SudokuDifficultyLevelInstructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empty Square Indicator.
+        /// </summary>
+        internal static string SudokuEmptySquareIndicator {
+            get {
+                return ResourceManager.GetString("SudokuEmptySquareIndicator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show an &apos;x&apos; in empty squares:.
+        /// </summary>
+        internal static string SudokuEmptySquareIndicatorCheckBoxLabel {
+            get {
+                return ResourceManager.GetString("SudokuEmptySquareIndicatorCheckBoxLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select this if the letter &apos;x&apos; should show in empty squares..
+        /// </summary>
+        internal static string SudokuEmptySquareIndicatorInstructions {
+            get {
+                return ResourceManager.GetString("SudokuEmptySquareIndicatorInstructions", resourceCulture);
             }
         }
         

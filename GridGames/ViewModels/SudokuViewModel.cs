@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using GridGames.ResX;
 
@@ -11,6 +10,9 @@ namespace GridGames.ViewModels
     // View model for the Sudoku page.
     public class SudokuViewModel : BaseViewModel
     {
+        // Barker Todo:
+        static public bool SudokuEmptySquareIndicatorIsX;
+
         private const int gridDimensions = 9;
 
         private ObservableCollection<Square> sudokuList;
@@ -60,6 +62,24 @@ namespace GridGames.ViewModels
                 if (currentBlankSquareCount != value)
                 {
                     SetProperty(ref currentBlankSquareCount, value);
+                }
+            }
+        }
+
+        private bool emptySquareIndicatorIsX;
+        public bool EmptySquareIndicatorIsX
+        {
+            get
+            {
+                return emptySquareIndicatorIsX;
+            }
+            set
+            {
+                if (emptySquareIndicatorIsX != value)
+                {
+                    SetProperty(ref emptySquareIndicatorIsX, value);
+
+                    SudokuEmptySquareIndicatorIsX = value;
                 }
             }
         }
@@ -164,14 +184,27 @@ namespace GridGames.ViewModels
         public class Square : INotifyPropertyChanged
         {
             // Support the ability to customise the UIA Name property of the square.
+
+            // Important: The evolving requirements of the game have led to a poor implementation around
+            // setting the square's accessible name. Particularly involving the use of the static bool
+            // SudokuEmptySquareIndicatorIsX. At some point this code will be cleaned up to remove the 
+            // use of SudokuEmptySquareIndicatorIsX and the RefreshAccessibleName() method below.
+
             public string AccessibleName
             {
                 get
                 {
-                    var name = (NumberShown ? Number + " " + (FixedNumber ? "Fixed" : "Guess") : "No number shown");
+                    var name = (NumberShown ? 
+                                    Number + ", " + (FixedNumber ? "Fixed" : "Guess") + ", " :
+                                    (SudokuViewModel.SudokuEmptySquareIndicatorIsX ? "x" : "No number shown"));
 
                     return name;
                 }
+            }
+
+            public void RefreshAccessibleName()
+            {
+                OnPropertyChanged("AccessibleName");
             }
 
             public string AccessibleDescription

@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using GridGames.ViewModels;
 
 namespace GridGames.Views
 {
@@ -40,6 +41,66 @@ namespace GridGames.Views
             var intValue = (int)value;
 
             return (Aspect)intValue;
+        }
+    }
+
+    public class NumberToIsVisible : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values == null || (values.Length < 2))
+            {
+                return "";
+            }
+
+            if ((values[0] == null) || (values[1] == null))
+            {
+                return "";
+            }
+
+            var numberShown = (bool)values[0];
+            var emptySquareIndicatorIsX = (bool)values[1];
+
+            return (numberShown || emptySquareIndicatorIsX);
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class NumberToDisplayedValue : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values == null || (values.Length < 3))
+            {
+                return "";
+            }
+
+            if ((values[0] == null) || (values[1] == null) || (values[2] == null))
+            {
+                return "";
+            }
+
+            var number = (string)values[0];
+            var numberShown = (bool)values[1];
+            var emptySquareIndicatorIsX = (bool)values[2];
+
+            string displayedValue = number;
+
+            if (!numberShown && emptySquareIndicatorIsX)
+            {
+                displayedValue = "x";
+            }
+
+            return displayedValue;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -82,7 +143,6 @@ namespace GridGames.Views
             throw new NotImplementedException();
         }
     }
-
 
     public class NearbyFrogCountToLabel : IMultiValueConverter
     {

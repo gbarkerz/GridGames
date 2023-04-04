@@ -5,6 +5,7 @@ using InvokePlatformCode.Services.PartialMethods;
 using Microsoft.UI.Xaml.Controls;
 using SkiaSharp;
 using SkiaSharp.Views.Maui.Controls;
+using System;
 using System.Diagnostics;
 using Windows.Media.Playback;
 using Windows.System;
@@ -70,6 +71,21 @@ public partial class SudokuPage : ContentPage
         vm.ShowDarkTheme = (currentTheme == AppTheme.Dark);
 
         vm.SudokuSettingsVM.BlankSquareCount = (int)Preferences.Get("BlankSquareCount", 10);
+
+        if (vm.EmptySquareIndicatorIsX != vm.SudokuSettingsVM.EmptySquareIndicatorIsX)
+        {
+            vm.EmptySquareIndicatorIsX = vm.SudokuSettingsVM.EmptySquareIndicatorIsX;
+
+            // Updated the accessible names of all the squares based on the current
+            // game setting relating to whether an 'x' is shown in empty squares.
+            for (int i = 0; i < 81; ++i)
+            {
+                if (!vm.SudokuListCollection[i].NumberShown)
+                {
+                    vm.SudokuListCollection[i].RefreshAccessibleName();
+                }
+            }
+        }
     }
 
     private async void SudokuSettingsButton_Clicked(object sender, EventArgs e)

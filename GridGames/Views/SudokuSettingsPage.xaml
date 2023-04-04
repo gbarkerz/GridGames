@@ -39,6 +39,9 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0"
@@ -47,7 +50,7 @@
                     <Label Grid.Row="1"
                             LineBreakMode="WordWrap"
                             Text="{x:Static resources:AppResources.SudokuDifficultyLevelInstructions}"
-                            Margin="0,4,0,20" />
+                            Margin="0,4,0,10" />
                     <StackLayout Grid.Row="2" Orientation="Horizontal" 
                             Margin="0" Padding="0">
                         <Label Text="{x:Static resources:AppResources.CountOfBlankSquares}"
@@ -68,7 +71,7 @@
                     <Label Grid.Row="4"
                         LineBreakMode="WordWrap"
                         Text="{x:Static resources:AppResources.SudokuResponseWhenNoMoveAvailableInstructions}"
-                        Margin="0,4,0,20" />
+                        Margin="0,4,0,10" />
                     <StackLayout Grid.Row="5" Orientation="Horizontal" 
                         Margin="0" Padding="0">
                         <Label Text="{x:Static resources:AppResources.Response}"
@@ -79,6 +82,25 @@
                             SemanticProperties.Description="{x:Static resources:AppResources.Response}"
                             SemanticProperties.Hint="{x:Static resources:AppResources.SudokuResponseWhenNoMoveAvailableInstructions}"
                             SelectedIndex="{Binding SudokuNoMoveResponse, Mode=TwoWay}" />
+                    </StackLayout>
+
+                    <Label Grid.Row="6"
+                            FontSize="Subtitle" SemanticProperties.HeadingLevel="Level2"
+                            Text="{x:Static resources:AppResources.SudokuEmptySquareIndicator}" Margin="0,40,0,0" />
+                    <Label Grid.Row="7"
+                            LineBreakMode="WordWrap"
+                            Text="{x:Static resources:AppResources.SudokuEmptySquareIndicatorInstructions}"
+                            Margin="0,4,0,10" />
+                    <StackLayout Grid.Row="8" Orientation="Horizontal" 
+                            Margin="0" Padding="0">
+                        <Label Text="{x:Static resources:AppResources.SudokuEmptySquareIndicatorCheckBoxLabel}"
+                            VerticalOptions="Center" />
+                        <CheckBox x:Name="SudokuEmptySquareIndicatorCheckBox"
+                            windows:VisualElement.AccessKey="E"  
+                            VerticalOptions="Center" Margin="8,0,0,0"
+                            SemanticProperties.Description="{x:Static resources:AppResources.SudokuEmptySquareIndicatorCheckBoxLabel}"
+                            SemanticProperties.Hint="{x:Static resources:AppResources.SudokuEmptySquareIndicatorInstructions}"
+                            IsChecked="{Binding EmptySquareIndicatorIsX, Mode=TwoWay}" />
                     </StackLayout>
 
                 </Grid>
