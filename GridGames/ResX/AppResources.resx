@@ -378,7 +378,11 @@ At the top left corner of the game is the Open Navigation button, which can be u
 
 Use the arrow keys to move between squares in the grid, and when you've reached a square of interest, type the number to be added to the square. To clear a number you added earlier, press the Space or Enter keys. Note that pressing the right arrow when at the last square in a row, or the left arrow when at the first square in a row, will not move you to another row. Instead you will stay on the current square. 
 
-Pressing Alt plus any of the Left, Right, Up, or Down arrow keys will attempt to move you in that direction to the next square whose number-showing state is different from the current square. For example, if you're at a square showing a number, you will move to the next square that does not show a number. Note that square you move to make not show visual selection feedback after the move. 
+Pressing the Home or End keys will move you to the first or last square on the current row, and pressing the PageUp or PageDown keys will move you to the first or last square on the current column. 
+
+Pressing Alt plus any of the Left, Right, Up, or Down arrow keys will attempt to move you in that direction to the next square whose number-showing state is different from the current square. For example, if you're at a square showing a number, you will move to the next square that does not show a number.
+
+Please note that following a press of one of the navigation keys just mentioned, visual selection feedback does not appear on the destination square. Selection feedback will show again once an arrow key is pressed after the move.
 
 In addition, the grid is divided into nine 3-by-3 groups, with group 1 containing the nine squares at the top left of the grid, and group 9 containing the nine squares at the bottom right of the grid. Each group must contain the numbers 1 to 9, with no number duplicated in the group. 
 
