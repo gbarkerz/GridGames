@@ -180,6 +180,21 @@ public static class MauiProgram
                 }
             }
         }
+        else if ((e.Key == Windows.System.VirtualKey.Home) ||
+                 (e.Key == Windows.System.VirtualKey.End) ||
+                 (e.Key == Windows.System.VirtualKey.PageUp) ||
+                 (e.Key == Windows.System.VirtualKey.PageDown))
+        {
+            timeOfMostRecentArrowKeyPress = DateTime.Now;
+
+            var currentPage = (Application.Current.MainPage as Microsoft.Maui.Controls.Shell).CurrentPage;
+            if (currentPage is SudokuPage)
+            {
+                (currentPage as SudokuPage).HandleNavigationKey(e.Key);
+
+                e.Handled = true;
+            }
+        }
     }
 
     static private void HandleLeftRightArrowPress(Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)

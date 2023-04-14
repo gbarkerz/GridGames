@@ -37,5 +37,11 @@ namespace GridGames
         {
             await Navigation.PopModalAsync();
         }
-   }
+
+        private void RestoreButton_Clicked(object sender, EventArgs e)
+        {
+            SquareLocationAnnouncementEditor.Text = AppResources.ResourceManager.GetString(
+                                                        "SquareLocationAnnouncementDefault");
+        }
+    }
 }

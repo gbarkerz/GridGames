@@ -484,10 +484,9 @@ namespace GridGames.Views
             timer.Dispose();
 
             var platformAction = new GridGamesPlatformAction();
-            platformAction.SetGridCollectionViewAccessibleData(SquaresCollectionView, false);
+            platformAction.SetGridCollectionViewAccessibleData(SquaresCollectionView, false, null);
 #endif
         }
-
 
         private int GetItemCollectionIndexFromItemAccessibleName(string ItemAccessibleName)
         {
@@ -685,7 +684,7 @@ namespace GridGames.Views
 
 #if WINDOWS
                 var platformAction = new GridGamesPlatformAction();
-                platformAction.SetGridCollectionViewAccessibleData(SquaresCollectionView, false);
+                platformAction.SetGridCollectionViewAccessibleData(SquaresCollectionView, false, null);
 #endif
             });
         }

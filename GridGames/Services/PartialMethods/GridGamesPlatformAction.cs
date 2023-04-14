@@ -6,7 +6,7 @@ namespace InvokePlatformCode.Services.PartialMethods
 #if WINDOWS
 
         public partial void SetGridItemCollectionViewAccessibleData(CollectionView collectionView, int itemIndex, int row, int column);
-        public partial void SetGridCollectionViewAccessibleData(CollectionView collectionView, bool includeGroupData);
+        public partial void SetGridCollectionViewAccessibleData(CollectionView collectionView, bool includeGroupData, string dataFormat);
 
         public partial void ShowFlyout(FlyoutBase contextFlyout,
             Border border);

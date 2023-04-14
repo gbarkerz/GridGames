@@ -42,6 +42,9 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0"
@@ -56,7 +59,7 @@
                         <Label Text="{x:Static resources:AppResources.CountOfBlankSquares}"
                             VerticalOptions="Center" />
                         <Picker x:Name="BlankSquareCountPicker"
-                            windows:VisualElement.AccessKey="D"    
+                            windows:VisualElement.AccessKey="B"    
                             VerticalOptions="Center" Margin="8,0,0,0"
                             SemanticProperties.Description="{x:Static resources:AppResources.CountOfBlankSquares}"
                             SemanticProperties.Hint="{x:Static resources:AppResources.SudokuDifficultyLevelInstructions}"
@@ -103,8 +106,34 @@
                             IsChecked="{Binding EmptySquareIndicatorIsX, Mode=TwoWay}" />
                     </StackLayout>
 
+                    <Label Grid.Row="9"
+                        FontSize="Subtitle" SemanticProperties.HeadingLevel="Level2"
+                        Text="Format of square location announcement" Margin="0,40,0,0" />
+                    <Label Grid.Row="10"
+                        LineBreakMode="WordWrap"
+                        Text="{x:Static resources:AppResources.SquareLocationAnnouncementInstructions}"
+                        Margin="0,4,0,10" />
+                    <StackLayout Grid.Row="11" Margin="0" Padding="0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Editor Grid.Column="0" x:Name="SquareLocationAnnouncementEditor" 
+                                windows:VisualElement.AccessKey="L"
+                                SemanticProperties.Description="{x:Static resources:AppResources.SquareLocationAnnouncementEditorName}"
+                                SemanticProperties.Hint="{x:Static resources:AppResources.SquareLocationAnnouncementInstructions}"
+                                Text="{Binding SquareLocationAnnouncementFormat, Mode=TwoWay}"/>
+                            <Button Grid.Column="1" Clicked="RestoreButton_Clicked" Margin="8,0,20,0"
+                                windows:VisualElement.AccessKey="D"  
+                                Text="{x:Static resources:AppResources.RestoreDefaultAnnouncement}" />
+                        </Grid>
+                    </StackLayout>
                 </Grid>
-
+                
             </ScrollView>
             
             <Button Grid.Row="2" x:Name="CloseButton" 

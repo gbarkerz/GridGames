@@ -1168,6 +1168,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restore default announcement.
+        /// </summary>
+        internal static string RestoreDefaultAnnouncement {
+            get {
+                return ResourceManager.GetString("RestoreDefaultAnnouncement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to right.
         /// </summary>
         internal static string Right {
@@ -1326,6 +1335,33 @@ namespace GridGames.ResX {
         internal static string Small {
             get {
                 return ResourceManager.GetString("Small", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Row $r Column $c, Group $g.
+        /// </summary>
+        internal static string SquareLocationAnnouncementDefault {
+            get {
+                return ResourceManager.GetString("SquareLocationAnnouncementDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Square location announcement format.
+        /// </summary>
+        internal static string SquareLocationAnnouncementEditorName {
+            get {
+                return ResourceManager.GetString("SquareLocationAnnouncementEditorName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify the format for a screen reader&apos;s announcement of a square&apos;s group, row, and column number. Enter whatever text and punctuation you would like here, and wherever you put $r or $c or $g, the square&apos;s row or column or group would be announced. For example, if you put &quot;Group $g, Row $r Column $c&quot; then the announcement might be &quot;Group 3, Row 8 Column 1&quot;. Or if you put &quot;$r $c, G $g&quot; then the announcement might be &quot;8 1, G 3&quot;..
+        /// </summary>
+        internal static string SquareLocationAnnouncementInstructions {
+            get {
+                return ResourceManager.GetString("SquareLocationAnnouncementInstructions", resourceCulture);
             }
         }
         

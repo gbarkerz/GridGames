@@ -45,8 +45,12 @@ public partial class SudokuPage : ContentPage
     private void SudokuCollectionView_Loaded(object sender, EventArgs e)
     {
 #if WINDOWS
+        var squareLocationAnnouncementFormat = (string)Preferences.Get(
+                                                "SquareLocationAnnouncementFormat",
+                                                AppResources.ResourceManager.GetString("SquareLocationAnnouncementDefault"));
+
         var platformAction = new GridGamesPlatformAction();
-        platformAction.SetGridCollectionViewAccessibleData(SudokuCollectionView, true);
+        platformAction.SetGridCollectionViewAccessibleData(SudokuCollectionView, true, squareLocationAnnouncementFormat);
 #endif
     }
 
@@ -76,7 +80,7 @@ public partial class SudokuPage : ContentPage
         {
             vm.EmptySquareIndicatorIsX = vm.SudokuSettingsVM.EmptySquareIndicatorIsX;
 
-            // Updated the accessible names of all the squares based on the current
+            // Update the accessible names of all the squares based on the current
             // game setting relating to whether an 'x' is shown in empty squares.
             for (int i = 0; i < 81; ++i)
             {
@@ -85,6 +89,18 @@ public partial class SudokuPage : ContentPage
                     vm.SudokuListCollection[i].RefreshAccessibleName();
                 }
             }
+        }
+
+        if (vm.SquareLocationAnnouncementFormat != vm.SudokuSettingsVM.SquareLocationAnnouncementFormat)
+        {
+            vm.SquareLocationAnnouncementFormat = vm.SudokuSettingsVM.SquareLocationAnnouncementFormat;
+
+            var squareLocationAnnouncementFormat = (string)Preferences.Get(
+                                                    "SquareLocationAnnouncementFormat",
+                                                    AppResources.ResourceManager.GetString("SquareLocationAnnouncementDefault"));
+
+            var platformAction = new GridGamesPlatformAction();
+            platformAction.SetGridCollectionViewAccessibleData(SudokuCollectionView, true, squareLocationAnnouncementFormat);
         }
     }
 
@@ -116,10 +132,13 @@ public partial class SudokuPage : ContentPage
         // likely due to programmatic selection via a screen reader, attempt to move 
         // the square.
         var timeSinceMostRecentArrowKeyPress = DateTime.Now - MauiProgram.timeOfMostRecentArrowKeyPress;
-        if (timeSinceMostRecentArrowKeyPress.TotalMilliseconds < 100)
+        if (timeSinceMostRecentArrowKeyPress.TotalMilliseconds < 200)
         {
             return;
         }
+
+        Debug.WriteLine("SudokuCollectionView_SelectionChanged: Time since most recent press " +
+            timeSinceMostRecentArrowKeyPress.TotalMilliseconds);
 
         var collectionView = sender as CollectionView;
         if (collectionView != null)
@@ -363,8 +382,11 @@ public partial class SudokuPage : ContentPage
 #if WINDOWS
         timer.Dispose();
 
+        var squareLocationAnnouncementFormat = (string)Preferences.Get(
+                                                "SquareLocationAnnouncementFormat",
+                                                AppResources.ResourceManager.GetString("SquareLocationAnnouncementDefault"));
         var platformAction = new GridGamesPlatformAction();
-        platformAction.SetGridCollectionViewAccessibleData(SudokuCollectionView, true);
+        platformAction.SetGridCollectionViewAccessibleData(SudokuCollectionView, true, squareLocationAnnouncementFormat);
 #endif
     }
 
@@ -650,6 +672,49 @@ public partial class SudokuPage : ContentPage
         }
 
         vm.RaiseNotificationEvent(announcement);
+    }
+
+
+    public void HandleNavigationKey(VirtualKey key)
+    {
+        Debug.WriteLine("HandleNavigationKey: key " + key);
+
+        var square = SudokuCollectionView.SelectedItem as SudokuViewModel.Square;
+        if (square == null)
+        {
+            return;
+        }
+
+        var vm = this.BindingContext as SudokuViewModel;
+
+        var index = square.Index;
+
+        int rowValue = index / 9;
+        int columnValue = index % 9;
+
+        int indexTargetSquare = -1;
+
+        if (key == VirtualKey.Home)
+        {
+            indexTargetSquare = 9 * rowValue;
+        }
+        else if (key == VirtualKey.End)
+        {
+            indexTargetSquare = (9 * rowValue) + 8;
+        }
+        else if (key == VirtualKey.PageUp)
+        {
+            indexTargetSquare = columnValue;
+        }
+        else if (key == VirtualKey.PageDown)
+        {
+            indexTargetSquare = 72 + columnValue;
+        }
+
+        if (indexTargetSquare != -1)
+        {
+            SudokuCollectionView.SelectedItem = vm.SudokuListCollection[indexTargetSquare];
+        }
     }
 
     public void AnnounceNumberPresence(VirtualKey key)

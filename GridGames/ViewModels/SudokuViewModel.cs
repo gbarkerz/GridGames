@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Net.Security;
 using System.Runtime.CompilerServices;
 using GridGames.ResX;
 
@@ -10,8 +11,9 @@ namespace GridGames.ViewModels
     // View model for the Sudoku page.
     public class SudokuViewModel : BaseViewModel
     {
-        // Barker Todo:
+        // Barker Todo: Remove the use of these statics.
         static public bool SudokuEmptySquareIndicatorIsX;
+        static public string SudokuSquareLocationAnnouncementFormat;
 
         private const int gridDimensions = 9;
 
@@ -80,6 +82,25 @@ namespace GridGames.ViewModels
                     SetProperty(ref emptySquareIndicatorIsX, value);
 
                     SudokuEmptySquareIndicatorIsX = value;
+                }
+            }
+        }
+
+
+        private string squareLocationAnnouncementFormat;
+        public string SquareLocationAnnouncementFormat
+        {
+            get
+            {
+                return squareLocationAnnouncementFormat;
+            }
+            set
+            {
+                if (squareLocationAnnouncementFormat != value)
+                {
+                    SetProperty(ref squareLocationAnnouncementFormat, value);
+
+                    SudokuSquareLocationAnnouncementFormat = value;
                 }
             }
         }
@@ -222,7 +243,19 @@ namespace GridGames.ViewModels
                     rowColumnData = ", Row " + (rowIndex + 1) + " Column " + (columnIndex + 1);
 #endif
 
-                    return "Group " + (groupIndex + 1).ToString() + rowColumnData;
+                    string fullDescription;
+
+#if WINDOWS
+                    fullDescription = SudokuViewModel.SudokuSquareLocationAnnouncementFormat;
+
+                    fullDescription = fullDescription.Replace("$g", (groupIndex + 1).ToString());
+                    fullDescription = fullDescription.Replace("$r", (rowIndex + 1).ToString());
+                    fullDescription = fullDescription.Replace("$c", (columnIndex + 1).ToString());
+#else
+                    fullDescription = "Group " + (groupIndex + 1).ToString() + rowColumnData;
+#endif
+
+                    return fullDescription;
                 }
             }
 

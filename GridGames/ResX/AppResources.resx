@@ -550,6 +550,9 @@ Would you like to play another game?</value>
   <data name="RestartGame" xml:space="preserve">
     <value>Restart Game</value>
   </data>
+  <data name="RestoreDefaultAnnouncement" xml:space="preserve">
+    <value>Restore default announcement</value>
+  </data>
   <data name="Right" xml:space="preserve">
     <value>right</value>
   </data>
@@ -603,6 +606,15 @@ Would you like to play another game?</value>
   </data>
   <data name="Small" xml:space="preserve">
     <value>Small</value>
+  </data>
+  <data name="SquareLocationAnnouncementDefault" xml:space="preserve">
+    <value>Row $r Column $c, Group $g</value>
+  </data>
+  <data name="SquareLocationAnnouncementEditorName" xml:space="preserve">
+    <value>Square location announcement format</value>
+  </data>
+  <data name="SquareLocationAnnouncementInstructions" xml:space="preserve">
+    <value>Specify the format for a screen reader's announcement of a square's group, row, and column number. Enter whatever text and punctuation you would like here, and wherever you put $r or $c or $g, the square's row or column or group would be announced. For example, if you put "Group $g, Row $r Column $c" then the announcement might be "Group 3, Row 8 Column 1". Or if you put "$r $c, G $g" then the announcement might be "8 1, G 3".</value>
   </data>
   <data name="Squares" xml:space="preserve">
     <value>Squares</value>

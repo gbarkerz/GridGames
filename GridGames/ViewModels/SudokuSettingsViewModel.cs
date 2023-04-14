@@ -1,4 +1,5 @@
 ﻿using GridGames.ResX;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -22,6 +23,10 @@ namespace GridGames.ViewModels
             BlankSquareCount = (int)Preferences.Get("BlankSquareCount", 10);
             SudokuNoMoveResponse = Preferences.Get("SudokuNoMoveResponse", (int)SudokuNoMoveResponseChoices.Announcement);
             EmptySquareIndicatorIsX = Preferences.Get("EmptySquareIndicatorIsX", false);
+
+            SquareLocationAnnouncementFormat = (string)Preferences.Get(
+                                                    "SquareLocationAnnouncementFormat",
+                                                    AppResources.ResourceManager.GetString("SquareLocationAnnouncementDefault"));
         }
 
         private int blankSquareCount;
@@ -74,6 +79,24 @@ namespace GridGames.ViewModels
                     SetProperty(ref emptySquareIndicatorIsX, value);
 
                     Preferences.Set("EmptySquareIndicatorIsX", (bool)value);
+                }
+            }
+        }
+
+        private string squareLocationAnnouncementFormat;
+        public string SquareLocationAnnouncementFormat
+        {
+            get
+            {
+                return squareLocationAnnouncementFormat;
+            }
+            set
+            {
+                if (squareLocationAnnouncementFormat != value)
+                {
+                    SetProperty(ref squareLocationAnnouncementFormat, value);
+
+                    Preferences.Set("SquareLocationAnnouncementFormat", (string)value);
                 }
             }
         }

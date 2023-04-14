@@ -1,4 +1,5 @@
 ﻿using GridGames.ResX;
+using GridGames.ViewModels;
 using Microsoft.Maui.Controls;
 using Microsoft.UI.Composition.Interactions;
 using Microsoft.UI.Xaml;
@@ -16,7 +17,7 @@ public partial class GridGamesPlatformAction
 #if WINDOWS
 
     // Set any platform-specific accessibility properties on the grid and its items.
-    public partial void SetGridCollectionViewAccessibleData(CollectionView collectionView, bool includeGroupData)
+    public partial void SetGridCollectionViewAccessibleData(CollectionView collectionView, bool includeGroupData, string dataFormat)
     {
         try
         {
@@ -60,9 +61,22 @@ public partial class GridGamesPlatformAction
 
                                 int groupIndex = (3 * (int)(rowIndex / 3)) + (columnIndex / 3);
 
-                                var helpText = (includeGroupData ? "Group " + (groupIndex + 1).ToString() + ", " : "") + 
-                                    rowString + " " + (rowIndex + 1) + " " +
-                                        columnString + " " + (columnIndex + 1);
+                                string helpText;
+
+                                if (!string.IsNullOrEmpty(dataFormat))
+                                {
+                                    helpText = SudokuViewModel.SudokuSquareLocationAnnouncementFormat;
+
+                                    helpText = helpText.Replace("$g", (groupIndex + 1).ToString());
+                                    helpText = helpText.Replace("$r", (rowIndex + 1).ToString());
+                                    helpText = helpText.Replace("$c", (columnIndex + 1).ToString());
+                                }
+                                else
+                                {
+                                    helpText = (includeGroupData ? "Group " + (groupIndex + 1).ToString() + ", " : "") +
+                                        rowString + " " + (rowIndex + 1) + " " +
+                                            columnString + " " + (columnIndex + 1);
+                                }
 
                                 // Assume it's ok from a localization perspective to have a fixed order for the elements of this HelpText.
                                 AutomationProperties.SetHelpText(container, helpText);
