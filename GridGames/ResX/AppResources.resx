@@ -401,6 +401,8 @@ Alt plus C. Announce all numbers that are not showing in the current column.
 Alt plus G. Announce all numbers that are not showing in the current group.
 Alt plus a number from 1 to 9. Announce whether the current row, column, and group contains the number.
 
+Windows Speech Recognition Usage: To play the game using Windows Speech Recognition, say: “Select square”, which will result in all squares that were originally empty showing a unique number. Then say the number shown at the square that you want to change, and that square will be selected. Once the square is selected, say: “Press” followed by the number you want shown in the square.
+
 Acknowledgement: The game uses software kindly made available by Firat Eski, at https://github.com/firateski/SudokuLibrary. The associated license for the software is included below.
  
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -610,6 +612,9 @@ Would you like to play another game?</value>
   </data>
   <data name="Small" xml:space="preserve">
     <value>Small</value>
+  </data>
+  <data name="SpeechTargetButtonPrefix" xml:space="preserve">
+    <value>Select square</value>
   </data>
   <data name="SquareLocationAnnouncementDefault" xml:space="preserve">
     <value>Row $r Column $c, Group $g</value>

@@ -1339,6 +1339,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select square.
+        /// </summary>
+        internal static string SpeechTargetButtonPrefix {
+            get {
+                return ResourceManager.GetString("SpeechTargetButtonPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Row $r Column $c, Group $g.
         /// </summary>
         internal static string SquareLocationAnnouncementDefault {

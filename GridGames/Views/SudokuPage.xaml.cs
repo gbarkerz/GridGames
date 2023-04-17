@@ -16,7 +16,7 @@ namespace GridGames.Views;
 
 public partial class SudokuPage : ContentPage
 {
-    public static DateTime timeOfMostRecentSelectionChanged = DateTime.Now;
+    public static DateTime timeOfMostRecentProgrammaticSelection = DateTime.Now;
 
     public SudokuPage()
 	{
@@ -34,12 +34,24 @@ public partial class SudokuPage : ContentPage
 
         SudokuCollectionView.SelectionChanged += SudokuCollectionView_SelectionChanged;
 
+        SudokuCollectionView.Focused += SudokuCollectionView_Focused;
 #if IOS
         // At this time, VoiceOver won't navigate to the items in a CollectionView
         // if the CollectionView has a SemanticProperties.Description. So for now,
         // remove the Description on iOS.
         SemanticProperties.SetDescription(SudokuCollectionView, null);
 #endif
+    }
+
+    private void SudokuCollectionView_Focused(object sender, FocusEventArgs e)
+    {
+        // If the grid's getting focus and no square is currently selected, select the 
+        // first square now. This might happen when tabbing into the grid after the 
+        // game's first started or when it's been restarted. 
+        if (SudokuCollectionView.SelectedItem == null)
+        {
+            SetItemSelection(0);
+        }
     }
 
     private void SudokuCollectionView_Loaded(object sender, EventArgs e)
@@ -119,26 +131,36 @@ public partial class SudokuPage : ContentPage
         var item = SudokuCollectionView.SelectedItem as SudokuViewModel.Square;
         if (item != null)
         {
-            TurnOverSquare(item);
+            ClearSquare(item);
         }
     }
 
     private void SudokuCollectionView_SelectionChanged(object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
     {
-        timeOfMostRecentSelectionChanged = DateTime.Now;
+        var timeSinceMostRecentProgrammaticSelection = DateTime.Now - timeOfMostRecentProgrammaticSelection;
 
-        // If this selection change is very likely due to a use of an Arrow key to move
-        // between squares, do nothing here. If instead the selection change is more
-        // likely due to programmatic selection via a screen reader, attempt to move 
-        // the square.
-        var timeSinceMostRecentArrowKeyPress = DateTime.Now - MauiProgram.timeOfMostRecentArrowKeyPress;
-        if (timeSinceMostRecentArrowKeyPress.TotalMilliseconds < 200)
+        // If we're here because the game itself has programmatically set the current selection
+        // in the grid, do not attempt to clear the selected square.
+
+        Debug.WriteLine("SudokuCollectionView_SelectionChanged: Time since most recent programmatic selection " +
+            timeSinceMostRecentProgrammaticSelection.TotalMilliseconds);
+
+        if (timeSinceMostRecentProgrammaticSelection.TotalMilliseconds < 200)
         {
             return;
         }
 
+        // If this selection change is very likely due to a use of an Arrow key to move
+        // between squares, do nothing here.
+        var timeSinceMostRecentArrowKeyPress = DateTime.Now - MauiProgram.timeOfMostRecentArrowKeyPress;
+
         Debug.WriteLine("SudokuCollectionView_SelectionChanged: Time since most recent press " +
             timeSinceMostRecentArrowKeyPress.TotalMilliseconds);
+
+        if (timeSinceMostRecentArrowKeyPress.TotalMilliseconds < 200)
+        {
+            return;
+        }
 
         var collectionView = sender as CollectionView;
         if (collectionView != null)
@@ -146,12 +168,12 @@ public partial class SudokuPage : ContentPage
             var item = SudokuCollectionView.SelectedItem as SudokuViewModel.Square;
             if (item != null)
             {
-                TurnOverSquare(item);
+                ClearSquare(item);
             }
         }
     }
 
-    private async void TurnOverSquare(SudokuViewModel.Square item)
+    private async void ClearSquare(SudokuViewModel.Square item)
     {
         if (item != null)
         {
@@ -171,6 +193,7 @@ public partial class SudokuPage : ContentPage
                 ++vm.CurrentBlankSquareCount;
                 
                 item.NumberShown = false;
+                item.Number = item.OriginalNumber;
 
                 var msg = "Now " + item.AccessibleName;
                 vm.RaiseNotificationEvent(msg);
@@ -365,6 +388,10 @@ public partial class SudokuPage : ContentPage
         var vm = this.BindingContext as SudokuViewModel;
         if (!vm.FirstRunSudoku)
         {
+            SetItemSelection(-1);
+
+            Debug.WriteLine("RestartGame: Reset view model list.");
+
             vm.ResetGrid();
 
 #if WINDOWS
@@ -510,7 +537,7 @@ public partial class SudokuPage : ContentPage
             {
                 if (square.NumberShown != vm.SudokuListCollection[i].NumberShown)
                 {
-                    SudokuCollectionView.SelectedItem = vm.SudokuListCollection[i];
+                    SetItemSelection(i);
 
                     doneMove = true;
 
@@ -526,7 +553,7 @@ public partial class SudokuPage : ContentPage
             {
                 if (square.NumberShown != vm.SudokuListCollection[i].NumberShown)
                 {
-                    SudokuCollectionView.SelectedItem = vm.SudokuListCollection[i];
+                    SetItemSelection(i);
 
                     doneMove = true;
 
@@ -540,7 +567,7 @@ public partial class SudokuPage : ContentPage
             {
                 if (square.NumberShown != vm.SudokuListCollection[i].NumberShown)
                 {
-                    SudokuCollectionView.SelectedItem = vm.SudokuListCollection[i];
+                    SetItemSelection(i);
 
                     doneMove = true;
 
@@ -554,7 +581,7 @@ public partial class SudokuPage : ContentPage
             {
                 if (square.NumberShown != vm.SudokuListCollection[i].NumberShown)
                 {
-                    SudokuCollectionView.SelectedItem = vm.SudokuListCollection[i];
+                    SetItemSelection(i);
 
                     doneMove = true;
 
@@ -562,6 +589,71 @@ public partial class SudokuPage : ContentPage
                 }
             }
         }
+    }
+
+    private void SetItemSelection(int selectedItemIndex)
+    {
+        timeOfMostRecentProgrammaticSelection = DateTime.Now;
+
+        SetItemSelectionHighlight(SudokuCollectionView, false);
+
+        if (selectedItemIndex == -1)
+        {
+            SudokuCollectionView.SelectedItem = null;
+        }
+        else
+        {
+            var vm = this.BindingContext as SudokuViewModel;
+
+            SudokuCollectionView.SelectedItem = vm.SudokuListCollection[selectedItemIndex];
+
+            SetItemSelectionHighlight(SudokuCollectionView, true);
+        }
+    }
+
+    public void SetItemSelectionHighlight(CollectionView collectionView, bool isSelected)
+    {
+#if WINDOWS
+        try
+        {
+            // Always run this on the UI thread.
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                // Force a square's context menu to appear.
+                var square = collectionView.SelectedItem as SudokuViewModel.Square;
+                if (square != null)
+                {
+                    int borderCount = 0;
+
+                    // First find the main container Border associated with the selected square.
+                    var gridDescendants = collectionView.GetVisualTreeDescendants();
+                    for (int i = 0; i < gridDescendants.Count; ++i)
+                    {
+                        var gridDescendant = gridDescendants[i];
+                        if (gridDescendant is Microsoft.Maui.Controls.Border)
+                        {
+                            if (borderCount == square.Index)
+                            {
+                                // Ok, we've found the Border for the square of interest.
+                                var gridItemDescendants = gridDescendant.GetVisualTreeDescendants();
+
+                                var element = gridDescendant as VisualElement;
+
+                                VisualStateManager.GoToState(
+                                    element, isSelected ? "Selected" : "Normal");
+                            }
+
+                            ++borderCount;
+                        }
+                    }
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine("SetItemSelectionHighlight: " + ex.Message);
+        }
+#endif
     }
 
     public void AnnounceRCGDetails(VirtualKey key)
@@ -713,7 +805,7 @@ public partial class SudokuPage : ContentPage
 
         if (indexTargetSquare != -1)
         {
-            SudokuCollectionView.SelectedItem = vm.SudokuListCollection[indexTargetSquare];
+            SetItemSelection(indexTargetSquare);
         }
     }
 
@@ -980,5 +1072,30 @@ public partial class SudokuPage : ContentPage
         rect.Right = rect.Left + 8;
 
         e.Surface.Canvas.DrawRect(rect, paint);
+    }
+
+    private void SpeechTargetButton_Clicked(object sender, EventArgs e)
+    {
+        var speechTargetButton = sender as Microsoft.Maui.Controls.Button;
+
+        // The accessible name of the button will be "Select square " followed by 
+        // the 1-based index of the square in the grid.
+        var accessibleName = SemanticProperties.GetDescription(speechTargetButton);
+
+        var speechTargetButtonPrefix = AppResources.ResourceManager.GetString("SpeechTargetButtonPrefix");
+
+        var itemIndexString = accessibleName.Replace(speechTargetButtonPrefix + " ", "");
+
+        int itemIndex = int.Parse(itemIndexString) - 1;
+
+        // If the square isn't already selected, select it now.
+        var vm = this.BindingContext as SudokuViewModel;
+
+        if (SudokuCollectionView.SelectedItem != vm.SudokuListCollection[itemIndex])
+        {
+            Debug.WriteLine("SpeechTargetButton_Clicked: Select square " + itemIndex);
+
+            SetItemSelection(itemIndex);
+        }
     }
 }

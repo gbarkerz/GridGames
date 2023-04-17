@@ -25,6 +25,8 @@
             <localviews:DarkThemeToSquareLabelColor x:Key="DarkThemeToSquareLabelColor" />
             <localviews:NumberToDisplayedValue x:Key="NumberToDisplayedValue" />
             <localviews:NumberToIsVisible x:Key="NumberToIsVisible" />
+            <localviews:SudokuSquareIndexToSpeechTargetName x:Key="SudokuSquareIndexToSpeechTargetName" />
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -122,6 +124,17 @@
                                 Stroke="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}">
 
                                 <Grid Padding="0" Margin="4">
+                                    
+                                    <!-- Add a button to support to assitive technology like Windows Speech Recognition
+                                        programmatically invoking a square to select it. -->
+                                    <Button IsVisible="{Binding FixedNumber, Mode=OneWay,
+                                                Converter={StaticResource InvertedBoolConverter}}"
+                                        SemanticProperties.Description="{Binding Index, Mode=OneWay,
+                                            Converter={StaticResource SudokuSquareIndexToSpeechTargetName}}"
+                                        Clicked="SpeechTargetButton_Clicked"
+                                        Text="{Binding TargetIndex}" 
+                                        Margin="0" Padding="0"
+                                        BackgroundColor="Transparent" BorderColor="Transparent" />
 
                                     <Label Margin="2,2,0,0" Padding="0"
                                         AutomationProperties.IsInAccessibleTree="False"

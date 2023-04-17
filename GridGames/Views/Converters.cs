@@ -6,6 +6,23 @@ using GridGames.ViewModels;
 
 namespace GridGames.Views
 {
+    public class SudokuSquareIndexToSpeechTargetName : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var index = (int)value;
+
+            var speechTargetButtonPrefix = AppResources.ResourceManager.GetString("SpeechTargetButtonPrefix");
+
+            return speechTargetButtonPrefix + " " + (index + 1).ToString();
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class SudokuCollectionViewHeightToRowHeight : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

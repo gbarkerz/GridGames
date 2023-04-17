@@ -164,6 +164,7 @@ namespace GridGames.ViewModels
                     {
                         Index = index,
                         Number = cellValue,
+                        OriginalNumber = cellValue,
                         NumberShown = numberShown,
                         FixedNumber = numberShown
                     });
@@ -278,6 +279,17 @@ namespace GridGames.ViewModels
                     SetProperty(ref number, value);
 
                     OnPropertyChanged("AccessibleName");
+                }
+            }
+
+
+            private string originalNumber;
+            public string OriginalNumber
+            {
+                get { return originalNumber; }
+                set
+                {
+                    SetProperty(ref originalNumber, value);
                 }
             }
 
