@@ -5,6 +5,8 @@ namespace InvokePlatformCode.Services.PartialMethods
     {
 #if WINDOWS
 
+        public partial void PrepareGamepadUsage();
+
         public partial void SetGridItemCollectionViewAccessibleData(CollectionView collectionView, int itemIndex, int row, int column);
         public partial void SetGridCollectionViewAccessibleData(CollectionView collectionView, bool includeGroupData, string dataFormat);
 

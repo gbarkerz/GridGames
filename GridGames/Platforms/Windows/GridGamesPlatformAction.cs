@@ -1,7 +1,5 @@
 ﻿using GridGames.ResX;
 using GridGames.ViewModels;
-using Microsoft.Maui.Controls;
-using Microsoft.UI.Composition.Interactions;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Automation.Peers;
 using Microsoft.UI.Xaml.Controls;
@@ -10,11 +8,98 @@ using Windows.Storage;
 using Windows.UI.ViewManagement;
 using AutomationProperties = Microsoft.UI.Xaml.Automation.AutomationProperties;
 
+using Windows.Gaming.Input;
+using Windows.System;
+using GridGames.Views;
+
 namespace InvokePlatformCode.Services.PartialMethods;
 
 public partial class GridGamesPlatformAction
 {
 #if WINDOWS
+
+    private Timer timerGamepad;
+    private bool gettingGamepadReading;
+
+    public partial void PrepareGamepadUsage()
+    {
+        Gamepad.GamepadAdded += Gamepad_GamepadAdded;
+    }
+
+    private void Gamepad_GamepadAdded(object sender, Gamepad e)
+    {
+        Debug.WriteLine("Sudoku: Gamepad detected.");
+
+        timerGamepad = new Timer(
+                            new TimerCallback((s) => GetGamepadState()),
+                                null,
+                                TimeSpan.FromMilliseconds(500),
+                                TimeSpan.FromMilliseconds(500));
+    }
+
+    private void GetGamepadState()
+    {
+        if (gettingGamepadReading)
+        {
+            return;
+        }
+
+        gettingGamepadReading = true;
+
+        var gamepads = Gamepad.Gamepads;
+        if (gamepads.Count > 0)
+        {
+            var state = gamepads[0].GetCurrentReading();
+
+            Debug.WriteLine("GamepadReading: " + state.Buttons);
+
+            if (state.Buttons != 0) 
+            {
+                HandleGamepadButtonPress(state.Buttons);
+            }
+        }
+
+        gettingGamepadReading = false;
+    }
+
+    private void HandleGamepadButtonPress(GamepadButtons buttons)
+    {
+        VirtualKey key = VirtualKey.None;
+
+        switch (buttons)
+        {
+            case GamepadButtons.A:
+            case GamepadButtons.B:
+
+                key = VirtualKey.Space; 
+                break;
+
+            case GamepadButtons.DPadLeft:
+
+                key = VirtualKey.Left;
+                break;
+
+            case GamepadButtons.DPadRight:
+
+                key = VirtualKey.Right;
+                break;
+
+            case GamepadButtons.DPadUp:
+
+                key = VirtualKey.Up;
+                break;
+
+            case GamepadButtons.DPadDown:
+
+                key = VirtualKey.Down;
+                break;
+        }
+
+        if (key != VirtualKey.None)
+        {
+            SudokuPage.HandleGamepadButtonInput(key);
+        }
+    }
 
     // Set any platform-specific accessibility properties on the grid and its items.
     public partial void SetGridCollectionViewAccessibleData(CollectionView collectionView, bool includeGroupData, string dataFormat)

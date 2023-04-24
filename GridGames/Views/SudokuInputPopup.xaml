@@ -6,16 +6,10 @@
              CanBeDismissedByTappingOutsideOfPopup="False">
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <Grid.Resources>
@@ -27,19 +21,33 @@
             </Style>
         </Grid.Resources>
 
-        <Button Text="1" Grid.Row="0" Grid.Column="0" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
-        <Button Text="2" Grid.Row="0" Grid.Column="1" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
-        <Button Text="3" Grid.Row="0" Grid.Column="2" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
-        <Button x:Name="OneButton" Text="4" Grid.Row="1" Grid.Column="0" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
-        <Button Text="5" Grid.Row="1" Grid.Column="1" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
-        <Button Text="6" Grid.Row="1" Grid.Column="2" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
-        <Button Text="7" Grid.Row="2" Grid.Column="0" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
-        <Button Text="8" Grid.Row="2" Grid.Column="1" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
-        <Button Text="9" Grid.Row="2" Grid.Column="2" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-        <Button Text="Close Number Pad" Grid.Row="3" Grid.ColumnSpan="3" 
-            Margin="8,8,8,8"
-            HorizontalOptions="CenterAndExpand" 
-            Clicked="CloseButton_Clicked" />
+            <Button Text="1" Grid.Row="0" Grid.Column="0" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
+            <Button Text="2" Grid.Row="0" Grid.Column="1" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
+            <Button Text="3" Grid.Row="0" Grid.Column="2" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
+            <Button x:Name="OneButton" Text="4" Grid.Row="1" Grid.Column="0" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
+            <Button Text="5" Grid.Row="1" Grid.Column="1" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
+            <Button Text="6" Grid.Row="1" Grid.Column="2" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
+            <Button Text="7" Grid.Row="2" Grid.Column="0" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
+            <Button Text="8" Grid.Row="2" Grid.Column="1" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
+            <Button Text="9" Grid.Row="2" Grid.Column="2" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
+
+            <Button Text="Close Number Pad" Grid.Row="3" Grid.ColumnSpan="3" 
+                Margin="8,8,8,8"
+                HorizontalOptions="CenterAndExpand" 
+                Clicked="CloseButton_Clicked" />
+        </Grid>
     </Grid>
 </mct:Popup>

@@ -181,7 +181,7 @@ namespace GridGames.Views
         // and also when closing the Matching Settings page.
         protected override async void OnAppearing()
         {
-            Debug.Write("Matching Game: OnAppearing called.");
+            Debug.WriteLine("Matching Game: OnAppearing called.");
 
             base.OnAppearing();
 

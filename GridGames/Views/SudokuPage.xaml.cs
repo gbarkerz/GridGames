@@ -2,14 +2,10 @@ using CommunityToolkit.Maui.Views;
 using GridGames.ResX;
 using GridGames.ViewModels;
 using InvokePlatformCode.Services.PartialMethods;
-using Microsoft.UI.Xaml.Controls;
 using SkiaSharp;
-using SkiaSharp.Views.Maui.Controls;
-using System;
+using SkiaSharp.Views.Maui.Controls;using System;
 using System.Diagnostics;
-using Windows.Media.Playback;
 using Windows.System;
-using Windows.UI.StartScreen;
 using Application = Microsoft.Maui.Controls.Application;
 
 namespace GridGames.Views;
@@ -19,8 +15,11 @@ public partial class SudokuPage : ContentPage
     public static DateTime timeOfMostRecentProgrammaticSelection = DateTime.Now;
 
     public SudokuPage()
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
+
+        // This static is used when the page is called by Windows platform Gamepad-related code.
+        sudokuPage = this;
 
 #if WINDOWS
         GameTitleLabel.HorizontalOptions = LayoutOptions.Center;
@@ -63,12 +62,14 @@ public partial class SudokuPage : ContentPage
 
         var platformAction = new GridGamesPlatformAction();
         platformAction.SetGridCollectionViewAccessibleData(SudokuCollectionView, true, squareLocationAnnouncementFormat);
+
+        platformAction.PrepareGamepadUsage();
 #endif
     }
 
     protected override void OnAppearing()
     {
-        Debug.Write("Sudoku: OnAppearing called.");
+        Debug.WriteLine("Sudoku: OnAppearing called.");
 
         base.OnAppearing();
 
@@ -77,7 +78,7 @@ public partial class SudokuPage : ContentPage
         var vm = this.BindingContext as SudokuViewModel;
 
         vm.FirstRunSudoku = Preferences.Get("FirstRunSudoku", true);
-        
+
         var currentTheme = Application.Current.UserAppTheme;
         if (currentTheme == AppTheme.Unspecified)
         {
@@ -191,7 +192,7 @@ public partial class SudokuPage : ContentPage
             {
                 var vm = this.BindingContext as SudokuViewModel;
                 ++vm.CurrentBlankSquareCount;
-                
+
                 item.NumberShown = false;
                 item.Number = item.OriginalNumber;
 
@@ -490,12 +491,12 @@ public partial class SudokuPage : ContentPage
             switch (vm.SudokuSettingsVM.SudokuNoMoveResponse)
             {
                 case (int)SudokuNoMoveResponseChoices.PlaySound:
-                
+
                     mediaElement.Stop();
                     mediaElement.Play();
 
                     break;
-                
+
                 case (int)SudokuNoMoveResponseChoices.Announcement:
 
                     vm.RaiseNotificationEvent(announcement);
@@ -503,14 +504,14 @@ public partial class SudokuPage : ContentPage
                     break;
 
                 case (int)SudokuNoMoveResponseChoices.PlaySoundAndAnnouncement:
-                
+
                     mediaElement.Stop();
                     mediaElement.Play();
 
                     vm.RaiseNotificationEvent(announcement);
 
                     break;
-                
+
                 case (int)SudokuNoMoveResponseChoices.NoResponse:
                 default:
 
@@ -1097,5 +1098,190 @@ public partial class SudokuPage : ContentPage
 
             SetItemSelection(itemIndex);
         }
+    }
+
+    // The remainder of this file contains code to react to Gamepad input when running on Windows.
+
+    // Important: This code is here only to raise the discussion around how a Gamepad might be used 
+    // to play a game of Sudoku. The feature is not complete. For example, it is not possible to move
+    // keyboard focus into the grid, or to restart a game once the game is completed. 
+
+    // Also, the app polls for the state of the gamepad buttons, which is not at all what I'd like to
+    // be doing. I've not yet found a way to add gamepad button event handles to a MAUI app as it can
+    // be done in a UWP XAML app. I found no way of getting a MAUI app's KeyDown handler to be called 
+    // following a gamepad button press. Interesting this Microsoft resource also mentions use of 
+    // polling to get the gamepad state...
+    // https://learn.microsoft.com/en-us/gaming/gdk/_content/gc/reference/input/gameinput/interfaces/igameinput/methods/igameinput_getcurrentreading
+
+    public static SudokuPage sudokuPage;
+    private static SudokuInputPopup currentPopup;
+
+    // Handle a Gamepad button being pressed.
+    static public void HandleGamepadButtonInput(VirtualKey key)
+    {
+        Debug.WriteLine("HandleGamepadButtonInput: Key " + key.ToString());
+
+        // If the Sudoku input popup is up, have the Gamepad input trigger action in the popup.
+        if (currentPopup != null)
+        {
+            HandleGamepadButtonInputAtPopup(key);
+
+            return;
+        }
+
+        // Have the Gamepad input trigger action in the main Sudoku grid.
+        if ((sudokuPage.SudokuCollectionView != null) &&
+            (sudokuPage.SudokuCollectionView.SelectedItem != null))
+        {
+            var square = sudokuPage.SudokuCollectionView.SelectedItem as SudokuViewModel.Square;
+            if (square != null)
+            {
+                if (key == VirtualKey.Space)
+                {
+                    try
+                    {
+                        // Always run this on the UI thread.
+                        MainThread.BeginInvokeOnMainThread(async () =>
+                        {
+                            currentPopup = new SudokuInputPopup();
+
+                            var result = await sudokuPage.ShowPopupAsync(currentPopup) as string;
+                            if (result != "")
+                            {
+                                var vm = sudokuPage.BindingContext as SudokuViewModel;
+
+                                if (!square.NumberShown)
+                                {
+                                    --vm.CurrentBlankSquareCount;
+
+                                    square.NumberShown = true;
+                                }
+
+                                square.Number = result.ToString();
+
+                                var msg = "Now " + square.AccessibleName;
+                                vm.RaiseNotificationEvent(msg);
+
+                                bool gameWon;
+
+                                if (vm.IsGridFilled(out gameWon))
+                                {
+                                    var answer = await sudokuPage.DisplayAlert(
+                                        "Sudoku",
+                                        (gameWon ? "Congratulations, you won the game!" : "Sorry, the grid is not correct.") +
+                                            " Would you like another game?",
+                                        AppResources.ResourceManager.GetString("Yes"),
+                                        AppResources.ResourceManager.GetString("No"));
+                                    if (answer)
+                                    {
+                                        sudokuPage.RestartGame();
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("HandleGamepadButtonInput: Exception " + ex.Message);
+                    }
+                }
+                else
+                {
+                    int targetIndex = -1;
+
+                    if (key == VirtualKey.Left)
+                    {
+                        bool isStartOfRow = (square.Index % 9) == 0;
+                        if (!isStartOfRow)
+                        {
+                            targetIndex = square.Index - 1;
+                        }
+                    }
+                    else if (key == VirtualKey.Right)
+                    {
+                        bool isEndOfRow = (square.Index % 9) == 8;
+                        if (!isEndOfRow)
+                        {
+                            targetIndex = square.Index + 1;
+                        }
+                    }
+                    else if (key == VirtualKey.Up)
+                    {
+                        if (square.Index > 8)
+                        {
+                            targetIndex = square.Index - 9;
+                        }
+                    }
+                    else if (key == VirtualKey.Down)
+                    {
+                        if (square.Index < 72)
+                        {
+                            targetIndex = square.Index + 9;
+                        }
+                    }
+
+                    if (targetIndex != -1)
+                    {
+                        var vm = sudokuPage.BindingContext as SudokuViewModel;
+
+                        try
+                        {
+                            // Always run this on the UI thread.
+                            MainThread.BeginInvokeOnMainThread(() =>
+                            {
+                                timeOfMostRecentProgrammaticSelection = DateTime.Now;
+
+                                sudokuPage.SetItemSelection(targetIndex);
+                            });
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine("HandleGamepadButtonInput: Exception " + ex.Message);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    static public void HandleGamepadButtonInputAtPopup(VirtualKey key)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            var vm = sudokuPage.BindingContext as SquaresViewModel;
+
+            var descendants = currentPopup.GetVisualTreeDescendants();
+
+            bool focusNextButton = false;
+
+            for (int i = 0; i < descendants.Count; ++i)
+            {
+                var descendant = descendants[i];
+                if (descendant is Microsoft.Maui.Controls.Button)
+                {
+                    var button = descendant as Microsoft.Maui.Controls.Button;
+
+                    if (focusNextButton)
+                    {
+                        button.Focus();
+
+                        break;
+                    }
+                    else if (button.IsFocused)
+                    {
+                        if (key == VirtualKey.Space)
+                        {
+                            currentPopup.Close(button.Text.StartsWith("Close") ? "" : button.Text);
+
+                            currentPopup = null;
+                        }
+                        else
+                        {
+                            focusNextButton = true;
+                        }
+                    }
+                }
+            }
+        });
     }
 }
