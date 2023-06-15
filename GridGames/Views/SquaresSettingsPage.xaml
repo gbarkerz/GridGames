@@ -151,7 +151,11 @@
                                         Margin="0,0,8,0"
                                         VerticalTextAlignment="Center"
                                         Text="{x:Static resources:AppResources.PictureNameLabel}" />
+                                    <!-- Barker: Add a HeightRequest here because the default height is too small.
+                                        Figure out how to remove this, because a hardcoded height won't account for
+                                        user customized font sizes if that's ever available. -->
                                     <Entry Grid.Column="1" x:Name="PictureNameEditor"
+                                        HeightRequest="40"
                                         windows:VisualElement.AccessKey="M"
                                         VerticalTextAlignment="Center"
                                         Text="{Binding PictureName, Mode=TwoWay}" 

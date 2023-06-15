@@ -181,12 +181,6 @@ namespace GridGames
 
         private async void PictureBrowseButton_Clicked(object sender, EventArgs e)
         {
-            PermissionStatus status = await CheckAndRequestStoragePermission();
-            if (status != PermissionStatus.Granted)
-            {
-                return;
-            }
-
             var options = new PickOptions
             {
                 PickerTitle = "Please select the Pairs game pictures."

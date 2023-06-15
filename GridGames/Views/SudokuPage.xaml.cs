@@ -5,8 +5,11 @@ using InvokePlatformCode.Services.PartialMethods;
 using SkiaSharp;
 using SkiaSharp.Views.Maui.Controls;using System;
 using System.Diagnostics;
-using Windows.System;
 using Application = Microsoft.Maui.Controls.Application;
+
+#if WINDOWS
+using Windows.System;
+#endif
 
 namespace GridGames.Views;
 
@@ -18,10 +21,10 @@ public partial class SudokuPage : ContentPage
     {
         InitializeComponent();
 
+#if WINDOWS
         // This static is used when the page is called by Windows platform Gamepad-related code.
         sudokuPage = this;
 
-#if WINDOWS
         GameTitleLabel.HorizontalOptions = LayoutOptions.Center;
 #endif
 
@@ -44,6 +47,7 @@ public partial class SudokuPage : ContentPage
 
     private void SudokuCollectionView_Focused(object sender, FocusEventArgs e)
     {
+#if WINDOWS
         // If the grid's getting focus and no square is currently selected, select the 
         // first square now. This might happen when tabbing into the grid after the 
         // game's first started or when it's been restarted. 
@@ -51,6 +55,7 @@ public partial class SudokuPage : ContentPage
         {
             SetItemSelection(0);
         }
+#endif
     }
 
     private void SudokuCollectionView_Loaded(object sender, EventArgs e)
@@ -111,9 +116,10 @@ public partial class SudokuPage : ContentPage
             var squareLocationAnnouncementFormat = (string)Preferences.Get(
                                                     "SquareLocationAnnouncementFormat",
                                                     AppResources.ResourceManager.GetString("SquareLocationAnnouncementDefault"));
-
+#if WINDOWS
             var platformAction = new GridGamesPlatformAction();
             platformAction.SetGridCollectionViewAccessibleData(SudokuCollectionView, true, squareLocationAnnouncementFormat);
+#endif
         }
     }
 
@@ -389,7 +395,9 @@ public partial class SudokuPage : ContentPage
         var vm = this.BindingContext as SudokuViewModel;
         if (!vm.FirstRunSudoku)
         {
+#if WINDOWS
             SetItemSelection(-1);
+#endif
 
             Debug.WriteLine("RestartGame: Reset view model list.");
 
@@ -1096,7 +1104,11 @@ public partial class SudokuPage : ContentPage
         {
             Debug.WriteLine("SpeechTargetButton_Clicked: Select square " + itemIndex);
 
+#if WINDOWS
             SetItemSelection(itemIndex);
+#else
+            SudokuCollectionView.SelectedItem = vm.SudokuListCollection[itemIndex];
+#endif
         }
     }
 
@@ -1112,6 +1124,8 @@ public partial class SudokuPage : ContentPage
     // following a gamepad button press. Interesting this Microsoft resource also mentions use of 
     // polling to get the gamepad state...
     // https://learn.microsoft.com/en-us/gaming/gdk/_content/gc/reference/input/gameinput/interfaces/igameinput/methods/igameinput_getcurrentreading
+
+#if WINDOWS
 
     public static SudokuPage sudokuPage;
     private static SudokuInputPopup currentPopup;
@@ -1284,4 +1298,7 @@ public partial class SudokuPage : ContentPage
             }
         });
     }
+
+#endif
+
 }
