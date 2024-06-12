@@ -138,6 +138,14 @@ namespace GridGames.ViewModels
 
         public void InitialiseGrid(int indexNoFrog)
         {
+            for (int i = 0; i < (sweeperSettingsVM.SideLength * sweeperSettingsVM.SideLength); ++i)
+            {
+                sweeperList[i].TurnedUp = false;
+                sweeperList[i].HasFrog = false;
+                sweeperList[i].ShowsQueryFrog = false;
+                sweeperList[i].NearbyFrogCount = 0;
+            }
+
             var random = new Random();
 
             int frogsFound = 0;
@@ -155,12 +163,26 @@ namespace GridGames.ViewModels
             }
             while (frogsFound < sweeperSettingsVM.FrogCount);
 
+            int frogCount = 0;
+
             for (int cardIndex = 0; cardIndex < (sweeperSettingsVM.SideLength * sweeperSettingsVM.SideLength); ++cardIndex)
             {
                 if (!sweeperList[cardIndex].HasFrog)
                 {
                     SetSquareNearbyFrogCount(cardIndex);
                 }
+                else
+                {
+                    // Debug purposes:
+                    ++frogCount;
+                }
+            }
+
+            // Debug purposes:
+            if (frogCount != sweeperSettingsVM.FrogCount)
+            {
+                System.Diagnostics.Debug.Write("Unexpected initial frog count: Actual " +
+                    frogCount + ", Expected " + sweeperSettingsVM.FrogCount);
             }
         }
 

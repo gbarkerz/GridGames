@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-    <TargetFrameworks>net8.0-windows10.0.22621.0</TargetFrameworks>
-    <!--<TargetFrameworks>net8.0-android33.0</TargetFrameworks>-->
+    <!--<TargetFrameworks>net8.0-windows10.0.22621.0</TargetFrameworks>-->
+    <TargetFrameworks>net8.0-android34.0</TargetFrameworks>
     
     <OutputType>Exe</OutputType>
 		<RootNamespace>GridGames</RootNamespace>
@@ -24,7 +24,9 @@
 		<ApplicationDisplayVersion>2.8</ApplicationDisplayVersion>
 		<ApplicationVersion>10</ApplicationVersion>
 
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.4</SupportedOSPlatformVersion>
+    <!--<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.4</SupportedOSPlatformVersion>-->
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">29.0</SupportedOSPlatformVersion>
+
     <DefaultLanguage>en</DefaultLanguage>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
@@ -39,8 +41,18 @@
 		<!--<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.22621.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.22621.0</TargetPlatformMinVersion>-->
     <!--<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">28.0</SupportedOSPlatformVersion>-->
+
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android34.0|AnyCPU'">
+    <PublishTrimmed>False</PublishTrimmed>
+    <RunAOTCompilation>False</RunAOTCompilation>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android34.0|AnyCPU'">
+    <PublishTrimmed>False</PublishTrimmed>
+    <RunAOTCompilation>False</RunAOTCompilation>
+  </PropertyGroup>
+  
   <!-- This is the ApplicationId for iOS. -->
 	<PropertyGroup Condition="'$(TargetFramework)'=='net7.0-iOS'">
 	  <ApplicationId>ios.guybarker.gridgames</ApplicationId>
@@ -106,7 +118,7 @@
     <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="white" />
 
     <!-- Splash Screen -->
-	<MauiSplashScreen Include="Resources\Splash\splashscreen.svg" />
+	<MauiSplashScreen Include="Resources\Splash\splashscreen.svg" Color="#FFFFFF" />
 
     <!-- Images -->
     <MauiImage Include="Resources\Images\*" />
@@ -145,6 +157,7 @@
 	  <None Remove="Resources\DefaultMatchingBackgrounds\Card7.jpg" />
 	  <None Remove="Resources\DefaultMatchingBackgrounds\Card8.jpg" />
 	  <None Remove="Resources\Images\card1.jpg" />
+	  <None Remove="Resources\Images\hamburger.svg" />
 	  <None Remove="Resources\SoundNoMoveAvailable.m4a" />
 	  <None Remove="Resources\Splash\splashscreen.png" />
 	  <None Remove="squaresgameicon.png" />
@@ -217,27 +230,35 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="CommunityToolkit.Maui" Version="5.0.0" />
-	  <PackageReference Include="CommunityToolkit.Maui.MediaElement" Version="1.0.2" />
-	  <PackageReference Include="SkiaSharp" Version="2.88.3" />
-	  <PackageReference Include="SkiaSharp.Views" Version="2.88.3" />
-	  <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.3" />
-	  <PackageReference Include="SkiaSharp.Views.Maui.Controls.Compatibility" Version="2.88.3" />
-	  <PackageReference Include="SkiaSharp.Views.Maui.Core" Version="2.88.3" />
+	  <PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
+	  <PackageReference Include="CommunityToolkit.Maui.MediaElement" Version="3.0.1" />
+	  <PackageReference Include="SkiaSharp" Version="2.88.6" />
+	  <PackageReference Include="SkiaSharp.Views" Version="2.88.6" />
+	  <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.6" />
+	  <PackageReference Include="SkiaSharp.Views.Maui.Controls.Compatibility" Version="2.88.6" />
+	  <PackageReference Include="SkiaSharp.Views.Maui.Core" Version="2.88.6" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Reference Include="Sudoku">
-	    <HintPath>..\..\SudokuLibrary\Sudoku\bin\Debug\netstandard1.4\Sudoku.dll</HintPath>
+	    <HintPath>..\..\SudokuLibrary\Sudoku\bin\Release\netstandard1.4\Sudoku.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 
-	<ItemGroup>
+	<!--<ItemGroup>
 	  <MauiSplashScreen Include="Resources\Splash\splashscreen.png" />
+	</ItemGroup>-->
+
+	<ItemGroup>
+	  <PackageReference Update="Microsoft.Windows.SDK.BuildTools" Version="10.0.25387-preview" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Update="Microsoft.Windows.SDK.BuildTools" Version="10.0.25314-preview" />
+	  <PackageReference Update="Microsoft.Maui.Controls" Version="8.0.0-preview.5.8529" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Update="Microsoft.Maui.Controls.Compatibility" Version="8.0.0-preview.5.8529" />
 	</ItemGroup>
 
 </Project>

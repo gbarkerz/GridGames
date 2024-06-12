@@ -34,15 +34,24 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Button Text="1" Grid.Row="0" Grid.Column="0" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
-            <Button Text="2" Grid.Row="0" Grid.Column="1" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
-            <Button Text="3" Grid.Row="0" Grid.Column="2" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
-            <Button x:Name="OneButton" Text="4" Grid.Row="1" Grid.Column="0" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
-            <Button Text="5" Grid.Row="1" Grid.Column="1" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
-            <Button Text="6" Grid.Row="1" Grid.Column="2" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
-            <Button Text="7" Grid.Row="2" Grid.Column="0" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
-            <Button Text="8" Grid.Row="2" Grid.Column="1" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
-            <Button Text="9" Grid.Row="2" Grid.Column="2" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked" />
+            <Button Text="1" Grid.Row="0" Grid.Column="0" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked"
+                    HorizontalOptions="CenterAndExpand" />
+            <Button Text="2" Grid.Row="0" Grid.Column="1" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked"
+                    HorizontalOptions="CenterAndExpand" />
+            <Button Text="3" Grid.Row="0" Grid.Column="2" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked"
+                    HorizontalOptions="CenterAndExpand" />
+            <Button Text="4" Grid.Row="1" Grid.Column="0" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked"
+                    HorizontalOptions="CenterAndExpand" />
+            <Button Text="5" Grid.Row="1" Grid.Column="1" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked"
+                    HorizontalOptions="CenterAndExpand" />
+            <Button Text="6" Grid.Row="1" Grid.Column="2" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked"
+                    HorizontalOptions="CenterAndExpand" />
+            <Button Text="7" Grid.Row="2" Grid.Column="0" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked"
+                    HorizontalOptions="CenterAndExpand" />
+            <Button Text="8" Grid.Row="2" Grid.Column="1" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked"
+                    HorizontalOptions="CenterAndExpand" />
+            <Button Text="9" Grid.Row="2" Grid.Column="2" Style="{StaticResource buttonStyle}" Clicked="NumberButton_Clicked"
+                    HorizontalOptions="CenterAndExpand" />
 
             <Button Text="Close Number Pad" Grid.Row="3" Grid.ColumnSpan="3" 
                 Margin="8,8,8,8"

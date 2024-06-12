@@ -176,6 +176,8 @@ namespace GridGames.Views
             }
         }
 
+        private bool currentlyProcessingInputOnCard = false;
+
         private async Task ReactToInputOnCard(SweeperViewModel.Square item)
         {
             var vm = this.BindingContext as SweeperViewModel;
@@ -188,6 +190,13 @@ namespace GridGames.Views
             {
                 return;
             }
+
+            if (currentlyProcessingInputOnCard)
+            {
+                return;
+            }
+
+            currentlyProcessingInputOnCard = true;
 
             if (IsFirstTurnUp())
             {
@@ -205,12 +214,16 @@ namespace GridGames.Views
             var result = await this.ShowPopupAsync(popup) as string;
             if (String.IsNullOrEmpty(result)) 
             {
+                currentlyProcessingInputOnCard = false;
+
                 return;
             }
 
             if (result == "MarkFrog") 
             {
                 SetShowsQueryFrogInSquare(item.TargetIndex, !item.ShowsQueryFrog);
+
+                currentlyProcessingInputOnCard = false;
 
                 return;
             }
@@ -241,6 +254,8 @@ namespace GridGames.Views
                         item.AccessibleName);
                 }
             }
+
+            currentlyProcessingInputOnCard = false;
         }
 
         // This gets called when switching to the Sweeper Game from other games.
@@ -448,10 +463,16 @@ namespace GridGames.Views
             var vm = this.BindingContext as SweeperViewModel;
             if (!vm.FirstRunSweeper)
             {
+                vm.ResetGrid();
+
+                // Important: Do not set these to false until after the grid has been reset. 
+                // Otherwise if a tap of a square is made after they're set to false, yet
+                // before the grid is reset, the tap will be processed as though the game is 
+                // in progress. Instead we must ignore all touch input until the game has 
+                // been restarted.
                 vm.GameWon = false;
                 vm.GameLost = false;
 
-                vm.ResetGrid();
 
 #if WINDOWS
                 timer = new Timer(

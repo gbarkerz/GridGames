@@ -31,16 +31,18 @@
     </ContentPage.Resources>
 
     <Shell.TitleView>
-        <Grid Margin="0,0,0,-50">
+        <Grid Margin="0,0,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
+            
             <Label Grid.Column="0" x:Name="GameTitleLabel"
                 Text="{x:Static resources:AppResources.Sudoku}"
                 SemanticProperties.HeadingLevel="Level1" FontSize="Title"
                 TextColor="{StaticResource White}"
-                Margin="8,0,0,0" HorizontalOptions="Start" VerticalOptions="StartAndExpand" />
+                Margin="0,8,0,0" HorizontalOptions="Start" VerticalOptions="StartAndExpand" />
+            
             <Button x:Name="SudokuSettingsButton" Grid.Column="1"
                 Text="&#xf013;"
                 TextColor="{StaticResource White}"
@@ -120,21 +122,24 @@
                                 AutomationProperties.IsInAccessibleTree="False"
                                 HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}},
                                     Path=Height, Converter={StaticResource SudokuCollectionViewHeightToRowHeight}}"
-                                StrokeThickness="1" 
+                                StrokeThickness="1"
                                 Stroke="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}">
 
-                                <Grid Padding="0" Margin="4">
+                                <Grid Padding="0" Margin="4"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Dark}}">
                                     
                                     <!-- Add a button to support to assitive technology like Windows Speech Recognition
                                         programmatically invoking a square to select it. -->
-                                    <Button IsVisible="{Binding FixedNumber, Mode=OneWay,
+                                    
+                                    <!-- Barker: Remove this for now. -->
+                                    <!--<Button IsVisible="{Binding FixedNumber, Mode=OneWay,
                                                 Converter={StaticResource InvertedBoolConverter}}"
                                         SemanticProperties.Description="{Binding Index, Mode=OneWay,
                                             Converter={StaticResource SudokuSquareIndexToSpeechTargetName}}"
                                         Clicked="SpeechTargetButton_Clicked"
                                         Text="{Binding TargetIndex}" 
                                         Margin="0" Padding="0"
-                                        BackgroundColor="Transparent" BorderColor="Transparent" />
+                                        BackgroundColor="Transparent" BorderColor="Transparent" />-->
 
                                     <Label Margin="2,2,0,0" Padding="0"
                                         AutomationProperties.IsInAccessibleTree="False"

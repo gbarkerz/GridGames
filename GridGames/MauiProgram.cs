@@ -4,7 +4,10 @@ using SkiaSharp.Views.Maui.Controls.Hosting;
 using CommunityToolkit.Maui;
 using GridGames.ViewModels;
 using InvokePlatformCode.Services.PartialMethods;
+
+#if WINDOWS
 using Microsoft.UI.Xaml.Controls;
+#endif
 
 namespace GridGames;
 
