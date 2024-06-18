@@ -191,10 +191,12 @@ namespace GridGames
                 // Pick a picture file from a folder containing the 8 custom pictures.
                 // Note that this doesn't work if selecting a picture from a OneDrive folder.
 
-                string pathToPictures = "";
-
                 var platformAction = new GridGamesPlatformAction();
-                pathToPictures = await platformAction.GetPairsPictureFolder();
+
+                var tuple = await platformAction.GetPairsPictureFolder();
+                string pathToPictures = tuple.Item1;
+                string selectedFolder = tuple.Item2;
+
                 if (!String.IsNullOrWhiteSpace(pathToPictures))
                 {
                     // The selected folder must contain exactly the required number of pictures in it.
@@ -231,7 +233,7 @@ namespace GridGames
                             var vm = this.BindingContext as MatchingSettingsViewModel;
                             vm.PictureListCollection.Clear();
 
-                            vm.PicturePathMatching = Path.GetDirectoryName(pathToPictures);
+                            vm.PicturePathMatching = Path.GetDirectoryName(selectedFolder);
 
                             // PictureOriginalPathMatching is used only for display purposes in the Settings window.
                             var pathOriginal = Path.GetDirectoryName(pathToPictures);

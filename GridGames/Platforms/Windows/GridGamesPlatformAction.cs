@@ -219,7 +219,7 @@ public partial class GridGamesPlatformAction
         }
     }
 
-    public partial async Task<string> GetPairsPictureFolder()
+    public partial async Task<Tuple<string, string>> GetPairsPictureFolder()
     {
         string result = "";
 

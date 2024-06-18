@@ -8,7 +8,7 @@ namespace InvokePlatformCode.Services.PartialMethods;
 public partial class GridGamesPlatformAction
 {
 #if IOS
-    public partial Task<string> GetPairsPictureFolder()
+    public partial Task<Tuple<string, string>> GetPairsPictureFolder()
     {
         string result = "";
 

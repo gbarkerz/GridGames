@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-    <!--<TargetFrameworks>net8.0-windows10.0.22621.0</TargetFrameworks>-->
     <TargetFrameworks>net8.0-android34.0</TargetFrameworks>
     
     <OutputType>Exe</OutputType>
@@ -24,8 +23,7 @@
 		<ApplicationDisplayVersion>2.8</ApplicationDisplayVersion>
 		<ApplicationVersion>10</ApplicationVersion>
 
-    <!--<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.4</SupportedOSPlatformVersion>-->
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">29.0</SupportedOSPlatformVersion>
+    <!--<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">29.0</SupportedOSPlatformVersion>-->
 
     <DefaultLanguage>en</DefaultLanguage>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
@@ -35,12 +33,6 @@
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <Configurations>Release;Debug</Configurations>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</SupportedOSPlatformVersion>
-    <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</TargetPlatformMinVersion>
-    <!--<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>-->
-		<!--<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.22621.0</SupportedOSPlatformVersion>
-		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.22621.0</TargetPlatformMinVersion>-->
-    <!--<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">28.0</SupportedOSPlatformVersion>-->
 
   </PropertyGroup>
 
@@ -53,66 +45,11 @@
     <RunAOTCompilation>False</RunAOTCompilation>
   </PropertyGroup>
   
-  <!-- This is the ApplicationId for iOS. -->
-	<PropertyGroup Condition="'$(TargetFramework)'=='net7.0-iOS'">
-	  <ApplicationId>ios.guybarker.gridgames</ApplicationId>
-	</PropertyGroup>
-  
-	<PropertyGroup Condition="'$(TargetFramework)'=='net7.0-iOS15.4'">
-	  <ApplicationId>ios.guybarker.gridgames</ApplicationId>
-	</PropertyGroup>
-  
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-iOS15.4|AnyCPU'">
-	  <ApplicationTitle>Grid Games</ApplicationTitle>
-	  <ApplicationId>ios.guybarker.gridgames</ApplicationId>
-	  <ApplicationDisplayVersion>2.1</ApplicationDisplayVersion>
-	  <ApplicationVersion>2.1</ApplicationVersion>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios15.4|AnyCPU'">
-	  <CreatePackage>false</CreatePackage>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios15.4|AnyCPU'">
-	  <CreatePackage>false</CreatePackage>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
-	  <CreatePackage>false</CreatePackage>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
-	  <CreatePackage>false</CreatePackage>
-	  <CodesignProvision>Guy Barker Distribution Grid Games</CodesignProvision>
-	  <CodesignKey>iPhone Distribution: Guy Barker (9HC5XH2RVN)</CodesignKey>
-	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
 	  <DebugSymbols>true</DebugSymbols>
 	  <WarningLevel>4</WarningLevel>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios15.0|AnyCPU'">
-	  <CreatePackage>false</CreatePackage>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios15.0|AnyCPU'">
-	  <CreatePackage>false</CreatePackage>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-ios15.0|AnyCPU'">
-	  <CreatePackage>false</CreatePackage>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-ios15.0|AnyCPU'">
-	  <CreatePackage>false</CreatePackage>
-	</PropertyGroup>
-  <!--<PropertyGroup>
-    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.22621.0</TargetFrameworks>
-    <TargetFrameworks />
-  </PropertyGroup>-->
 
-  <!--<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android33.0|AnyCPU'">
-	  <PublishTrimmed>False</PublishTrimmed>
-	  <RunAOTCompilation>False</RunAOTCompilation>
-	</PropertyGroup>-->
-  
-  <PropertyGroup>
-    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.22621.0</TargetFrameworks>
-  </PropertyGroup>
   <ItemGroup>
 		<!-- App Icon -->
     <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="white" />
@@ -230,8 +167,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
-	  <PackageReference Include="CommunityToolkit.Maui.MediaElement" Version="3.0.1" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.14" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.14" />
+    <PackageReference Include="Microsoft.Maui.Essentials" Version="8.0.14" />
+    <PackageReference Include="Microsoft.Maui.Graphics.Text.Markdig" Version="8.0.14" />
+    <PackageReference Include="CommunityToolkit.Maui" Version="9.0.1" />
+    <PackageReference Include="CommunityToolkit.Maui.MediaElement" Version="3.1.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 	  <PackageReference Include="SkiaSharp" Version="2.88.6" />
 	  <PackageReference Include="SkiaSharp.Views" Version="2.88.6" />
 	  <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.6" />
@@ -248,17 +190,5 @@
 	<!--<ItemGroup>
 	  <MauiSplashScreen Include="Resources\Splash\splashscreen.png" />
 	</ItemGroup>-->
-
-	<ItemGroup>
-	  <PackageReference Update="Microsoft.Windows.SDK.BuildTools" Version="10.0.25387-preview" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <PackageReference Update="Microsoft.Maui.Controls" Version="8.0.0-preview.5.8529" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <PackageReference Update="Microsoft.Maui.Controls.Compatibility" Version="8.0.0-preview.5.8529" />
-	</ItemGroup>
 
 </Project>

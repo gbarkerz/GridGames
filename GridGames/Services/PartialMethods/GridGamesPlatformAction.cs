@@ -14,7 +14,7 @@ namespace InvokePlatformCode.Services.PartialMethods
             Border border);
 #endif
 
-    public partial Task<string> GetPairsPictureFolder();
+    public partial Task<Tuple<string, string>> GetPairsPictureFolder();
 
 #if WINDOWS
         public partial bool IsHighContrastActive(out Color highContrastBackgroundColor);

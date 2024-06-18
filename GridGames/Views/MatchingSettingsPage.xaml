@@ -85,27 +85,6 @@
                                 VerticalOptions="Center" />
                         </StackLayout>
 
-                        <Label Text="{x:Static resources:AppResources.CustomPicturesInstructions}"
-                                   Margin="0,4,0,10" />
-
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-
-                            <Label Grid.Row="0" Text="{x:Static resources:AppResources.PairsCustomPicturesViewSample}"
-                               Margin="0,4,0,10" />
-
-                            <Button Grid.Row="1"
-                                windows:VisualElement.AccessKey="V"
-                                Padding="10"
-                                Text="View sample picture folder"
-                                HorizontalOptions="Start" Margin="0,0,0,20"
-                                Clicked="ViewSampleButton_Clicked" />
-
-                        </Grid>
-
                         <Label x:Name="SelectPictureFolderInstructions" Grid.Row="0" Margin="0,0,0,10" />
 
                         <Grid>
@@ -141,7 +120,10 @@
                         Stroke="{AppThemeBinding Light=Black, Dark=White}">
 
                         <StackLayout>
-                            <Grid Margin="0,10,0,10">
+                            
+                            <!-- The current method of file selection doesn't provide the original folder selected.
+                                So don't attempt to show that folder here for now. -->
+                            <!--<Grid Margin="0,10,0,10">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
@@ -150,17 +132,13 @@
                                     Text="{x:Static resources:AppResources.PicturePath}" 
                                     IsVisible="{Binding PicturePathMatching, Mode=OneWay,
                                         Converter={StaticResource FilePathToIsVisible}}" />
-                                <!--<Label Grid.Column="1" 
-                                    Text="{x:Static resources:AppResources.NoFolderSelected}"                               
-                                    IsVisible="{Binding PicturePathMatching, Mode=OneWay,
-                                        Converter={StaticResource FilePathToIsVisible}}" />-->
                                 <Label Grid.Column="1" Text="{Binding PictureOriginalPathMatching, Mode=TwoWay}" 
                                     IsVisible="{Binding PicturePathMatching, Mode=OneWay,
                                         Converter={StaticResource FilePathToIsVisible}}"/>
-                            </Grid>
+                            </Grid>-->
 
                             <CollectionView x:Name="PicturesCollectionView"  
-                            windows:VisualElement.AccessKey="Z"    
+                                windows:VisualElement.AccessKey="Z"    
                                 SemanticProperties.Description="Custom pictures"
                                 ItemsSource="{Binding PictureListCollection}">
                                 <CollectionView.ItemTemplate>
@@ -214,6 +192,34 @@
                             </CollectionView>
                         </StackLayout>
                     </Border>
+
+                    <StackLayout Grid.Row="3"
+                        Margin="0,10,0,0">
+                        
+                        <Label 
+                            Text="{x:Static resources:AppResources.CustomPicturesInstructions}"
+                            Margin="0,4,0,10" />
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0" Text="{x:Static resources:AppResources.PairsCustomPicturesViewSample}"
+                                   Margin="0,4,0,10" />
+
+                            <Button Grid.Row="1"
+                                    windows:VisualElement.AccessKey="V"
+                                    Padding="10"
+                                    Text="View sample picture folder"
+                                    HorizontalOptions="Start" Margin="0,0,0,20"
+                                    Clicked="ViewSampleButton_Clicked" />
+
+                        </Grid>
+
+                    </StackLayout>
+
                 </Grid>
             </ScrollView>
 
