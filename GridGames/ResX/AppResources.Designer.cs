@@ -757,9 +757,9 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Sudoku game shows a grid of 9-by-9 squares. Most of the squares are blank when the game starts, but some of the squares show a number from 1 to 9. The number of squares showing a number depends on the current game settings. To win the game, type a number from 1 to 9 in each of the blank squares, such that each row and each column in the game contains the numbers 1 to 9. No number can be duplicated on any row or any column. 
+        ///   Looks up a localized string similar to The Sudoku game shows a grid of 9-by-9 squares. Most of the squares are blank when the game starts, but some of the squares show a number from 1 to 9. The number of squares showing a number depends on the current game settings. To win the game, enter a number from 1 to 9 in each of the blank squares, such that each row and each column in the game contains the numbers 1 to 9. No number can be duplicated on any row or any column. 
         ///
-        ///Use the arrow keys to move between squares in the grid, and when you&apos;ve reach [rest of string was truncated]&quot;;.
+        ///In addition, the grid is divided into nine 3-by-3 groups, with group 1 conta [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string HelpContentSudoku {
             get {
@@ -770,7 +770,7 @@ namespace GridGames.ResX {
         /// <summary>
         ///   Looks up a localized string similar to The Leaf Sweeper Game is based on the traditional Minesweeper game, but the aim of this game is to sweep the leaves off a group of paving stones without disturbing two frogs resting under the leaves on two of the stones.
         ///
-        ///When the game is run, a 4-by-4 grid of squares appears, with each square showing a leaf symbol. The squares represent a group of paving stones covered with leaves. First clear the leaves off one of the stones by clicking on the stone. When using a keyboard, move focus to the grid of squa [rest of string was truncated]&quot;;.
+        ///When the game is run, a 4-by-4 grid of squares appears, with each square showing a leaf symbol. The squares represent a group of paving stones covered with leaves. First clear the leaves off one of the stones by clicking on the stone. When the leaves are cleared, the number of frogs in t [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string HelpContentSweeper {
             get {

@@ -17,17 +17,17 @@
         </Tab>
     </FlyoutItem>
 
-    <FlyoutItem Title="Leaf Sweeper"
-                Icon="sweepergameicon.png">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate views:SweeperPage}" />
-        </Tab>
-    </FlyoutItem>
-
     <FlyoutItem Title="Pairs"
                 Icon="matchinggameicon.png">
         <Tab>
             <ShellContent ContentTemplate="{DataTemplate views:MatchingPage}" />
+        </Tab>
+    </FlyoutItem>
+
+    <FlyoutItem Title="Leaf Sweeper"
+                Icon="sweepergameicon.png">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate views:SweeperPage}" />
         </Tab>
     </FlyoutItem>
 
@@ -38,7 +38,7 @@
         </Tab>
     </FlyoutItem>
 
-    <MenuItem x:Name="HelpMenuItem" Text="Help (F1)" 
+    <MenuItem x:Name="HelpMenuItem" Text="Help" 
         StyleClass="MenuItemLayoutStyle" Clicked="OnHelpMenuItemClicked">
         <MenuItem.IconImageSource>
             <FontImageSource
@@ -48,7 +48,7 @@
         </MenuItem.IconImageSource>
     </MenuItem>
 
-    <MenuItem x:Name="RestartGameMenuItem" Text="Restart Game (F5)" 
+    <MenuItem x:Name="RestartGameMenuItem" Text="Restart Game" 
         StyleClass="MenuItemLayoutStyle" Clicked="OnRestartMenuItemClicked">
         <MenuItem.IconImageSource>
             <FontImageSource

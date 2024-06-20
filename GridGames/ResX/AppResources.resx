@@ -352,58 +352,29 @@ Review the Help content for details on how to play the game using only the keybo
 
 When the game is run, a 4 by 4 grid of blank squares appears, each square representing a face-down card. When one of the cards is turned up, it reveals an image on the face-up card. When another card is turned up, an image is also shown on that second face-up card. If the two images are the same, then the cards are considered to be matched, and will not change again for the rest of the game. If the images do not match, then the cards are considered to be unmatched, and cards must be then turned back down. These steps are then repeated until all matching images have been found, and a "Congratulations" window appears.
 
-The Pairs game can be played using touch, mouse, speech or keyboard. To use the keyboard to play the game, first use the Tab key to move keyboard focus into the grid of cards. Once keyboard focus in on the grid, use the arrow keys to move to a card of interest. Once at a card of interest, press either the Space key or Enter key to turn the card up. To turn two unmatched face-up cards back down, press Space or Enter at any card.
-
-Press the F1 key to show this Help content, or the F5 key to restart a game. 
-
-Press and release the Alt key to have any available access keys shown. For example, press Alt+S to have the game's Settings page shown. To have your own pictures shown in the game, along with custom accessible names and descriptions, please follow the steps described in the Settings page.
-
-At the top left corner of the game is the Open Navigation button, which can be used to restart this game or to move to another game.</value>
+At the top left corner of the game is the Open Navigation button, which can be used to restart this game or to move to another game.</value>  
   </data>
   <data name="HelpContentSquares" xml:space="preserve">
     <value>The Squares Game is based on a square sliding puzzle, where squares in a grid of squares are rearranged by the player to form an ordered sequence of squares in the grid.
 
 When the game is run, a 4 by 4 grid of squares appears, with fifteen of those squares occupied with a movable element, and one square being empty. When a square is clicked, if it is adjacent to the empty square, the clicked square moves into the empty square. The space where the tapped square was then becomes the empty square. The aim is to arrange all the squares in a sorted order, leaving the empty square in the bottom right corner of the grid. Once all the squares are ordered, a "Congratulations" window appears.
 
-The Squares game can only be played using the keyboard, and squares cannot be moved using a mouse, touch, or speech. To use the keyboard to play the game, first use the Tab key to move keyboard focus into the grid of squares. Once keyboard focus in on the grid, use the arrow keys to move to a square of interest. Once at a square of interest, press either the Space key or Enter key to click the square.
-
-Press the F1 key to show this Help content, or the F5 key to restart a game. 
-
-Press and release the Alt key to have any available access keys shown. For example, press Alt+S to have the game's Settings page shown. To have your own picture shown in the game, please follow the steps described in the Settings page.
-
 At the top left corner of the game is the Open Navigation button, which can be used to restart this game or to move to another game.</value>
   </data>
   <data name="HelpContentSudoku" xml:space="preserve">
-    <value>The Sudoku game shows a grid of 9-by-9 squares. Most of the squares are blank when the game starts, but some of the squares show a number from 1 to 9. The number of squares showing a number depends on the current game settings. To win the game, type a number from 1 to 9 in each of the blank squares, such that each row and each column in the game contains the numbers 1 to 9. No number can be duplicated on any row or any column. 
-
-Use the arrow keys to move between squares in the grid, and when you've reached a square of interest, type the number to be added to the square. To clear a number you added earlier, press the Space or Enter keys. Note that pressing the right arrow when at the last square in a row, or the left arrow when at the first square in a row, will not move you to another row. Instead you will stay on the current square. 
-
-Pressing the Home or End keys will move you to the first or last square on the current row, and pressing the PageUp or PageDown keys will move you to the first or last square on the current column. 
-
-Pressing Alt plus any of the Left, Right, Up, or Down arrow keys will attempt to move you in that direction to the next square whose number-showing state is different from the current square. For example, if you're at a square showing a number, you will move to the next square that does not show a number.
-
-Please note that following a press of one of the navigation keys just mentioned, visual selection feedback does not appear on the destination square. Selection feedback will show again once an arrow key is pressed after the move.
+  <value>The Sudoku game shows a grid of 9-by-9 squares. Most of the squares are blank when the game starts, but some of the squares show a number from 1 to 9. The number of squares showing a number depends on the current game settings. To win the game, enter a number from 1 to 9 in each of the blank squares, such that each row and each column in the game contains the numbers 1 to 9. No number can be duplicated on any row or any column. 
 
 In addition, the grid is divided into nine 3-by-3 groups, with group 1 containing the nine squares at the top left of the grid, and group 9 containing the nine squares at the bottom right of the grid. Each group must contain the numbers 1 to 9, with no number duplicated in the group. 
 
 The current number of blank squares in the grid is shown above the grid. When a number is added to the last remaining blank square, a message appears saying whether the game has been won or not.
 
-At the top left corner of the game is the Open Navigation button, which can be used to restart this game or to move to another game. Press the F1 key to show this Help content, or the F5 key to restart a game. 
+At the top left corner of the game is the Open Navigation button, which can be used to restart this game or to move to another game.
 
 Screen Reader Usage: When playing the game with a screen reader, the Sudoku grid of squares is announced as a Grid with a name of "Sudoku Games". The grid contains a collection of 81 Cells, and a Cell's name is the number shown on the Cell, followed by "Fixed", if the number cannot be changed, or "Guess", if the number has been added to the square by you. If no number is shown on the Cell, its name is either "No number shown" or "x", depending on the current Sudoku settings. The additional information associated with a Cell is the Cell's group, followed by its row and column information. For example, if when the game starts the square at the top left corner of the grid shows the number 3, then a screen reader will announce "3 Fixed, Cell" when navigating to the square. And depending on the screen reader's settings, may then go on to announce "Group 1, Row 1 Column 1". 
 
 When action is taken at a square, the game encourages a screen reader to announce the new state of the square. For example, if you add a number to a square, a screen reader may say "Now 8 Guess", or if you clear a number from a square, a screen reader may say either "Now No number shown" or "Now x", depending on the current Sudoku settings. 
 
-The Sudoku game supports a number of keyboard shortcuts which encourage screen readers to make specific announcements relating to the current state of the game. The keyboard shortcuts are as follows:
-
-Alt plus R. Announce all numbers that are not showing in the current row.
-Alt plus C. Announce all numbers that are not showing in the current column.
-Alt plus G. Announce all numbers that are not showing in the current group.
-Alt plus a number from 1 to 9. Announce whether the current row, column, and group contains the number.
-
-Windows Speech Recognition Usage: To play the game using Windows Speech Recognition, say: “Select square”, which will result in all squares that were originally empty showing a unique number. Then say the number shown at the square that you want to change, and that square will be selected. Once the square is selected, say: “Press” followed by the number you want shown in the square.
-
-Acknowledgement: The game uses software kindly made available by Firat Eski, at https://github.com/firateski/SudokuLibrary. The associated license for the software is included below.
+Acknowledgement: The game uses software made available by Firat Eski, at https://github.com/firateski/SudokuLibrary. The associated license for the software is included below.
  
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -415,13 +386,11 @@ SOFTWARE.</value>
   <data name="HelpContentSweeper" xml:space="preserve">
     <value>The Leaf Sweeper Game is based on the traditional Minesweeper game, but the aim of this game is to sweep the leaves off a group of paving stones without disturbing two frogs resting under the leaves on two of the stones.
 
-When the game is run, a 4-by-4 grid of squares appears, with each square showing a leaf symbol. The squares represent a group of paving stones covered with leaves. First clear the leaves off one of the stones by clicking on the stone. When using a keyboard, move focus to the grid of squares and arrow around to move to the stone of interest, and then press Space or Enter to clear the leaves off the stone. When the leaves are cleared, the number of frogs in the stones adjacent to that stone will be shown on the stone. If no frogs are on adjacent stones, then the clicked stone shows nothing. In addition, all adjacent stones with no frogs will also be cleared until blocked by stones with one or more stones showing nearby frog counts.
+When the game is run, a 4-by-4 grid of squares appears, with each square showing a leaf symbol. The squares represent a group of paving stones covered with leaves. First clear the leaves off one of the stones by clicking on the stone. When the leaves are cleared, the number of frogs in the stones adjacent to that stone will be shown on the stone. If no frogs are on adjacent stones, then the clicked stone shows nothing. In addition, all adjacent stones with no frogs will also be cleared until blocked by stones with one or more stones showing nearby frog counts.
 
 When you feel you know that a stone must have a frog resting beneath its leaves, mark it as "Query Frog" by showing the stones context menu and select "Change Query Frog state". To change the Query Frog state when using a screen reader, use the navigate the screen reader to a non-visual button on the stone, and click the button. 
 
 Once all paving stones in the grid which don't have resting frogs on them have been cleared, you've won the game. If while playing the game you click on a stone which does have a resting frog on it, the game is lost. If the game is lost, both resting frogs will be revealed.
-
-Press the F1 key to show this Help content, or the F5 key to restart a game.
 
 At the top left corner of the game is the Open Navigation button, which can be used to restart this game or to move to another game.</value>
   </data>

@@ -234,7 +234,7 @@ public static class MauiProgram
         builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
-            .UseMauiCommunityToolkitMediaElement()
+            //.UseMauiCommunityToolkitMediaElement() Windows only.
             .UseSkiaSharp(true)
             .ConfigureFonts(fonts =>
             {
