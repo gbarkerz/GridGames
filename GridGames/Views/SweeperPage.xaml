@@ -48,6 +48,7 @@
                 Text="&#xf013;" 
                 SemanticProperties.Description="{x:Static resources:AppResources.SweeperSettings}"
                 TextColor="{StaticResource White}"
+                BackgroundColor="{StaticResource Primary}"                    
                 AutomationId="SweeperSettingsButton"
                 Clicked="SweeperGameSettingsButton_Clicked"
                 BorderWidth="0"

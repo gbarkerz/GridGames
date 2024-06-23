@@ -47,6 +47,7 @@
             <Button x:Name="SudokuSettingsButton" Grid.Column="1"
                 Text="&#xf013;"
                 TextColor="{StaticResource White}"
+                BackgroundColor="{StaticResource Primary}"                    
                 SemanticProperties.Description="{x:Static resources:AppResources.SudokuSettings}"
                 AutomationId="SudokuSettingsButton"
                 Clicked="SudokuSettingsButton_Clicked"

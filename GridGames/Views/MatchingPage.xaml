@@ -38,6 +38,7 @@
                 Clicked="MatchingGameSettingsButton_Clicked"
                 BorderWidth="0"
                 TextColor="{StaticResource White}"
+                BackgroundColor="{StaticResource Primary}"                    
                 windows:VisualElement.AccessKey="S"
                 FontFamily="FA" FontSize="Title" HorizontalOptions="End" VerticalOptions="StartAndExpand"
                 SemanticProperties.Description="{x:Static resources:AppResources.PairsSettings}" />
