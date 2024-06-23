@@ -19,11 +19,11 @@ public partial class AppShell : Shell
             {
                 this.CurrentItem = this.Items[0];
             }
-            else if (initialGame == "Sweeper")
+            else if (initialGame == "Pairs")
             {
                 this.CurrentItem = this.Items[1];
             }
-            else if (initialGame == "Pairs")
+            else if (initialGame == "Sweeper")
             {
                 this.CurrentItem = this.Items[2];
             }

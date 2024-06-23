@@ -25,6 +25,7 @@
             <localviews:DarkThemeToSquareLabelColor x:Key="DarkThemeToSquareLabelColor" />
             <localviews:NumberToDisplayedValue x:Key="NumberToDisplayedValue" />
             <localviews:NumberToIsVisible x:Key="NumberToIsVisible" />
+            <localviews:NumberShownToTextColor x:Key="NumberShownToTextColor" />
             <localviews:SudokuSquareIndexToSpeechTargetName x:Key="SudokuSquareIndexToSpeechTargetName" />
             <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
         </ResourceDictionary>
@@ -111,7 +112,6 @@
 
                             <Label Margin="2,2,0,0" Padding="0"
                                 BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"                                   
-                                TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"                                   
                                 LineBreakMode="NoWrap"
                                 VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
                                 SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}"
@@ -119,13 +119,23 @@
                                 HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}},
                                     Path=Height, Converter={StaticResource SudokuCollectionViewHeightToRowHeight}}">
 
-                                <Label.IsVisible>
+                                <Label.TextColor>
+                                    <MultiBinding Mode="OneWay" Converter="{StaticResource NumberShownToTextColor}">
+                                        <Binding Path="NumberShown" />
+                                        <Binding Source="{x:Reference SudokuPageInstance}"
+                                            Path="BindingContext.EmptySquareIndicatorIsX" />
+                                        <Binding Source="{x:Reference SudokuPageInstance}" 
+                                            Path="BindingContext.ShowDarkTheme" />
+                                    </MultiBinding>
+                                </Label.TextColor>
+
+                                <!--<Label.IsVisible>
                                     <MultiBinding Mode="OneWay" Converter="{StaticResource NumberToIsVisible}">
                                         <Binding Path="NumberShown" />
                                         <Binding Source="{x:Reference SudokuPageInstance}"
                                             Path="BindingContext.EmptySquareIndicatorIsX" />
                                     </MultiBinding>
-                                </Label.IsVisible>
+                                </Label.IsVisible>-->
 
                                 <Label.Text>
                                     <MultiBinding Mode="OneWay" Converter="{StaticResource NumberToDisplayedValue}">

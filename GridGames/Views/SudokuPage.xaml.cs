@@ -1,7 +1,6 @@
 using CommunityToolkit.Maui.Views;
 using GridGames.ResX;
 using GridGames.ViewModels;
-using InvokePlatformCode.Services.PartialMethods;
 using SkiaSharp;
 using SkiaSharp.Views.Maui.Controls;using System;
 using System.Diagnostics;

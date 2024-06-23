@@ -87,6 +87,43 @@ namespace GridGames.Views
         }
     }
 
+    public class NumberShownToTextColor : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values == null || (values.Length < 3))
+            {
+                return "";
+            }
+
+            if ((values[0] == null) || (values[1] == null) || (values[2] == null))
+            {
+                return "";
+            }
+
+            var numberShown = (bool)values[0];
+            var emptySquareIndicatorIsX = (bool)values[1];
+
+            Color foregroundColor = Colors.Black;
+            Color backgroundColor = Colors.White;
+
+            bool showDarkTheme = (bool)values[2];
+            if (showDarkTheme)
+            {
+                foregroundColor = Colors.White;
+                backgroundColor = Colors.Black;
+            }
+
+            return (numberShown || emptySquareIndicatorIsX) ?
+                        foregroundColor : backgroundColor;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class NumberToDisplayedValue : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
