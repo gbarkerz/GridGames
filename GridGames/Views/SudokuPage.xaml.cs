@@ -210,7 +210,7 @@ public partial class SudokuPage : ContentPage
                 var popup = new SudokuInputPopup();
 
                 var result = await this.ShowPopupAsync(popup) as string;
-                if (result != "")
+                if ((result != null) && (result != ""))
                 {
                     var vm = this.BindingContext as SudokuViewModel;
                     if (!item.NumberShown) 
