@@ -37,13 +37,15 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            
-            <Label Grid.Column="0" x:Name="GameTitleLabel"
-                Text="{x:Static resources:AppResources.Sudoku}"
-                SemanticProperties.HeadingLevel="Level1" FontSize="Title"
-                TextColor="{StaticResource White}"
-                Margin="0,8,0,0" HorizontalOptions="Start" VerticalOptions="StartAndExpand" />
-            
+
+            <ScrollView Grid.Column="0" Orientation="Horizontal" VerticalOptions="Center" Margin="0" Padding="0">
+                <Label x:Name="GameTitleLabel" 
+                    Text="{x:Static resources:AppResources.Sudoku}"
+                    SemanticProperties.HeadingLevel="Level1" FontSize="Title"
+                    TextColor="{StaticResource White}"
+                    Margin="0" HorizontalOptions="Start" VerticalOptions="Center" />
+            </ScrollView>
+        
             <Button x:Name="SudokuSettingsButton" Grid.Column="1"
                 Text="&#xf013;"
                 TextColor="{StaticResource White}"
@@ -53,7 +55,7 @@
                 Clicked="SudokuSettingsButton_Clicked"
                 BorderWidth="0"
                 windows:VisualElement.AccessKey="S"
-                FontFamily="FA" FontSize="Title" HorizontalOptions="End" VerticalOptions="StartAndExpand" />
+                FontFamily="FA" FontSize="Title" HorizontalOptions="End" VerticalOptions="Center" />
         </Grid>
     </Shell.TitleView>
 
@@ -67,15 +69,19 @@
             </Grid.RowDefinitions>
 
             <Grid BackgroundColor="{StaticResource Primary}">
-                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand"
-                    BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}">
-                    <Label Text="Count of blank squares: "
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <ScrollView Grid.Column="0" Orientation="Horizontal" HorizontalOptions="End"
+                    Margin="4,0,4,0" Padding="0">
+                    <Label Text="Count of blank squares:"
                         TextColor="{StaticResource White}"
-                        HorizontalOptions="Center" VerticalOptions="Center" />
-                    <Label Text="{Binding CurrentBlankSquareCount}" Margin="4,0,20,0"
-                        TextColor="{StaticResource White}"
-                        HorizontalOptions="Center" VerticalOptions="Center" />
-                </StackLayout>
+                        VerticalOptions="Center" />
+                </ScrollView>
+                <Label Grid.Column="1" Text="{Binding CurrentBlankSquareCount}" Margin="4,0,20,0"
+                    TextColor="{StaticResource White}"
+                    HorizontalOptions="Center" VerticalOptions="Center" />
             </Grid>
             
             <Grid Grid.Row="1" BackgroundColor="Transparent">
@@ -172,14 +178,15 @@
                         </Grid.RowDefinitions>
                         <Label Grid.Row="0" x:Name="SudokuWelcomeTitleLabel"
                             Text="{x:Static resources:AppResources.SudokuWelcome}"                        
-                            FontSize="Large" FontAttributes="Bold" />
+                            FontSize="Title" />
                         <ScrollView Grid.Row="1">
-                            <Editor x:Name="SudokuWelcomeTitleInstructions" IsReadOnly="True" FontSize="Medium"
+                            <Editor x:Name="SudokuWelcomeTitleInstructions" IsReadOnly="True"
                                 SemanticProperties.Description="{x:Static resources:AppResources.SudokuWelcome}"
                                 Text="{x:Static resources:AppResources.WelcomeInstructions}" />
                         </ScrollView>
                         <Button Grid.Row="2" x:Name="WelcomeMessageCloseButton"
                             Text="{x:Static resources:AppResources.Close}" 
+                            TextColor="{StaticResource White}" BackgroundColor="{StaticResource Primary}"
                             Clicked="WelcomeMessageCloseButton_Clicked"
                             HorizontalOptions="End" Margin="0,4,4,4" Padding="8" />
                     </Grid>

@@ -13,18 +13,20 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0" Padding="10" Margin="0"
+            <Grid Grid.Row="0" Padding="10" Margin="0" 
                 BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}">
-                <Label x:Name="HelpPageTitle"
-                    SemanticProperties.HeadingLevel="Level1" FontSize="Title"
-                    TextColor="{AppThemeBinding Light=White, Dark=White}"
-                    HorizontalOptions="Center" VerticalOptions="Center" />
+                <ScrollView Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                    <Label x:Name="HelpPageTitle"
+                        SemanticProperties.HeadingLevel="Level1" FontSize="Title"
+                        TextColor="{AppThemeBinding Light=White, Dark=White}"
+                        HorizontalOptions="Center" VerticalOptions="Center" />
+                </ScrollView>
             </Grid>
-
+            
             <ScrollView x:Name="MatchingGameHelpContent" Grid.Row="1" 
                 IsVisible="False"
                 Margin="4,4,4,2">
-                <Editor x:Name="PairsHelpEditor" IsReadOnly="True" FontSize="Medium" 
+                <Editor x:Name="PairsHelpEditor" IsReadOnly="True"
                     SemanticProperties.Description="{x:Static resources:AppResources.PairsHelpEditor}"
                     Text="{x:Static resources:AppResources.HelpContentPairs}" />
             </ScrollView>
@@ -32,7 +34,7 @@
             <ScrollView x:Name="SquaresGameHelpContent" Grid.Row="1" 
                 IsVisible="False"
                 Margin="4,4,4,2">
-                <Editor x:Name="SquaresHelpEditor" IsReadOnly="True" FontSize="Medium" 
+                <Editor x:Name="SquaresHelpEditor" IsReadOnly="True"
                     SemanticProperties.Description="{x:Static resources:AppResources.SquaresHelpEditor}"
                     Text="{x:Static resources:AppResources.HelpContentSquares}" />
             </ScrollView>
@@ -40,7 +42,7 @@
             <ScrollView x:Name="SweeperGameHelpContent" Grid.Row="1" 
                 IsVisible="False"
                 Margin="4,4,4,2">
-                <Editor x:Name="SweeperHelpEditor" IsReadOnly="True" FontSize="Medium" 
+                <Editor x:Name="SweeperHelpEditor" IsReadOnly="True"
                     SemanticProperties.Description="{x:Static resources:AppResources.SweeperHelpEditor}"
                     Text="{x:Static resources:AppResources.HelpContentSweeper}" />
             </ScrollView>
@@ -48,13 +50,14 @@
             <ScrollView x:Name="SudokuGameHelpContent" Grid.Row="1" 
                 IsVisible="False"
                 Margin="4,4,4,2">
-                <Editor x:Name="SudokuHelpEditor" IsReadOnly="True" FontSize="Medium" 
+                <Editor x:Name="SudokuHelpEditor" IsReadOnly="True"
                     SemanticProperties.Description="{x:Static resources:AppResources.SudokuHelpEditor}"
                     Text="{x:Static resources:AppResources.HelpContentSudoku}" />
             </ScrollView>
 
             <Button Grid.Row="2" x:Name="CloseButton" 
                 windows:VisualElement.AccessKey="C"                                    
+                TextColor="{StaticResource White}" BackgroundColor="{StaticResource Primary}"
                 HorizontalOptions="End" Margin="0,8,4,4" Padding="8"
                 Text="Close" Clicked="CloseButton_Clicked" />
         </Grid>
