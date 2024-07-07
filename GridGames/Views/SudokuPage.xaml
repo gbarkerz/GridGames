@@ -33,21 +33,26 @@
 
     <Shell.TitleView>
         <Grid Margin="0,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <ScrollView Grid.Column="0" Orientation="Horizontal" VerticalOptions="Center" Margin="0" Padding="0">
+            <ScrollView Grid.Column="0" Orientation="Horizontal" 
+                VerticalOptions="Center" HorizontalOptions="Center"
+                Margin="0" Padding="0">
                 <Label x:Name="GameTitleLabel" 
                     Text="{x:Static resources:AppResources.Sudoku}"
                     SemanticProperties.HeadingLevel="Level1" FontSize="Title"
                     TextColor="{StaticResource White}"
-                    Margin="0" HorizontalOptions="Start" VerticalOptions="Center" />
+                    Margin="0" HorizontalOptions="Center" VerticalOptions="Center" />
             </ScrollView>
         
             <Button x:Name="SudokuSettingsButton" Grid.Column="1"
-                Text="&#xf013;"
+                Text="&#xf013;" Margin="10,0,10,0" Padding="0"
                 TextColor="{StaticResource White}"
                 BackgroundColor="{StaticResource Primary}"                    
                 SemanticProperties.Description="{x:Static resources:AppResources.SudokuSettings}"
