@@ -50,7 +50,7 @@ namespace GridGames.Views
                 }
             }
 
-            return marginThickness;  
+            return marginThickness;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -173,9 +173,20 @@ namespace GridGames.Views
 
             string displayedValue = number;
 
-            if (!numberShown && emptySquareIndicatorIsX)
+            // emptySquareIndicatorIsX feature is not currently being used.
+            //if (!numberShown && emptySquareIndicatorIsX)
+            //{
+            //    displayedValue = "x";
+            //}
+
+            // A number is not shown in an item by setting its background and foreground colour to be the same.
+            // (Setting the Label in the item to IsVisible false has ramifications leading to the accessible
+            // name of the empty square being broken.) This works ok unless the Android high contrast font 
+            // feature is turned on, where Android draws an outline around the invisible number. To prevent 
+            // this being a problem, set the text to be a space here, in which case no outline is drawn.
+            if (!numberShown)
             {
-                displayedValue = "x";
+                displayedValue = " ";
             }
 
             return displayedValue;
