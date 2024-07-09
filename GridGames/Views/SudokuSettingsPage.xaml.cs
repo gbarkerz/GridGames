@@ -25,10 +25,11 @@ namespace GridGames
                 resMgr.GetString("PlaySoundAndScreenReaderAnnouncement")
             };
 
-            for (int i = 0; i < 4 ; i++)
-            {
-                SudokuResponseWhenNoMoveAvailablePicker.Items.Add(responseOptions[i]);
-            }
+            // Remove until there's interest in keyboard us on Windows.
+            //for (int i = 0; i < 4 ; i++)
+            //{
+            //    SudokuResponseWhenNoMoveAvailablePicker.Items.Add(responseOptions[i]);
+            //}
 
             this.BindingContext = sudokuSettingsVM;
         }

@@ -42,16 +42,9 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <Label Grid.Row="0"
+                    <Label Grid.Row="0" FontAttributes="Bold"
                             FontSize="Subtitle" SemanticProperties.HeadingLevel="Level2"
                             Text="{x:Static resources:AppResources.DifficultyLevel}" Margin="0,10,0,0" />
                     <Label Grid.Row="1"
@@ -70,7 +63,8 @@
                         SelectedIndex="{Binding BlankSquareCount, Mode=TwoWay,
                             Converter={StaticResource BlankSquareCountToInt}}" />
 
-                    <Label Grid.Row="4"
+                    <!-- This is a Windows-only keyboard experience, so remove for now. -->
+                    <!--<Label Grid.Row="4" FontAttributes="Bold"
                         FontSize="Subtitle" SemanticProperties.HeadingLevel="Level2"
                         Text="{x:Static resources:AppResources.SudokuResponseWhenNoMoveAvailable}" 
                         Margin="0,40,0,0" />
@@ -88,9 +82,11 @@
                         VerticalOptions="Center" Margin="8,0,0,0"
                         SemanticProperties.Description="{x:Static resources:AppResources.Response}"
                         SemanticProperties.Hint="{x:Static resources:AppResources.SudokuResponseWhenNoMoveAvailableInstructions}"
-                        SelectedIndex="{Binding SudokuNoMoveResponse, Mode=TwoWay}" />
+                        SelectedIndex="{Binding SudokuNoMoveResponse, Mode=TwoWay}" />-->
 
-                    <Label Grid.Row="8"
+                    <!-- There's intermittent crashing of the app when this setting changes, so remove it for now. 
+                        The setting related to the user experience for braille device users on Windows. -->
+                    <!--<Label Grid.Row="8"
                             FontSize="Subtitle" SemanticProperties.HeadingLevel="Level2"
                             Text="{x:Static resources:AppResources.SudokuEmptySquareIndicator}" Margin="0,40,0,0" />
                     <Label Grid.Row="9"
@@ -111,16 +107,16 @@
                             SemanticProperties.Description="{x:Static resources:AppResources.SudokuEmptySquareIndicatorCheckBoxLabel}"
                             SemanticProperties.Hint="{x:Static resources:AppResources.SudokuEmptySquareIndicatorInstructions}"
                             IsChecked="{Binding EmptySquareIndicatorIsX, Mode=TwoWay}" />
-                    </Grid>
+                    </Grid>-->
 
-                    <Label Grid.Row="11"
+                    <Label Grid.Row="4" FontAttributes="Bold"
                         FontSize="Subtitle" SemanticProperties.HeadingLevel="Level2"
                         Text="Format of square location announcement" Margin="0,40,0,0" />
-                    <Label Grid.Row="12"
+                    <Label Grid.Row="5"
                         LineBreakMode="WordWrap"
                         Text="{x:Static resources:AppResources.SquareLocationAnnouncementInstructions}"
                         Margin="0,4,0,10" />
-                    <StackLayout Grid.Row="13" Margin="0" Padding="0">
+                    <StackLayout Grid.Row="6" Margin="0" Padding="0">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
