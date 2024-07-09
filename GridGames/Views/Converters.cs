@@ -2,10 +2,63 @@
 using System.Globalization;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using GridGames.ViewModels;
 
 namespace GridGames.Views
 {
+    public class SudokuItemHeightToCollectionViewHeight : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var itemHeight = (int)value;
+
+            // Returning null leads to the default item height being used.
+            if (itemHeight <= 0)
+            {
+                return null;
+            }
+
+            return itemHeight;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class SudokuSquareIndexToMargin : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            // Make this 1-based.
+            var index = (int)value + 1;
+
+            var marginThickness = new Thickness(1, 1, 1, 1);
+
+            if (index > 0)
+            {
+                if ((index % 9 != 0) && (index % 3 == 0))
+                {
+                    marginThickness.Right = 4;
+                }
+
+                // Widen some item margins to give the appearance of 9 3x3 groups in the Sudoku grid.
+                if (((index > 18) && (index < 28)) ||
+                    ((index > 45) && (index < 55)))
+                {
+                    marginThickness.Bottom = 4;
+                }
+            }
+
+            return marginThickness;  
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class SudokuSquareIndexToSpeechTargetName : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -34,30 +87,6 @@ namespace GridGames.Views
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
-        }
-    }
-
-    public class SudokuLabelContainerHeightToFontSize : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var containerHeightPixels = (double)value;
-
-            // Todo: Consider being a little more precise here...
-            double scale = 0.67;
-
-#if !WINDOWS
-            scale = 0.5;
-#endif
-
-            return scale * (containerHeightPixels / 9.0);
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var intValue = (int)value;
-
-            return (Aspect)intValue;
         }
     }
 

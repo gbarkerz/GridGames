@@ -1,8 +1,6 @@
 using CommunityToolkit.Maui.Views;
 using GridGames.ResX;
 using GridGames.ViewModels;
-using SkiaSharp;
-using SkiaSharp.Views.Maui.Controls;using System;
 using System.Diagnostics;
 using Application = Microsoft.Maui.Controls.Application;
 
@@ -14,6 +12,17 @@ namespace GridGames.Views;
 
 public partial class SudokuPage : ContentPage
 {
+    // Create a bindable ItemRow property to set the height of the CollectionView items
+    // in the main Sudoku grid.
+    public static readonly BindableProperty ItemRowHeightProperty =
+        BindableProperty.Create(nameof(ItemRowHeight), typeof(int), typeof(SudokuPage));
+
+    public int ItemRowHeight
+    {
+        get => (int)GetValue(SudokuPage.ItemRowHeightProperty);
+        set => SetValue(SudokuPage.ItemRowHeightProperty, value);
+    }
+
     public static DateTime timeOfMostRecentProgrammaticSelection = DateTime.Now;
 
     public SudokuPage()
@@ -1023,65 +1032,6 @@ public partial class SudokuPage : ContentPage
     }
 #endif
 
-    private void SKCanvasView_PaintSurface(object sender, SkiaSharp.Views.Maui.SKPaintSurfaceEventArgs e)
-    {
-        var view = sender as SKCanvasView;
-
-        SKPaint paint = new SKPaint();
-
-        // Account for the current app theme being either light or dark.
-        paint.Color = (Application.Current.RequestedTheme == AppTheme.Dark ?
-                        SKColor.Parse("FFFF00") : SKColor.Parse("2B0B98"));
-
-        // Draw two horizonal bars and two vertical bars.
-
-        float width = view.CanvasSize.Width;
-        float height = view.CanvasSize.Height;
-
-        var itemHeight = (float)(9 * ((int)(height) / 9)) - 9;
-
-        // First draw the two horizontal lines.
-
-        var yLine = (float)(3.0 * itemHeight) / 9f;
-
-        SKRect rect = new SKRect(
-            0,
-            yLine - 2,
-            width,
-            yLine + 6);
-
-        e.Surface.Canvas.DrawRect(rect, paint);
-
-        yLine = (float)(6.0 * itemHeight) / 9f;
-
-        rect = new SKRect(
-            0,
-            yLine - 2,
-            width,
-            yLine + 6);
-
-        e.Surface.Canvas.DrawRect(rect, paint);
-
-        // Next draw the two vertical lines.
-
-        var left = (width / 3) - 3;
-
-        height = itemHeight;
-
-        rect = new SKRect(
-            left,
-            0,
-            left + 8,
-            height);
-
-        e.Surface.Canvas.DrawRect(rect, paint);
-
-        rect.Left = (2 * (width / 3)) - 3;
-        rect.Right = rect.Left + 8;
-
-        e.Surface.Canvas.DrawRect(rect, paint);
-    }
-
     private void SpeechTargetButton_Clicked(object sender, EventArgs e)
     {
         var speechTargetButton = sender as Microsoft.Maui.Controls.Button;
@@ -1108,6 +1058,27 @@ public partial class SudokuPage : ContentPage
 #else
             SudokuCollectionView.SelectedItem = vm.SudokuListCollection[itemIndex];
 #endif
+        }
+    }
+
+    private void SudokuCollectionView_SizeChanged(object sender, EventArgs e)
+    {
+        var collectionView = (sender as CollectionView);
+        var collectionViewHeight = collectionView.Height;
+
+        var scrollViewHeight = SudokuGridScrollView.Height;
+
+        // We only need to set the item height such that the grid fills the main area on the page
+        // if the grid cannot be scrolled. If the grid can scroll then allow the default item sizing
+        // and ScrollView behavior.
+        if ((collectionViewHeight > 0) && (scrollViewHeight > 0) &&
+            (collectionViewHeight == scrollViewHeight))
+        {
+            // Space available for items is: (Note CollectionView doesn't support padding.)
+            // collection view height - (2 x 2 x wide gap between rows) - (6 x 2 x narrow gap between rows)
+            var availableSpace = (int)collectionViewHeight - (2 * 2 * 4) - (6 * 2 * 1);
+
+            this.ItemRowHeight = availableSpace / 9;
         }
     }
 

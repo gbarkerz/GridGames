@@ -21,12 +21,13 @@
             <localviews:FirstRunToGridIsEnabled x:Key="FirstRunToGridIsEnabled" />
             <localviews:FirstRunToGridOpacity x:Key="FirstRunToGridOpacity" />
             <localviews:SudokuCollectionViewHeightToRowHeight x:Key="SudokuCollectionViewHeightToRowHeight" />
-            <localviews:SudokuLabelContainerHeightToFontSize x:Key="SudokuLabelContainerHeightToFontSize" />
             <localviews:DarkThemeToSquareLabelColor x:Key="DarkThemeToSquareLabelColor" />
             <localviews:NumberToDisplayedValue x:Key="NumberToDisplayedValue" />
             <localviews:NumberToIsVisible x:Key="NumberToIsVisible" />
             <localviews:NumberShownToTextColor x:Key="NumberShownToTextColor" />
             <localviews:SudokuSquareIndexToSpeechTargetName x:Key="SudokuSquareIndexToSpeechTargetName" />
+            <localviews:SudokuItemHeightToCollectionViewHeight x:Key="SudokuItemHeightToCollectionViewHeight" />
+            <localviews:SudokuSquareIndexToMargin x:Key="SudokuSquareIndexToMargin" />
             <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -89,7 +90,8 @@
                     HorizontalOptions="Center" VerticalOptions="Center" />
             </Grid>
             
-            <Grid Grid.Row="1" BackgroundColor="Transparent">
+            <ScrollView Grid.Row="1" x:Name="SudokuGridScrollView"
+                Orientation="Both" Padding="0">
 
                 <!-- Note: When the Grid Games app was first built, binding a game's "FirstRun" property 
                     to the IsVisible property of the CollectionView led to incorrect sizing of the rows 
@@ -98,12 +100,12 @@
                     being satisfactory, but the programmatic interface of the game being broken. In this 
                     particular case, both interfaces do seem satisfactory, but this binding needs to be 
                     revisited at some point to see if the IsVisible binding can be made to work. -->
-            
-                <skia:SKCanvasView PaintSurface="SKCanvasView_PaintSurface"
-                    Opacity="{Binding FirstRunSudoku, Mode=OneWay,
-                            Converter={StaticResource FirstRunToGridOpacity}}" />
 
-                <CollectionView Margin="0"                                 
+                <CollectionView Margin="0" SizeChanged="SudokuCollectionView_SizeChanged"
+                    MinimumWidthRequest="{Binding Source={RelativeSource AncestorType={x:Type ScrollView}},
+                        Path=Width}" 
+                    MinimumHeightRequest="{Binding Source={RelativeSource AncestorType={x:Type ScrollView}},
+                        Path=Height}" 
                     BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}"
                     x:Name="SudokuCollectionView"
                     SemanticProperties.Description="{x:Static resources:AppResources.SudokuSquares}"
@@ -122,14 +124,16 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
 
-                            <Label Margin="2,2,0,0" Padding="0"
+                            <Label Padding="0"
                                 BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"                                   
                                 LineBreakMode="NoWrap"
                                 VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
                                 SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}"
-                                SemanticProperties.Hint="{Binding AccessibleDescription, Mode=OneWay}"                       
-                                HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}},
-                                    Path=Height, Converter={StaticResource SudokuCollectionViewHeightToRowHeight}}">
+                                SemanticProperties.Hint="{Binding AccessibleDescription, Mode=OneWay}"
+                                Margin="{Binding Index, Mode=OneWay,
+                                    Converter={StaticResource SudokuSquareIndexToMargin}}" 
+                                HeightRequest="{Binding Source={x:Reference SudokuPageInstance}, Mode=OneWay,
+                                    Path=ItemRowHeight, Converter={StaticResource SudokuItemHeightToCollectionViewHeight}}">
 
                                 <Label.TextColor>
                                     <MultiBinding Mode="OneWay" Converter="{StaticResource NumberShownToTextColor}">
@@ -140,15 +144,7 @@
                                             Path="BindingContext.ShowDarkTheme" />
                                     </MultiBinding>
                                 </Label.TextColor>
-
-                                <!--<Label.IsVisible>
-                                    <MultiBinding Mode="OneWay" Converter="{StaticResource NumberToIsVisible}">
-                                        <Binding Path="NumberShown" />
-                                        <Binding Source="{x:Reference SudokuPageInstance}"
-                                            Path="BindingContext.EmptySquareIndicatorIsX" />
-                                    </MultiBinding>
-                                </Label.IsVisible>-->
-
+                                
                                 <Label.Text>
                                     <MultiBinding Mode="OneWay" Converter="{StaticResource NumberToDisplayedValue}">
                                         <Binding Path="Number" />
@@ -158,46 +154,41 @@
                                     </MultiBinding>
                                 </Label.Text>
 
-                                <Label.FontSize>
-                                    <Binding Source="{RelativeSource AncestorType={x:Type CollectionView}}" 
-                                        Path="Height" Mode="OneWay"
-                                        Converter="{StaticResource SudokuLabelContainerHeightToFontSize}" />
-                                </Label.FontSize>
                             </Label>
 
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
+            </ScrollView>
 
-                <Border Margin="4" Padding="8" x:Name="WelcomeBorder"
-                    IsVisible="{Binding FirstRunSudoku}"
-                    Stroke="{AppThemeBinding Light=Black, Dark=White}"
-                    BackgroundColor="{DynamicResource PageBackgroundColor}"
-                    SemanticProperties.Description="{x:Static resources:AppResources.SudokuWelcome}"
-                    VerticalOptions="Fill" HorizontalOptions="Fill">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Label Grid.Row="0" x:Name="SudokuWelcomeTitleLabel"
-                            Text="{x:Static resources:AppResources.SudokuWelcome}"                        
-                            FontSize="Title" />
-                        <ScrollView Grid.Row="1">
-                            <Editor x:Name="SudokuWelcomeTitleInstructions" IsReadOnly="True"
-                                SemanticProperties.Description="{x:Static resources:AppResources.SudokuWelcome}"
-                                Text="{x:Static resources:AppResources.WelcomeInstructions}" />
-                        </ScrollView>
-                        <Button Grid.Row="2" x:Name="WelcomeMessageCloseButton"
-                            Text="{x:Static resources:AppResources.Close}" 
-                            TextColor="{StaticResource White}" BackgroundColor="{StaticResource Primary}"
-                            Clicked="WelcomeMessageCloseButton_Clicked"
-                            HorizontalOptions="End" Margin="0,4,4,4" Padding="8" />
-                    </Grid>
-                </Border>
-
-            </Grid>
+            <Border Grid.Row="1" 
+                Margin="4" Padding="8" x:Name="WelcomeBorder"
+                IsVisible="{Binding FirstRunSudoku}"
+                Stroke="{AppThemeBinding Light=Black, Dark=White}"
+                BackgroundColor="{DynamicResource PageBackgroundColor}"
+                SemanticProperties.Description="{x:Static resources:AppResources.SudokuWelcome}"
+                VerticalOptions="Fill" HorizontalOptions="Fill">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" x:Name="SudokuWelcomeTitleLabel"
+                        Text="{x:Static resources:AppResources.SudokuWelcome}"                        
+                        FontSize="Title" />
+                    <ScrollView Grid.Row="1">
+                        <Editor x:Name="SudokuWelcomeTitleInstructions" IsReadOnly="True"
+                            SemanticProperties.Description="{x:Static resources:AppResources.SudokuWelcome}"
+                            Text="{x:Static resources:AppResources.WelcomeInstructions}" />
+                    </ScrollView>
+                    <Button Grid.Row="2" x:Name="WelcomeMessageCloseButton"
+                        Text="{x:Static resources:AppResources.Close}" 
+                        TextColor="{StaticResource White}" BackgroundColor="{StaticResource Primary}"
+                        Clicked="WelcomeMessageCloseButton_Clicked"
+                        HorizontalOptions="End" Margin="0,4,4,4" Padding="8" />
+                </Grid>
+            </Border>
 
         </Grid>
         
