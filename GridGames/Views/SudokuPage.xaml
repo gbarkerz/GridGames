@@ -124,7 +124,7 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
 
-                            <Label Padding="0"
+                            <Label Padding="4,0,4,0"
                                 BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"                                   
                                 LineBreakMode="NoWrap"
                                 VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
@@ -133,7 +133,9 @@
                                 Margin="{Binding Index, Mode=OneWay,
                                     Converter={StaticResource SudokuSquareIndexToMargin}}" 
                                 HeightRequest="{Binding Source={x:Reference SudokuPageInstance}, Mode=OneWay,
-                                    Path=ItemRowHeight, Converter={StaticResource SudokuItemHeightToCollectionViewHeight}}">
+                                    Path=ItemRowHeight, Converter={StaticResource SudokuItemHeightToCollectionViewHeight}}"
+                                FontSize="{Binding Source={x:Reference SudokuPageInstance}, Mode=OneWay,
+                                    Path=ItemFontSize}">
 
                                 <Label.TextColor>
                                     <MultiBinding Mode="OneWay" Converter="{StaticResource NumberShownToTextColor}">

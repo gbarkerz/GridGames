@@ -23,6 +23,17 @@ public partial class SudokuPage : ContentPage
         set => SetValue(SudokuPage.ItemRowHeightProperty, value);
     }
 
+    // Create a bindable ItemFontSize property to set the size of the CollectionView item font
+    // in the main Sudoku grid.
+    public static readonly BindableProperty ItemFontSizeProperty =
+        BindableProperty.Create(nameof(ItemFontSize), typeof(int), typeof(SudokuPage));
+
+    public int ItemFontSize
+    {
+        get => (int)GetValue(SudokuPage.ItemFontSizeProperty);
+        set => SetValue(SudokuPage.ItemFontSizeProperty, value);
+    }
+
     public static DateTime timeOfMostRecentProgrammaticSelection = DateTime.Now;
 
     public SudokuPage()
@@ -68,6 +79,8 @@ public partial class SudokuPage : ContentPage
 
     private void SudokuCollectionView_Loaded(object sender, EventArgs e)
     {
+        this.ItemFontSize = (int)(GameTitleLabel.FontSize * 2);
+
 #if WINDOWS
         var squareLocationAnnouncementFormat = (string)Preferences.Get(
                                                 "SquareLocationAnnouncementFormat",
@@ -1064,21 +1077,27 @@ public partial class SudokuPage : ContentPage
     private void SudokuCollectionView_SizeChanged(object sender, EventArgs e)
     {
         var collectionView = (sender as CollectionView);
-        var collectionViewHeight = collectionView.Height;
+        var collectionViewWidth = (int)collectionView.Width;
 
-        var scrollViewHeight = SudokuGridScrollView.Height;
+        var scrollViewWidth = (int)SudokuGridScrollView.Width;
+
+        Debug.WriteLine("SudokuCollectionView_SizeChanged: collectionViewWidth " + 
+            collectionViewWidth+ ", scrollViewWidth " + scrollViewWidth);
 
         // We only need to set the item height such that the grid fills the main area on the page
         // if the grid cannot be scrolled. If the grid can scroll then allow the default item sizing
         // and ScrollView behavior.
-        if ((collectionViewHeight > 0) && (scrollViewHeight > 0) &&
-            (collectionViewHeight == scrollViewHeight))
+        if ((collectionViewWidth > 0) && (scrollViewWidth > 0) &&
+            (collectionViewWidth <= scrollViewWidth - 1))
         {
             // Space available for items is: (Note CollectionView doesn't support padding.)
             // collection view height - (2 x 2 x wide gap between rows) - (6 x 2 x narrow gap between rows)
-            var availableSpace = (int)collectionViewHeight - (2 * 2 * 4) - (6 * 2 * 1);
+            var availableSpace = (int)collectionView.Height - (2 * 2 * 4) - (6 * 2 * 1);
 
             this.ItemRowHeight = availableSpace / 9;
+
+            Debug.WriteLine("SudokuCollectionView_SizeChanged: Set ItemRowHeight to " +
+                ItemRowHeight);
         }
     }
 
