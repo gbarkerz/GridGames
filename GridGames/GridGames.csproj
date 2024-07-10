@@ -21,7 +21,7 @@
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>3.1</ApplicationDisplayVersion>
-		<ApplicationVersion>19</ApplicationVersion>
+		<ApplicationVersion>20</ApplicationVersion>
 
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">29.0</SupportedOSPlatformVersion>
 
@@ -130,6 +130,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\PageTitleArea.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\SudokuPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

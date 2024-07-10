@@ -109,7 +109,7 @@ namespace GridGames.ViewModels
             // Show the "Please wait" message until we know it's not needed.
             GameIsLoading = true;
 
-            Title = AppResources.ResourceManager.GetString("Squares");
+            Title = AppResources.ResourceManager.GetString("Sweeper");
 
             sweeperSettingsVM = new SweeperSettingsViewModel();
 

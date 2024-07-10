@@ -7,6 +7,7 @@
              xmlns:localviews="clr-namespace:GridGames.Views"
              xmlns:vm="clr-namespace:GridGames.ViewModels"
              xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:views="clr-namespace:GridGames.Views"
              Title="{Binding Title}">
 
     <ContentPage.BindingContext>
@@ -22,27 +23,7 @@
     </ContentPage.Resources>
 
     <Shell.TitleView>
-        <Grid Margin="0,0,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            
-            <Label Grid.Column="0" x:Name="GameTitleLabel"
-                Text="{x:Static resources:AppResources.Pairs}"
-                SemanticProperties.HeadingLevel="Level1" FontSize="Title"
-                TextColor="{StaticResource White}"
-                Margin="0,8,0,0" HorizontalOptions="Start" VerticalOptions="StartAndExpand" />
-            
-            <Button Grid.Column="1" Text="&#xf013;" x:Name="PairsSettingsButton"
-                Clicked="MatchingGameSettingsButton_Clicked"
-                BorderWidth="0"
-                TextColor="{StaticResource White}"
-                BackgroundColor="{StaticResource Primary}"                    
-                windows:VisualElement.AccessKey="S"
-                FontFamily="FA" FontSize="Title" HorizontalOptions="End" VerticalOptions="StartAndExpand"
-                SemanticProperties.Description="{x:Static resources:AppResources.PairsSettings}" />
-        </Grid>
+        <views:PageTitleArea Margin="0" Padding="0" />
     </Shell.TitleView>
 
     <ContentPage.Content>
@@ -150,7 +131,7 @@
                             Text="{x:Static resources:AppResources.WelcomeInstructions}" />
                     </ScrollView>
                     <Button Grid.Row="2" x:Name="WelcomeMessageCloseButton"
-                        Text="Close welcome message" 
+                        Text="{x:Static resources:AppResources.Close}"
                         Clicked="WelcomeMessageCloseButton_Clicked"
                         windows:VisualElement.AccessKey="C"
                         HorizontalOptions="End" Margin="0,4,4,4" Padding="8" />

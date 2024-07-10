@@ -9,6 +9,7 @@
              xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
              xmlns:drawable="clr-namespace:GridGames.Views"
              xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:views="clr-namespace:GridGames.Views"
              Title="{Binding Title}">
 
     <ContentPage.BindingContext>
@@ -26,27 +27,7 @@
     </ContentPage.Resources>
 
     <Shell.TitleView>
-        <Grid Margin="0,0,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-
-            <Label Grid.Column="0" x:Name="GameTitleLabel"
-                Text="{x:Static resources:AppResources.Squares}"
-                SemanticProperties.HeadingLevel="Level1" FontSize="Title"
-                TextColor="{StaticResource White}"
-                Margin="0,8,0,0" HorizontalOptions="Start" VerticalOptions="StartAndExpand" />
-
-            <Button Grid.Column="1" Text="&#xf013;" x:Name="SquaresSettingsButton"
-                Clicked="SquaresGameSettingsButton_Clicked"
-                BorderWidth="0"
-                TextColor="{StaticResource White}"
-                BackgroundColor="{StaticResource Primary}"                    
-                windows:VisualElement.AccessKey="S"
-                FontFamily="FA" FontSize="Title" HorizontalOptions="End" VerticalOptions="StartAndExpand"
-                SemanticProperties.Description="{x:Static resources:AppResources.SquaresSettings}" />
-        </Grid>
+        <views:PageTitleArea Margin="0" Padding="0" />
     </Shell.TitleView>
 
     <ContentPage.Content>

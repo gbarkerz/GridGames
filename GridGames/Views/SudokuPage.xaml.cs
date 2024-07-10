@@ -79,7 +79,11 @@ public partial class SudokuPage : ContentPage
 
     private void SudokuCollectionView_Loaded(object sender, EventArgs e)
     {
-        this.ItemFontSize = (int)(GameTitleLabel.FontSize * 2);
+        var gameTitleLabel = PageTitleArea.FindByName("GameTitleLabel") as Label;
+        if (gameTitleLabel != null)
+        {
+            this.ItemFontSize = (int)(gameTitleLabel.FontSize * 2);
+        }
 
 #if WINDOWS
         var squareLocationAnnouncementFormat = (string)Preferences.Get(

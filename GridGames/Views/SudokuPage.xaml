@@ -9,6 +9,7 @@
              xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
              xmlns:drawable="clr-namespace:GridGames.Views"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:views="clr-namespace:GridGames.Views"
              xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
              Title="{Binding Title}">
 
@@ -33,36 +34,7 @@
     </ContentPage.Resources>
 
     <Shell.TitleView>
-        <Grid Margin="0,0,0,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-
-            <ScrollView Grid.Column="0" Orientation="Horizontal" 
-                VerticalOptions="Center" HorizontalOptions="Center"
-                Margin="0" Padding="0">
-                <Label x:Name="GameTitleLabel" 
-                    Text="{x:Static resources:AppResources.Sudoku}"
-                    SemanticProperties.HeadingLevel="Level1" FontSize="Title"
-                    TextColor="{StaticResource White}"
-                    Margin="0" HorizontalOptions="Center" VerticalOptions="Center" />
-            </ScrollView>
-        
-            <Button x:Name="SudokuSettingsButton" Grid.Column="1"
-                Text="&#xf013;" Margin="10,0,10,0" Padding="0"
-                TextColor="{StaticResource White}"
-                BackgroundColor="{StaticResource Primary}"                    
-                SemanticProperties.Description="{x:Static resources:AppResources.SudokuSettings}"
-                AutomationId="SudokuSettingsButton"
-                Clicked="SudokuSettingsButton_Clicked"
-                BorderWidth="0"
-                windows:VisualElement.AccessKey="S"
-                FontFamily="FA" FontSize="Title" HorizontalOptions="End" VerticalOptions="Center" />
-        </Grid>
+        <views:PageTitleArea x:Name="PageTitleArea" Margin="0" Padding="0" />
     </Shell.TitleView>
 
     <ContentPage.Content>
@@ -81,7 +53,7 @@
                 </Grid.ColumnDefinitions>
                 <ScrollView Grid.Column="0" Orientation="Horizontal" HorizontalOptions="End"
                     Margin="4,0,4,0" Padding="0">
-                    <Label Text="Count of blank squares:"
+                    <Label Text="{x:Static resources:AppResources.SudokuCountOfEmptySquares}"
                         TextColor="{StaticResource White}"
                         VerticalOptions="Center" />
                 </ScrollView>

@@ -1258,6 +1258,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        internal static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to seven.
         /// </summary>
         internal static string Seven {
@@ -1598,6 +1607,15 @@ namespace GridGames.ResX {
         internal static string Sudoku {
             get {
                 return ResourceManager.GetString("Sudoku", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Count of blank squares:.
+        /// </summary>
+        internal static string SudokuCountOfEmptySquares {
+            get {
+                return ResourceManager.GetString("SudokuCountOfEmptySquares", resourceCulture);
             }
         }
         

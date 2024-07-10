@@ -352,7 +352,7 @@ Review the Help content for details on how to play the game using only the keybo
 
 When the game is run, a 4 by 4 grid of blank squares appears, each square representing a face-down card. When one of the cards is turned up, it reveals an image on the face-up card. When another card is turned up, an image is also shown on that second face-up card. If the two images are the same, then the cards are considered to be matched, and will not change again for the rest of the game. If the images do not match, then the cards are considered to be unmatched, and cards must be then turned back down. These steps are then repeated until all matching images have been found, and a "Congratulations" window appears.
 
-At the top left corner of the game is the Open Navigation button, which can be used to restart this game or to move to another game.</value>  
+At the top left corner of the game is the Open Navigation button, which can be used to restart this game or to move to another game.</value>
   </data>
   <data name="HelpContentSquares" xml:space="preserve">
     <value>The Squares Game is based on a square sliding puzzle, where squares in a grid of squares are rearranged by the player to form an ordered sequence of squares in the grid.
@@ -362,7 +362,7 @@ When the game is run, a 4 by 4 grid of squares appears, with fifteen of those sq
 At the top left corner of the game is the Open Navigation button, which can be used to restart this game or to move to another game.</value>
   </data>
   <data name="HelpContentSudoku" xml:space="preserve">
-  <value>The Sudoku game shows a grid of 9-by-9 squares. Most of the squares are blank when the game starts, but some of the squares show a number from 1 to 9. The number of squares showing a number depends on the current game settings. To win the game, enter a number from 1 to 9 in each of the blank squares, such that each row and each column in the game contains the numbers 1 to 9. No number can be duplicated on any row or any column. 
+    <value>The Sudoku game shows a grid of 9-by-9 squares. Most of the squares are blank when the game starts, but some of the squares show a number from 1 to 9. The number of squares showing a number depends on the current game settings. To win the game, enter a number from 1 to 9 in each of the blank squares, such that each row and each column in the game contains the numbers 1 to 9. No number can be duplicated on any row or any column. 
 
 In addition, the grid is divided into nine 3-by-3 groups, with group 1 containing the nine squares at the top left of the grid, and group 9 containing the nine squares at the bottom right of the grid. Each group must contain the numbers 1 to 9, with no number duplicated in the group. 
 
@@ -555,6 +555,9 @@ Would you like to play another game?</value>
   <data name="SelectPictureFolderInstructionsFolder" xml:space="preserve">
     <value>To select the picture folder, browse to the folder of interest and select it.</value>
   </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
   <data name="Seven" xml:space="preserve">
     <value>seven</value>
   </data>
@@ -670,6 +673,9 @@ Would you like to play another game?</value>
   </data>
   <data name="Sudoku" xml:space="preserve">
     <value>Sudoku</value>
+  </data>
+  <data name="SudokuCountOfEmptySquares" xml:space="preserve">
+    <value>Count of blank squares:</value>
   </data>
   <data name="SudokuDifficultyLevelInstructions" xml:space="preserve">
     <value>Select the number of blank squares in the grid when a new game is started.</value>
