@@ -131,7 +131,7 @@
                 <Label x:Name="PleaseWaitLabel"
                     Margin="8"
                     Text="{x:Static resources:AppResources.LoadingPleaseWait}"
-                    FontSize="Large" />
+                    FontSize="Title" />
             </Border>
 
             <Border Margin="4" Padding="8" x:Name="WelcomeBorder"
@@ -148,9 +148,9 @@
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" x:Name="SquaresWelcomeTitleLabel"
                         Text="{x:Static resources:AppResources.SquaresWelcome}"                        
-                        FontSize="Large" FontAttributes="Bold" />
+                        FontSize="Title" />
                     <ScrollView Grid.Row="1">
-                        <Editor x:Name="SquaresWelcomeTitleInstructions" IsReadOnly="True" FontSize="Medium"
+                        <Editor x:Name="SquaresWelcomeTitleInstructions" IsReadOnly="True"
                             SemanticProperties.Description="{x:Static resources:AppResources.SquaresWelcome}"
                             Text="{x:Static resources:AppResources.WelcomeInstructions}" />
                     </ScrollView>

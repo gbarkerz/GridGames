@@ -16,7 +16,7 @@
     <VerticalStackLayout Padding="0" Margin="0" VerticalOptions="CenterAndExpand"
         BackgroundColor="{StaticResource Primary}">
         
-        <Grid Margin="0,0,0,0">
+        <Grid Margin="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
@@ -32,11 +32,11 @@
                     Text="{Binding Title}"
                     SemanticProperties.HeadingLevel="Level1" FontSize="Title"
                     TextColor="{StaticResource White}"
-                    Margin="0" HorizontalOptions="Center" VerticalOptions="Center" />
+                    Margin="0" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" />
             </ScrollView>
 
             <Button x:Name="SettingsButton" Grid.Column="1"
-                Text="&#xf013;" Margin="10,0,10,0" Padding="0"
+                Text="&#xf013;" Margin="10,0,10,0" Padding="0" 
                 TextColor="{StaticResource White}"
                 BackgroundColor="{StaticResource Primary}"                    
                 SemanticProperties.Description="{x:Static resources:AppResources.Settings}"

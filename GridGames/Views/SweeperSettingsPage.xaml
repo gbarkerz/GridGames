@@ -61,7 +61,7 @@
 
                     <Picker x:Name="FrogCountPicker"
                         windows:VisualElement.AccessKey="F"    
-                        VerticalOptions="Center" Margin="8,0,0,0"
+                        VerticalOptions="Center" Margin="8,0,0,10"
                         SemanticProperties.Description="{x:Static resources:AppResources.FrogCountPickerLabel}"
                         SelectedIndex="{Binding FrogCount, Mode=TwoWay,
                             Converter={StaticResource FrogCountToInt}}" />

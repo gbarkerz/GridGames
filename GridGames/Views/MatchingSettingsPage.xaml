@@ -121,7 +121,7 @@
                                 windows:VisualElement.AccessKey="P"
                                 Text="{x:Static resources:AppResources.SelectPicture}"
                                 Padding="10"
-                                HorizontalOptions="Fill" Margin="0,0,0,10"
+                                HorizontalOptions="CenterAndExpand" Margin="0,0,0,10"
                                 LineBreakMode="WordWrap"
                                 TextColor="{StaticResource White}" BackgroundColor="{StaticResource Primary}"
                                 Clicked="PictureBrowseButton_Clicked" />
@@ -130,7 +130,7 @@
                                 windows:VisualElement.AccessKey="S"
                                 Text="{x:Static resources:AppResources.ClearSelection}"                               
                                 Padding="10"
-                                HorizontalOptions="Fill" Margin="0,0,0,10"
+                                HorizontalOptions="CenterAndExpand" Margin="0,0,0,10"
                                 LineBreakMode="WordWrap"
                                 TextColor="{StaticResource White}" BackgroundColor="{StaticResource Primary}"
                                 Clicked="PictureClearButton_Clicked" />
@@ -139,7 +139,7 @@
                     </StackLayout>
 
                     <Border Grid.Row="2" 
-                        Margin="0" Padding="10"
+                        Margin="0,0,10,0" Padding="10"
                         IsVisible="{Binding PicturePathMatching, Mode=OneWay,
                             Converter={StaticResource FilePathToIsVisible}}"
                         Stroke="{AppThemeBinding Light=Black, Dark=White}">
@@ -243,7 +243,7 @@
                                 windows:VisualElement.AccessKey="V"
                                 Padding="10"
                                 Text="{x:Static resources:AppResources.PairsViewSamplePictureFolder}"
-                                HorizontalOptions="Start" Margin="0,0,0,20"
+                                HorizontalOptions="CenterAndExpand" Margin="0,0,0,20"
                                 TextColor="{StaticResource White}" BackgroundColor="{StaticResource Primary}"
                                 Clicked="ViewSampleButton_Clicked" />
 

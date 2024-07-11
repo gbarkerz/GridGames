@@ -124,9 +124,9 @@
                     <Label Grid.Row="0" x:Name="MatchingWelcomeTitleLabel"
                         Text="{x:Static resources:AppResources.PairsWelcome}" 
                         SemanticProperties.HeadingLevel="Level1"
-                        FontSize="Title" Margin="0,0,0,20" />
+                        FontSize="Title" />
                     <ScrollView Grid.Row="1">
-                        <Editor x:Name="MatchingWelcomeTitleInstructions" IsReadOnly="True" FontSize="Medium"
+                        <Editor x:Name="MatchingWelcomeTitleInstructions" IsReadOnly="True"
                             SemanticProperties.Description="{x:Static resources:AppResources.PairsWelcome}"
                             Text="{x:Static resources:AppResources.WelcomeInstructions}" />
                     </ScrollView>

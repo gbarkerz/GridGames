@@ -191,9 +191,9 @@
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" x:Name="SweeperWelcomeTitleLabel"
                         Text="{x:Static resources:AppResources.SweeperWelcome}"                        
-                        FontSize="Large" FontAttributes="Bold" />
+                        FontSize="Title" />
                     <ScrollView Grid.Row="1">
-                        <Editor x:Name="SweeperWelcomeTitleInstructions" IsReadOnly="True" FontSize="Medium"
+                        <Editor x:Name="SweeperWelcomeTitleInstructions" IsReadOnly="True"
                             SemanticProperties.Description="{x:Static resources:AppResources.SweeperWelcome}"
                             Text="{x:Static resources:AppResources.WelcomeInstructions}" />
                     </ScrollView>
