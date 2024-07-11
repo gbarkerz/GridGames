@@ -87,7 +87,7 @@
                             
                             <FlyoutBase.ContextFlyout>
                                 <MenuFlyout>
-                                    <MenuFlyoutItem Text="Change Query Frog state"
+                                    <MenuFlyoutItem Text="{x:Static resources:AppResources.ChangeSquareFrogState}"
                                         Clicked="MenuFlyoutItem_Clicked" />
                                 </MenuFlyout>
                             </FlyoutBase.ContextFlyout>
@@ -109,8 +109,9 @@
                                 </Grid.BackgroundColor>
 
                                 <!-- This invisible button is for programmatic invoking by a screen reader. -->
-                                <Button Text="Change Query Frog state"
+                                <Button Text="{x:Static resources:AppResources.ChangeSquareFrogState}"
                                     Clicked="ToggleQueryFrogButton_Clicked"
+                                    TextColor="{StaticResource White}" BackgroundColor="{StaticResource Primary}"
                                     Opacity="0" InputTransparent="True" />
 
                                 <!-- Label showing count of nearby leaves. -->
@@ -199,6 +200,7 @@
                     <Button Grid.Row="2" x:Name="WelcomeMessageCloseButton"
                         Text="{x:Static resources:AppResources.Close}" 
                         Clicked="WelcomeMessageCloseButton_Clicked"
+                        TextColor="{StaticResource White}" BackgroundColor="{StaticResource Primary}"
                         HorizontalOptions="End" Margin="0,4,4,4" Padding="8" />
                 </Grid>
             </Border>

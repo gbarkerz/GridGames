@@ -31,57 +31,49 @@
             </Grid>
 
             <ScrollView Grid.Row="1" Margin="14,4,14,2">
-                <Grid Grid.Row="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
                     
-                    <StackLayout Grid.Row="2" Margin="0,10,0,10">
+                <StackLayout Margin="0,10,0,10">
 
-                        <Label FontAttributes="Bold" LineBreakMode="WordWrap" Margin="4,4,4,30"
-                            Text="Important: If you change the number of rows and columns in the game, the game will need to be restarted." />
-                        <Label Text="How many rows and columns would you like in the game?" />
-                        <StackLayout Grid.Row="2" Orientation="Horizontal" 
-                            Margin="4" Padding="0">
-                            <Label Text="Row and column count:"
-                                VerticalOptions="Center" />
-                            <Picker x:Name="RowColumnCountPicker"
-                                windows:VisualElement.AccessKey="R"    
-                                VerticalOptions="Center" Margin="8,0,0,0"
-                                SemanticProperties.Description="Row and column count:"
-                                SelectedIndex="{Binding SideLength, Mode=TwoWay,
-                                    Converter={StaticResource SideLengthToInt}}" />
-                        </StackLayout>
+                    <Label FontAttributes="Bold" LineBreakMode="WordWrap" Margin="4,4,4,30"
+                        Text="{x:Static resources:AppResources.SweeperRowColumnChangeWarning}" />
 
-                        <Label Text="How many frogs would you like in the game?" 
-                            Margin="0,20,0,0"/>
-                        <StackLayout Grid.Row="2" Orientation="Horizontal" 
-                            Margin="4" Padding="0">
-                            <Label Text="Frog count:"
-                                VerticalOptions="Center" />
-                            <Picker x:Name="FrogCountPicker"
-                                windows:VisualElement.AccessKey="F"    
-                                VerticalOptions="Center" Margin="8,0,0,0"
-                                SemanticProperties.Description="Frog count:"
-                                SelectedIndex="{Binding FrogCount, Mode=TwoWay,
-                                    Converter={StaticResource FrogCountToInt}}" />
-                        </StackLayout>
+                    <Label Text="{x:Static resources:AppResources.HowManyRowsColumns}" />
 
-                    </StackLayout>
+                    <ScrollView Grid.Row="2" Orientation="Horizontal" Padding="10">
+                        <Label Text="{x:Static resources:AppResources.RowColumnCount}"
+                            VerticalOptions="Center" />
+                    </ScrollView>
 
-                </Grid>
+                    <Picker x:Name="RowColumnCountPicker"
+                        windows:VisualElement.AccessKey="R"    
+                        VerticalOptions="Center" Margin="8,0,0,0"
+                        SemanticProperties.Description="{x:Static resources:AppResources.RowColumnCount}"
+                        SelectedIndex="{Binding SideLength, Mode=TwoWay,
+                            Converter={StaticResource SideLengthToInt}}" />
+
+                    <Label Text="{x:Static resources:AppResources.FrogCount}" 
+                        Margin="0,30,0,0"/>
+
+                    <ScrollView Grid.Row="2" Orientation="Horizontal" Padding="10">
+                        <Label Text="{x:Static resources:AppResources.FrogCountPickerLabel}"
+                            VerticalOptions="Center" />
+                    </ScrollView>
+
+                    <Picker x:Name="FrogCountPicker"
+                        windows:VisualElement.AccessKey="F"    
+                        VerticalOptions="Center" Margin="8,0,0,0"
+                        SemanticProperties.Description="{x:Static resources:AppResources.FrogCountPickerLabel}"
+                        SelectedIndex="{Binding FrogCount, Mode=TwoWay,
+                            Converter={StaticResource FrogCountToInt}}" />
+
+                </StackLayout>
+
             </ScrollView>
             
             <Button Grid.Row="2" x:Name="CloseButton" 
                 windows:VisualElement.AccessKey="C"                                    
                 HorizontalOptions="End" Margin="0,0,4,4" Padding="8"
+                TextColor="{StaticResource White}" BackgroundColor="{StaticResource Primary}"
                 Text="{x:Static resources:AppResources.Close}" Clicked="CloseButton_Clicked" />
         </Grid>
     </ContentPage.Content>

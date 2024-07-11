@@ -115,11 +115,29 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cell.
         /// </summary>
         internal static string CellLocalizedControlType {
             get {
                 return ResourceManager.GetString("CellLocalizedControlType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change square&apos;s query frog state.
+        /// </summary>
+        internal static string ChangeSquareFrogState {
+            get {
+                return ResourceManager.GetString("ChangeSquareFrogState", resourceCulture);
             }
         }
         
@@ -133,7 +151,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clear Selection.
+        ///   Looks up a localized string similar to Clear Picture Selection.
         /// </summary>
         internal static string ClearSelection {
             get {
@@ -218,11 +236,29 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Custom Pictures.
+        /// </summary>
+        internal static string CustomPictures {
+            get {
+                return ResourceManager.GetString("CustomPictures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To prepare custom pictures for showing in the Pairs game, first create a new folder and copy in the eight pictures that you&apos;d like to have shown. Then create a text file in the same folder, called &quot;PairsGamePictureDetails.txt&quot;. Edit the text file so that each line in the file contains the accessible details for one of the pictures in the folder. A line starts with the filename of the picture, followed by a tab, and then the accessible name of the picture. If a description is also provided, the name is follo [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CustomPicturesInstructions {
             get {
                 return ResourceManager.GetString("CustomPicturesInstructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom Pictures Instructions.
+        /// </summary>
+        internal static string CustomPicturesInstructionsHeader {
+            get {
+                return ResourceManager.GetString("CustomPicturesInstructionsHeader", resourceCulture);
             }
         }
         
@@ -672,6 +708,24 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to How many frogs would you like in the game?.
+        /// </summary>
+        internal static string FrogCount {
+            get {
+                return ResourceManager.GetString("FrogCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frog count:.
+        /// </summary>
+        internal static string FrogCountPickerLabel {
+            get {
+                return ResourceManager.GetString("FrogCountPickerLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Game is ready to play..
         /// </summary>
         internal static string GameReady {
@@ -775,6 +829,15 @@ namespace GridGames.ResX {
         internal static string HelpContentSweeper {
             get {
                 return ResourceManager.GetString("HelpContentSweeper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How many rows and columns would you like in the game?.
+        /// </summary>
+        internal static string HowManyRowsColumns {
+            get {
+                return ResourceManager.GetString("HowManyRowsColumns", resourceCulture);
             }
         }
         
@@ -979,6 +1042,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Numbers.
+        /// </summary>
+        internal static string Numbers {
+            get {
+                return ResourceManager.GetString("Numbers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} is shown in this .
         /// </summary>
         internal static string NumberShownPrefix {
@@ -1033,6 +1105,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pairs cards.
+        /// </summary>
+        internal static string PairsCards {
+            get {
+                return ResourceManager.GetString("PairsCards", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A sample custom pictures folder is available at https://github.com/gbarkerz/GridGames/tree/master/GridGames/PairsSamples/LittleMoretonHall. Consider making your own set of pictures and accessible details, and showing in the Pairs game..
         /// </summary>
         internal static string PairsCustomPicturesViewSample {
@@ -1069,11 +1150,38 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Have your own pictures shown in the cards in the Pairs game..
+        /// </summary>
+        internal static string PairsShowCustomPicturesLabel {
+            get {
+                return ResourceManager.GetString("PairsShowCustomPicturesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View sample picture folder.
+        /// </summary>
+        internal static string PairsViewSamplePictureFolder {
+            get {
+                return ResourceManager.GetString("PairsViewSamplePictureFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Welcome to the Pairs Game!.
         /// </summary>
         internal static string PairsWelcome {
             get {
                 return ResourceManager.GetString("PairsWelcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Picture.
+        /// </summary>
+        internal static string Picture {
+            get {
+                return ResourceManager.GetString("Picture", resourceCulture);
             }
         }
         
@@ -1087,11 +1195,29 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Scale type.
+        ///   Looks up a localized string similar to Scale type:.
         /// </summary>
         internal static string PictureAspectLabel {
             get {
                 return ResourceManager.GetString("PictureAspectLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select how you would like the pictures to be shown in the cards..
+        /// </summary>
+        internal static string PictureAspectSelectionLabel {
+            get {
+                return ResourceManager.GetString("PictureAspectSelectionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Picture Name.
+        /// </summary>
+        internal static string PictureName {
+            get {
+                return ResourceManager.GetString("PictureName", resourceCulture);
             }
         }
         
@@ -1119,6 +1245,15 @@ namespace GridGames.ResX {
         internal static string PicturePath {
             get {
                 return ResourceManager.GetString("PicturePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pictures.
+        /// </summary>
+        internal static string Pictures {
+            get {
+                return ResourceManager.GetString("Pictures", resourceCulture);
             }
         }
         
@@ -1195,6 +1330,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Row and column count:.
+        /// </summary>
+        internal static string RowColumnCount {
+            get {
+                return ResourceManager.GetString("RowColumnCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Row needs .
         /// </summary>
         internal static string RowNeeds {
@@ -1209,6 +1353,15 @@ namespace GridGames.ResX {
         internal static string ScreenReaderAnnouncement {
             get {
                 return ResourceManager.GetString("ScreenReaderAnnouncement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Custom Pictures.
+        /// </summary>
+        internal static string SelectCustomPictures {
+            get {
+                return ResourceManager.GetString("SelectCustomPictures", resourceCulture);
             }
         }
         
@@ -1285,7 +1438,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show custom pictures.
+        ///   Looks up a localized string similar to Show custom pictures:.
         /// </summary>
         internal static string ShowCustomPictures {
             get {
@@ -1303,7 +1456,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show numbers.
+        ///   Looks up a localized string similar to Show numbers:.
         /// </summary>
         internal static string ShowNumbers {
             get {
@@ -1312,7 +1465,7 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show picture.
+        ///   Looks up a localized string similar to Show picture:.
         /// </summary>
         internal static string ShowPicture {
             get {
@@ -1357,6 +1510,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Square Contents.
+        /// </summary>
+        internal static string SquareContents {
+            get {
+                return ResourceManager.GetString("SquareContents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Row $r Column $c, Group $g.
         /// </summary>
         internal static string SquareLocationAnnouncementDefault {
@@ -1371,6 +1533,15 @@ namespace GridGames.ResX {
         internal static string SquareLocationAnnouncementEditorName {
             get {
                 return ResourceManager.GetString("SquareLocationAnnouncementEditorName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Format of square location announcement.
+        /// </summary>
+        internal static string SquareLocationAnnouncementFormat {
+            get {
+                return ResourceManager.GetString("SquareLocationAnnouncementFormat", resourceCulture);
             }
         }
         
@@ -1526,6 +1697,15 @@ namespace GridGames.ResX {
         internal static string String16 {
             get {
                 return ResourceManager.GetString("String16", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string String17 {
+            get {
+                return ResourceManager.GetString("String17", resourceCulture);
             }
         }
         
@@ -1737,6 +1917,15 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Important: If you change the number of rows and columns in the game, the game will need to be restarted..
+        /// </summary>
+        internal static string SweeperRowColumnChangeWarning {
+            get {
+                return ResourceManager.GetString("SweeperRowColumnChangeWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sweeper Settings.
         /// </summary>
         internal static string SweeperSettings {
@@ -1760,6 +1949,15 @@ namespace GridGames.ResX {
         internal static string SweeperWelcome {
             get {
                 return ResourceManager.GetString("SweeperWelcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sweep the square.
+        /// </summary>
+        internal static string SweepSquare {
+            get {
+                return ResourceManager.GetString("SweepSquare", resourceCulture);
             }
         }
         

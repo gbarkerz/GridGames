@@ -36,7 +36,7 @@
 
             <CollectionView
                 x:Name="SquaresCollectionView"
-                SemanticProperties.Description="Squares"               
+                SemanticProperties.Description="{x:Static resources:AppResources.Squares}"               
                 VerticalScrollBarVisibility="Never"
                 SelectionMode="Single"
                 ItemsSource="{Binding SquareListCollection}">
@@ -157,6 +157,7 @@
                     <Button Grid.Row="2" x:Name="WelcomeMessageCloseButton"
                         Text="{x:Static resources:AppResources.Close}" 
                         Clicked="WelcomeMessageCloseButton_Clicked"
+                        TextColor="{StaticResource White}" BackgroundColor="{StaticResource Primary}"
                         HorizontalOptions="End" Margin="0,4,4,4" Padding="8" />
                 </Grid>
             </Border>

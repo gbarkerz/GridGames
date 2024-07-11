@@ -135,14 +135,20 @@
   <data name="BrowsePicture" xml:space="preserve">
     <value>Browse for picture</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="CellLocalizedControlType" xml:space="preserve">
     <value>Cell</value>
+  </data>
+  <data name="ChangeSquareFrogState" xml:space="preserve">
+    <value>Change square's query frog state</value>
   </data>
   <data name="ChooseEightPictures" xml:space="preserve">
     <value>Please choose a picture in a folder that contains exactly 8 pictures.</value>
   </data>
   <data name="ClearSelection" xml:space="preserve">
-    <value>Clear Selection</value>
+    <value>Clear Picture Selection</value>
   </data>
   <data name="Close" xml:space="preserve">
     <value>Close</value>
@@ -172,8 +178,14 @@ Would you like to play another game?</value>
   <data name="CountOfBlankSquares" xml:space="preserve">
     <value>Count of blank squares:</value>
   </data>
+  <data name="CustomPictures" xml:space="preserve">
+    <value>Custom Pictures</value>
+  </data>
   <data name="CustomPicturesInstructions" xml:space="preserve">
     <value>To prepare custom pictures for showing in the Pairs game, first create a new folder and copy in the eight pictures that you'd like to have shown. Then create a text file in the same folder, called "PairsGamePictureDetails.txt". Edit the text file so that each line in the file contains the accessible details for one of the pictures in the folder. A line starts with the filename of the picture, followed by a tab, and then the accessible name of the picture. If a description is also provided, the name is followed by a tab, and then the description.</value>
+  </data>
+  <data name="CustomPicturesInstructionsHeader" xml:space="preserve">
+    <value>Custom Pictures Instructions</value>
   </data>
   <data name="DefaultMatchingCard1Description" xml:space="preserve">
     <value>A smiling man with a red coat and arms outstretched, standing in front of 3 large Daleks and a TARDIS. The Daleks seem to be raised above the grass beneath them, and a slightly cloudy sky is in the background.</value>
@@ -326,6 +338,12 @@ Review the Help content for details on how to play the game using only the keybo
   <data name="Frog" xml:space="preserve">
     <value>Frog</value>
   </data>
+  <data name="FrogCount" xml:space="preserve">
+    <value>How many frogs would you like in the game?</value>
+  </data>
+  <data name="FrogCountPickerLabel" xml:space="preserve">
+    <value>Frog count:</value>
+  </data>
   <data name="GameReady" xml:space="preserve">
     <value>Game is ready to play.</value>
   </data>
@@ -393,6 +411,9 @@ When you feel you know that a stone must have a frog resting beneath its leaves,
 Once all paving stones in the grid which don't have resting frogs on them have been cleared, you've won the game. If while playing the game you click on a stone which does have a resting frog on it, the game is lost. If the game is lost, both resting frogs will be revealed.
 
 At the top left corner of the game is the Open Navigation button, which can be used to restart this game or to move to another game.</value>
+  </data>
+  <data name="HowManyRowsColumns" xml:space="preserve">
+    <value>How many rows and columns would you like in the game?</value>
   </data>
   <data name="IncorrectWCAG" xml:space="preserve">
     <value>{0} isn't {1}.</value>
@@ -462,6 +483,9 @@ Would you like to play another game?</value>
   <data name="NumberNotShownInRowColumnGroup" xml:space="preserve">
     <value>{0} is not shown in this row, column, or group.</value>
   </data>
+  <data name="Numbers" xml:space="preserve">
+    <value>Numbers</value>
+  </data>
   <data name="NumberShownPrefix" xml:space="preserve">
     <value>{0} is shown in this </value>
   </data>
@@ -480,6 +504,9 @@ Would you like to play another game?</value>
   <data name="Pairs" xml:space="preserve">
     <value>Pairs</value>
   </data>
+  <data name="PairsCards" xml:space="preserve">
+    <value>Pairs cards</value>
+  </data>
   <data name="PairsCustomPicturesViewSample" xml:space="preserve">
     <value>A sample custom pictures folder is available at https://github.com/gbarkerz/GridGames/tree/master/GridGames/PairsSamples/LittleMoretonHall. Consider making your own set of pictures and accessible details, and showing in the Pairs game.</value>
   </data>
@@ -492,14 +519,29 @@ Would you like to play another game?</value>
   <data name="PairsSettings" xml:space="preserve">
     <value>Pairs Settings</value>
   </data>
+  <data name="PairsShowCustomPicturesLabel" xml:space="preserve">
+    <value>Have your own pictures shown in the cards in the Pairs game.</value>
+  </data>
+  <data name="PairsViewSamplePictureFolder" xml:space="preserve">
+    <value>View sample picture folder</value>
+  </data>
   <data name="PairsWelcome" xml:space="preserve">
     <value>Welcome to the Pairs Game!</value>
+  </data>
+  <data name="Picture" xml:space="preserve">
+    <value>Picture</value>
   </data>
   <data name="PictureAspectInstructions" xml:space="preserve">
     <value>Pick how the pictures will be shown in the cards.</value>
   </data>
   <data name="PictureAspectLabel" xml:space="preserve">
-    <value>Scale type</value>
+    <value>Scale type:</value>
+  </data>
+  <data name="PictureAspectSelectionLabel" xml:space="preserve">
+    <value>Select how you would like the pictures to be shown in the cards.</value>
+  </data>
+  <data name="PictureName" xml:space="preserve">
+    <value>Picture Name</value>
   </data>
   <data name="PictureNameInstructions" xml:space="preserve">
     <value>Optionally provide a name to be shown when the game is completed.</value>
@@ -509,6 +551,9 @@ Would you like to play another game?</value>
   </data>
   <data name="PicturePath" xml:space="preserve">
     <value>Selected picture folder:</value>
+  </data>
+  <data name="Pictures" xml:space="preserve">
+    <value>Pictures</value>
   </data>
   <data name="PlaySound" xml:space="preserve">
     <value>Play a sound</value>
@@ -534,11 +579,17 @@ Would you like to play another game?</value>
   <data name="Row" xml:space="preserve">
     <value>Row</value>
   </data>
+  <data name="RowColumnCount" xml:space="preserve">
+    <value>Row and column count:</value>
+  </data>
   <data name="RowNeeds" xml:space="preserve">
     <value>Row needs </value>
   </data>
   <data name="ScreenReaderAnnouncement" xml:space="preserve">
     <value>Make a screen reader announcement</value>
+  </data>
+  <data name="SelectCustomPictures" xml:space="preserve">
+    <value>Select Custom Pictures</value>
   </data>
   <data name="Selected" xml:space="preserve">
     <value>Selected:</value>
@@ -565,16 +616,16 @@ Would you like to play another game?</value>
     <value>Show bonus WCAG questions</value>
   </data>
   <data name="ShowCustomPictures" xml:space="preserve">
-    <value>Show custom pictures</value>
+    <value>Show custom pictures:</value>
   </data>
   <data name="ShowFullPicture" xml:space="preserve">
     <value>Show full picture</value>
   </data>
   <data name="ShowNumbers" xml:space="preserve">
-    <value>Show numbers</value>
+    <value>Show numbers:</value>
   </data>
   <data name="ShowPicture" xml:space="preserve">
-    <value>Show picture</value>
+    <value>Show picture:</value>
   </data>
   <data name="Six" xml:space="preserve">
     <value>six</value>
@@ -588,11 +639,17 @@ Would you like to play another game?</value>
   <data name="SpeechTargetButtonPrefix" xml:space="preserve">
     <value>Select square</value>
   </data>
+  <data name="SquareContents" xml:space="preserve">
+    <value>Square Contents</value>
+  </data>
   <data name="SquareLocationAnnouncementDefault" xml:space="preserve">
     <value>Row $r Column $c, Group $g</value>
   </data>
   <data name="SquareLocationAnnouncementEditorName" xml:space="preserve">
     <value>Square location announcement format</value>
+  </data>
+  <data name="SquareLocationAnnouncementFormat" xml:space="preserve">
+    <value>Format of square location announcement</value>
   </data>
   <data name="SquareLocationAnnouncementInstructions" xml:space="preserve">
     <value>Specify the format for a screen reader's announcement of a square's group, row, and column number. Enter whatever text and punctuation you would like here, and wherever you put $r or $c or $g, the square's row or column or group would be announced. For example, if you put "Group $g, Row $r Column $c" then the announcement might be "Group 3, Row 8 Column 1". Or if you put "$r $c, G $g" then the announcement might be "8 1, G 3".</value>
@@ -645,6 +702,9 @@ Would you like to play another game?</value>
     <value>Note that screen readers may announce the menu button as the "OK" button or only as "button".</value>
   </data>
   <data name="String16" xml:space="preserve">
+    <value />
+  </data>
+  <data name="String17" xml:space="preserve">
     <value />
   </data>
   <data name="String2" xml:space="preserve">
@@ -716,6 +776,9 @@ Would you like to play another game?</value>
   <data name="SweeperHelpEditor" xml:space="preserve">
     <value>Leaf Sweeper Help</value>
   </data>
+  <data name="SweeperRowColumnChangeWarning" xml:space="preserve">
+    <value>Important: If you change the number of rows and columns in the game, the game will need to be restarted.</value>
+  </data>
   <data name="SweeperSettings" xml:space="preserve">
     <value>Sweeper Settings</value>
   </data>
@@ -724,6 +787,9 @@ Would you like to play another game?</value>
   </data>
   <data name="SweeperWelcome" xml:space="preserve">
     <value>Welcome to the Leaf Sweeper Game!</value>
+  </data>
+  <data name="SweepSquare" xml:space="preserve">
+    <value>Sweep the square</value>
   </data>
   <data name="Ten" xml:space="preserve">
     <value>ten</value>

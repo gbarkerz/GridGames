@@ -27,10 +27,10 @@ namespace GridGames
 #endif
 
             // Adding localized strings to a Picker in XAML seems complicated, so do it in code.
-            SquaresNumberSizePicker.Items.Add(AppResources.ResourceManager.GetString("Small"));
-            SquaresNumberSizePicker.Items.Add(AppResources.ResourceManager.GetString("Medium"));
-            SquaresNumberSizePicker.Items.Add(AppResources.ResourceManager.GetString("Large"));
-            SquaresNumberSizePicker.Items.Add(AppResources.ResourceManager.GetString("Largest"));
+            //SquaresNumberSizePicker.Items.Add(AppResources.ResourceManager.GetString("Small"));
+            //SquaresNumberSizePicker.Items.Add(AppResources.ResourceManager.GetString("Medium"));
+            //SquaresNumberSizePicker.Items.Add(AppResources.ResourceManager.GetString("Large"));
+            //SquaresNumberSizePicker.Items.Add(AppResources.ResourceManager.GetString("Largest"));
 
             this.BindingContext = new SquareSettingsViewModel();
 

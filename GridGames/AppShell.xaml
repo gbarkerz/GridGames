@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:GridGames.Views"
     xmlns:res="clr-namespace:GridGames.ResX"
+    xmlns:resources="clr-namespace:GridGames.ResX"
     Title="{x:Static res:AppResources.GridGames}"
     FlyoutBackdrop="#80000000"
     FlyoutIcon="hamburger.svg"
@@ -38,7 +39,7 @@
         </Tab>
     </FlyoutItem>
 
-    <MenuItem x:Name="HelpMenuItem" Text="Help" 
+    <MenuItem x:Name="HelpMenuItem" Text="{x:Static resources:AppResources.Help}" 
         StyleClass="MenuItemLayoutStyle" Clicked="OnHelpMenuItemClicked">
         <MenuItem.IconImageSource>
             <FontImageSource
@@ -48,7 +49,7 @@
         </MenuItem.IconImageSource>
     </MenuItem>
 
-    <MenuItem x:Name="RestartGameMenuItem" Text="Restart Game" 
+    <MenuItem x:Name="RestartGameMenuItem" Text="{x:Static resources:AppResources.RestartGame}" 
         StyleClass="MenuItemLayoutStyle" Clicked="OnRestartMenuItemClicked">
         <MenuItem.IconImageSource>
             <FontImageSource
