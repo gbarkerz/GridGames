@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Maui.Views;
 using GridGames.ResX;
 using GridGames.ViewModels;
-using InvokePlatformCode.Services.PartialMethods;
 using System.Diagnostics;
 
 namespace GridGames.Views
@@ -255,11 +254,6 @@ namespace GridGames.Views
 
             currentlyProcessingInputOnCard = true;
 
-            if (IsFirstTurnUp())
-            {
-                vm.InitialiseGrid(item.TargetIndex);
-            }
-
 #if !WINDOWS
             var popup = new SweeperMarkFrogPopup();
 
@@ -285,6 +279,11 @@ namespace GridGames.Views
                 return;
             }
 #endif
+
+            if (IsFirstTurnUp())
+            {
+                vm.InitialiseGrid(item.TargetIndex);
+            }
 
             bool gameIsLost = vm.ActOnInputOnSquare(item.targetIndex);
             if (gameIsLost)
@@ -347,16 +346,39 @@ namespace GridGames.Views
             var sideLength = (int)Preferences.Get("SideLength", 4);
             var frogCount = (int)Preferences.Get("FrogCount", 2);
 
-            if (firstRunThisInstance ||
-                (sideLength != previousSideLength) ||
-                (frogCount != previousFrogCount))
+            bool updatePreviousValues = false;
+
+            if (firstRunThisInstance)
             {
+                updatePreviousValues = true;
+
                 RestartGame(firstRunThisInstance);
 
                 firstRunThisInstance = false;
+            }
 
+            if (((previousSideLength > 0) && (sideLength != previousSideLength)) ||
+                (previousFrogCount > 0) && (frogCount != previousFrogCount))
+            {
+                updatePreviousValues = true;
+
+                vm.SweeperListCollection.Clear();
+
+                SweeperCollectionView.ItemsLayout = new GridItemsLayout(
+                    sideLength, ItemsLayoutOrientation.Vertical);
+
+                RestartGame(firstRunThisInstance);
+            }
+
+            if (updatePreviousValues)
+            {
                 previousSideLength = sideLength;
                 previousFrogCount = frogCount;
+
+                vm.SideLength = sideLength;
+
+                vm.SweeperSettingsVM.SideLength = sideLength;
+                vm.SweeperSettingsVM.FrogCount = frogCount;
             }
         }
 

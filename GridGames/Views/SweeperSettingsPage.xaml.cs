@@ -56,16 +56,6 @@ namespace GridGames
                 return;
             }
 
-            if (RowColumnCountPicker.SelectedIndex != (previousRowCount - 4))
-            {
-                previousRowCount = sideCount;
-
-                await DisplayAlert(
-                    "Leaf Sweeper",
-                    "Please restart the Grid Games app now.",
-                    "OK");
-            }
-
             await Navigation.PopModalAsync();
         }
    }

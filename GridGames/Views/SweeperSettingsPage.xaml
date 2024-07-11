@@ -34,9 +34,6 @@
                     
                 <StackLayout Margin="0,10,0,10">
 
-                    <Label FontAttributes="Bold" LineBreakMode="WordWrap" Margin="4,4,4,30"
-                        Text="{x:Static resources:AppResources.SweeperRowColumnChangeWarning}" />
-
                     <Label Text="{x:Static resources:AppResources.HowManyRowsColumns}" />
 
                     <ScrollView Grid.Row="2" Orientation="Horizontal" Padding="10">

@@ -148,7 +148,7 @@
                                         LineBreakMode="NoWrap"
                                         AutomationProperties.IsInAccessibleTree="False"
                                         FontFamily="FA"
-                                        TextColor="{AppThemeBinding Light=#004000, Dark=#C0FFC0}"
+                                        TextColor="{AppThemeBinding Light=#004000, Dark=#D0FFD0}"
                                         VerticalTextAlignment="Center" HorizontalTextAlignment="Center">
 
                                         <Label.FontSize >
