@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace GridGames.Views
 {
-    public class SudokuItemHeightToCollectionViewHeight : IValueConverter
+    public class ItemHeightToCollectionViewHeight : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -352,6 +352,47 @@ namespace GridGames.Views
         }
     }
 
+    public class LeafToFontSize : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values == null || (values.Length < 6))
+            {
+                return false;
+            }
+
+            if ((values[0] == null) || (values[1] == null) ||
+                (values[2] == null) || (values[3] == null) ||
+                (values[4] == null) || (values[5] == null))
+            {
+                return false;
+            }
+
+            var turnedUp = (bool)values[0];
+            var hasFrog = (bool)values[1];
+            var showsQueryFrog = (bool)values[2];
+            var gameWon = (bool)values[3];
+            var gameLost = (bool)values[4];
+            var fontSize = (int)values[5];
+
+            if ((turnedUp && !hasFrog) || gameWon || gameLost)
+            {
+                fontSize = (fontSize * 2) / 3;
+            }
+            else if (showsQueryFrog)
+            {
+                fontSize /= 2; 
+            }
+
+            return fontSize;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class LeafToLabel : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -378,19 +419,15 @@ namespace GridGames.Views
 
             if (showsQueryFrog)
             {
-                text = "\uf52e" + "?";
+                text = "\uf52e?";
             }
             else if (gameWon && hasFrog)
             {
-                text = "\uf52e" + " " + "\uf118";
+                text = "\uf118";
             }
             else if (gameLost && hasFrog)
             {
-                text = "\uf52e" + " " + "\uf119";
-
-#if !WINDOWS
                 text = "\uf119";
-#endif
             }
 
             return text;

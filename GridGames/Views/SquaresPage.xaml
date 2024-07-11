@@ -27,7 +27,7 @@
     </ContentPage.Resources>
 
     <Shell.TitleView>
-        <views:PageTitleArea Margin="0" Padding="0" />
+        <views:PageTitleArea x:Name="PageTitleArea" Margin="0" Padding="0" />
     </Shell.TitleView>
 
     <ContentPage.Content>

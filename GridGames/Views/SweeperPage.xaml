@@ -26,156 +26,177 @@
             <localviews:TurnedUpToBackgroundColour x:Key="TurnedUpToBackgroundColour" />
             <localviews:NearbyFrogCountToLabel x:Key="NearbyFrogCountToLabel" />
             <localviews:LeafToVisible x:Key="LeafToVisible" />
+            <localviews:LeafToFontSize x:Key="LeafToFontSize" />
             <localviews:LeafToLabel x:Key="LeafToLabel" />
             <localviews:SweeperItemGameOverToAccessibleName x:Key="SweeperItemGameOverToAccessibleName" />
+            <localviews:ItemHeightToCollectionViewHeight x:Key="ItemHeightToCollectionViewHeight" />
             <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
     <Shell.TitleView>
-        <views:PageTitleArea Margin="0" Padding="0" />
+        <views:PageTitleArea x:Name="PageTitleArea" Margin="0" Padding="0" />
     </Shell.TitleView>
 
     <ContentPage.Content>
 
         <Grid x:Name="PageGrid">
 
-            <CollectionView
-                x:Name="SweeperCollectionView"
-                SemanticProperties.Description="{x:Static resources:AppResources.SweeperSquares}"               
-                IsEnabled="{Binding FirstRunSweeper, Mode=OneWay,
-                    Converter={StaticResource FirstRunToGridIsEnabled}}"
-                Opacity="{Binding FirstRunSweeper, Mode=OneWay,
-                    Converter={StaticResource FirstRunToGridOpacity}}"
-                VerticalScrollBarVisibility="Never"
-                SelectionMode="Single"
-                ItemsSource="{Binding SweeperListCollection}">
+            <ScrollView x:Name="SweeperGridScrollView"
+                Orientation="Both" Padding="0">
+            
+                <CollectionView
+                    x:Name="SweeperCollectionView"
+                    Margin="0" SizeChanged="SweeperCollectionView_SizeChanged"
+                    MinimumWidthRequest="{Binding Source={RelativeSource AncestorType={x:Type ScrollView}},
+                        Path=Width}" 
+                    MinimumHeightRequest="{Binding Source={RelativeSource AncestorType={x:Type ScrollView}},
+                        Path=Height}" 
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}"
+                    SemanticProperties.Description="{x:Static resources:AppResources.SweeperSquares}"               
+                    IsEnabled="{Binding FirstRunSweeper, Mode=OneWay,
+                        Converter={StaticResource FirstRunToGridIsEnabled}}"
+                    Opacity="{Binding FirstRunSweeper, Mode=OneWay,
+                        Converter={StaticResource FirstRunToGridOpacity}}"
+                    VerticalScrollBarVisibility="Never"
+                    SelectionMode="Single"
+                    ItemsSource="{Binding SweeperListCollection}">
 
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
 
-                        <!-- Remove the Border from the UIA tree, otherwise it gets exposed unnecessarily as
-                        a group element. Still set a SemanticProperties.Description, as this will get
-                        propogated up to be the UIA Name on the containing list item. -->
-                        <Border Margin="0" Padding="0"
-                            AutomationProperties.IsInAccessibleTree="False"
-                            StrokeThickness="1"
-                            Stroke="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
-                            SemanticProperties.Hint="{Binding AccessibleDescription, Mode=OneWay}">
+                            <!-- Remove the Border from the UIA tree, otherwise it gets exposed unnecessarily as
+                            a group element. Still set a SemanticProperties.Description, as this will get
+                            propogated up to be the UIA Name on the containing list item. -->
+                            <Border Margin="0" Padding="0"
+                                AutomationProperties.IsInAccessibleTree="False"
+                                StrokeThickness="1"
+                                HeightRequest="{Binding Source={x:Reference SweeperPageInstance}, Mode=OneWay,
+                                    Path=ItemRowHeight, Converter={StaticResource ItemHeightToCollectionViewHeight}}"
+                                Stroke="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
+                                SemanticProperties.Hint="{Binding AccessibleDescription, Mode=OneWay}">
 
-                            <SemanticProperties.Description>
-                                <MultiBinding Mode="OneWay" 
-                                    Converter="{StaticResource SweeperItemGameOverToAccessibleName}">
-                                    <Binding Path="AccessibleName" />
-                                    <Binding Path="HasFrog" />
-                                    <Binding Source="{x:Reference SweeperPageInstance}" 
-                                                    Path="BindingContext.GameWon" />
-                                    <Binding Source="{x:Reference SweeperPageInstance}" 
-                                                    Path="BindingContext.GameLost" />
-                                </MultiBinding>
-                            </SemanticProperties.Description>
-
-                            <Border.HeightRequest>
-                                <MultiBinding Mode="OneWay" 
-                                    Converter="{StaticResource SweeperCollectionViewHeightToRowHeight}">
-                                    <Binding Source="{RelativeSource AncestorType={x:Type CollectionView}}"
-                                        Path="Height" />
-                                    <Binding Source="{x:Reference SweeperPageInstance}" 
-                                        Path="BindingContext.SideLength" />
-                                </MultiBinding>
-                            </Border.HeightRequest>
-                            
-                            <FlyoutBase.ContextFlyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem Text="{x:Static resources:AppResources.ChangeSquareFrogState}"
-                                        Clicked="MenuFlyoutItem_Clicked" />
-                                </MenuFlyout>
-                            </FlyoutBase.ContextFlyout>
-
-                            <Grid Padding="0" Margin="8">
-                                <Grid.BackgroundColor>
+                                <SemanticProperties.Description>
                                     <MultiBinding Mode="OneWay" 
-                                            Converter="{StaticResource TurnedUpToBackgroundColour}">
-                                        <Binding Path="TurnedUp" />
+                                        Converter="{StaticResource SweeperItemGameOverToAccessibleName}">
+                                        <Binding Path="AccessibleName" />
                                         <Binding Path="HasFrog" />
-                                        <Binding Path="ShowsQueryFrog" />
                                         <Binding Source="{x:Reference SweeperPageInstance}" 
-                                                    Path="BindingContext.GameWon" />
+                                                        Path="BindingContext.GameWon" />
                                         <Binding Source="{x:Reference SweeperPageInstance}" 
-                                                    Path="BindingContext.GameLost" />
-                                        <Binding Source="{x:Reference SweeperPageInstance}" 
-                                                    Path="BindingContext.ShowDarkTheme" />
+                                                        Path="BindingContext.GameLost" />
                                     </MultiBinding>
-                                </Grid.BackgroundColor>
+                                </SemanticProperties.Description>
 
-                                <!-- This invisible button is for programmatic invoking by a screen reader. -->
-                                <Button Text="{x:Static resources:AppResources.ChangeSquareFrogState}"
-                                    Clicked="ToggleQueryFrogButton_Clicked"
-                                    TextColor="{StaticResource White}" BackgroundColor="{StaticResource Primary}"
-                                    Opacity="0" InputTransparent="True" />
+                                <FlyoutBase.ContextFlyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem Text="{x:Static resources:AppResources.ChangeSquareFrogState}"
+                                            Clicked="MenuFlyoutItem_Clicked" />
+                                    </MenuFlyout>
+                                </FlyoutBase.ContextFlyout>
 
-                                <!-- Label showing count of nearby leaves. -->
-                                <Label Margin="2,2,0,0" Padding="2,0,2,0" 
-                                    AutomationProperties.IsInAccessibleTree="False"
-                                    LineBreakMode="NoWrap"
-                                    VerticalTextAlignment="Center" HorizontalTextAlignment="Center">
-                                    <Label.Text>                                    
+                                <Grid Padding="8" Margin="0">
+                                    <Grid.BackgroundColor>
                                         <MultiBinding Mode="OneWay" 
-                                            Converter="{StaticResource NearbyFrogCountToLabel}">
-                                            <Binding Path="TurnedUp" />
-                                            <Binding Path="NearbyFrogCount" />
-                                            <Binding Path="ShowsQueryFrog" />
-                                            <Binding Path="HasFrog" />
-                                        </MultiBinding>
-                                    </Label.Text>
-                                    <Label.FontSize>
-                                        <Binding Source="{RelativeSource AncestorType={x:Type CollectionView}}" 
-                                            Path="Height" Mode="OneWay"  ConverterParameter="2"
-                                            Converter="{StaticResource SweeperLabelContainerHeightToFontSize}" />
-                                    </Label.FontSize>
-                                </Label>
-
-                                <!-- Label showing the glyphs for a Leaf, Frog, or Query Frog. -->
-                                <Label Margin="2,2,0,0" Padding="2,0,2,0" 
-                                    LineBreakMode="NoWrap"
-                                    AutomationProperties.IsInAccessibleTree="False"
-                                    FontFamily="FA"
-                                    TextColor="{AppThemeBinding Light=#004000, Dark=#C0FFC0}"
-                                    VerticalTextAlignment="Center" HorizontalTextAlignment="Center">
-                                    <Label.IsVisible>
-                                        <MultiBinding Mode="OneWay" 
-                                            Converter="{StaticResource LeafToVisible}">
+                                                Converter="{StaticResource TurnedUpToBackgroundColour}">
                                             <Binding Path="TurnedUp" />
                                             <Binding Path="HasFrog" />
                                             <Binding Path="ShowsQueryFrog" />
                                             <Binding Source="{x:Reference SweeperPageInstance}" 
-                                                    Path="BindingContext.GameOver" />
-                                        </MultiBinding>
-                                    </Label.IsVisible>
-                                    <Label.Text>
-                                        <MultiBinding Mode="OneWay" 
-                                            Converter="{StaticResource LeafToLabel}">
-                                            <Binding Path="TurnedUp" />
-                                            <Binding Path="HasFrog" />
-                                            <Binding Path="ShowsQueryFrog" />
+                                                        Path="BindingContext.GameWon" />
                                             <Binding Source="{x:Reference SweeperPageInstance}" 
-                                                    Path="BindingContext.GameWon" />
+                                                        Path="BindingContext.GameLost" />
                                             <Binding Source="{x:Reference SweeperPageInstance}" 
-                                                    Path="BindingContext.GameLost" />
+                                                        Path="BindingContext.ShowDarkTheme" />
                                         </MultiBinding>
-                                    </Label.Text>
-                                    <Label.FontSize>
-                                        <Binding Source="{RelativeSource AncestorType={x:Type CollectionView}}" 
-                                            Path="Height" Mode="OneWay"  ConverterParameter="2"
-                                            Converter="{StaticResource SweeperLabelContainerHeightToFontSize}" />
-                                    </Label.FontSize>
-                                </Label>
+                                    </Grid.BackgroundColor>
 
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                                    <!-- Label showing count of nearby leaves. -->
+                                    <Label Margin="0" Padding="0" 
+                                        AutomationProperties.IsInAccessibleTree="False"
+                                        LineBreakMode="NoWrap"
+                                        VerticalTextAlignment="Center" HorizontalTextAlignment="Center">
+
+                                        <Label.FontSize >
+                                            <MultiBinding Mode="OneWay" 
+                                                Converter="{StaticResource LeafToFontSize}">
+                                                <Binding Path="TurnedUp" />
+                                                <Binding Path="HasFrog" />
+                                                <Binding Path="ShowsQueryFrog" />
+                                                <Binding Source="{x:Reference SweeperPageInstance}" 
+                                                        Path="BindingContext.GameWon" />
+                                                <Binding Source="{x:Reference SweeperPageInstance}" 
+                                                        Path="BindingContext.GameLost" />
+                                                <Binding Source="{x:Reference SweeperPageInstance}" 
+                                                        Path="ItemFontSize" />
+                                            </MultiBinding>
+                                        </Label.FontSize>
+
+                                        <Label.Text>                                    
+                                            <MultiBinding Mode="OneWay" 
+                                                Converter="{StaticResource NearbyFrogCountToLabel}">
+                                                <Binding Path="TurnedUp" />
+                                                <Binding Path="NearbyFrogCount" />
+                                                <Binding Path="ShowsQueryFrog" />
+                                                <Binding Path="HasFrog" />
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+
+                                    <!-- Label showing the glyphs for a Leaf, Frog, or Query Frog. -->
+                                    <Label Margin="0" Padding="0" 
+                                        LineBreakMode="NoWrap"
+                                        AutomationProperties.IsInAccessibleTree="False"
+                                        FontFamily="FA"
+                                        TextColor="{AppThemeBinding Light=#004000, Dark=#C0FFC0}"
+                                        VerticalTextAlignment="Center" HorizontalTextAlignment="Center">
+
+                                        <Label.FontSize >
+                                            <MultiBinding Mode="OneWay" 
+                                                Converter="{StaticResource LeafToFontSize}">
+                                                <Binding Path="TurnedUp" />
+                                                <Binding Path="HasFrog" />
+                                                <Binding Path="ShowsQueryFrog" />
+                                                <Binding Source="{x:Reference SweeperPageInstance}" 
+                                                        Path="BindingContext.GameWon" />
+                                                <Binding Source="{x:Reference SweeperPageInstance}" 
+                                                        Path="BindingContext.GameLost" />
+                                                <Binding Source="{x:Reference SweeperPageInstance}" 
+                                                        Path="ItemFontSize" />
+                                            </MultiBinding>
+                                        </Label.FontSize>
+
+                                        <Label.IsVisible>
+                                            <MultiBinding Mode="OneWay" 
+                                                Converter="{StaticResource LeafToVisible}">
+                                                <Binding Path="TurnedUp" />
+                                                <Binding Path="HasFrog" />
+                                                <Binding Path="ShowsQueryFrog" />
+                                                <Binding Source="{x:Reference SweeperPageInstance}" 
+                                                        Path="BindingContext.GameOver" />
+                                            </MultiBinding>
+                                        </Label.IsVisible>
+                                        
+                                        <Label.Text>
+                                            <MultiBinding Mode="OneWay" 
+                                                Converter="{StaticResource LeafToLabel}">
+                                                <Binding Path="TurnedUp" />
+                                                <Binding Path="HasFrog" />
+                                                <Binding Path="ShowsQueryFrog" />
+                                                <Binding Source="{x:Reference SweeperPageInstance}" 
+                                                        Path="BindingContext.GameWon" />
+                                                <Binding Source="{x:Reference SweeperPageInstance}" 
+                                                        Path="BindingContext.GameLost" />
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
 
             <Border Margin="4" Padding="8" x:Name="WelcomeBorder"
                 IsVisible="{Binding FirstRunSweeper}"

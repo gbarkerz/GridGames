@@ -114,23 +114,25 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <Button Grid.Row="0"
+                            <Button Grid.Row="0" Grid.Column="1"
                                 windows:VisualElement.AccessKey="P"
                                 Text="{x:Static resources:AppResources.SelectPicture}"
                                 Padding="10"
-                                HorizontalOptions="CenterAndExpand" Margin="0,0,0,10"
+                                HorizontalOptions="Fill" Margin="0,0,0,10"
                                 LineBreakMode="WordWrap"
                                 TextColor="{StaticResource White}" BackgroundColor="{StaticResource Primary}"
                                 Clicked="PictureBrowseButton_Clicked" />
 
-                            <Button Grid.Row="1" x:Name="PictureClearButton" 
+                            <Button Grid.Row="1" Grid.Column="1" x:Name="PictureClearButton" 
                                 windows:VisualElement.AccessKey="S"
                                 Text="{x:Static resources:AppResources.ClearSelection}"                               
                                 Padding="10"
-                                HorizontalOptions="CenterAndExpand" Margin="0,0,0,10"
+                                HorizontalOptions="FillAndExpand" Margin="0,0,0,10"
                                 LineBreakMode="WordWrap"
                                 TextColor="{StaticResource White}" BackgroundColor="{StaticResource Primary}"
                                 Clicked="PictureClearButton_Clicked" />

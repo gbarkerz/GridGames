@@ -9,6 +9,28 @@ namespace GridGames.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SweeperPage : ContentPage
     {
+        // Create a bindable ItemRow property to set the height of the CollectionView items
+        // in the main Sweeper grid.
+        public static readonly BindableProperty ItemRowHeightProperty =
+            BindableProperty.Create(nameof(ItemRowHeight), typeof(int), typeof(SudokuPage));
+
+        public int ItemRowHeight
+        {
+            get => (int)GetValue(SudokuPage.ItemRowHeightProperty);
+            set => SetValue(SudokuPage.ItemRowHeightProperty, value);
+        }
+
+        // Create a bindable ItemFontSize property to set the size of the CollectionView item font
+        // in the main Sudoku grid.
+        public static readonly BindableProperty ItemFontSizeProperty =
+            BindableProperty.Create(nameof(ItemFontSize), typeof(int), typeof(SudokuPage));
+
+        public int ItemFontSize
+        {
+            get => (int)GetValue(SudokuPage.ItemFontSizeProperty);
+            set => SetValue(SudokuPage.ItemFontSizeProperty, value);
+        }
+
         public static DateTime timeOfMostRecentSelectionChanged = DateTime.Now;
 
         private int previousSideLength;
@@ -61,10 +83,45 @@ namespace GridGames.Views
 
         private void SweeperCollectionView_Loaded(object sender, EventArgs e)
         {
+            var gameTitleLabel = PageTitleArea.FindByName("GameTitleLabel") as Label;
+            if (gameTitleLabel != null)
+            {
+                this.ItemFontSize = (int)(gameTitleLabel.FontSize * 2);
+            }
+
 #if WINDOWS
             var platformAction = new GridGamesPlatformAction();
             platformAction.SetGridCollectionViewAccessibleData(SweeperCollectionView, false, null);
 #endif
+        }
+
+        private void SweeperCollectionView_SizeChanged(object sender, EventArgs e)
+        {
+            var collectionView = (sender as CollectionView);
+            var collectionViewHeight = (int)collectionView.Height;
+
+            var scrollViewHeight = (int)SweeperGridScrollView.Height;
+
+            Debug.WriteLine("SweeperCollectionView_SizeChanged: collectionViewHeight " +
+                collectionViewHeight + ", scrollViewHeight " + scrollViewHeight);
+
+            var vm = this.BindingContext as SweeperViewModel;
+
+            // We only need to set the item height such that the grid fills the main area on the page
+            // if the grid cannot be scrolled. If the grid can scroll then allow the default item sizing
+            // and ScrollView behavior.
+            if ((collectionViewHeight > 0) && (scrollViewHeight > 0))
+            {
+                if (collectionViewHeight <= scrollViewHeight)
+                {
+                    var availableSpace = (int)collectionView.Height;
+
+                    this.ItemRowHeight = availableSpace / vm.SideLength;
+
+                    Debug.WriteLine("SweeperCollectionView_SizeChanged: Set ItemRowHeight to " +
+                        ItemRowHeight);
+                }
+            }
         }
 
         private void WelcomeBorder_Loaded(object sender, EventArgs e)
@@ -455,9 +512,6 @@ namespace GridGames.Views
             }
         }
 #endif
-
-        private Timer timer;
-
         public void RestartGame(bool suppressAnnouncement)
         {
             var vm = this.BindingContext as SweeperViewModel;
