@@ -180,7 +180,7 @@ namespace GridGames.Views
                     PairsCollectionView.WidthRequest = (PairsGridScrollView.Width * vm.GridSizeScale) / 100;
                     PairsCollectionView.HeightRequest = (PairsGridScrollView.Height * vm.GridSizeScale) / 100;
 
-                    vm.GridRowHeight = (PairsCollectionView.HeightRequest / 4) - 12;
+                    vm.GridRowHeight = (PairsCollectionView.HeightRequest / 4) - 3;
                 }
             }
         }

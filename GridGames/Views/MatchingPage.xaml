@@ -87,6 +87,7 @@
                                         list item. If the customer is interested in the image details, the screen reader
                                         can navigate to the image from the list item. -->
                                     <Image
+                                        Margin="0"
                                         SemanticProperties.Description="{Binding CurrentAccessibleDescription, Mode=OneWay}"
                                         AutomationProperties.IsInAccessibleTree="{Binding FaceUp, Mode=OneWay}"
                                         InputTransparent="True"

@@ -82,7 +82,7 @@ public partial class SudokuPage : ContentPage
         var gameTitleLabel = PageTitleArea.FindByName("GameTitleLabel") as Label;
         if (gameTitleLabel != null)
         {
-            this.ItemFontSize = (int)(gameTitleLabel.FontSize * 3);
+            this.ItemFontSize = (int)(gameTitleLabel.FontSize * 2);
         }
 
 #if WINDOWS
