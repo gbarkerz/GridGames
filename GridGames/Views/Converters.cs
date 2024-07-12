@@ -621,6 +621,23 @@ namespace GridGames.Views
         }
     }
 
+    public class GridSizeScaleToPickerIndex : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var gridSizeScale = (int)value;
+
+            var index = (gridSizeScale - 100) / 25;
+
+            return index;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class BlankSquareCountToInt : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

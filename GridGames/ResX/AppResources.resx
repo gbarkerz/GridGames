@@ -356,6 +356,15 @@ Review the Help content for details on how to play the game using only the keybo
   <data name="GridLocalizedControlType" xml:space="preserve">
     <value>Grid</value>
   </data>
+  <data name="GridSize" xml:space="preserve">
+    <value>Grid Size</value>
+  </data>
+  <data name="GridSizePickerLabel" xml:space="preserve">
+    <value>Grid Size:</value>
+  </data>
+  <data name="GridSizeQuery" xml:space="preserve">
+    <value>How much bigger would you like the grid of pictures to be?</value>
+  </data>
   <data name="Group" xml:space="preserve">
     <value>Group</value>
   </data>

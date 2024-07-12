@@ -1,12 +1,7 @@
 ﻿using GridGames.ResX;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Xaml;
 
 namespace GridGames.ViewModels
 {
@@ -95,6 +90,24 @@ namespace GridGames.ViewModels
                     SetProperty(ref pictureAspect, value);
 
                     Preferences.Set("PictureAspect", (int)value);
+                }
+            }
+        }
+
+        private int gridSizeScale = 100;
+        public int GridSizeScale
+        {
+            get
+            {
+                return gridSizeScale;
+            }
+            set
+            {
+                if (gridSizeScale != value)
+                {
+                    SetProperty(ref gridSizeScale, value);
+
+                    Preferences.Set("GridSizeScale", (int)value);
                 }
             }
         }

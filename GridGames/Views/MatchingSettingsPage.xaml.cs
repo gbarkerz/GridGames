@@ -43,6 +43,15 @@ namespace GridGames
             MatchingPictureAspectPicker.Items.Add(AppResources.ResourceManager.GetString("FillCardAndClip"));
             MatchingPictureAspectPicker.Items.Add(AppResources.ResourceManager.GetString("FillCardWithoutClipping"));
 
+            var baseScale = 100;
+
+            for (int i = 0; i < 11; i++)
+            {
+                PairsGridSizeScale.Items.Add(baseScale.ToString() + "%");
+
+                baseScale += 25;
+            }
+
             this.BindingContext = new MatchingSettingsViewModel();
 
             var vm = this.BindingContext as MatchingSettingsViewModel;
@@ -53,6 +62,9 @@ namespace GridGames
 
             // Default to Fill and Don't Clip.
             vm.PictureAspect = (Aspect)Preferences.Get("PictureAspect", 2);
+
+            // Default to keeping the full grid in view.
+            vm.GridSizeScale = (int)Preferences.Get("PairsGridSizeScale", 100);
 
             LoadCustomPictureData();
         }
@@ -397,6 +409,10 @@ namespace GridGames
         private void SaveCurrentSettings()
         {
             var vm = this.BindingContext as MatchingSettingsViewModel;
+
+            var scale = (PairsGridSizeScale.SelectedIndex * 25) + 100;
+
+            Preferences.Set("PairsGridSizeScale", scale);
 
             // The Settings window is being closed, so persist whatever picture data we currently have.
             if (!String.IsNullOrWhiteSpace(vm.PicturePathMatching))

@@ -1,6 +1,7 @@
 ﻿using GridGames.ResX;
 using GridGames.ViewModels;
 using InvokePlatformCode.Services.PartialMethods;
+using Microsoft.Maui.Controls;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
@@ -11,6 +12,7 @@ namespace GridGames.Views
     {
         private bool previousShowCustomPictures;
         private string previousPicturePathMatching;
+        private int previousGridSizeScale = 0;
         private bool firstRunThisInstance = true;
         private bool hasSettingsWindowAppeared = false;
 
@@ -30,7 +32,7 @@ namespace GridGames.Views
 
             WelcomeBorder.Loaded += WelcomeBorder_Loaded;
 
-            SquaresCollectionView.SizeChanged += SquaresCollectionView_SizeChanged;
+            PairsCollectionView.SizeChanged += PairsCollectionView_SizeChanged;
 
             Application.Current.RequestedThemeChanged += (s, a) =>
             {
@@ -46,26 +48,26 @@ namespace GridGames.Views
 
             (this.BindingContext as MatchingViewModel).SetMatchingPage(this);
 
-            SquaresCollectionView.SelectionChanged += SquaresCollectionView_SelectionChanged;
+            PairsCollectionView.SelectionChanged += PairsCollectionView_SelectionChanged;
 
-            SquaresCollectionView.Loaded += SquaresCollectionView_Loaded;
+            PairsCollectionView.Loaded += PairsCollectionView_Loaded;
 #if IOS
             // At this time, VoiceOver won't navigate to the items in a CollectionView
             // if the CollectionView has a SemanticProperties.Description. So for now,
             // remove the Description on iOS.
-            SemanticProperties.SetDescription(SquaresCollectionView, null);
+            SemanticProperties.SetDescription(PairsCollectionView, null);
 #endif
         }
 
-        private void SquaresCollectionView_Loaded(object sender, EventArgs e)
+        private void PairsCollectionView_Loaded(object sender, EventArgs e)
         {
 #if WINDOWS
             var platformAction = new GridGamesPlatformAction();
-            platformAction.SetGridCollectionViewAccessibleData(SquaresCollectionView, false, null);
+            platformAction.SetGridCollectionViewAccessibleData(PairsCollectionView, false, null);
 #endif
         }
 
-        private async void SquaresCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void PairsCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             timeOfMostRecentSelectionChanged = DateTime.Now;
 
@@ -84,7 +86,7 @@ namespace GridGames.Views
             {
                 if (collectionView.SelectedItem != null)
                 {
-                    var item = SquaresCollectionView.SelectedItem as Card;
+                    var item = PairsCollectionView.SelectedItem as Card;
                     if (item != null)
                     {
                         await ReactToInputOnCard(item.Index);
@@ -107,7 +109,7 @@ namespace GridGames.Views
 
         public async void ReactToKeyInputOnSelectedCard()
         {
-            var item = SquaresCollectionView.SelectedItem as Card;
+            var item = PairsCollectionView.SelectedItem as Card;
             if (item != null)
             {
                 await ReactToInputOnCard(item.Index);
@@ -150,18 +152,36 @@ namespace GridGames.Views
                     4000);
                 */
 
-                SquaresCollectionView.IsVisible = false;
+                PairsCollectionView.IsVisible = false;
 
                 WelcomeMessageCloseButton.Focus();
             }
         }
 
-        private void SquaresCollectionView_SizeChanged(object sender, EventArgs e)
+        private void PairsCollectionView_SizeChanged(object sender, EventArgs e)
         {
-            if (SquaresCollectionView.Height > 0)
+            SetGridSize();
+        }
+
+        private void SetGridSize()
+        {
+            if (PairsCollectionView.Height > 0)
             {
-                var vm = this.BindingContext as MatchingViewModel;
-                vm.GridRowHeight = (SquaresCollectionView.Height / 4) - 12;
+                var collectionViewWidth = (int)PairsCollectionView.Width;
+                var scrollViewWidth = (int)PairsGridScrollView.Width;
+
+                Debug.WriteLine("PairsCollectionView_Loaded: collectionViewWidth " +
+                    collectionViewWidth + ", scrollViewWidth " + scrollViewWidth);
+
+                if ((collectionViewWidth > 0) && (scrollViewWidth > 0))
+                {
+                    var vm = this.BindingContext as MatchingViewModel;
+
+                    PairsCollectionView.WidthRequest = (PairsGridScrollView.Width * vm.GridSizeScale) / 100;
+                    PairsCollectionView.HeightRequest = (PairsGridScrollView.Height * vm.GridSizeScale) / 100;
+
+                    vm.GridRowHeight = (PairsCollectionView.HeightRequest / 4) - 12;
+                }
             }
         }
 
@@ -203,6 +223,16 @@ namespace GridGames.Views
 
             // Default to Fill and Don't Clip.
             vm.PictureAspect = (Aspect)Preferences.Get("PictureAspect", 2);
+
+            // Default to keeping the full grid in view.
+            vm.GridSizeScale = (int)Preferences.Get("PairsGridSizeScale", 100);
+
+            if ((previousGridSizeScale != 0) && (previousGridSizeScale != vm.GridSizeScale))
+            {
+                SetGridSize();
+            }
+
+            previousGridSizeScale = vm.GridSizeScale;
 
             // Has something changed related to custom picture use since the last time
             // we were in OnAppearing()?
@@ -366,7 +396,7 @@ namespace GridGames.Views
         // an adjacent row in response to a press of a left or right arrow key press.
         public void HandleLeftRightArrow(Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
-            var square = SquaresCollectionView.SelectedItem as Card;
+            var square = PairsCollectionView.SelectedItem as Card;
             if (square != null)
             {
                 int itemCollectionIndex = GetItemCollectionIndexFromItemIndex(square.Index);
@@ -408,7 +438,7 @@ namespace GridGames.Views
             timer.Dispose();
 
             var platformAction = new GridGamesPlatformAction();
-            platformAction.SetGridCollectionViewAccessibleData(SquaresCollectionView, false, null);
+            platformAction.SetGridCollectionViewAccessibleData(PairsCollectionView, false, null);
 #endif
         }
 
@@ -462,7 +492,7 @@ namespace GridGames.Views
             var vm = this.BindingContext as MatchingViewModel;
             vm.FirstRunMatching = false;
 
-            SquaresCollectionView.IsVisible = true;
+            PairsCollectionView.IsVisible = true;
 
             vm.RaiseNotificationEvent("The Pairs game is ready to play!");
         }

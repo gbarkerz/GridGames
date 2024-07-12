@@ -762,6 +762,33 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Grid Size.
+        /// </summary>
+        internal static string GridSize {
+            get {
+                return ResourceManager.GetString("GridSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grid Size:.
+        /// </summary>
+        internal static string GridSizePickerLabel {
+            get {
+                return ResourceManager.GetString("GridSizePickerLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How much bigger would you like the grid of pictures to be?.
+        /// </summary>
+        internal static string GridSizeQuery {
+            get {
+                return ResourceManager.GetString("GridSizeQuery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Group.
         /// </summary>
         internal static string Group {
