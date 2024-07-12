@@ -20,7 +20,6 @@
         <ResourceDictionary>
             <localviews:FirstRunLoadingSquaresToGridIsEnabled x:Key="FirstRunLoadingSquaresToGridIsEnabled" />
             <localviews:FirstRunLoadingSquaresToGridOpacity x:Key="FirstRunLoadingSquaresToGridOpacity" />
-            <localviews:CollectionViewHeightToRowHeight x:Key="CollectionViewHeightToRowHeight" />
             <localviews:LabelContainerHeightToFontSize x:Key="LabelContainerHeightToFontSize" />
             <localviews:DarkThemeToSquareLabelColor x:Key="DarkThemeToSquareLabelColor" />
         </ResourceDictionary>
@@ -34,93 +33,106 @@
 
         <Grid x:Name="PageGrid">
 
-            <CollectionView
-                x:Name="SquaresCollectionView"
-                SemanticProperties.Description="{x:Static resources:AppResources.Squares}"               
-                VerticalScrollBarVisibility="Never"
-                SelectionMode="Single"
-                ItemsSource="{Binding SquareListCollection}">
-                <CollectionView.IsEnabled>
-                    <MultiBinding Mode="OneWay" Converter="{StaticResource FirstRunLoadingSquaresToGridIsEnabled}">
-                        <Binding Source="{x:Reference SquaresPageInstance}" Path="BindingContext.FirstRunSquares" />
-                        <Binding Source="{x:Reference SquaresPageInstance}" Path="BindingContext.GameIsLoading" />
-                    </MultiBinding>
-                </CollectionView.IsEnabled>
-                <CollectionView.Opacity>
-                    <MultiBinding Mode="OneWay" Converter="{StaticResource FirstRunLoadingSquaresToGridOpacity}">
-                        <Binding Source="{x:Reference SquaresPageInstance}" Path="BindingContext.FirstRunSquares" />
-                        <Binding Source="{x:Reference SquaresPageInstance}" Path="BindingContext.GameIsLoading" />
-                    </MultiBinding>
-                </CollectionView.Opacity>
+            <ScrollView Grid.Row="0" x:Name="SquaresGridScrollView"
+                Orientation="Both" Padding="0">
 
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="4" />
-                </CollectionView.ItemsLayout>
+                <CollectionView
+                    x:Name="SquaresCollectionView"
+                    Margin="0"
+                    SemanticProperties.Description="{x:Static resources:AppResources.Squares}"               
+                    MinimumWidthRequest="{Binding Source={RelativeSource AncestorType={x:Type ScrollView}},
+                        Path=Width}" 
+                    MinimumHeightRequest="{Binding Source={RelativeSource AncestorType={x:Type ScrollView}},
+                        Path=Height}" 
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}"
+                    VerticalScrollBarVisibility="Never"
+                    SelectionMode="Single"
+                    ItemsSource="{Binding SquareListCollection}">
 
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <!-- Remove the Border from the UIA tree, otherwise it gets exposed unnecessarily as
-                            a group element. Still set a SemanticProperties.Description, as this will get
-                            propogated up to be the UIA Name on the containing list item. -->
-                        <Border Margin="0" Padding="0"
-                            AutomationProperties.IsInAccessibleTree="False"
-                            HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}},
-                                Path=Height, Converter={StaticResource CollectionViewHeightToRowHeight}}"
-                            StrokeThickness="1"
-                            Stroke="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
-                            SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}"
-                            SemanticProperties.Hint="{Binding AccessibleDescription, Mode=OneWay}">
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"
-                                    CommandParameter="{Binding Index}" />
-                            </Border.GestureRecognizers>
+                    <CollectionView.IsEnabled>
+                        <MultiBinding Mode="OneWay" Converter="{StaticResource FirstRunLoadingSquaresToGridIsEnabled}">
+                            <Binding Source="{x:Reference SquaresPageInstance}" Path="BindingContext.FirstRunSquares" />
+                            <Binding Source="{x:Reference SquaresPageInstance}" Path="BindingContext.GameIsLoading" />
+                        </MultiBinding>
+                    </CollectionView.IsEnabled>
+                    <CollectionView.Opacity>
+                        <MultiBinding Mode="OneWay" Converter="{StaticResource FirstRunLoadingSquaresToGridOpacity}">
+                            <Binding Source="{x:Reference SquaresPageInstance}" Path="BindingContext.FirstRunSquares" />
+                            <Binding Source="{x:Reference SquaresPageInstance}" Path="BindingContext.GameIsLoading" />
+                        </MultiBinding>
+                    </CollectionView.Opacity>
 
-                            <Grid Padding="0" Margin="4">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="4" />
+                    </CollectionView.ItemsLayout>
 
-                                <!-- Barker: IMPORTANT. Read the comment at the top of SquaresPage.xaml.cs
-                                    relating to not being able to find a reliable way of binding IsVisible
-                                    to the items being swapped around the CollectioView as the game is played. -->
-                                
-                                <Image 
-                                    AutomationProperties.IsInAccessibleTree="False"
-                                    InputTransparent="True"
-                                    Aspect="Fill"
-                                    BackgroundColor="Transparent"
-                                    Source="{Binding PictureImageSource}">
-                                </Image>
-                                
-                                <Label Margin="2,2,0,0" Padding="2,0,2,0"  
-                                    AutomationProperties.IsInAccessibleTree="False"
-                                    InputTransparent="True"
-                                    Text="{Binding VisualLabel}"
-                                    TextColor="{Binding Source={x:Reference SquaresPageInstance},
-                                        Path=BindingContext.ShowDarkTheme,
-                                        ConverterParameter=0,
-                                        Converter={StaticResource DarkThemeToSquareLabelColor}}"
-                                    BackgroundColor="{Binding Source={x:Reference SquaresPageInstance},
-                                        Path=BindingContext.ShowDarkTheme,
-                                        ConverterParameter=1,
-                                        Converter={StaticResource DarkThemeToSquareLabelColor}}"
-                                    HorizontalOptions="Start" VerticalOptions="Start">
-                                    <Label.FontSize>
-                                        <MultiBinding Mode="OneWay" 
-                                            Converter="{StaticResource LabelContainerHeightToFontSize}">
-                                            <Binding 
-                                                Source="{RelativeSource AncestorType={x:Type CollectionView}}" 
-                                                Path="Height" />
-                                            <Binding 
-                                                Source="{x:Reference SquaresPageInstance}"
-                                                Path="BindingContext.NumberHeight" />
-                                        </MultiBinding>
-                                    </Label.FontSize>
-                                </Label>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <!-- Remove the Border from the UIA tree, otherwise it gets exposed unnecessarily as
+                                a group element. Still set a SemanticProperties.Description, as this will get
+                                propogated up to be the UIA Name on the containing list item. -->
+                            <Border Margin="0" Padding="0"
+                                AutomationProperties.IsInAccessibleTree="False"
+                                HeightRequest="{Binding 
+                                    Source={x:Reference SquaresPageInstance},
+                                        Path=BindingContext.GridRowHeight,
+                                        Mode=OneWay}"
+                                StrokeThickness="1"
+                                Stroke="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
+                                SemanticProperties.Description="{Binding AccessibleName, Mode=OneWay}"
+                                SemanticProperties.Hint="{Binding AccessibleDescription, Mode=OneWay}">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"
+                                        CommandParameter="{Binding Index}" />
+                                </Border.GestureRecognizers>
 
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                                <Grid Padding="0" Margin="4">
 
+                                    <!-- Barker: IMPORTANT. Read the comment at the top of SquaresPage.xaml.cs
+                                        relating to not being able to find a reliable way of binding IsVisible
+                                        to the items being swapped around the CollectioView as the game is played. -->
+
+                                    <Image 
+                                        AutomationProperties.IsInAccessibleTree="False"
+                                        InputTransparent="True"
+                                        Aspect="Fill"
+                                        BackgroundColor="Transparent"
+                                        Source="{Binding PictureImageSource}">
+                                    </Image>
+
+                                    <Label Margin="2,2,0,0" Padding="2,0,2,0"  
+                                        AutomationProperties.IsInAccessibleTree="False"
+                                        InputTransparent="True"
+                                        Text="{Binding VisualLabel}"
+                                        TextColor="{Binding Source={x:Reference SquaresPageInstance},
+                                            Path=BindingContext.ShowDarkTheme,
+                                            ConverterParameter=0,
+                                            Converter={StaticResource DarkThemeToSquareLabelColor}}"
+                                        BackgroundColor="{Binding Source={x:Reference SquaresPageInstance},
+                                            Path=BindingContext.ShowDarkTheme,
+                                            ConverterParameter=1,
+                                            Converter={StaticResource DarkThemeToSquareLabelColor}}"
+                                        HorizontalOptions="Start" VerticalOptions="Start">
+                                        <!--<Label.FontSize>
+                                            <MultiBinding Mode="OneWay" 
+                                                Converter="{StaticResource LabelContainerHeightToFontSize}">
+                                                <Binding 
+                                                    Source="{RelativeSource AncestorType={x:Type CollectionView}}" 
+                                                    Path="Height" />
+                                                <Binding 
+                                                    Source="{x:Reference SquaresPageInstance}"
+                                                    Path="BindingContext.NumberHeight" />
+                                            </MultiBinding>
+                                        </Label.FontSize>-->
+                                    </Label>
+
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
+            
             <!-- Show a message when the pictures are being loaded into the squares. -->
             <Border
                 IsVisible="{Binding GameIsLoading}"

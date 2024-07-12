@@ -1,7 +1,5 @@
 ﻿using GridGames.ResX;
 using GridGames.ViewModels;
-using InvokePlatformCode.Services.PartialMethods;
-using Microsoft.Maui.Controls;
 using SkiaSharp;
 using SkiaSharp.Views.Maui.Controls;
 using System.Diagnostics;
@@ -75,6 +73,8 @@ namespace GridGames.Views
         private string previousLoadedPicture = "";
         private SKBitmap originalCustomPictureBitmap = null;
 
+        private int previousGridSizeScale = 0;
+
         private Timer timerSetCustomPicture;
         private bool inShowCustomPictureIfReady = false;
 
@@ -94,6 +94,8 @@ namespace GridGames.Views
 #endif
 
             WelcomeBorder.Loaded += WelcomeBorder_Loaded;
+
+            SquaresCollectionView.SizeChanged += SquaresCollectionView_SizeChanged;
 
             Application.Current.RequestedThemeChanged += (s, a) =>
             {
@@ -407,6 +409,16 @@ namespace GridGames.Views
             vm.PicturePathSquares = Preferences.Get("PicturePathSquares", "");
             vm.PictureName = Preferences.Get("PictureName", "");
 
+            // Default to keeping the full grid in view.
+            vm.GridSizeScale = (int)Preferences.Get("SquaresGridSizeScale", 100);
+
+            if ((previousGridSizeScale != 0) && (previousGridSizeScale != vm.GridSizeScale))
+            {
+                SetGridSize();
+            }
+
+            previousGridSizeScale = vm.GridSizeScale;
+
             bool loadedCustomPicture = false;
 
             Debug.WriteLine("Squares Game: vm.PicturePathSquares: " + vm.PicturePathSquares);
@@ -475,6 +487,34 @@ namespace GridGames.Views
                 FixupSquaresWithDelay(500);
             }
         }
+
+        private void SquaresCollectionView_SizeChanged(object sender, EventArgs e)
+        {
+            SetGridSize();
+        }
+
+        private void SetGridSize()
+        {
+            if (SquaresCollectionView.Height > 0)
+            {
+                var collectionViewWidth = (int)SquaresCollectionView.Width;
+                var scrollViewWidth = (int)SquaresGridScrollView.Width;
+
+                Debug.WriteLine("SquaresCollectionView_Loaded: collectionViewWidth " +
+                    collectionViewWidth + ", scrollViewWidth " + scrollViewWidth);
+
+                if ((collectionViewWidth > 0) && (scrollViewWidth > 0))
+                {
+                    var vm = this.BindingContext as SquaresViewModel;
+
+                    SquaresCollectionView.WidthRequest = (SquaresGridScrollView.Width * vm.GridSizeScale) / 100;
+                    SquaresCollectionView.HeightRequest = (SquaresGridScrollView.Height * vm.GridSizeScale) / 100;
+
+                    vm.GridRowHeight = (SquaresCollectionView.HeightRequest / 4) - 3;
+                }
+            }
+        }
+
 
         private Timer timer;
 

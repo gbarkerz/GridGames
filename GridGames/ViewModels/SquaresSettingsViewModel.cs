@@ -106,5 +106,23 @@ namespace GridGames.ViewModels
                 }
             }
         }
+
+        private int gridSizeScale = 100;
+        public int GridSizeScale
+        {
+            get
+            {
+                return gridSizeScale;
+            }
+            set
+            {
+                if (gridSizeScale != value)
+                {
+                    SetProperty(ref gridSizeScale, value);
+
+                    Preferences.Set("GridSizeScale", (int)value);
+                }
+            }
+        }
     }
 }

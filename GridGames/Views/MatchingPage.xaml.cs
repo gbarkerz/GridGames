@@ -1,7 +1,5 @@
 ﻿using GridGames.ResX;
 using GridGames.ViewModels;
-using InvokePlatformCode.Services.PartialMethods;
-using Microsoft.Maui.Controls;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 

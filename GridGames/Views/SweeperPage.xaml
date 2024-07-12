@@ -21,7 +21,6 @@
         <ResourceDictionary>
             <localviews:FirstRunToGridIsEnabled x:Key="FirstRunToGridIsEnabled" />
             <localviews:FirstRunToGridOpacity x:Key="FirstRunToGridOpacity" />
-            <localviews:SweeperCollectionViewHeightToRowHeight x:Key="SweeperCollectionViewHeightToRowHeight" />
             <localviews:SweeperLabelContainerHeightToFontSize x:Key="SweeperLabelContainerHeightToFontSize" />
             <localviews:TurnedUpToBackgroundColour x:Key="TurnedUpToBackgroundColour" />
             <localviews:NearbyFrogCountToLabel x:Key="NearbyFrogCountToLabel" />

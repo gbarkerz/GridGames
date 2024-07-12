@@ -128,7 +128,7 @@ namespace GridGames.Views
             if ((sender as Border).IsVisible)
             {
                 /*
-                var vm = this.BindingContext as MatchingViewModel;
+                var vm = this.BindingContext as SweeperViewModel;
 
                 vm.RaiseDelayedNotificationEvent(
                     SweeperWelcomeTitleLabel.Text + ", " +

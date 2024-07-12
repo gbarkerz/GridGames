@@ -1255,7 +1255,7 @@ public partial class SudokuPage : ContentPage
     {
         MainThread.BeginInvokeOnMainThread(() =>
         {
-            var vm = sudokuPage.BindingContext as SquaresViewModel;
+            var vm = sudokuPage.BindingContext as SudokuViewModel;
 
             var descendants = currentPopup.GetVisualTreeDescendants();
 

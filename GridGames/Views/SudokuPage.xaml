@@ -21,7 +21,6 @@
         <ResourceDictionary>
             <localviews:FirstRunToGridIsEnabled x:Key="FirstRunToGridIsEnabled" />
             <localviews:FirstRunToGridOpacity x:Key="FirstRunToGridOpacity" />
-            <localviews:SudokuCollectionViewHeightToRowHeight x:Key="SudokuCollectionViewHeightToRowHeight" />
             <localviews:DarkThemeToSquareLabelColor x:Key="DarkThemeToSquareLabelColor" />
             <localviews:NumberToDisplayedValue x:Key="NumberToDisplayedValue" />
             <localviews:NumberToIsVisible x:Key="NumberToIsVisible" />

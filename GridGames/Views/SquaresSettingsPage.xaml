@@ -10,6 +10,7 @@
         <ResourceDictionary>
             <localviews:SettingsPicturePathToPicturePathLabelIsVisible x:Key="SettingsPicturePathToPicturePathLabelIsVisible" />
             <localviews:CheckBoxStateToAccessibleName x:Key="CheckBoxStateToAccessibleName" />
+            <localviews:GridSizeScaleToPickerIndex x:Key="GridSizeScaleToPickerIndex" />
             <localviews:PathToFileName x:Key="PathToFileName" />
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -35,8 +36,31 @@
                 <StackLayout>
 
                     <Label FontSize="Subtitle" FontAttributes="Bold"
+                        SemanticProperties.HeadingLevel="Level2"
+                        Text="{x:Static resources:AppResources.GridSize}" 
+                        Margin="10,10,10,0" />
+
+                    <Label Margin="10,0,10,0"
+                        Text="{x:Static resources:AppResources.GridSizeQuery}" />
+
+                    <StackLayout Orientation="Horizontal" Padding="10,0,10,10">
+                        <Label x:Name="GridSizePickerLabel" 
+                            Text="{x:Static resources:AppResources.GridSizePickerLabel}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+
+                    <!-- Barker TODO: Make the binding here TwoWay. -->
+                    <Picker Grid.Row="3" x:Name="SquaresGridSizeScale"
+                        VerticalOptions="Center" Margin="8,0,0,0"
+                        SemanticProperties.Description="{x:Static resources:AppResources.GridSizePickerLabel}"
+                        SemanticProperties.Hint="{x:Static resources:AppResources.GridSizeQuery}"
+                        SelectedIndex="{Binding GridSizeScale, Mode=OneWay,
+                            Converter={StaticResource GridSizeScaleToPickerIndex}}" />
+
+                    <Label FontSize="Subtitle" FontAttributes="Bold"
+                        SemanticProperties.HeadingLevel="Level2"
                         Text="{x:Static resources:AppResources.SquareContents}" 
-                        Margin="10,10,10,0"/>
+                        Margin="10,20,10,0"/>
 
                     <Label Margin="10"
                         Text="{x:Static resources:AppResources.SquaresSettingsInstructions}" />

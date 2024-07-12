@@ -76,20 +76,6 @@ namespace GridGames.Views
         }
     }
 
-    public class SudokuCollectionViewHeightToRowHeight : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            // The full set of rows fills the containing grid.
-            return ((double)value / 9) - 3;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
     public class NumberToIsVisible : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -795,45 +781,6 @@ namespace GridGames.Views
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class SweeperCollectionViewHeightToRowHeight : IMultiValueConverter
-    {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            if ((values == null) || (values.Length < 2) || (values[0] == null) || (values[1] == null))
-            {
-                return 0;
-            }
-
-            var gridHeight = (double)values[0];
-            var sideLength = (int)values[1];
-
-            if ((gridHeight <= 0) || (sideLength == 0))
-            {
-                return 0;
-            }
-
-            return ((double)gridHeight / sideLength) - 2;
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class CollectionViewHeightToRowHeight : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return ((double)value / 4) - 2;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

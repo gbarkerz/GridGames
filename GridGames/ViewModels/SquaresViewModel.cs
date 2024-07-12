@@ -67,6 +67,34 @@ namespace GridGames.ViewModels
             }
         }
 
+        // Barker TODO: Some of these properties should only exist in the Squares Settings VMs.
+        // Remove the properties that are unnecessarily duplicated in the Squares VM.
+        private int gridSizeScale = 100;
+        public int GridSizeScale
+        {
+            get
+            {
+                return gridSizeScale;
+            }
+            set
+            {
+                SetProperty(ref gridSizeScale, value);
+            }
+        }
+
+        private double gridRowHeight;
+        public double GridRowHeight
+        {
+            get
+            {
+                return Math.Max(gridRowHeight, 20);
+            }
+            set
+            {
+                SetProperty(ref gridRowHeight, value);
+            }
+        }
+
         private bool firstRunSquares = true;
         public bool FirstRunSquares
         {

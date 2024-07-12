@@ -1,14 +1,5 @@
-﻿using GridGames.ResX;
-using GridGames.ViewModels;
-using System;
+﻿using GridGames.ViewModels;
 using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Xaml;
 
 namespace GridGames
 {
@@ -32,6 +23,15 @@ namespace GridGames
             //SquaresNumberSizePicker.Items.Add(AppResources.ResourceManager.GetString("Large"));
             //SquaresNumberSizePicker.Items.Add(AppResources.ResourceManager.GetString("Largest"));
 
+            var baseScale = 100;
+
+            for (int i = 0; i < 11; i++)
+            {
+                SquaresGridSizeScale.Items.Add(baseScale.ToString() + "%");
+
+                baseScale += 25;
+            }
+
             this.BindingContext = new SquareSettingsViewModel();
 
             var vm = this.BindingContext as SquareSettingsViewModel;
@@ -40,11 +40,26 @@ namespace GridGames
             vm.ShowPicture = Preferences.Get("ShowPicture", false);
             vm.PicturePathSquares = Preferences.Get("PicturePathSquares", "");
             vm.PictureName = Preferences.Get("PictureName", "");
+
+            // Default to keeping the full grid in view
+            vm.GridSizeScale = (int)Preferences.Get("SquaresGridSizeScale", 100);
         }
 
         private async void CloseButton_Clicked(object sender, EventArgs e)
         {
+            SaveCurrentSettings();
+
             await Navigation.PopModalAsync();
+        }
+
+
+        private void SaveCurrentSettings()
+        {
+            var vm = this.BindingContext as SquareSettingsViewModel;
+
+            var scale = (SquaresGridSizeScale.SelectedIndex * 25) + 100;
+
+            Preferences.Set("SquaresGridSizeScale", scale);
         }
 
         private void PictureClearButton_Clicked(object sender, EventArgs e)
