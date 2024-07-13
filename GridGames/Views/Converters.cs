@@ -1,10 +1,35 @@
 ﻿using GridGames.ResX;
 using System.Globalization;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 namespace GridGames.Views
 {
+    public class SquaresTargetIndexToNumberIsVisible : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values == null || (values.Length < 2))
+            {
+                return false;
+            }
+
+            if ((values[0] == null) || (values[1] == null))
+            {
+                return false;
+            }
+
+            var numberShown = (bool)values[0];
+            var targetIndex = (int)values[1];
+
+            return (numberShown && (targetIndex < 15));
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class ItemHeightToCollectionViewHeight : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -499,6 +524,23 @@ namespace GridGames.Views
         }
     }
 
+    public class GridRowHeightToLabelHeight : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var rowHeight = (double)value;
+
+            var labelHeight = rowHeight / 2;
+
+            return 60; //  labelHeight;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class QuestionToQuestionString : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -778,63 +820,6 @@ namespace GridGames.Views
             }
 
             return opacity;
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class LabelContainerHeightToFontSize : IMultiValueConverter
-    {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            if ((values == null) || (values.Length < 2) || 
-                (values[0] == null) || (values[1] == null))
-            {
-                return 0;
-            }
-
-            var collectionViewHeight = (double)values[0];
-            var numberSizeIndex = (int)values[1];
-
-            if (collectionViewHeight <= 0)
-            {
-                return 1;
-            }
-
-            double gridRowHeightMultiplier = 0.3;
-
-            switch (numberSizeIndex)
-            {
-                case 0:
-                    gridRowHeightMultiplier = 0.2;
-                    break;
-                case 2:
-#if IOS
-                    gridRowHeightMultiplier = 0.3;
-#else
-                    gridRowHeightMultiplier = 0.4;
-#endif
-                    break;
-                case 3:
-#if IOS
-                    gridRowHeightMultiplier = 0.4;
-#else
-                    gridRowHeightMultiplier = 0.5;
-#endif
-                    break;
-                default:
-                    break;
-            }
-
-            Debug.WriteLine("Squares label data: gridHeight " + collectionViewHeight +
-                ", gridRowHeightMultiplier " + gridRowHeightMultiplier);
-
-            // Future: Properly account for line height etc. For now, just shrink the value.
-            // Also this reduces the size to account for tall cells in portrait orientation.
-            return collectionViewHeight * 0.25 * gridRowHeightMultiplier;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
