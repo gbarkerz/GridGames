@@ -202,7 +202,7 @@
             
             <Button Grid.Row="3" x:Name="CloseButton" 
                 windows:VisualElement.AccessKey="C"                                    
-                HorizontalOptions="End" Margin="0,0,4,4" Padding="8"
+                HorizontalOptions="End" Margin="0,8,4,4" Padding="8"
                 TextColor="{StaticResource White}" BackgroundColor="{StaticResource Primary}"
                 Text="{x:Static resources:AppResources.Close}" Clicked="CloseButton_Clicked" />
         </Grid>

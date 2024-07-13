@@ -34,7 +34,7 @@
 
         <Grid x:Name="PageGrid">
 
-            <ScrollView Grid.Row="0" x:Name="SquaresGridScrollView"
+            <ScrollView x:Name="SquaresGridScrollView"
                 Orientation="Both" Padding="0">
 
                 <CollectionView
@@ -191,8 +191,8 @@
                         HorizontalOptions="End" Margin="0,4,4,4" Padding="8" />
                 </Grid>
             </Border>
-
         </Grid>
+
     </ContentPage.Content>
     
 </ContentPage>
