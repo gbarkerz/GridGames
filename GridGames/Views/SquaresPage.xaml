@@ -23,6 +23,7 @@
             <localviews:SquaresTargetIndexToNumberIsVisible x:Key="SquaresTargetIndexToNumberIsVisible" />
             <localviews:GridRowHeightToLabelHeight x:Key="GridRowHeightToLabelHeight" />
             <localviews:DarkThemeToSquareLabelColor x:Key="DarkThemeToSquareLabelColor" />
+            <localviews:DarkThemeToSquareBackgroundColor x:Key="DarkThemeToSquareBackgroundColor" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -89,6 +90,13 @@
                                 </Border.GestureRecognizers>
 
                                 <Grid Padding="0" Margin="0">
+
+                                    <Grid.BackgroundColor>
+                                        <MultiBinding Mode="OneWay" Converter="{StaticResource DarkThemeToSquareBackgroundColor}">
+                                            <Binding Source="{x:Reference SquaresPageInstance}" Path="BindingContext.ShowDarkTheme" />
+                                            <Binding Path="TargetIndex" />
+                                        </MultiBinding>
+                                    </Grid.BackgroundColor>
 
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />

@@ -4,6 +4,44 @@ using System.Collections.ObjectModel;
 
 namespace GridGames.Views
 {
+    public class DarkThemeToSquareBackgroundColor : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values == null || (values.Length < 2))
+            {
+                return false;
+            }
+
+            if ((values[0] == null) || (values[1] == null))
+            {
+                return false;
+            }
+
+            var showDarkTheme = (bool)values[0];
+            var targetIndex = (int)values[1];
+
+            Color backgroundColor;
+
+            if (targetIndex == 15)
+            {
+                backgroundColor = Colors.DarkGray;
+            }
+            else
+            {
+                backgroundColor = (showDarkTheme ? Colors.Black : Colors.White);
+
+            }
+
+            return backgroundColor;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class SquaresTargetIndexToNumberIsVisible : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
