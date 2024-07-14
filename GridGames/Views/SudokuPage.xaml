@@ -72,12 +72,8 @@
                     particular case, both interfaces do seem satisfactory, but this binding needs to be 
                     revisited at some point to see if the IsVisible binding can be made to work. -->
 
-                <CollectionView 
+                <CollectionView
                     Margin="0" SizeChanged="SudokuCollectionView_SizeChanged"
-                    MinimumWidthRequest="{Binding Source={RelativeSource AncestorType={x:Type ScrollView}},
-                        Path=Width}" 
-                    MinimumHeightRequest="{Binding Source={RelativeSource AncestorType={x:Type ScrollView}},
-                        Path=Height}" 
                     BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}"
                     x:Name="SudokuCollectionView"
                     SemanticProperties.Description="{x:Static resources:AppResources.SudokuSquares}"
@@ -108,7 +104,7 @@
                                     Path=ItemRowHeight, Converter={StaticResource ItemHeightToCollectionViewHeight}}"
                                 FontSize="{Binding Source={x:Reference SudokuPageInstance}, Mode=OneWay,
                                     Path=ItemFontSize}">
-
+        
                                 <Label.TextColor>
                                     <MultiBinding Mode="OneWay" Converter="{StaticResource NumberShownToTextColor}">
                                         <Binding Path="NumberShown" />

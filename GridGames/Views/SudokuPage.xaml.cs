@@ -1092,8 +1092,18 @@ public partial class SudokuPage : ContentPage
         // if the grid cannot be scrolled. If the grid can scroll then allow the default item sizing
         // and ScrollView behavior.
         if ((collectionViewWidth > 0) && (scrollViewWidth > 0) &&
-            (collectionViewWidth <= scrollViewWidth - 1))
+            (collectionViewWidth < scrollViewWidth))
         {
+            // Originally the CollectionView dimensions were set to never be smaller than the parent ScrollView
+            // by setting this in the XAML:
+            //MinimumWidthRequest="{Binding Source={RelativeSource AncestorType={x:Type ScrollView}},
+            //    Path=Width}" 
+            //MinimumHeightRequest="{Binding Source={RelativeSource AncestorType={x:Type ScrollView}},
+            //    Path=Height}" 
+            // But for some reason this led to the TalkBack performance degrading to be unusable.
+            // So explicitly control the width of the CollectionView here instead.
+            collectionView.WidthRequest = scrollViewWidth;
+
             // Space available for items is: (Note CollectionView doesn't support padding.)
             // collection view height - (2 x 2 x wide gap between rows) - (6 x 2 x narrow gap between rows)
             var availableSpace = (int)collectionView.Height - (2 * 2 * 4) - (6 * 2 * 1);
