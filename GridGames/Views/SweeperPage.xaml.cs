@@ -15,8 +15,17 @@ namespace GridGames.Views
 
         public int ItemRowHeight
         {
-            get => (int)GetValue(SudokuPage.ItemRowHeightProperty);
-            set => SetValue(SudokuPage.ItemRowHeightProperty, value);
+            get => (int)GetValue(SweeperPage.ItemRowHeightProperty);
+            set => SetValue(SweeperPage.ItemRowHeightProperty, value);
+        }
+
+        public static readonly BindableProperty ItemRowWidthProperty =
+            BindableProperty.Create(nameof(ItemRowWidth), typeof(int), typeof(SudokuPage));
+
+        public int ItemRowWidth
+        {
+            get => (int)GetValue(SweeperPage.ItemRowWidthProperty);
+            set => SetValue(SweeperPage.ItemRowWidthProperty, value);
         }
 
         // Create a bindable ItemFontSize property to set the size of the CollectionView item font
@@ -35,6 +44,13 @@ namespace GridGames.Views
         private int previousSideLength;
         private int previousFrogCount;
         private bool firstRunThisInstance = true;
+
+        // In order to set the grid item size as required (ie the default size when the CollectionView
+        // is larger than the containing ScrollView, or larger-than-default size when we have to increase
+        // the size of the CollectionView to fill the ScrollView), we need to cache the original size of
+        // the grid view items.
+        private bool storeOriginalGridItemSize = true;
+        private Size originalGridItemSize;
 
         public SweeperPage()
         {
@@ -94,32 +110,67 @@ namespace GridGames.Views
 #endif
         }
 
+        // We need to store the original size of the grid items in the event that we increase 
+        // the size of the items to fill the area of the containing ScrollView later.
+        private void GridItemBorder_SizeChanged(object sender, EventArgs e)
+        {
+            if (!storeOriginalGridItemSize)
+            {
+                return;
+            }
+
+            var border = sender as Border;
+
+            if ((border.Width > 0) && (border.Height > 0))
+            {
+                originalGridItemSize.Width = border.Width;
+                originalGridItemSize.Height = border.Height;
+
+                Debug.WriteLine("GridItemBorder_SizeChanged: Stored original item width, height " +
+                    originalGridItemSize.Width + ", " + originalGridItemSize.Height);
+
+                // We only need to do this once, as all the grid items are the same size
+                // and they don't change size unless we choose to change their size later
+                // when we get notified of a change in size of the containing CollectionView.
+
+                // *** IMPORTANT *** This assumes the first grid item size change notification
+                // arrives before the first CollectionView size change notification.
+                storeOriginalGridItemSize = false;
+            }
+        }
+
+        // Originally the grid to was set to have minimum dimensions set from the size of the 
+        // containing ScrollView. That seemed to work except for some reason the TalkBack perf
+        // was usable when doing that. So manually set whatever widths and heights of the 
+        // CollectionView and its items are necessary here.
         private void SweeperCollectionView_SizeChanged(object sender, EventArgs e)
         {
-            var collectionView = (sender as CollectionView);
-            var collectionViewHeight = (int)collectionView.Height;
+            Debug.WriteLine("SweeperCollectionView_SizeChanged: SweeperCollectionView Width,Height " +
+                SweeperCollectionView.Width + ", " + SweeperGridScrollView.Height);
 
-            var scrollViewHeight = (int)SweeperGridScrollView.Height;
-
-            Debug.WriteLine("SweeperCollectionView_SizeChanged: collectionViewHeight " +
-                collectionViewHeight + ", scrollViewHeight " + scrollViewHeight);
-
-            var vm = this.BindingContext as SweeperViewModel;
-
-            // We only need to set the item height such that the grid fills the main area on the page
-            // if the grid cannot be scrolled. If the grid can scroll then allow the default item sizing
-            // and ScrollView behavior.
-            if ((collectionViewHeight > 0) && (scrollViewHeight > 0))
+            // If the CollectionView is smaller that the containing ScrollView, increase the CollectionView
+            // dimensions to match the ScrollView. And in that case, also increase the size of the contained
+            // items to fill the CollectionView.
+            if ((SweeperCollectionView.Width > 0) && (SweeperCollectionView.Height > 0))
             {
-                if (collectionViewHeight <= scrollViewHeight)
+                var vm = this.BindingContext as SweeperViewModel;
+
+                if (SweeperCollectionView.Width <= SweeperGridScrollView.Width)
                 {
-                    var availableSpace = (int)collectionView.Height;
+                    SweeperCollectionView.WidthRequest = SweeperGridScrollView.Width;
 
-                    this.ItemRowHeight = availableSpace / vm.SideLength;
-
-                    Debug.WriteLine("SweeperCollectionView_SizeChanged: Set ItemRowHeight to " +
-                        ItemRowHeight);
+                    this.ItemRowWidth = (int)(SweeperGridScrollView.Width / vm.SideLength) - 1;
                 }
+
+                if (SweeperCollectionView.Height <= SweeperGridScrollView.Height)
+                {
+                    SweeperCollectionView.HeightRequest = SweeperGridScrollView.Height;
+
+                    this.ItemRowHeight = (int)(SweeperGridScrollView.Height / vm.SideLength) - 1;
+                }
+
+                Debug.WriteLine("Leaf Sweeper: SweeperCollectionView_SizeChanged() Item size now: width, height " +
+                    this.ItemRowWidth + ", " + this.ItemRowHeight);
             }
         }
 
@@ -358,8 +409,20 @@ namespace GridGames.Views
             }
 
             if (((previousSideLength > 0) && (sideLength != previousSideLength)) ||
-                (previousFrogCount > 0) && (frogCount != previousFrogCount))
+                ((previousFrogCount > 0) && (frogCount != previousFrogCount)))
             {
+                Debug.WriteLine("Leaf Sweeper: OnAppearing() Restore original grid item size, width, height " +
+                    this.originalGridItemSize.Width + ", " + originalGridItemSize.Height);
+
+                this.ItemRowWidth = (int)originalGridItemSize.Width;
+                this.ItemRowHeight = (int)originalGridItemSize.Height;
+
+                // Now set the CollectionView based on the size of the contained grid items.
+                // Both the item size and CollectionView size will be increased later if
+                // necessary to fill the containing ScrollView.
+                SweeperCollectionView.WidthRequest = this.ItemRowWidth * sideLength;
+                SweeperCollectionView.HeightRequest = this.ItemRowHeight * sideLength;
+
                 updatePreviousValues = true;
 
                 vm.SweeperListCollection.Clear();

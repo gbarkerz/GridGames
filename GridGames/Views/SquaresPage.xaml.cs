@@ -510,7 +510,7 @@ namespace GridGames.Views
                     SquaresCollectionView.WidthRequest = (SquaresGridScrollView.Width * vm.GridSizeScale) / 100;
                     SquaresCollectionView.HeightRequest = (SquaresGridScrollView.Height * vm.GridSizeScale) / 100;
 
-                    vm.GridRowHeight = (SquaresCollectionView.HeightRequest / 4) - 3;
+                    vm.GridRowHeight = (SquaresCollectionView.HeightRequest / 4) - 1;
                 }
             }
         }

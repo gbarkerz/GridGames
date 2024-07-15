@@ -29,6 +29,7 @@
             <localviews:LeafToLabel x:Key="LeafToLabel" />
             <localviews:SweeperItemGameOverToAccessibleName x:Key="SweeperItemGameOverToAccessibleName" />
             <localviews:ItemHeightToCollectionViewHeight x:Key="ItemHeightToCollectionViewHeight" />
+            <localviews:ItemWidthToCollectionViewWidth x:Key="ItemWidthToCollectionViewWidth" />
             <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -47,10 +48,6 @@
                 <CollectionView
                     x:Name="SweeperCollectionView"
                     Margin="0" SizeChanged="SweeperCollectionView_SizeChanged"
-                    MinimumWidthRequest="{Binding Source={RelativeSource AncestorType={x:Type ScrollView}},
-                        Path=Width}" 
-                    MinimumHeightRequest="{Binding Source={RelativeSource AncestorType={x:Type ScrollView}},
-                        Path=Height}" 
                     BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}"
                     SemanticProperties.Description="{x:Static resources:AppResources.SweeperSquares}"               
                     IsEnabled="{Binding FirstRunSweeper, Mode=OneWay,
@@ -69,9 +66,12 @@
                             propogated up to be the UIA Name on the containing list item. -->
                             <Border Margin="0" Padding="0"
                                 AutomationProperties.IsInAccessibleTree="False"
-                                StrokeThickness="1"
+                                SizeChanged="GridItemBorder_SizeChanged"
+                                WidthRequest="{Binding Source={x:Reference SweeperPageInstance}, Mode=OneWay,
+                                    Path=ItemRowWidth, Converter={StaticResource ItemWidthToCollectionViewWidth}}"
                                 HeightRequest="{Binding Source={x:Reference SweeperPageInstance}, Mode=OneWay,
                                     Path=ItemRowHeight, Converter={StaticResource ItemHeightToCollectionViewHeight}}"
+                                StrokeThickness="1"
                                 Stroke="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
                                 SemanticProperties.Hint="{Binding AccessibleDescription, Mode=OneWay}">
 

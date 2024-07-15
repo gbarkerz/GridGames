@@ -89,6 +89,27 @@ namespace GridGames.Views
         }
     }
 
+    public class ItemWidthToCollectionViewWidth : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var itemWidth = (int)value;
+
+            // Returning null leads to the default item width being used.
+            if (itemWidth <= 0)
+            {
+                return null;
+            }
+
+            return itemWidth;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class SudokuSquareIndexToMargin : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
