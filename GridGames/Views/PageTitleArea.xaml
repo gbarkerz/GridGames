@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:resources="clr-namespace:GridGames.ResX"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:controls="clr-namespace:GridGames.Views"
              x:Class="GridGames.Views.PageTitleArea"
              Padding="0" Margin="0"
              x:Name="GridGamesPageTitleArea">
@@ -13,39 +14,37 @@
         </ResourceDictionary>
     </ContentView.Resources>
 
-    <VerticalStackLayout Padding="0" Margin="0" VerticalOptions="CenterAndExpand"
+    <Grid Margin="0" Padding="0"
         BackgroundColor="{StaticResource Primary}">
-        
-        <Grid Margin="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
 
-            <ScrollView Grid.Column="0" Orientation="Horizontal" 
-                VerticalOptions="Center" HorizontalOptions="Center"
+            <ScrollView Grid.Column="0" Orientation="Both"
+                HorizontalOptions="Center" VerticalOptions="Center" 
                 Margin="0" Padding="0">
-                <Label x:Name="GameTitleLabel" 
-                    Text="{Binding Title}"
-                    SemanticProperties.HeadingLevel="Level1" FontSize="Title"
-                    TextColor="{StaticResource White}"
-                    Margin="0" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" />
+                <controls:PageTitleLabel x:Name="GameTitleLabel"
+                        SemanticProperties.HeadingLevel="Level1" 
+                        VerticalTextAlignment="Start"
+                        Text="{Binding Title}"
+                        FontSize="Title"
+                        TextColor="{StaticResource White}"
+                        HorizontalOptions="Center" VerticalOptions="Center" 
+                        Margin="0" Padding="0" />
             </ScrollView>
 
-            <Button x:Name="SettingsButton" Grid.Column="1"
-                Text="&#xf013;" Margin="10,0,10,0" Padding="0" 
-                TextColor="{StaticResource White}"
-                BackgroundColor="{StaticResource Primary}"                    
+            <Button Grid.Column="1" x:Name="SettingsButton" 
                 SemanticProperties.Description="{x:Static resources:AppResources.Settings}"
-                AutomationId="SettingsButton"
+                Text="&#xf013;" 
+                FontFamily="FA" 
+                FontSize="Title" 
+                TextColor="{StaticResource White}"
+                BackgroundColor="{StaticResource Primary}"
                 Clicked="SettingsButton_Clicked"
+                Margin="10,0,10,0" Padding="0" 
                 BorderWidth="0"
-                FontFamily="FA" FontSize="Title" HorizontalOptions="End" VerticalOptions="Center" />
-        </Grid>
-
-    </VerticalStackLayout>
+                HorizontalOptions="End" VerticalOptions="Center" />
+    </Grid>
 
 </ContentView>

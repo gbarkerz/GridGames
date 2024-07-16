@@ -2,12 +2,26 @@ using GridGames.ViewModels;
 
 namespace GridGames.Views;
 
+public class PageTitleLabel : Label
+{
+}
+
 public partial class PageTitleArea : ContentView
 {
-	public PageTitleArea()
-	{
-		InitializeComponent();
-	}
+    public PageTitleArea()
+    {
+        InitializeComponent();
+
+        // Remove unnecessary padding around the PageTitle label, as that space becomes large as
+        // the font size increases and so pushes the title down to become more clipped.
+        Microsoft.Maui.Handlers.LabelHandler.Mapper.AppendToMapping("PageTitleLabelCustomisation", (handler, view) =>
+        {
+            if (view is Label)
+            {
+                handler.PlatformView.SetIncludeFontPadding(false);
+            }
+        });
+    }
 
     public static readonly BindableProperty TitleProperty =
         BindableProperty.Create(nameof(Title), typeof(string), typeof(PageTitleArea));
