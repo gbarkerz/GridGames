@@ -68,6 +68,26 @@ namespace GridGames.Views
         }
     }
 
+    public class SweeperDisplayToItemPadding : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var showsQueryFrog = (bool)value;
+
+            // In some cases the query frog UI can be wider than the leaf UI, the latter being
+            // the UI which dictates the width of the item. So if no related action is taken,
+            // the width of the items can change while playing the game. To avoid this, when
+            // the query frog UI is shown, reduce the left/right padding so that the UI can
+            // fully appear in the item without the size of the item changing.
+            return showsQueryFrog ? new Thickness(0, 8, 0, 8) : new Thickness(8, 8, 8, 8);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class ItemHeightToCollectionViewHeight : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

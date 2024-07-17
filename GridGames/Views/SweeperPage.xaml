@@ -19,6 +19,7 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
+            <localviews:SweeperDisplayToItemPadding x:Key="SweeperDisplayToItemPadding" />
             <localviews:FirstRunToGridIsEnabled x:Key="FirstRunToGridIsEnabled" />
             <localviews:FirstRunToGridOpacity x:Key="FirstRunToGridOpacity" />
             <localviews:SweeperLabelContainerHeightToFontSize x:Key="SweeperLabelContainerHeightToFontSize" />
@@ -94,7 +95,10 @@
                                     </MenuFlyout>
                                 </FlyoutBase.ContextFlyout>
 
-                                <Grid Padding="8" Margin="0">
+                                <Grid 
+                                    Margin="0"
+                                    Padding="{Binding ShowsQueryFrog, Mode=OneWay,
+                                        Converter={StaticResource SweeperDisplayToItemPadding}}">
                                     <Grid.BackgroundColor>
                                         <MultiBinding Mode="OneWay" 
                                                 Converter="{StaticResource TurnedUpToBackgroundColour}">
