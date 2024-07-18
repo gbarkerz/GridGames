@@ -217,7 +217,7 @@ namespace GridGames.ViewModels
                 get
                 {
                     var name = (NumberShown ? 
-                                    Number + ", " + (FixedNumber ? "Fixed" : "Guess") + ", " :
+                                    Number + ", " + (FixedNumber ? "Fixed" : "Guess") :
                                     (SudokuViewModel.SudokuEmptySquareIndicatorIsX ? "x" : "No number shown"));
 
                     return name;

@@ -377,19 +377,35 @@ Review the Help content for details on how to play the game using only the keybo
   <data name="HelpContentPairs" xml:space="preserve">
     <value>The Pairs Game is based on a traditional card matching game, where face-down cards are turned over in order to find pairs of cards.
 
-When the game is run, a 4 by 4 grid of blank squares appears, each square representing a face-down card. When one of the cards is turned up, it reveals an image on the face-up card. When another card is turned up, an image is also shown on that second face-up card. If the two images are the same, then the cards are considered to be matched, and will not change again for the rest of the game. If the images do not match, then the cards are considered to be unmatched, and cards must be then turned back down. These steps are then repeated until all matching images have been found, and a "Congratulations" window appears.
+When the game is run, a 4 by 4 grid of blank squares appears, each square representing a face-down card. When one of the cards is turned up, it reveals an image on the face-up card. When another card is turned up, an image is also shown on that second face-up card. If the two images are the same, then the cards are considered to be matched, and will not change again for the rest of the game. If the images do not match, then the cards are considered to be unmatched, and cards must be then turned back down. Click on any square to turn unmatched cards back down. These steps are then repeated until all matching images have been found, and a "Congratulations" window appears.
 
-At the top left corner of the game is the Open Navigation button, which can be used to restart this game or to move to another game.</value>
+At the top left corner of the game is the Open Navigation button, which can be used to restart this game or to move to another game.
+
+To have your own pictures shown in the Pairs game, along with custom accessible names and descriptions, please follow the steps described in the Pairs Settings page.
+
+The Pairs game has a zoom setting to make all the squares bigger. If the grid is too large for the screen, it can be scrolled to bring the squares of interest into view. 
+
+The game also respect your choice of Android Light and Dark colour modes.
+
+The TalkBack screen reader announces the contents of the grid squares in the games, and their position in the grids. TalkBack also announces changes to the squares as the game is played.</value>
   </data>
   <data name="HelpContentSquares" xml:space="preserve">
     <value>The Squares Game is based on a square sliding puzzle, where squares in a grid of squares are rearranged by the player to form an ordered sequence of squares in the grid.
 
 When the game is run, a 4 by 4 grid of squares appears, with fifteen of those squares occupied with a movable element, and one square being empty. When a square is clicked, if it is adjacent to the empty square, the clicked square moves into the empty square. The space where the tapped square was then becomes the empty square. The aim is to arrange all the squares in a sorted order, leaving the empty square in the bottom right corner of the grid. Once all the squares are ordered, a "Congratulations" window appears.
 
-At the top left corner of the game is the Open Navigation button, which can be used to restart this game or to move to another game.</value>
+At the top left corner of the game is the Open Navigation button, which can be used to restart this game or to move to another game.
+
+To have your own picture shown in the Squares game, please follow the steps described in the Squares Settings page.
+
+The size of the numbers shown in the Squares game change as the Android Accessibility Font Size setting is changed. The Squares game also has a zoom setting to make all the squares bigger. If the grid is too large for the screen, it can be scrolled to bring the squares of interest into view.
+
+The game also respect your choice of Android Light and Dark colour modes.
+
+The TalkBack screen reader announces the contents of the grid squares in the games, and their position in the grids. TalkBack also announces changes to the squares as the games are played.</value>
   </data>
   <data name="HelpContentSudoku" xml:space="preserve">
-    <value>The Sudoku game shows a grid of 9-by-9 squares. Most of the squares are blank when the game starts, but some of the squares show a number from 1 to 9. The number of squares showing a number depends on the current game settings. To win the game, enter a number from 1 to 9 in each of the blank squares, such that each row and each column in the game contains the numbers 1 to 9. No number can be duplicated on any row or any column. 
+    <value>The Sudoku game shows a grid of 9-by-9 squares. When then game starts most of the squares show a number from 1 to 9, and some of the squares are blank. The number of squares showing a number depends on the current game settings. To win the game, enter a number from 1 to 9 in each of the blank squares, such that each row and each column in the game contains the numbers 1 to 9. No number can be duplicated on any row or any column. 
 
 In addition, the grid is divided into nine 3-by-3 groups, with group 1 containing the nine squares at the top left of the grid, and group 9 containing the nine squares at the bottom right of the grid. Each group must contain the numbers 1 to 9, with no number duplicated in the group. 
 
@@ -397,9 +413,13 @@ The current number of blank squares in the grid is shown above the grid. When a 
 
 At the top left corner of the game is the Open Navigation button, which can be used to restart this game or to move to another game.
 
-Screen Reader Usage: When playing the game with a screen reader, the Sudoku grid of squares is announced as a Grid with a name of "Sudoku Games". The grid contains a collection of 81 Cells, and a Cell's name is the number shown on the Cell, followed by "Fixed", if the number cannot be changed, or "Guess", if the number has been added to the square by you. If no number is shown on the Cell, its name is either "No number shown" or "x", depending on the current Sudoku settings. The additional information associated with a Cell is the Cell's group, followed by its row and column information. For example, if when the game starts the square at the top left corner of the grid shows the number 3, then a screen reader will announce "3 Fixed, Cell" when navigating to the square. And depending on the screen reader's settings, may then go on to announce "Group 1, Row 1 Column 1". 
+The size and style of the numbers shown in the Sudoku game change as the Android Accessibility Font Size and High Contrast Fonts settings are changed. If the grid in the game is too large for the screen, it can be scrolled to bring the squares of interest into view. 
 
-When action is taken at a square, the game encourages a screen reader to announce the new state of the square. For example, if you add a number to a square, a screen reader may say "Now 8 Guess", or if you clear a number from a square, a screen reader may say either "Now No number shown" or "Now x", depending on the current Sudoku settings. 
+The games also respect your choice of Android Light and Dark colour modes.
+
+Screen Reader Usage: When playing the game with a screen reader, the Sudoku grid of squares is announced as a Grid with a name of "Sudoku Games". The grid contains a collection of 81 Cells, and a Cell's name is the number shown on the Cell, followed by "Fixed", if the number cannot be changed, or "Guess", if the number has been added to the square by you. If no number is shown on the Cell, its name is "No number shown". The additional information associated with a Cell is the Cell's group, followed by its row and column information. For example, if when the game starts the square at the top left corner of the grid shows the number 3, then a screen reader will announce "3 Fixed, Cell" when navigating to the square. And depending on the screen reader's settings, may then go on to announce "Group 1, Row 1 Column 1". 
+
+When action is taken at a square, the game encourages a screen reader to announce the new state of the square. For example, if you add a number to a square, a screen reader may say "Now 8 Guess", or if you clear a number from a square, a screen reader may say "Now No number shown". 
 
 Acknowledgement: The game uses software made available by Firat Eski, at https://github.com/firateski/SudokuLibrary. The associated license for the software is included below.
  
@@ -415,11 +435,15 @@ SOFTWARE.</value>
 
 When the game is run, a 4-by-4 grid of squares appears, with each square showing a leaf symbol. The squares represent a group of paving stones covered with leaves. First clear the leaves off one of the stones by clicking on the stone. When the leaves are cleared, the number of frogs in the stones adjacent to that stone will be shown on the stone. If no frogs are on adjacent stones, then the clicked stone shows nothing. In addition, all adjacent stones with no frogs will also be cleared until blocked by stones with one or more stones showing nearby frog counts.
 
-When you feel you know that a stone must have a frog resting beneath its leaves, mark it as "Query Frog" by showing the stones context menu and select "Change Query Frog state". To change the Query Frog state when using a screen reader, use the navigate the screen reader to a non-visual button on the stone, and click the button. 
+When you feel you know that a stone must have a frog resting beneath its leaves, mark it as "Query Frog" by showing the stones context menu and select "Change Query Frog state".
 
 Once all paving stones in the grid which don't have resting frogs on them have been cleared, you've won the game. If while playing the game you click on a stone which does have a resting frog on it, the game is lost. If the game is lost, both resting frogs will be revealed.
 
-At the top left corner of the game is the Open Navigation button, which can be used to restart this game or to move to another game.</value>
+At the top left corner of the game is the Open Navigation button, which can be used to restart this game or to move to another game.
+
+The size of the numbers shown in the Leaf Sweeper game change as the Android Accessibility Font Size setting is changed. If the grid in the game is too large for the screen, it can be scrolled to bring the squares of interest into view. 
+
+The games also respect your choice of Android Light and Dark colour modes.</value>
   </data>
   <data name="HowManyRowsColumns" xml:space="preserve">
     <value>How many rows and columns would you like in the game?</value>
@@ -839,7 +863,9 @@ Would you like to play another game?</value>
   <data name="WelcomeInstructions" xml:space="preserve">
     <value>After closing this message, please review the help content for details on how to play this game.
 
-The help content can be reached via the menu button at the top left corner of the app. Screen readers may announce this button as the "Open Navigation" button or "Menu" button. When the menu button is clicked, a menu of items is shown beneath it. The items can be used to switch between the games, or to restart a game, or to have the help content shown.</value>
+The help content can be reached via the menu button at the top left corner of the app. The TalkBack screen reader may announce this button as the "Open Navigation drawer" button. When the menu button is clicked, a menu of items is shown beneath it. The items can be used to switch between the games, or to restart a game, or to have the help content shown.
+
+If the TalkBack screen reader is turned on while Grid Games is running, or any Android Accessibility settings such as Font Size are changed, please restart the Grid Games app.</value>
   </data>
   <data name="WonInMoves" xml:space="preserve">
     <value>You won the game in {0} goes.

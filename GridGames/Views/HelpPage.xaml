@@ -58,7 +58,7 @@
             <Button Grid.Row="2" x:Name="CloseButton" 
                 windows:VisualElement.AccessKey="C"                                    
                 TextColor="{StaticResource White}" BackgroundColor="{StaticResource Primary}"
-                HorizontalOptions="End" Margin="0,8,4,4" Padding="8"
+                HorizontalOptions="End" Margin="8" Padding="8"
                 Text="Close" Clicked="CloseButton_Clicked" />
         </Grid>
     </ContentPage.Content>

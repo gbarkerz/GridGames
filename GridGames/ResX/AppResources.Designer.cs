@@ -838,9 +838,9 @@ namespace GridGames.ResX {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Sudoku game shows a grid of 9-by-9 squares. Most of the squares are blank when the game starts, but some of the squares show a number from 1 to 9. The number of squares showing a number depends on the current game settings. To win the game, enter a number from 1 to 9 in each of the blank squares, such that each row and each column in the game contains the numbers 1 to 9. No number can be duplicated on any row or any column. 
+        ///   Looks up a localized string similar to The Sudoku game shows a grid of 9-by-9 squares. When then game starts most of the squares show a number from 1 to 9, and some of the squares are blank. The number of squares showing a number depends on the current game settings. To win the game, enter a number from 1 to 9 in each of the blank squares, such that each row and each column in the game contains the numbers 1 to 9. No number can be duplicated on any row or any column. 
         ///
-        ///In addition, the grid is divided into nine 3-by-3 groups, with group 1 conta [rest of string was truncated]&quot;;.
+        ///In addition, the grid is divided into nine 3-by-3 groups, with group 1 cont [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string HelpContentSudoku {
             get {
@@ -2099,7 +2099,9 @@ namespace GridGames.ResX {
         /// <summary>
         ///   Looks up a localized string similar to After closing this message, please review the help content for details on how to play this game.
         ///
-        ///The help content can be reached via the menu button at the top left corner of the app. Screen readers may announce this button as the &quot;Open Navigation&quot; button or &quot;Menu&quot; button. When the menu button is clicked, a menu of items is shown beneath it. The items can be used to switch between the games, or to restart a game, or to have the help content shown..
+        ///The help content can be reached via the menu button at the top left corner of the app. The TalkBack screen reader may announce this button as the &quot;Open Navigation drawer&quot; button. When the menu button is clicked, a menu of items is shown beneath it. The items can be used to switch between the games, or to restart a game, or to have the help content shown.
+        ///
+        ///If the TalkBack screen reader is turned on while Gri [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string WelcomeInstructions {
             get {
