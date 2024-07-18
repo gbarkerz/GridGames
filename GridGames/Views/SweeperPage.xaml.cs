@@ -336,6 +336,9 @@ namespace GridGames.Views
                 vm.InitialiseGrid(item.TargetIndex);
             }
 
+            // If the card was previously in a Query Frog state, it is no longer so.
+            item.ShowsQueryFrog = false;
+
             bool gameIsLost = vm.ActOnInputOnSquare(item.targetIndex);
             if (gameIsLost)
             {
